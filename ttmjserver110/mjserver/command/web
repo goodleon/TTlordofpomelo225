@@ -1,0 +1,17 @@
+#!/bin/bash
+currentPath=$PWD
+webServerPath=../web-server/
+
+export NODE_PATH=/usr/lib/node_modules
+cd  ${webServerPath}
+forever start web.js
+
+if [ $? != 0 ];then
+    cd ${currentPath}
+    bash echoColor "${0}: can't start web.js !!!" error;
+    exit 1
+else
+    cd ${currentPath}
+    bash echoColor "${0}: start web.js Success!" info;
+    exit 0
+fi

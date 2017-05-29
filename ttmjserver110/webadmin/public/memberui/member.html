@@ -1,0 +1,384 @@
+    <!doctype html>
+    <html>
+    <head>
+        <meta charset="UTF-8">  
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/metro/easyui.css">  
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/mobile.css">  
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+        <script type="text/javascript" src="/easyui/jquery.min.js"></script>  
+        <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script> 
+        <script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script> 
+		<script type="text/javascript" src="/share.js"></script>
+		<title>首页</title>
+	</head>
+    <body>
+        <header>
+		    <div class="m-toolbar">
+			   &nbsp;
+            </div>
+            <div class="m-toolbar">
+				<span id="username">
+					<input class="easyui-combobox" id="language" name="language"
+						   data-options="valueField:'id',textField:'text'" style="width:150px;">
+				</span>
+
+				<span>用户名:&nbsp;</span><label id="mName">abc</label>&nbsp;&nbsp;
+				<span>余额:&nbsp;</span><label id="money">100</label>&nbsp;&nbsp;
+				<span>会员推荐返利:&nbsp;</span><label id="buyReward">0</label>
+				<a href="#" class="easyui-linkbutton" onclick="GetBuyReward()">领取返利</a>&nbsp;&nbsp;
+				<span>累计充值返利:&nbsp;</span><label id="accruedReward">0</label>
+				<a href="#" class="easyui-linkbutton" onclick="getAccruedReward()">领取返利</a>
+            </div>
+        </header>
+			 
+        <div class="easyui-tabs" data-options="fit:true,border:false" id="tt">
+			<div title="出售" style="padding:10px">
+			  <iframe width="100%" height="100%" scrolling="auto" frameborder="0" src="yhgl.html"></iframe>
+            </div>
+			<div title="充值" style="padding:10px" id="recharge">
+				<select class="easyui-combobox" id="charge" name="charge" style="width:250px;">
+				</select>
+
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="easyui-linkbutton" onclick="recharge()" style="width:200px;height:33px;">爱贝充值</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="easyui-linkbutton scanBtn" onclick="rechargewx()" style="width:200px;height:33px;display:none">微信扫码支付</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			    <a href="#" class="easyui-linkbutton scanBtn" onclick="rechargeali()" style="width:200px;height:33px;display:none">阿里扫码支付</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+				<div style="margin:20px 0px;">
+					<!--上下 左右-->
+					<font color="red" style="margin:0px 0px;" size="3" id="chargeTip"></font>
+				</div>
+				<div>
+					<img src="" id="scanid" style="width:200px;height:200px" >
+				</div>
+			</div>
+            <div title="出售记录" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="wjjl.html" id="iframewjjl"></iframe>
+            </div>
+            <div title="购买记录" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="gmjl.html"></iframe> 
+            </div>
+			<div title="添加会员" style="padding:10px" id="addMemberMenu">
+				<table width="50%">
+					<tr><td><label>微信昵称:</label></td> <td><input class="easyui-validatebox" type="text" id="mNick" data-options="required:true" /></td></tr>
+					<tr><td><label>姓名:</label></td> <td><input class="easyui-validatebox" type="text" id="newName" data-options="required:true" /></td></tr>
+					<tr><td><label>地址:</label></td> <td><input class="easyui-validatebox" type="text" id="mAddress" data-options="required:true" placeholder="必须:××省/市××市/区"/>&nbsp;&nbsp;</td></tr>
+					<tr><td><label>联系电话:</label></td> <td><input class="easyui-validatebox" type="text" id="mPhone1" data-options="required:true,validType:'digits'" /></td></tr>
+					<tr><td><label>紧急联系电话:</label></td> <td><input class="easyui-validatebox" type="text" id="mPhone2" data-options="required:true,validType:'digits'" /></td></tr>
+					<tr><td><label>推荐人:</label></td> <td><input class="easyui-validatebox" type="text" id="mAddBy" data-options="required:true" /></td></tr>
+					<tr><td><label>客户经理:</label></td> <td><input class="easyui-validatebox" type="text" id="mManager" data-options="required:true" /></td></tr>
+				</table>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="easyui-linkbutton" onclick="addMember()">确定</a>
+			</div>
+            <div title="我的推荐" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="mymember.html"></iframe>
+            </div>
+            <div title="修改密码" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="xgmm.html"></iframe> 
+            </div>
+			<div title="安全设置" style="padding:10px">
+				<iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="safeset.html"></iframe>
+			</div>
+			<div title="修改手机" style="padding:10px">
+				<iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="changephone.html"></iframe>
+			</div>
+        </div>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				if(getGameType(window.location.host).wxScanPay){
+					$(".scanBtn").css("display","inline-block");
+				}
+			});
+			var mid;
+			var adminLevel;
+
+		function recharge() {
+			var str = $('#charge').combobox('getValue');
+			if (str != "-1") {
+				postJson("/admin/genAlipayCharge", {msg: str}, function (rtn) {
+			//alert(rtn);
+				if (rtn == 1) {
+				alert('您的密码不安全，请修改密码后操作');
+				} else if (rtn) {
+					window.location.href = rtn;
+				}
+			});
+		}
+		else {
+			alert("请选择充值金额");
+		}
+	}
+
+			function rechargewx() {
+				var str = $('#charge').combobox('getValue');
+				var type="weixin";
+				if(str != "-1"){
+				//	postJson("/admin/genAlipayCharge",{msg:str},function(rtn){
+					 postJson("/admin/genAlipayChargeWxAli",{msg:str,type:type},function(rtn){
+						if(rtn == 1) {
+							alert('您的密码不安全，请修改密码后操作');
+						} else if(rtn) {
+							$("#scanid").attr("src",rtn) ;
+							$("#chargeTip").html(getGameType(window.location.host).wxScanPayTextTip);
+//							window.location.href = rtn;
+						}
+					});
+				}
+				else {
+					alert("请选择充值金额");
+				}
+			}
+
+
+	function rechargeali() {
+		var str = $('#charge').combobox('getValue');
+		var type="ali";
+
+		if(str != "-1"){
+			postJson("/admin/genAlipayChargeWxAli",{msg:str,type:type},function(rtn){
+				//alert(rtn);
+				//console.log(11111122222);
+				if(rtn == 1) {
+				alert('您的密码不安全，请修改密码后操作');
+			} else if(rtn) {
+				//	alert(111);
+					//console.log(rtn);
+					$("#scanid").attr("src",rtn) ;
+					$("#chargeTip").html(getGameType(window.location.host).wxScanPayTextTip);
+				//window.location.href = rtn;
+			}
+		});
+	}
+	else {
+
+		alert("请选择充值金额");
+	}
+}
+	//刷新
+			function cz_refresh(){
+
+				window.location.reload();
+
+			}
+
+
+// 开关
+         //checkbox_d1
+			function chargeDivOpen() {
+				//var currentTab = $('#tt').tabs('getSelected');
+				//var currtab_title = currentTab.panel('options').title;
+				//$('#tt').tabs('close', currtab_title);
+
+				if(!(getGameType(window.location.host).rechargeOpen)){
+					//$("#tt").tabs('close', 1);
+					$("#tt").tabs('close', "充值");
+				}
+				else {
+					postJson("/admin/getAlipayJsonContent", {},
+						function (data) {
+							console.log(data);
+							var reg=new RegExp("钻石","g"); //创建正则RegExp对象
+							var rpalceArr=["元宝","红宝石","红钻","钻石"];
+							var host = window.location.host.split(".");
+							for(var i=1;i<data.length;i++){
+								var stringObj=data[i]["text"];
+								if(host[0] == "phz") {
+									var newstr=stringObj.replace(reg,rpalceArr[0]);
+								}else if(host[0] == "pdk") {
+									var newstr=stringObj.replace(reg,rpalceArr[1]);
+								}else if(host[0] == "ddz"){
+									var newstr=stringObj.replace(reg,rpalceArr[2]);
+								}else{
+									var newstr=stringObj.replace(reg,rpalceArr[3]);
+								}
+								data[i]["text"]=newstr;
+							}
+							$("#chargeTip").html(getGameType(window.location.host).alipayTextTip);
+							$("#charge").combobox("loadData", data);
+						}
+					);
+				}
+			}
+
+			$(document).ready(function(){
+				chargeDivOpen();
+			});
+
+			var data = [];
+
+			function jumpToAdmin() {
+				var str = $('#language').combobox('getValue');
+
+				if(!str)
+					return;
+
+				window.location.href = str;
+			}
+
+			$(document).ready(function () {
+				$("#language").combobox({onChange:function (news, olds) {
+					if(news != "tip"){
+						jumpToAdmin();
+					}
+				}});
+			});
+
+			function loadData() {
+				var host = window.location.host.split(".");
+
+				//host[0] != "pdk" && host[0] != "phz"
+				if(!gameType[host[0]].jump){
+					$("#username").hide();
+					return;
+				}
+
+				var obj = gameType[host[0]].jump;
+
+				//var obj = gameType.pdk.jump;
+
+				for(var key in obj){
+					data.push(obj[key]);
+				}
+
+				var data_ = [];
+
+				for(var i = 0; i < data.length; i++){
+					if(i == 0){
+						data_.push({"id":data[i]["url"], "text":data[i]["name"], "selected":true});
+					}
+					else {
+						data_.push({"id":data[i]["url"], "text":data[i]["name"]});
+					}
+				}
+
+				$('#language').combobox('loadData', data_);
+
+				//测试外网IP
+//				postJson("/admin/getLocationIp",{},function(rtn){
+//					if(rtn){
+//					}
+//				});
+			}
+
+			$(document).ready(function(){
+				loadData();
+			});
+
+		   function getMyInfo()
+		   {
+			   //{"_id":135790,"mid":135790,"mName":"changhao","money":99895146,"gameids":""}
+		      postJson("/admin/getMyInfo",{},function(rtn){
+			       //alert(JSON.stringify(rtn));
+				   if(rtn){
+					   mid = rtn.mid;
+					   adminLevel = rtn.adminLevel;
+					   $("#mName").html(rtn.mName);
+					   $("#money").html(rtn.money);
+					   $("#buyReward").html(rtn.buyReward);
+					   $("#accruedReward").html(rtn.accruedReward);
+
+					   if(adminLevel != 2) {
+						   $("#tt").tabs('close', "添加会员");
+					   }
+				   } else {
+					   $("#tt").tabs('close', "添加会员");
+				   }
+			  });
+		   }
+		   function setMoney(data)
+		   {
+		      $("#money").html(data);
+		   }
+		   function GetBuyReward()
+		   {  postJson("/admin/GetBuyReward",{},function(rtn){
+			       if(rtn){
+					   $("#mName").html(rtn.mName);
+					   $("#money").html(rtn.money);
+					   $("#buyReward").html(rtn.buyReward);
+				   } 
+			  });
+		   }
+			
+			function getAccruedReward() {
+				postJson("/admin/getAccruedReward",{},function(rtn){
+					if(rtn){
+						getMyInfo();
+					}
+				});
+			}
+			
+			function addMember() {
+				var msg={
+					mNick:$('#mNick').val(),
+					mName:$('#newName').val(),
+					mAddress:$('#mAddress').val(),
+					mPhone1:parseFloat( $('#mPhone1').val() ),
+					mPhone2:parseFloat( $('#mPhone2').val() ),
+					mAddBy:$('#mAddBy').val(),
+					mManager:$('#mManager').val()
+				};
+
+				if(msg.mNick.length==0) { alert("无效昵称"); return; }
+				if(msg.mName.length==0) { alert("无效名字"); return; }
+				if(!(msg.mPhone1>1000000000)) { alert("无效联系电话"); return; }
+				if(!(msg.mPhone2>1000000000)) { alert("无效紧急联系电话"); return; }
+
+				//alert(msg.mAddress.length);
+
+				if(msg.mAddress.length == 0) {
+					alert('无效的地址');
+					return;
+				}
+
+				var index = msg.mAddress.indexOf("省");
+
+				if(index < 0) {
+					if(msg.mAddress.indexOf("北京市") >= 0 ||
+							msg.mAddress.indexOf("上海市") >= 0 ||
+							msg.mAddress.indexOf("天津市") >= 0 ||
+							msg.mAddress.indexOf("重庆市") >= 0) {
+						if(msg.mAddress.indexOf("区") < 0) {
+							alert('直辖市请注明所在区');
+							return;
+						}
+					} else {
+						alert('地址必须注明所在省市');
+						return;
+					}
+				} else {
+					index = msg.mAddress.indexOf("市", index);
+
+					if(index < 0) {
+						alert('地址必须注明所在省市');
+						return;
+					}
+				}
+
+				msg.mPass=(msg.mPhone1+"");
+				msg.mPass=msg.mPass.substr(msg.mPass.length-6);
+
+				postJson("/admin/addMember",msg,
+						function(data)
+						{
+							if(data.n > 0)
+								alert('添加成功');
+							else
+								alert('添加失败');
+						}
+				);
+				$('#mNick').val("");
+				$('#newName').val("");
+				$('#mPhone1').val("");
+				$('#mPhone2').val("");
+				$('#mAddBy').val("");
+				$('#mManager').val("");
+			}
+
+		   getMyInfo();
+		</script>
+    </body>    
+    </html>

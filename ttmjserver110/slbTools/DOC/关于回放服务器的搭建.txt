@@ -1,0 +1,35 @@
+1. 安装apache2
+	yum install httpd
+2. 修改配置文件
+
+Listen 80
+NameVirtualHost *:80
+
+<VirtualHost *:80>
+    ServerName scmjLog.happyplaygame.net
+    ServerAlias happyplaygame.net *.happyplaygame.net
+    ProxyPass /00/ http://10.46.97.172:800/
+    ProxyPassReverse /scmj00/ http://10.46.97.172:800/
+	
+	
+    ProxyPass /01/ http://10.46.97.177:800/
+    ProxyPassReverse /scmj01/ http://10.46.97.177:800/
+
+    ErrorLog logs/happyplaygame.net-error_log
+    CustomLog logs/happyplaygame.net-access_log common
+</VirtualHost>
+
+
+
+
+// 
+
+  ProxyPass /01/ http://10.46.97.177:800/	
+  ProxyPassReverse /01/ http://10.46.97.177:800/
+	
+	// 这个表示 
+	scmjLog.happyplaygame.net/01/ 会被转发到  http://10.46.97.177:800/	
+	
+//每一条对应一台房间服务器, 根据房间服务器的serverId来配置, 具体的看servers.json里面对应的ip
+// 全部配置完成后执行
+service httpd restart

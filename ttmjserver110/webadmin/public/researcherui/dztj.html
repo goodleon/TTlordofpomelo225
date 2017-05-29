@@ -1,0 +1,150 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+</head>
+<body  class="easyui-layout">
+    <div>
+        <input class="easyui-datebox" data-options="onSelect:onSelect" style = "width:150px"></input>
+        <input class="easyui-datebox" data-options="onSelect:onSelect2" style = "width:150px"></input>
+        <a href="#" class="easyui-linkbutton" onclick="searchForTJData()">按日期搜索</a>
+        <label>列过滤</label>
+        <input class="easyui-validatebox" type="text" id="rowName" data-options="required:true" />
+
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" class="easyui-linkbutton" onclick="getCount()">获取人数</a>
+        <label id="userCount">0</label>
+    </div>
+    <table  id="tt" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+            data-options="singleSelect:true,collapsible:true">
+    </table>
+    <script type="text/javascript">
+        function getCount(){
+            postJson("/admin/getUserCount",{},
+                    function(data)
+                    {
+                        $("#userCount").html(data);
+                    }
+            );
+        }
+
+        var rowName = "";
+
+        var startDate_ = new Date();
+        startDate_.setDate(startDate_.getDate() - 2);
+
+        var startDate = getFormatDate(startDate_);
+        var endDate = getFormatDate(new Date());
+
+        function getDayLog()
+        {
+
+            postJson("/admin/getDayLog",{"_id":{$gte:startDate, $lte:endDate}},
+                    function(data)
+                    {
+                        var data_ = data.rows;
+
+                        var result = [];
+
+                        for(var i = 0; i < data_.length; i++){
+                            for(var key in data_[i]){
+                                var isAdd = true;
+                                for(var j = 0; j < result.length; j++){
+                                    if(key == result[j].title){
+                                        isAdd = false;
+                                        break;
+                                    }
+                                }
+                                if(isAdd){
+                                    result.push({field: key, title: key, width:100});
+                                }
+                            }
+                        }
+
+                        var result_ = [];
+
+                        var isValidRowName = false;
+
+                        for(var i = 0 ; i < result.length; i++){
+                            if(result[i]["title"].indexOf(rowName) >= 0){
+                                isValidRowName = true;
+                                break;
+                            }
+                        }
+
+                        if(isValidRowName){
+                            for(var i = 0; i < result.length; i++){
+                                var key = result[i]["title"];
+                                var keyTitle = key;
+
+                                if(key != "_id"){
+                                    if(key.indexOf(rowName) >= 0){
+                                        var reg= new RegExp(rowName, "g");
+                                        keyTitle = key.replace(reg, "");
+
+                                        result_.push({field: key, title: keyTitle, width:100});
+                                    }
+                                    else {
+                                        continue;
+                                    }
+                                }
+                                else {
+                                    result_.push({field: key, title: keyTitle, width:100});
+                                }
+                            }
+                        }
+                        else {
+                            result_ = result;
+                        }
+
+                        result_.splice(1, 0,{field: "totals", title: "totals", width:100});
+
+                        $('#tt').datagrid({
+                            columns:[result_]
+                        });
+
+                        for(var key in data.rows){
+                            var num = 0;
+
+                            for(var key_ in data.rows[key]){
+                                if (key_ != "_id" ){
+                                    num += data.rows[key][key_];
+                                }
+                            }
+
+                            data.rows[key]["totals"] = num;
+                        }
+
+//                        setTimeout(function () {
+//                            $("#tt").datagrid("loadData", data);
+//                        },2000);
+
+                        $("#tt").datagrid("loadData", data);
+                    }
+            );
+        }
+
+        $(document).ready(function(){
+            getDayLog();
+        });
+
+        function onSelect2(date) {
+            endDate = getFormatDate(date);
+        }
+
+        function onSelect(date){
+            startDate = getFormatDate(date);
+        }
+
+        function searchForTJData(){//tongji
+            rowName = $("#rowName").val();
+            getDayLog();
+        }
+
+    </script>
+</body>
+</html>

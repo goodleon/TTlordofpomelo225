@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="email=no">
+    <link rel="stylesheet" href="../css/main.css"/>
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>安全设置</title>
+</head>
+<style>
+    .container{
+        width:40%;
+    }
+    .tips{
+        width:50%;
+        height:2.6rem;
+        background-color: rgba(0,0,0,0.5);
+        color:white;
+        line-height: 2.6rem;
+        text-align: center;
+        display:none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        -o-transform: translate(-50%, -50%);
+    }
+    #code{
+        width:30%;
+        display:inline-block;
+    }
+    #identyCode{
+        display:inline-block;
+        font-size:1.6rem;
+        line-height:2.6rem;
+        height:2.6rem;
+        width:30%;
+    }
+    #confirmbtn{
+        width:40%;
+    }
+    .lgreen{
+        background-color:#48ccc4;
+    }
+    .lgray{
+        background-color:gray;
+        border-bottom: none;
+    }
+
+</style>
+<body>
+    <div class="container">
+        <header class="set-header">
+            <a href="###" class="home"></a><h1>安全设置</h1>
+        </header>
+        <label class="sign-tips mt3">异常验证</label>
+        <div class="sign-wp">开启后超过7天未登录或出现异地登录等情况,将需要短信验证登录</div>
+        <label class="sign-tips">当前状态</label>
+        <div class="sign-wp"> <span id="status"></span></div>
+        <label class="sign-tips">手机号:</label>
+        <div class="sign-wp"><span type="text" id="uPhone"></span></div>
+        <label class="sign-tips" id="changesta"></label>
+        <div class="sign-wp"><input type="text" id="code"  class="sign-input" value=""/><input type="button" class="sign-btn lgreen" id="identyCode" onclick="getIdentyCode()" value="点击获取"/></div>
+        <span class="sign-btn mt3" id="confirmbtn" onclick="confirmtoNet()">确&nbsp;&nbsp;认</span>
+    </div>
+    <div class="tips">
+    </div>
+</body>
+<script>
+    var protectStatus = 0;
+    var count=120;
+    function stopsetTime(){
+        clearInterval(InterValObj);//停止计时器;
+        $("#identyCode").val("点击获取");
+        $("#identyCode").removeClass('lgray');
+        $("#identyCode").addClass('lgreen');
+        $("#identyCode").removeAttr("disabled");
+        count=120;
+    }
+    function setRemainTime(){
+        if(count==0){
+            clearInterval(InterValObj);//停止计时器
+            $("#identyCode").removeAttr("disabled");
+            $("#identyCode").val("点击获取");
+            $("#identyCode").removeClass('lgray');
+            $("#identyCode").addClass('lgreen');
+            count=120;
+        }
+        else{
+            count--;
+            $("#identyCode").removeClass('lgreen');
+            $("#identyCode").addClass('lgray');
+            $("#identyCode").val(count+"s");
+        }
+
+    }
+    //        获取验证码
+    function  getIdentyCode(){
+        $("#identyCode").attr("disabled","true");
+        var msg={
+            type:5
+        };
+        InterValObj=setInterval(setRemainTime,1000);
+//       点击获取验证码之后进行的处理
+        postJson("/login/doGetSms", msg, function(rtn){
+            if(rtn.er == -1) {
+                alert('手机验证服务未开启');
+                stopsetTime();
+            } else if(!rtn.er) {
+                $('.tips').eq(0).html("请查收手机验证码");
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000);
+                $("#identyCode").attr("disabled","true");
+            } else {
+                if (rtn.er == 1) {
+                    $("#confirmbtn").removeAttr("disabled");
+                    $('.tips').eq(0).html("请先绑定手机");
+                    $('.tips').eq(0).css("display", "block");
+                } else if (rtn.er == 2) {
+                    $('.tips').eq(0).html("输入有误，请检查");
+                    $('.tips').eq(0).css("display", "block");
+                } else if (rtn.er == 3) {
+                    $('.tips').eq(0).html("请求过于频繁，请在" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试");
+                    $('.tips').eq(0).css("display", "block");
+                }
+                else if (rtn.er == 4) {
+                    $('.tips').eq(0).html("1小时内只能请求6次，请在" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试");
+                    $('.tips').eq(0).css("display", "block");
+                }
+                else if (rtn.er == 5) {
+                    $('.tips').eq(0).html("手机号码错误");
+                    $('.tips').eq(0).css("display", "block");
+                } else if (rtn.er == 6) {
+                    $('.tips').eq(0).html("手机号码已绑定");
+                    $('.tips').eq(0).css("display", "block");
+                } else if (rtn.er == 7) {
+                    $('.tips').eq(0).html("输入的ID有误");
+                    $('.tips').eq(0).css("display", "block");
+                } else if (rtn.er == 8) {
+                    $('.tips').eq(0).html("登录过期，请重新登录");
+                    $('.tips').eq(0).css("display", "block");
+                    //跳到登录页面
+                    window.location.href="/login.html";
+                }
+                setTimeout(function () {
+                    $('.tips').eq(0).css("display", "none");
+                }, 2000);
+                $("#confirmbtn").attr("disabled", "true");
+                stopsetTime();
+            }
+        });
+    }
+    //        点击进行确认
+    function confirmtoNet(){
+        var code=$("#code").val();
+
+        var msg = {
+            type:5,
+            mcode:code
+        };
+
+        postJson("/login/doCheckSms", msg, function(rtn) {
+            if(rtn == 0) {
+                if(protectStatus == 1) {
+                    protectStatus = 0;
+                } else {
+                    protectStatus = 1;
+                }
+                $('.tips').html('状态设置成功,请刷新页面');
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000);
+                setProtect();
+            }else if(rtn == 1){
+                $("#confirmbtn").attr("disabled","true");
+                $('.tips').eq(0).html("请先获取验证码");
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000)
+            }else if(rtn==2){
+                $('.tips').eq(0).html("输入信息有误，请检查");
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000);
+            }else if(rtn==3){
+                $('.tips').eq(0).html("验证码错误");
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000);
+            }else if(rtn==4){
+                $('.tips').eq(0).html("验证码过期请重新获取");
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000);
+            }
+            else if(rtn==5){
+                alert("登录过期，请重新登录");
+                window.location.href="/login.html";
+            }else if(rtn==6){
+                $('.tips').eq(0).html("尝试次数过多请重新获取");
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000);
+            }else if(rtn==7){
+                $('.tips').eq(0).html("手机号码已经被绑定");
+                $('.tips').eq(0).css("display","block");
+                setTimeout(function(){
+                    $('.tips').eq(0).css("display","none");
+                },2000);
+            }
+        });
+    }
+
+    function setProtect() {
+        if(protectStatus == 1) {
+            $("#status").html("已开启");
+            $("#changesta").text("关闭验证");
+        } else {
+            $("#status").html("已关闭");
+            $("#changesta").text("开启验证");
+        }
+    }
+    //      初始化页面
+    function initStatus(){
+        postJson("/admin/getMyInfo",{},function(rtn){
+                if(rtn.mbindphone) {
+                    $("#uPhone").html(rtn.mbindphone);
+                    protectStatus = rtn.mprotect;
+                    setProtect();
+                } else {
+                    $('.tips').html('未开启手机验证服务');
+                    $('.tips').eq(0).css("display","block");
+                    setTimeout(function(){
+                        $('.tips').eq(0).css("display","none");
+                    },2000)
+                }
+            });
+    }
+    $(document).ready(function(){
+        $("#confirmbtn").attr("disabled","true");
+        initStatus();
+    })
+</script>
+</html>

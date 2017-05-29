@@ -1,0 +1,4 @@
+
+domain Error: write EPIPE
+    at errnoException (net.js:905:11)
+    at Object.afterWrite (net.js:721:19)

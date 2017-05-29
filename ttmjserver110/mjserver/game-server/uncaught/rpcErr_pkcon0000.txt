@@ -1,0 +1,1 @@
+"5 pkplayer0000 {\"namespace\":\"sys\",\"serverType\":\"pkplayer\",\"service\":\"msgRemote\",\"method\":\"forwardMessage\",\"args\":[{\"id\":7,\"type\":0,\"compressRoute\":0,\"route\":\"pkplayer.handler.GetRoomCfg\",\"body\":{\"uid\":100002,\"version\":100}},{\"id\":1,\"frontendId\":\"pkcon0000\",\"uid\":100002,\"settings\":{\"pkplayer\":\"pkplayer0000\"}}]}"

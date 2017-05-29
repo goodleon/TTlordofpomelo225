@@ -1,0 +1,19 @@
+#!/bin/bash
+currentPath=$PWD
+
+ads=$(bash $currentPath/command/getCatalog /root)
+
+declare -A data
+
+for  key in $ads 
+do
+   
+   if( [ $key == 'slbTools' ]|| [ $key == 'mjserver' ]|| [ $key == 'temp' ]|| [ $key == 'web' ]);then
+     bash $currentPath/command/echoColor "$key is not link" info
+   else
+     ln -s /root/$key/web  /root/web/$key
+     bash $currentPath/command/echoColor "link /root/$key Successful" info
+   fi
+done
+
+

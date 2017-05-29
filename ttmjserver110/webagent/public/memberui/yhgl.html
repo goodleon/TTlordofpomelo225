@@ -1,0 +1,241 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<title>出售</title>
+</head>
+<body  class="easyui-layout">
+<!--$(this).dialog('center');-->
+		<div id="ddNotice" class="easyui-dialog" title="公告" style="width:80%;height:200px;max-width:800px;padding:10px;top:50px;" data-options="
+						iconCls:'icon-save',
+						resizable:true,
+						modal:true,
+						onResize:function(){
+
+						}" closed="true">
+			<label id="notice" align="center"></label>
+		</div>
+<!--closed="true"  style="width:100%;height:60%;"-->
+<!--style="width:300px;height:200px;left:0px;top:50px"-->
+		<div id="ddMoney" class="easyui-dialog" title="添加钻石" style="width:100%;height:60%;"
+				data-options="iconCls:'icon-save',resizable:true,modal:true" closed="true">
+				<table width="100%">
+				  <tr><td><label>售卖类型:</label></td>
+				  <td>
+					<label class="radio inline"><input type="radio" id="buyType"  name="buyType" value="1" checked="checked">售卖</label>
+					<label class="radio inline"><input type="radio" name="buyType" name="buyType" value="0">赠送</label>
+				  </td></tr>
+
+				  <tr id="tr_buyNum"><td><label>数量:</label></td> <td><input class="easyui-validatebox" type="text" id="buyNum" data-options="required:true" /></td></tr>
+				  <tr id="tr_buyMoney"><td><label>入账金额:</label></td> <td><input class="easyui-validatebox" type="text" id="buyMoney" data-options="required:true" /></td></tr>
+				  <tr><td><label>运营备注:</label></td> <td><input class="easyui-validatebox" type="text" id="buyNote" data-options="required:true" /></td></tr>
+				  <tr><td colspan="2" align="center"><a href="#" class="easyui-linkbutton" onclick="addMoneyYes()">确定</a></td></tr>
+				</table>
+		</div>
+		
+        <div>
+			<label>第一步 输入玩家ID</label>
+			<img src="" alt="头像" class="avatar" id = "image" height = "40" width="40" style="margin:2px 8px;"/>
+		</div>
+		<div>&nbsp;</div>
+		<div>
+		    <input class="easyui-validatebox" type="text" id="uid" data-options="required:true" />
+		</div>
+		<div>&nbsp;</div>
+        <div>
+		    <label>第二步</label>
+			<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search'" onclick="getUserByID()">搜索玩家</a>
+		</div>
+		<div>&nbsp;</div>
+        <div>
+		    <label>第三步 </label>
+			<a href="#" class="easyui-linkbutton" id = "addDiamondName" onclick="addMoney() ">添加钻石</a>
+		</div>
+		
+	<table width="100%" border="0">
+	  <tr>
+		<td rowspan="4"><img id="headimgurl" width="100" height="100"></img></td>
+	  </tr>
+	  <tr>
+		<td>玩家ID</td>
+		<td id="info_uid">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td>玩家昵称</td>
+		<td id="info_nickname">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	  </tr>
+	  <tr>
+		<td>玩家余额</td>
+		<td id="info_money">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+	  </tr>
+	</table>
+	
+	<script type="text/javascript">
+		function initNotice(){
+			postJson("/admin/getNoticeJson",{msg:"content"},
+				function(data)
+				{
+					if(data.length != 0){
+						$('#ddNotice').dialog('open');
+						$("#notice").html(data["content"]);
+					}
+				}
+			);
+		}
+		$(document).ready(function () {
+			var host = window.location.host.split(".");
+			if(host[0] == "pdk"){
+				$('#ddMoney').dialog({
+					title: '添加元宝',
+					iconCls:'icon-save',
+					resizable:true,
+					modal:true
+				});
+				$("#addDiamondName").html("添加元宝");
+			}else if(host[0] == "phz"){
+				$('#ddMoney').dialog({
+					title: '添加红宝石',
+					iconCls:'icon-save',
+					resizable:true,
+					modal:true
+				});
+				$("#addDiamondName").html("添加红宝石");
+			}else if(host[0] == "ddz"){
+				$('#ddMoney').dialog({
+					title: '添加红钻',
+					iconCls:'icon-save',
+					resizable:true,
+					modal:true
+				});
+				$("#addDiamondName").html("添加红钻");
+			}else{
+				$('#ddMoney').dialog({
+					title: '添加钻石',
+					iconCls:'icon-save',
+					resizable:true,
+					modal:true
+				});
+				$("#addDiamondName").html("添加钻石");
+			}
+
+			initNotice();
+		});
+
+		//$.parser.onComplete = function(){
+		//};
+
+		function changeAvatar() {
+			$("#image").attr("src", "../" + getGameType(window.location.host).loginImg);
+		}
+
+		changeAvatar();
+
+		function changeAddDiamondName() {
+			$("#addDiamondName").text(getGameType(window.location.host).addDiamondName);
+		}
+		changeAddDiamondName();
+		
+	  var user=null;
+
+	  function getUserByID()
+	  {
+	     var uid=parseInt( $("#uid").val() );
+		 if(uid>10000)
+			 postJson("/admin/getUserByID",{uid:uid},
+			   function(data)
+			   {
+				  if(data.rows.length>0)
+				  {
+					  //注册时间格式调整
+					  for(var key in data.rows)
+					  {
+						  var time = data.rows[key]["sendTime"];
+						  time = new Date(time);
+						  //time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						  time = getDateCommonFormat(time);
+						  data.rows[key]["sendTime"] = time;
+					  }
+					 user=data.rows[0];
+					 if(!user) alert("用户不存在");
+					 else
+					 {
+						 if(uid != user.uid) {
+							 alert('输入ID('+uid+')与玩家ID('+user.uid+')不相等，请报告客服，重新搜索');
+						 }
+					     $("#info_uid").html(user.uid);
+					     $("#info_nickname").html( unescape(user.nickname) );
+					     $("#info_money").html(user.money);
+						 
+						 $("#headimgurl").attr("src", user.headimgurl); 
+					 }
+				  }
+				  else alert("用户不存在");
+			   }
+			 );
+		 else alert("请输入用户ID");	 
+	  }
+
+      function addMoney()
+	  {
+	     if(!user)
+		 {
+		     alert("输入玩家ID,点击搜索");
+		     return;
+		 }
+		  if(parseInt( $("#uid").val() ) != user.uid) {
+			  alert('输入ID('+parseInt( $("#uid").val() )+')与玩家ID('+user.uid+')不相等，请报告客服，重新搜索后充值');
+			  return;
+		  }
+
+		 $('#buyNum').val("0");
+		 $('#buyMoney').val("0");
+		 $('#buyType').val(1);
+		 $('#buyNote').val("");
+		 $('#ddMoney').dialog('open');
+	  }
+
+	  function addMoneyYes()
+	  {
+	      $('#ddMoney').dialog('close');
+		  if(!user || parseInt( $("#uid").val() ) != user.uid) {
+			  alert('输入ID('+parseInt( $("#uid").val() )+')与玩家ID('+user.uid+')不相等，请报告客服，重新搜索后充值');
+			  return;
+		  }
+		  var msg = {
+			    uid:user.uid
+			   ,buyNum:parseInt($('#buyNum').val())
+			   ,buyMoney:parseInt($('#buyMoney').val())
+			   ,buyNote:$('#buyNote').val()
+			   ,buyType:$('#buyType').val()
+			};
+
+		  if(msg.buyNum>=0&&msg.buyMoney>=0)
+	      postJson("/admin/addUserMoney",msg,function(data)
+		   {
+		       if(data>=0)
+			   {
+			       window.parent.setMoney(data);
+				   setTimeout(function(){
+					   $("#uid").val(user.uid);
+					   getUserByID();
+				   },2000);
+                   alert("添加成功");
+			   }
+			   else if(data==-2)
+			   {
+			       alert("余额不足");
+			   }
+			   else if(data == -10)
+			   {
+				   alert('您的密码不安全，请修改密码后操作');
+			   }
+		   }
+		 );
+	  }
+	</script>
+</body>
+</html>

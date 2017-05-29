@@ -1,0 +1,53 @@
+服务器迁服指南
+
+0.开始准备新的服务器 
+  配置pomelo版本 tcp设置 crontab设置 系统优化等.
+
+1.停服导数据
+  1.1 majiangLog 不用导 login日志只导最后3天.
+  1.2 进入mongo  ,show dbs ,use 产品名,show collections.
+  1.3 把列出的表名,去掉不需要导库的之后,放入导库脚本中.
+  1.4 修改导库脚本中的内网地址 数据库名称.
+  1.5 node daoku.js 等候导库结果 ,出现Done的时候就可以了. //tool目录下有daoku.js
+  1.6 导库结束后压缩导出的目录,在新的服务器上wget url地址下载之后解压
+  1.7 恢复数据库,先新服务器上的数据库
+      执行mongorestore -h 本机内网Ip -d 项目名字 文件夹目录
+
+2.修改服务器高防 域名
+  1.如果项目用了高防,登录阿里云修改高防的转发地址  卡五星联通高防地址 里面修改cname
+  2.项目没用高防的话,修改json里面的servers的地址为链接服地址,多个以
+    逗号分隔
+  3.修改阿里云的域名解析,解析到最新的服务器.
+    到高防里面修改 3个地方 位置在卡五星组里面的 
+
+3.新服务器clone代码
+  1.数据服 链接服 房间服 clone代码
+  2.修改webadmin 下config里面的 mongodb 数据地址
+  3.mongodb 服务重启,数据恢复之后mongodb占用cpu比较大,需要重启服务
+    service mongod stop   service mongod restart
+
+4.修改爱贝支付服务器
+  nscd 服务重启
+  service nscd start
+  service nscd restart
+
+5.修改微信支付服务器
+  微信支付服务器1  微信支付服务器2
+  /home/wwwroot/default目录下的wx.config.php里的旧服务器地址换为新服务器地址.
+
+6.修改海外服境内服的iptables链接
+  修改88端口的数据服地址  
+  修改游戏端口150开头的地址 为链接服的第一个外网ip地址
+
+7.修改sbltools里面的地址
+  修改文件同步FileSync.sh里的数据服地址,该项目的旧数据服地址修改为新地址
+
+
+8.按照维护手册启动服务器,测试项目
+
+
+
+
+
+
+

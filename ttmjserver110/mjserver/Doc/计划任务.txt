@@ -1,0 +1,30 @@
+数据服:
+	添加财务报表的统计        
+		20 4 * * * bash /root/webadmin/statistics/crontab/memberConsumption.sh
+	统计财产
+		10 4 * * * bash /root/webadmin/tool/money.sh
+
+
+
+
+10 4 * * * bash /root/webadmin/tool/money.sh
+20 4 * * * cd /root/webadmin/statistics/crontab&&bash memberConsumption.sh
+30 4 * * * cd /root/webadmin/statistics/crontab&&bash membersActive.sh
+32 4 * * * cd /root/webadmin/statistics/crontab&&bash adminStatistics.sh
+35 4 * * * cd /root/webadmin/statistics/crontab&&bash memberStatistics.sh
+36 4 * * * cd /root/webadmin/statistics/crontab&&bash userConsumption.sh
+38 4 * * * cd /root/webadmin/dataCenterService/crontab&&bash exportDbTask.sh
+
+
+
+		
+
+房间服:
+	添加  清理log日志的脚本
+		0 4 * * * sh /root/mjserver/crontab/cleanLog.sh
+	提前创建明天的文件夹	
+		0 4 * * * sh /root/mjserver/crontab/createTomorrowFolder.sh
+		
+链接服:
+	添加数据库备份脚本, 注意一定要有/mnt/vdb1, 挑选两个链接服做备份即可
+	0 4 * * * bash /root/mjserver/crontab/backup.sh

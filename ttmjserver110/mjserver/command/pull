@@ -1,0 +1,28 @@
+#!/bin/bash
+currentPath=$PWD
+
+if [ $# != 1 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 1" error;
+exit 1;
+fi
+
+OK=0
+
+if [ -d /root/$1 ]; then
+    cd /root/$1
+    git checkout .
+    git pull
+    let OK=$?+$OK
+else
+    let OK=1
+fi
+
+if [ ${OK} != 0 ];then
+    cd ${currentPath}
+    bash echoColor "${0}: pull ${1} failed !" error;
+    exit 1
+else
+    cd ${currentPath}
+    bash echoColor "${0}: pull ${1} Success !" info;
+    exit 0
+fi

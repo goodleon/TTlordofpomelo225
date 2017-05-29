@@ -1,0 +1,859 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="email=no">
+    <link rel="stylesheet" href="../css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<!-- <script type="text/javascript" src="../easyui/locale/easyui-lang-zh_CN.js"></script> -->
+	<script type="text/javascript" src="../share.js"></script>
+	<script type="text/javascript" src="../js/pageControl.js"></script>
+	<title>快捷活动</title>
+	<style>
+	</style>
+</head>
+<body  class="easyui-layout">
+	<div id="crActivity" class="easyui-dialog"  closed="true" title="创建活动" style="width:450px;height:500px;"
+		 data-options="iconCls:'icon-save',resizable:true,modal:true">
+		<form>
+			<table style="margin-left: 10px;margin-left: 15px;margin-top: 25px;">
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="activityName">活动名称:</label></td>
+		            <td><input class="easyui-textbox"  id="activityName" data-options="validType:'maxLength[6]',required:true" placeholder="最多输入6个中文字符" /></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="desc">活动说明:</label></td>
+		            <td>
+		            	<input style="width: 260px;" class="easyui-textbox" data-options="validType:'maxLength[20]'" placeholder="最多输入20个中文字符" id="desc">
+		            </td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="">活动时间:</label></td>
+		            <td><input class="easyui-datetimebox" id="timeStart" data-options="required:true" style="width:150px"/>
+                                                 至 <input class="easyui-datetimebox" id="timeEnd" data-options="required:true" style="width:150px"/></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td colspan=2 style="font-size: 15px;padding: 10px 0px;">
+              			 完成条件<span style="font-size: 12px;">(至少达成一条)</span>：
+           			</td>	
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coYuanbao">元宝消耗:</label></td>
+		            <td><input class="easyui-numberbox reachcCondition" data-options="precision:0" placeholder="大于等于多少钻石" id="coYuanbao"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coCreateroom">开房次数:</label></td>
+		            <td><input class="easyui-numberbox reachcCondition" data-options="precision:0"  placeholder="大于等于多少次" id="coCreateroom"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coRound">对战局数:</label></td>
+		            <td><input class="easyui-numberbox reachcCondition" data-options="precision:0"  placeholder="大于等于多少局" id="coRound"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coBigWinner">大赢家次数:</label></td>
+		            <td><input class="easyui-numberbox reachcCondition" data-options="precision:0"  placeholder="大于等于多少次" id="coBigWinner"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+	            	<td colspan=2 style="font-size: 15px;padding: 10px 0px;">
+              			 活动奖励<span style="font-size: 12px;">(至少达成一条)</span>：
+           			</td>
+		        </tr>
+		         <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="rewardDiamend">钻石奖励:</label></td>
+		            <td><input class="easyui-numberbox" data-options="precision:0"  placeholder="奖励多少钻石" id="rewardDiamend"></td>
+		        </tr>
+		        <!-- <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coRound">金币奖励:</label></td>
+		            <td><input class="easyui-numberbox" data-options="precision:0"  placeholder="奖励多少金币" id="rewardCoin"></td>
+		        </tr>  -->                                                  
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="rewardOthers">其他奖励:</label></td>
+		            <td><input class="easyui-textbox" style="width: 240px;" data-options="precision:0" placeholder="奖励内容自定义 " id="rewardOthers"></td>
+		        </tr>
+		        <tr style="height: 20px;text-align: center;height: 60px">
+			        <td colspan=2 >
+	          			<a href="#" class="easyui-linkbutton" style="margin: 0px 15px 0px 15px; " id="ensureBtn" onclick="ensureBtnSent()">确定</a> 
+						<a href="#" class="easyui-linkbutton" style="margin: 0px 15px 0px 15px;" id="resetBtn" onclick="resetBtnSent()">重置</a>
+						<a href="#" class="easyui-linkbutton" style="margin: 0px 15px 0px 15px;" id="cancelBtn" onclick="cancelBtnSent()">取消</a>
+	       			</td>
+       			</tr>
+       			<tr style="font-size: 14px;">
+			        <td colspan=2 >
+			        	<span>注意：请尽量不要创建相同时间的活动</span>
+	          		</td>
+       			</tr>
+		    </table>
+		</form>
+		
+		
+	</div>
+	<div id="stopActive" class="easyui-dialog"  closed="true" title="停止活动" style="width:480px;height:550px;"
+		 data-options="iconCls:'icon-save',resizable:true,modal:true">
+		
+		<form>
+			<table style="margin-left: 10px;margin-left: 15px;margin-top: 25px;">
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="activityNameStop">活动名称:</label></td>
+		            <td><input class="easyui-textbox" disabled="false" id="activityNameStop" placeholder="最多输入6个中文字符" /></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="descStop">活动说明:</label></td>
+		            <td>
+		            	<input style="width: 260px;" class="easyui-textbox" disabled="false"  placeholder="最多输入20个中文字符" id="descStop">
+		            </td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="">活动时间:</label></td>
+		            <td><input class="easyui-datetimebox" id="timeStartStop" disabled="false"  style="width:150px"/>
+                                                 至 <input class="easyui-datetimebox" id="timeEndStop" disabled="false"  style="width:150px"/></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td colspan=2 style="font-size: 15px;padding: 10px 0px;">
+              			 完成条件<span style="font-size: 12px;">(至少达成一条)</span>：
+           			</td>	
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coYuanbaoStop">元宝消耗:</label></td>
+		            <td><input class="easyui-numberbox disabled="false" reachcCondition" disabled="false" data-options="precision:0" placeholder="大于等于多少钻石" id="coYuanbaoStop"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coCreateroomStop">开房次数:</label></td>
+		            <td><input class="easyui-numberbox reachcCondition" disabled="false" placeholder="大于等于多少次" id="coCreateroomStop"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coRoundStop">对战局数:</label></td>
+		            <td><input class="easyui-numberbox reachcCondition" disabled="false"  placeholder="大于等于多少局" id="coRoundStop"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="coBigWinnerStop">大赢家次数:</label></td>
+		            <td><input class="easyui-numberbox reachcCondition" disabled="false"   placeholder="大于等于多少次" id="coBigWinnerStop"></td>
+		        </tr>
+		        <tr style="height: 20px;">
+	            	<td colspan=2 style="font-size: 15px;padding: 10px 0px;">
+              			 活动奖励<span style="font-size: 12px;">(至少达成一条)</span>：
+           			</td>
+		        </tr>
+		         <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="rewardDiamendStop">钻石奖励:</label></td>
+		            <td><input class="easyui-numberbox"  disabled="false" placeholder="奖励多少钻石" id="rewardDiamendStop"></td>
+		        </tr>
+		        <!-- <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="rewardCoinStop">金币奖励:</label></td>
+		            <td><input class="easyui-numberbox" disabled="false" placeholder="奖励多少金币" id="rewardCoinStop"></td>
+		        </tr>   -->                                                 
+		        <tr style="height: 20px;">
+		            <td style="font-size: 14px;"><label for="rewardOthersStop">其他奖励:</label></td>
+		            <td><input class="easyui-textbox" style="width: 240px;"  disabled="false" placeholder="奖励内容自定义" id="rewardOthersStop"></td>
+		        </tr>
+		        <tr >
+		        	<td style="font-size: 14px;"><label for="reasonStop">停止原因:</label></td>
+			        <td>
+	          			<input class="easyui-textbox"  data-options="required:true" style="height: 20px;text-align: center;width: 260px;" id="reasonStop" placeholder="运营备注，停止原因，限20字"/>
+	       			</td>
+       			</tr>
+       			<tr style="height: 20px;">
+		            <td style="font-size: 15px;padding: 10px 0px;">
+              			<label for="timeStop">活动剩余时间: </label>
+           			</td>
+           			<td>
+	          			<input class="easyui-textbox" id="timeStop" disabled="false"/>
+	       			</td>	
+		        </tr>
+		        <tr style="height: 20px;text-align: center;height: 60px;">
+			        <td colspan=2 >
+			        	<a href="#" class="easyui-linkbutton" onclick="sendStopBtn()" id="stopAcId">停止</a>
+	       			</td>
+       			</tr>
+		    </table>
+		</form>
+	</div>
+	<div id="activationRecordShow" class="easyui-dialog"  closed="true" title="活动记录" style="width:850px;height:700px;"
+		 data-options="iconCls:'icon-save',resizable:true,modal:true">
+		<table id="activationRecord" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:85%;"
+		           data-options="singleSelect:true,
+								  collapsible:true,
+								  remoteSort:false,
+							      multiSort:true,
+								  rownumbers:true,
+								  autoRowHeight:false" >
+		        <thead>
+		        <tr>
+		            <th data-options="field:'join_cnt',width:70,align:'center'">参与人数</th>
+		            <th data-options="field:'complete_yuanbao_all',width:120,align:'center'">完成元宝消耗人数</th>
+		            <th data-options="field:'complete_createroom_all',width:120,align:'center'">完成开房次数人数</th>
+		            <th data-options="field:'complete_round_all',width:120,align:'center'">完成对战局数人数</th>
+		            <th data-options="field:'complete_bigwinner_all',width:120,align:'center'">完成大赢家次数人数</th>
+		            <th data-options="field:'reach_reward_cnt',width:90,align:'center'">完成活动人数</th>
+		            <th data-options="field:'get_reward_cnt',width:90,align:'center'">已发奖人数</th>
+		            <th data-options="field:'should_diamend_all',width:90,align:'center'">应发钻石数量</th>
+		            <th data-options="field:'get_diamend_all',width:90,align:'center'">已发钻石数量</th> 
+		            <!-- <th data-options="field:'should_coin_all',width:90,align:'center'">应发金币数量</th> 
+		            <th data-options="field:'get_coin_all',width:90,align:'center'">已发金币数量</th>  -->
+		            <th data-options="field:'reach_reward_cnt',width:90,align:'center'">应发其他数量</th> 
+		            <th data-options="field:'get_reward_cnt',width:90,align:'center'">已发其他数量</th>
+		        </tr>
+		        </thead> 
+		    </table>
+		    <!-- <div style="margin-top:20px;">
+				<div class="page_commonBox page_common">
+					<section class="pageSizeBox pageSize">
+						<span>每页显示</span>
+						<select  style="width: 60px;">
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="200">200</option>
+							<option value="500">500</option>
+							<option value="1000">1000</option>
+						</select>
+					</section>
+					
+						<i class="totalItemNum"></i>
+						<i class="firstPage"> 首页 </i>
+						<i class="prevPage"> 上页 </i>
+						<ul class="pageList"></ul>
+						<i class="nextPage">下页</i>
+						<i class="lastPage">尾页</i>
+						<i class="totalPageNum"></i>
+						<section class="goPagebox">
+							<p>
+								跳转到
+								<input type="text" class="go2PageIpt"/>
+								<img src="../images/goPage.png" class="go2PageBtn"/>
+								<i>页</i>
+							</p>
+						</section>
+				</div>
+			</div> -->
+	</div>
+	<div data-options="region:'north',title:'North Title',split:true" style="height:100%;">
+		    <div>
+				<a href="#" class="easyui-linkbutton" onclick="getIndex()">刷新</a>
+				<a href="#" class="easyui-linkbutton" onclick="createActivity()">创建活动</a>
+				<a href="#" class="easyui-linkbutton" onclick="stopActivity()">停止活动</a>
+				<a href="#" class="easyui-linkbutton" onclick="recordActive()">活动记录</a>
+		    </div>
+		    <table id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:85%;"
+		           data-options="singleSelect:true,
+								  collapsible:true,
+								  remoteSort:false,
+							      multiSort:true,
+								  rownumbers:true,
+								  autoRowHeight:false" >
+		        <thead>
+		        <tr>
+		            <th data-options="field:'id',width:70,align:'center'">活动ID</th>
+		            <th data-options="field:'activity_name',width:90,align:'center'">活动名称</th>
+		            <th data-options="field:'desc',width:250,align:'center'">活动说明</th>
+		            <th data-options="field:'start_time',width:140,align:'center'">开启时间</th>
+		            <th data-options="field:'end_time',width:140,align:'center'">结束时间</th>
+		            <th data-options="field:'period',width:90,align:'center'">开启周期</th>
+		            <th data-options="field:'complete_con',width:350,align:'center'">完成条件</th>
+		            <th data-options="field:'ward_con',width:250,align:'center'">奖励内容</th>
+		            <th data-options="field:'creator_uid',width:90,align:'center'">创建人ID</th> 
+		            <th data-options="field:'creator_uname',width:90,align:'center'">创建人昵称</th> 
+		            <th data-options="field:'status',width:90,align:'center'">活动状态</th> 
+		            <th data-options="field:'reason',width:250,align:'center'">运营备注</th>
+		        </tr>
+		        </thead> 
+		    </table>
+			
+			<div style="margin-top:20px;">
+				<div class="page_commonOne page_common">
+					<section class="pageSizeOne pageSize">
+						<span>每页显示</span>
+						<select style="width: 60px;">
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="200">200</option>
+							<option value="500">500</option>
+							<option value="1000">1000</option>
+						</select>
+					</section>
+						<i class="totalItemNum"></i>
+						<i class="firstPage"> 首页 </i>
+						<i class="prevPage"> 上页 </i>
+						<ul class="pageList"></ul>
+						<i class="nextPage">下页</i>
+						<i class="lastPage">尾页</i>
+						<i class="totalPageNum"></i>
+						<section class="goPagebox">
+							<p>
+								跳转到
+								<input type="text" class="go2PageIpt"/>
+								<img src="../images/goPage.png" class="go2PageBtn"/>
+								<i>页</i>
+							</p>
+						</section>
+					
+				</div>
+			</div>
+		</div>
+	<script type="text/javascript">
+		/*
+		 * author : wanglingyu
+		 */
+		var ensureBtn = $('#ensureBtn');
+		var	cancelBtn = $('#cancelBtn');
+		var resetBtn = $('#resetBtn');
+		var searchMemberData ={};
+        var searchData = {};
+        var pageOld = 0;
+		var pageOldBox = 0;
+		var haveData = 0;
+		var activeStopId = '';
+		var activename = '';
+        var pageCon = components.pageControl({
+			target : '.page_commonOne',
+			curPage : 1,
+			pageSize : 50,
+			totalPage : 0,
+			totalItem : 0,
+			pageChange : function(e) {
+				}
+		});
+		 // var pageConBox = components.pageControl({
+			// target : '.page_commonBox',
+			// curPage : 1,
+			// pageSize : 50,
+			// totalPage : 0,
+			// totalItem : 0,
+			// pageChange : function(e) {
+			// }
+// 				
+		// }); 
+		// $.extend($.fn.textbox.defaults.rules, {
+		    // maxLength: {
+		        // validator: function(value, param){
+		        	// if(value.length >= param[0]){
+		        		 // value=value.substring(0,param[0]).trim();
+			        	  // setTimeout(function(){
+			        		  // $(this).val(value);
+			        	   // },100); 
+// 		        		 
+		        	// }
+		            // return value.length >= param[0];;
+		        // },
+		        // message: '请输入最多 {0} 个字符.'
+		    // }
+		// });
+		
+		
+		$(function(){
+			window.onload = numberInputPlaceholder();
+		});
+		/**
+		easyui number placeholder
+		*/
+		function numberInputPlaceholder(){
+			$(".easyui-numberbox").each(function(i){
+				var span = $(this).siblings("span")[0];
+				var targetInput = $(span).find("input:first");
+				if(targetInput){
+				$(targetInput).attr("placeholder", $(this).attr("placeholder"));
+				}
+			
+			});
+			$(".easyui-textbox").each(function(i){
+				var span = $(this).siblings("span")[0];
+				var targetInput = $(span).find("input:first");
+				if(targetInput){
+				$(targetInput).attr("placeholder", $(this).attr("placeholder"));
+				}
+			});
+		}
+		//初始化表格
+		getIndex();
+		//以创建活动表格渲染
+		function getIndex(){
+			drawCreate(searchData);
+		}
+		
+		//新创建活动
+		function createActivity(){
+			$('#crActivity').dialog('open');
+			var oData = {};
+			clearData();
+		}
+		function resetBtnSent(){
+			clearData();
+			oData = {};
+		}
+		function cancelBtnSent(){
+			clearData();
+			$('#crActivity').dialog('close');
+		}
+		function ensureBtnSent(){
+			
+			    var leastOne = 0;
+				if(!$('#activityName').textbox('getValue')) {
+					$.messager.alert('提示','请输入活动名称');
+					return;
+				}else{
+					var nameValue = $('#activityName').textbox('getValue').replace(/\s/ig,'');
+					if(nameValue.length>6){
+						nameValue=nameValue.substring(0,6);
+					}
+					$('#activityName').textbox('setValue',nameValue);
+					oData.activity_name = nameValue;
+				}
+				if($('#desc').textbox('getValue')) {
+					var descValue = $('#desc').textbox('getValue').replace(/\s/ig,'');
+					if(descValue.length>6){
+						descValue=descValue.substring(0,20);
+					}
+					$('#desc').textbox('setValue',descValue);
+					oData.desc = descValue;
+				}
+				if(!$('#timeStart').datetimebox('getValue')) {
+					$.messager.alert('提示','请输入活动开始时间');
+					return;
+				}else{
+					var start_time = $('#timeStart').datetimebox('getValue');
+					start_time = start_time.replace('/', '-').replace('/', '');
+					var b= start_time.substring(0,5);
+					var a= start_time.substring(5,9); 
+					var c= start_time.substring(9);  
+					start_time = a +'-'+ b + c;
+					oData.start_time = start_time;//2017-04-18 18:16
+				}
+				if(!$('#timeEnd').datetimebox('getValue')) {
+					$.messager.alert('提示','请输入活动截止时间');
+					return;
+				}else{
+					var end_time = $('#timeEnd').datetimebox('getValue');
+					end_time = end_time.replace('/', '-').replace('/', '');
+					var b= end_time.substring(0,5);
+					var a= end_time.substring(5,9); 
+					var c= end_time.substring(9); 
+					end_time = a +'-'+ b + c;
+					oData.end_time = end_time;
+				}
+				var coData = {};
+				coData.complete_yuanbao =parseInt( $('#coYuanbao').numberbox('getValue'));
+				coData.complete_createroom = parseInt($('#coCreateroom').numberbox('getValue'));
+				coData.complete_round = parseInt($('#coRound').numberbox('getValue'));
+				coData.complete_bigwinner =parseInt( $('#coBigWinner').numberbox('getValue'));
+				
+				for(atte in coData){
+					if(coData[atte]){
+						leastOne = 1;
+					}else{
+						coData[atte] = 0;
+					}
+				}
+				var Odata = {};
+				Odata.reward_diamend = parseInt($('#rewardDiamend').numberbox('getValue'));
+				//Odata.reward_coin =parseInt($('#rewardCoin').numberbox('getValue')) ;
+				//Odata.reward_coin =parseInt($('#rewardCoin').numberbox('getValue')) ;
+				Odata.reward_coin =0 ;
+				Odata.reward_others = $('#rewardOthers').textbox('getValue');
+				if(leastOne == 1){
+					leastOne = 0;
+					for(atte in Odata){
+						if(Odata[atte]){
+							leastOne = 1;
+					
+						}else{
+							//delete Odata[atte];
+							Odata[atte] = 0;
+				
+						}
+					}
+					if(leastOne == 0){
+						$.messager.alert('提示','达成条件填和奖励内容至少填写一条');
+						return;
+					}
+				}else{
+					$.messager.alert('提示','达成条件填和奖励内容至少填写一条');
+					return;
+				}
+				if(leastOne == 1){
+					for(atte in Odata){
+						oData[atte]=Odata[atte];
+					}
+					for(atte in coData){
+						oData[atte]=coData[atte];
+					}
+				}
+				if($('#desc').textbox('getValue')){
+					oData.desc = $('#desc').textbox('getValue');
+				}else{
+					oData.desc = '';
+				}
+				
+				if(oData.reward_others == 0){
+					oData.reward_others = '';
+				}else{
+					oData.reward_others = String(oData.reward_others);
+				}
+				saveActive(oData);
+			
+		}
+		function clearData(){
+			oData = {};
+			$('#activityName').textbox('setValue','');
+			$('#desc').textbox('setValue','');
+			$('#timeStart').datetimebox('setValue', '');
+			$('#timeEnd').datetimebox('setValue', '');
+			$('#coYuanbao').numberbox('setValue', '');
+			$('#coCreateroom').numberbox('setValue', '');
+			$('#coRound').numberbox('setValue', '');
+			$('#coBigWinner').numberbox('setValue', '');
+			$('#rewardDiamend').numberbox('setValue', '');
+			// $('#rewardCoin').numberbox('setValue', '');
+			$('#rewardOthers').textbox('setValue','');
+		}
+		
+		function saveActive(oData){
+			var timestamp1 = Date.parse(new Date(oData.start_time))/ 1000;
+			var timestamp2 = Date.parse(new Date(oData.end_time))/ 1000;
+			if(timestamp2>timestamp1){
+				postJson("/activity/createActivity",oData,function(data){
+					if(data.errno==0){
+						$.messager.alert("操作提示", "操作成功！"); 
+						getIndex();
+					}else if(data.errno ==3){
+						$.messager.alert("操作提示", "活动结束时间必须晚于活动开始时间");
+					}else if(data.errno ==5){
+						$.messager.alert("操作提示", "活动名称已存在，请重新填写");
+					}else{
+						$.messager.alert("操作提示", "操作失败，请稍后再试！");
+					}
+			    });
+			}else{
+				$.messager.alert("操作提示", "活动结束时间必须晚于活动开始时间");
+			}
+			
+		}
+		//渲染活动表格
+		function drawCreate(){
+			var searchDataSearch = {};
+			var pagesize = parseInt($('.pageSizeOne select').val());
+			searchDataSearch.limit = pagesize||0;
+			if( pageOld*pagesize<=0){
+				searchDataSearch.start = 0;
+			}else{
+				searchDataSearch.start = (pageOld-1)*pagesize;
+			}
+		    postJson("/activity/getActivityList",searchDataSearch,function(data){
+				if(data.total>0){
+					haveData = 1;
+					for (var i = 0; i < data.rows.length; i++) {
+						data.rows[i]['complete_con'] = '';
+						data.rows[i]['ward_con'] = '';
+						for (var key in data.rows[i]) {
+							if(key=='complete_yuanbao'){
+								if(data.rows[i][key] !=0){
+									data.rows[i].complete_con =data.rows[i].complete_con +'消耗元宝大于'  + data.rows[i][key];
+								}
+							}else if(key=='complete_createroom'){
+								if(data.rows[i][key] !=0){
+									data.rows[i].complete_con =data.rows[i].complete_con +'开房次数大于'  + data.rows[i][key];
+								}
+							}else if(key=='complete_round'){
+								if(data.rows[i][key] !=0){
+									data.rows[i].complete_con =data.rows[i].complete_con +'对战局数大于'  + data.rows[i][key];
+								}
+							}else if(key=='complete_bigwinner'){
+								if(data.rows[i][key] !=0){
+									data.rows[i].complete_con =data.rows[i].complete_con +'大赢家次数大于'  + data.rows[i][key];
+								}
+							}else if(key=='reward_diamend'){
+								if(data.rows[i][key] !=0){
+									data.rows[i].ward_con =data.rows[i].ward_con + data.rows[i][key]+'钻石';
+								}
+							}
+							// else if(key=='reward_coin'){
+								// if(data.rows[i][key] !=0){
+									// data.rows[i].ward_con =data.rows[i].ward_con + data.rows[i][key]+'金币';
+								// }
+							// }
+							else if(key=='reward_others'){
+								if(data.rows[i][key] !="0"){
+									data.rows[i].ward_con =data.rows[i].ward_con + data.rows[i][key];
+								}
+							}else if(key=='stop_reason'){
+								if(data.rows[i][key] !="0"){
+									data.rows[i].reason = data.rows[i][key];
+								}
+							}else if(key=='status'){
+								if(data.rows[i].status==0){
+									data.rows[i].status = '进行中';
+								}else if(data.rows[i].status==1){
+									data.rows[i].status = '未开始';
+								}else if(data.rows[i].status==2){
+									data.rows[i].status = '提前结束';
+								}else if(data.rows[i].status==3){
+									data.rows[i].status = '活动到期';
+								}
+							}
+						}
+						data.rows[i].interval_time = data.rows[i].interval_time.replace(' ','天');
+						data.rows[i].period = data.rows[i].interval_time + '小时';
+						if(data.rows[i].start_time){
+				    		data.rows[i].start_time =timestampDate(data.rows[i].start_time);
+				    	}
+				    	if(data.rows[i].end_time){
+				    		data.rows[i].end_time =timestampDate(data.rows[i].end_time);
+				    	}
+					}
+					
+					$("#dg").datagrid("loadData",data);
+			      	var pageJson = {
+	                        curPage : pageOld,
+	                        totalPage : Math.ceil(data.total/pagesize),
+	                        totalItem : data.total,
+	                        pageSize : pagesize,
+	                        pageChange : function(e) {
+	                            if (e.action != 'init') {
+	                                pageOld = e.curPage ;
+	                                getIndex();
+	                            }
+	                        },
+	                        pageSizeChange : function(e) {
+	                            if (e.action == 'operate') {
+	                               pageOld = 0;
+	                               pagesize= e.pageSize;
+	                               getIndex();
+	                            }
+	                        }
+	                };
+	                pageCon.pageBox.show();
+	                pageCon.updatePage(pageJson);   
+				}else if(data.total==0){
+					haveData = 0;
+					$("#dg").datagrid("loadData",{ total: 0, rows: [] });
+					$('#dg').datagrid('appendRow',{id:"没有数据", activity_name:"", desc:"",start_time:"",
+		            end_time:"", period:"", complete_con:"", ward_con:"", 
+		            creator_uid :"", creator_uname :"", status :"", reward_others :""});	
+		      	} 
+		    });
+		};
+		
+		//停止活动
+		function stopActivity(){
+			var member = $("#dg").datagrid("getSelected");
+			if(haveData == 0){
+				$.messager.alert("操作提示", "没有活动","error");
+		        return;
+			}
+		    if(!member){
+		        $.messager.alert("操作提示", "请选中活动","error");
+		        return;
+		    }
+		    var activity_id = member.id;
+		    clearStopData();
+		    $('#stopActive').dialog('open');
+		   
+		    postJson("/activity/queryActivityById",{activity_id:activity_id},function(data){
+		    	if(data.activity_name){
+		    		$('#activityNameStop').textbox('setValue',data.activity_name);
+		    		activename = data.activity_name;
+		    	}
+		    	if(data.desc){
+		    		$('#descStop').textbox('setValue',data.desc);
+		    	}
+		    	if(data.start_time){
+		    		$('#timeStartStop').datetimebox('setValue',timestampDate(data.start_time));
+		    	}
+		    	if(data.end_time){
+		    		$('#timeEndStop').datetimebox('setValue',timestampDate(data.end_time));
+		    	}
+		    	if(data.complete_yuanbao){
+		    		$('#coYuanbaoStop').numberbox('setValue',data.complete_yuanbao);
+		    	}
+		    	if(data.complete_createroom){
+		    		$('#coCreateroomStop').numberbox('setValue',data.complete_createroom);
+		    	}
+		    	if(data.complete_round){
+		    		$('#coRoundStop').numberbox('setValue',data.complete_round);
+		    	}
+		    	if(data.complete_bigwinner){
+		    		$('#coBigWinnerStop').numberbox('setValue',data.complete_bigwinner);
+		    	}
+		    	if(data.reward_diamend){
+		    		$('#rewardDiamendStop').numberbox('setValue',data.reward_diamend);
+		    	}
+		    	// if(data.reward_coin){
+		    		// $('#rewardCoinStop').numberbox('setValue',data.reward_coin);
+		    	// }
+		    	if(data.reward_others){
+		    		$('#rewardOthersStop').textbox('setValue',data.reward_others);
+		    	}
+				if(data.remains_time){
+					data.remains_time =data.remains_time.replace(' ','天')+ '小时';
+		    		$('#timeStop').textbox('setValue',data.remains_time);
+		    	}
+		    	if(data.status == 0 ||data.status == 1){
+		    		$("#stopAcId").linkbutton('enable');
+		    		$('#reasonStop').textbox('textbox').attr('readonly',false);  //设置输入框为禁用
+		    		activeStopId = activity_id;
+			   	}else{
+			   		$("#stopAcId").linkbutton("disable"); 
+			   		if(data.stop_reason){
+			    		$('#reasonStop').textbox('setValue',data.stop_reason);
+			    	}
+			   		$('#reasonStop').textbox('textbox').attr('readonly',true);  //设置输入框为禁用
+			   		
+			   	}
+		    });
+		}
+		function sendStopBtn(){
+			var oData = {};
+			//reasonStop
+			if(!$('#reasonStop').textbox('getValue')) {
+				$.messager.alert('提示','请输入活动强制停止原因');
+				return;
+			}else{
+				var reasonValue = $('#reasonStop').textbox('getValue').replace(/\s/ig,'');
+				if(reasonValue.length>20){
+					reasonValue=reasonValue.substring(0,20);
+				}
+				$('#reasonStop').textbox('setValue',reasonValue);
+				oData.reason = reasonValue;
+				oData.id =activeStopId ;
+			}
+			var activeConfirm = '活动停止后，不可重新启用是否确认停止活动' + activename + '?';
+			$.messager.confirm('提示',activeConfirm, function(r){
+				if (r){
+					sendStopActive(oData);
+					getIndex();
+				}
+			});
+		};
+		function timestampDate(dateNum){
+			var date=new Date(dateNum*1000);
+			return fixZero(date.getMonth()+1,2)+"/"+fixZero(date.getDate(),2)+"/"+date.getFullYear()+" "+fixZero(date.getHours(),2)+":"+fixZero(date.getMinutes(),2)+":"+fixZero(date.getSeconds(),2);
+			function fixZero(num,length){
+			var str=""+num;
+			var len=str.length;
+			var s="";
+			for(var i=length;i-->len;){
+			s+="0";
+			}
+			return s+str;
+			}
+		}
+		
+		function clearStopData(){
+			$('#activityNameStop').textbox('setValue','');
+			$('#descStop').textbox('setValue','');
+			$('#timeStartStop').datetimebox('setValue', '');
+			$('#timeEndStop').datetimebox('setValue', '');
+			$('#coYuanbaoStop').numberbox('setValue', '');
+			$('#coCreateroomStop').numberbox('setValue', '');
+			$('#coRoundStop').numberbox('setValue', '');
+			$('#coBigWinnerStop').numberbox('setValue', '');
+			$('#rewardDiamendStop').numberbox('setValue', '');
+			$('#rewardCoinStop').numberbox('setValue', '');
+			$('#rewardOthersStop').textbox('setValue','');
+			$('#timeStop').textbox('setValue','');
+			$('#reasonStop').textbox('setValue','');
+		}
+		
+	   //提交停止活动
+	   function sendStopActive(oData){
+	   		postJson("/activity/stopActivity",oData,function(data){
+	   			if(data.errno==0){
+					$.messager.alert("操作提示", "活动已停止,操作成功！");
+					$("#stopAcId").linkbutton("disable"); 
+				}else if(data.errno!=0){
+					$.messager.alert("操作提示", "操作失败，请稍后再试！");
+				}
+	   		});
+	   }
+	   
+		//活动记录
+		 function recordActive(){
+		    var member = $("#dg").datagrid("getSelected");
+		    if(haveData == 0){
+				$.messager.alert("操作提示", "没有活动","error");
+		        return;
+			}
+		    if(!member){
+		        $.messager.alert("操作提示", "请选中活动","error");
+		        return;
+		    }
+		    searchData.activity_id = member.id;
+		    $('#activationRecordShow').dialog('open');
+			var pagesize = parseInt($('.pageSizeBox select').val());
+			searchData.limit = pagesize||0;
+			if( pageOldBox*pagesize<=0){
+				searchData.start = 0;
+			}else{
+				searchData.start = (pageOldBox-1)*pagesize||0;
+			}
+		     postJson("/activity/queryActivityById",searchData,function(data){
+				if(data){
+				//	for (var i = 0; i < data.length; i++) {
+						
+						 data.join_cnt =data.join_cnt|| 0;
+						 data.complete_yuanbao_all = 0;
+						 data.complete_createroom_all = 0;
+						 data.complete_round_all = 0;
+						 data.complete_bigwinner_all = 0;
+						 data.should_diamend_all = 0;
+						 data.get_diamend_all = 0;
+						 // data.should_coin_all = 0;
+						 // data.get_coin_all = 0;
+						 data.should_others_all = 0;
+						 data.get_others_all =0;
+						  
+						data.complete_yuanbao_all = data.complete_yuanbao_cnt||0;
+						data.complete_createroom_all = data.complete_createroom_cnt||0;
+						data.complete_round_all = data.complete_round_cnt||0;
+						data.complete_bigwinner_all = data.complete_bigwinner_cnt||0;
+						
+						data.should_diamend_all = data.reach_reward_cnt*data.reward_diamend||0;
+						data.get_diamend_all = data.get_reward_cnt*data.reward_diamend||0;
+						
+						// data.should_coin_all = data.reach_reward_cnt*data.reward_coin||0;
+						// data.get_coin_all = data.get_reward_cnt*data.reward_coin||0;
+						
+						data.should_others_all = data.reach_reward_cnt*data.reward_others||0;
+						data.get_others_all = data.get_reward_cnt*data.reward_others||0;
+				//	}
+					var rows = [];
+					rows.push(data);
+					data = {};
+					data.total=data.length||1;
+					data.rows = rows;
+					
+					$("#activationRecord").datagrid("loadData",data);
+			      	// var pageJson = {
+	                        // curPage : pageOldBox,
+	                        // totalPage : Math.ceil(data.total/pagesize),
+	                        // totalItem : data.total,
+	                        // pageSize : pagesize,
+	                        // pageChange : function(e) {
+	                            // if (e.action != 'init') {
+	                                // pageOldBox = e.curPage ;
+	                                // recordActive();
+	                            // }
+	                        // },
+	                        // pageSizeChange : function(e) {
+	                            // if (e.action == 'operate') {
+	                               // pageOldBox = 0;
+	                               // pagesize= e.pageSize;
+	                               // recordActive();
+	                            // }
+	                        // }
+	                // };
+	                // pageConBox.pageBox.show();
+	                // pageConBox.updatePage(pageJson);   
+				}else if(!data){
+					$("#activationRecord").datagrid("loadData", { total: 0, rows: [] });
+					$('#activationRecord').datagrid('appendRow',{join_cnt:"没有数据", complete_yuanbao_all:"", complete_createroom_all:"",complete_round_all:"",
+		            complete_bigwinner_all:"", reach_reward_cnt:"", get_reward_cnt:"", should_diamend_all:"", 
+		            get_diamend_all:"", reach_reward_cnt:"", get_reward_cnt:""});	// should_coin_all:"", get_coin_all:"",
+		      	}
+		    });
+		};
+	   
+	</script>
+</body>
+</html>

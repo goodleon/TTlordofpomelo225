@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="keywords" content="管理页面" />
+		<meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+		<meta name="screen-orientation" content="portrait"/><!--UC浏览器强制竖屏-->
+    	<meta name="x5-orientation" content="portrait"/> <!--QQ浏览器强制竖屏-->
+    	
+		<title>管理页面</title>
+		<script type="text/javascript" src="script/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="share.js"></script>
+		<style>
+			.coverBlack{
+				position:absolute;
+				top:0;
+				bottom:0;
+				left:0;
+				right:0;
+				background-color: rgba(0,0,0,0.5);
+				display:none;
+				z-index:1000;
+			}
+			.coverBlack>img{
+				position:absolute;
+				top:0;
+				right:10px;
+				width:150px;
+				height:70px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--此页面对应的是login.html-->
+		<div class="loginContainer">
+			
+		</div>
+		<script type="text/javascript">
+		var isPostBack = "<%= IsPostBack %>";
+		document.documentElement.style.fontSize = innerWidth / 16 + 'px';
+		onresize = function() {
+				document.documentElement.style.fontSize = innerWidth / 16 + 'px';
+			} 
+		function getUrlParam(name) {
+                var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+                var r = window.location.search.substr(1).match(reg);
+                if (r != null) return unescape(r[2]);
+                return null;
+		 }
+		$(document).ready(function() {
+			var mid=getUrlParam("u");
+			var mpass=getUrlParam("t");
+			doLogin(mid,mpass);
+		});
+		//以下是点击登录按钮触发的函数
+		function doLogin(gmid,gmpass) {
+			var host = window.location.host.split(".");
+			var msg={u:gmid, t:gmpass};
+		    postJson("/wxData/doWxLogin",msg,function(rtn){
+			if(typeof(rtn) == 'object') {
+				if(rtn.banDays) {
+					alert('您的账号被封禁，请在' + rtn.banDays + '天后尝试登录');
+				} else if(rtn.banMins) {
+					alert('您的账号被封禁，请在' + rtn.banMins + '分钟后尝试登录');
+				}
+			} else if(typeof(rtn)=='string') {
+				window.location.href=rtn;
+			} else {
+				alert("用户名或者密码错误");
+			}
+		});
+	}
+	// 以下是实现了cookie的记住密码功能
+	window.onload=function onLoginLoaded() {
+		if (isPostBack == "False") {
+			GetLastUser();
+		}
+	}
+
+	function GetLastUser() {
+		var id = "49BAC005-7D5B-4231-8CEA-16939BEACD67";//GUID标识符
+		var usr = GetCookie(id);
+		if (usr != null) {
+			document.getElementById('mid').value = usr;
+		} else {
+			document.getElementById('mid').value = "001";
+		}
+		GetPwdAndChk();
+	}
+
+	//用户名失去焦点时调用该方法
+	function GetPwdAndChk() {
+		var usr = document.getElementById('mid').value;
+		var pwd = GetCookie(usr);
+		if (pwd != null) {
+			document.getElementById('rememberpass').checked = true;
+			document.getElementById('mPass').value = pwd;
+		} else {
+			document.getElementById('rememberpass').checked = false;
+			document.getElementById('mPass').value = "";
+		}
+	}
+
+	//
+	function GetCookie(name) {
+		var arg = name + "=";
+		var alen = arg.length;
+		var clen = document.cookie.length;
+		var i = 0;
+		while (i < clen) {
+			var j = i + alen;
+			//alert(j);
+			if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+			i = document.cookie.indexOf(" ", i) + 1;
+			if (i == 0) break;
+		}
+		return null;
+	}
+
+	function getCookieVal(offset) {
+		var endstr = document.cookie.indexOf(";", offset);
+		if (endstr == -1) endstr = document.cookie.length;
+		return unescape(document.cookie.substring(offset, endstr));
+	}
+
+	//
+	function SetLastUser(usr) {
+		var id = "49BAC005-7D5B-4231-8CEA-16939BEACD67";
+		var usr = document.getElementById('mid').value;
+		var expdate = new Date();
+		//当前时间加上两周的时间
+		expdate.setTime(expdate.getTime() + 14 * (24 * 60 * 60 * 1000));
+		SetCookie(id, usr, expdate);
+	}
+
+	function SetCookie(name, value, expires) {
+		var argv = SetCookie.arguments;
+		//本例中length = 3
+		var argc = SetCookie.arguments.length;
+		var expires = (argc > 2) ? argv[2] : null;
+		var path = (argc > 3) ? argv[3] : null;
+		var domain = (argc > 4) ? argv[4] : null;
+		var secure = (argc > 5) ? argv[5] : false;
+		document.cookie = name + "=" + escape(value) + ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) + ((path == null) ? "" : ("; path=" + path)) + ((domain == null) ? "" : ("; domain=" + domain)) + ((secure == true) ? "; secure" : "");
+	}
+
+	function ResetCookie() {
+		var usr = document.getElementById('mid').value;
+		var expdate = new Date();
+		SetCookie(usr, null, expdate);
+	}
+</script>
+</body>
+</html>

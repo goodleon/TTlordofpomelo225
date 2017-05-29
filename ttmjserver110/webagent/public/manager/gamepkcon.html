@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>比赛配置</title>
+</head>
+<body>
+    <a href="javascript:void(0);" class="easyui-linkbutton" id="quire" onclick="roomDia()">创建房间</a>
+    <div id="createRoom" class="easyui-dialog"  closed="true" title="创建房间" style="width:700px;height:500px;"
+         data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+        <table width="100%">
+            <tr>
+                <td><label>字段1:</label></td>
+                <td>
+                    <input class="easyui-textbox para" name="para1"  data-options="prompt:'字段1',required:true"/>
+                </td>
+                <td><label>字段2:</label></td>
+                <td>
+                    <input class="easyui-textbox para" name="para2"  data-options="prompt:'字段2',required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label>字段3:</label></td>
+                <td>
+                    <input class="easyui-textbox para" name="para3"  data-options="prompt:'字段3',required:true"/>
+                </td>
+                <td><label>字段4:</label></td>
+                <td>
+                    <input class="easyui-textbox para" name="para4"  data-options="prompt:'字段4',required:true"/>
+                </td>
+            </tr>
+            <tr>
+                <td><label>下拉选框:</label></td>
+                <td>
+                    <input id="chargeNum" class="easyui-combobox" data-options="valueField:'id',textField:'text',method:'get',
+						data: [{id: '1',text: '大于等于',selected:true},
+								{id: '2',text: '小于等于'}]">
+                </td>
+                <td><label>时间选择框:</label></td>
+                <td>
+                    <input class="easyui-datetimebox" id="timeBox" data-options="required:true,showSeconds:false" style="width:150px"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" name="sel1" value="1"/>选项1
+                </td>
+                <td>
+                    <input type="checkbox" name="sel2" value="2"/>选项2
+                </td>
+                <td>
+                    <input type="checkbox" name="sel3" value="3"/>选项3
+                </td>
+                <td>
+                    <input type="checkbox" name="sel4" value="4"/>选项4
+                </td>
+            </tr>
+            <tr>
+                <td><a href="javascript:void(0);" class="easyui-linkbutton" id="quireNum" onclick="creatRoom()">创建房间</a></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+
+    </script>
+</body>
+</html>

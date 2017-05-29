@@ -1,0 +1,24 @@
+#!/bin/bash
+
+export NODE_PATH=/usr/lib/node_modules
+
+webadmin=/root/webadmin
+currentPath=$PWD
+currentFileName=${1}
+
+cd ${webadmin}/dataCenterService/statisticsTask/src
+log=$(node ${currentFileName}.js)
+
+if [ $? != 0 ];then
+    cd ${webadmin}
+    mkdir -p logs
+    myDate=$(date -d "1 days ago" +%Y-%m-%d)
+    echo ${myDate} error ${log}>> logs/${currentFileName}
+    exit 1;
+else
+    cd ${webadmin}
+    mkdir -p logs
+    myDate=$(date -d "1 days ago" +%Y-%m-%d)
+    echo ${myDate} successful ${log}>> logs/${currentFileName}
+    exit 0;
+fi

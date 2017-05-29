@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>首页</title>
+<meta name="viewport" content="width=device-width,user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="email=no">
+<script type="text/javascript" src="../js/zepto.js"></script>
+<link rel="stylesheet" href="../css/main.css"/>
+</head>
+<body>
+<header class="set-header">
+    <a href="###" class="set"></a><h1>首页</h1>
+</header>
+<div class="sign-wp mt3"><p class="info-de">用户名：时间线</p></div>
+<div class="sign-wp home-list"><p class="info-de lp">我的余额:1000</p><p class="info-de">今日收入:100&nbsp;&nbsp;</p></div>
+<h3 class="add-jewel">添加钻石</h3>
+<div class="sign-wp"><input type="text" class="sign-input" placeholder="请输入玩家ID" value=""/></div>
+
+<div class="search-info">
+    <img src="../images/avatar.png" class="avatar-img" alt="头像"/>
+    <div class="l-info">
+        <p>用户名</p>
+        <p>id:4324324&nbsp;余额：10</p>
+    </div>
+    <span class="add-btn">添加</span>
+</div>
+
+<span class="search-btn">查&nbsp;&nbsp;找</span>
+
+<h3 class="record-tit">售卖记录</h3>
+<dl class="record-list">
+    <dt><span>用户名</span><span>ID</span><span>数量</span><span>价格</span><span>时间</span></dt>
+    <dd><span>时间线</span><span>678940</span><span>22</span><span>10</span><span>5/12 12:00</span></dd>
+    <dd><span>时间线</span><span>678940</span><span>22</span><span>10</span><span>5/12 12:00</span></dd>
+</dl>
+
+<script type="text/javascript">
+    $(function(){
+        $('.search-btn').click(function(){
+            $('.search-info').css({'height':'6rem'});
+        });
+    });
+</script>
+</body>
+</html>
+

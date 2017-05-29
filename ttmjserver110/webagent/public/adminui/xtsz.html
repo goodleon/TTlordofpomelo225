@@ -1,0 +1,299 @@
+<html>
+<head>
+	<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+	<script type="text/javascript" src="/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+</head>
+<body class="easyui-layout" style="overflow-y: scroll">
+<div>
+	<a href="#" class="easyui-linkbutton" onclick="getCfgJson()">刷新</a><br>
+	<label>购买微信</label><br>
+	<input class="easyui-validatebox" size="150" type="text" id="weixinBuy" data-options="required:false"/>
+	<a href="#" class="easyui-linkbutton" onclick="saveResetInfo('weixinBuy')">修改</a>
+</div>
+
+<div>
+	<label>跑马灯</label><br>
+	<input class="easyui-validatebox" size="150" type="text" id="homeScroll" data-options="required:false"/>
+	<a href="#" class="easyui-linkbutton" onclick="saveResetInfo('homeScroll')">修改</a>
+</div>
+
+<div>
+	<label>重启提示文字</label><br>
+	<input class="easyui-validatebox" size="150" type="text" id="severRestart" data-options="required:false"/>
+	<a href="#" class="easyui-linkbutton" onclick="saveResetInfo('severRestart')">修改</a>
+</div>
+
+<div>
+	<label>重启开始时间</label><br>
+	<input class="easyui-validatebox" size="150" type="text" id="restartTipBegin" data-options="required:false"/>
+	<a href="#" class="easyui-linkbutton" onclick="saveResetInfo('restartTipBegin')">修改</a>
+</div>
+
+<div>
+	<label>重启结束时间</label><br>
+	<input class="easyui-validatebox" size="150" type="text" id="restartTipEnd" data-options="required:false"/>
+	<a href="#" class="easyui-linkbutton" onclick="saveResetInfo('restartTipEnd')">修改</a>
+</div>
+
+<div>
+	<label>重启提示时间间隔</label><br>
+	<input class="easyui-validatebox" size="150" type="text" id="restartTipInterval" data-options="required:false"/>
+	<a href="#" class="easyui-linkbutton" onclick="saveResetInfo('restartTipInterval')">修改</a>
+</div>
+
+<div>
+	<label>更新公告</label><br>
+	<input class="easyui-validatebox" size="150" type="text" id="gameTip" data-options="required:false"/>
+	<a href="#" class="easyui-linkbutton" onclick="saveResetInfo('gameTip')">修改</a>
+</div>
+<div style="width:100%;height:100%;">
+	<div>
+		配置规则:<br/>
+		1.按照需要的顺序依次添加配置;<br/>
+		2.时间含义为hh:mm(小时:分钟),其中小时的配置范围为00-23,分钟的配置范围为00-59;<br/>
+		3.双击每一行对配置条件进行修改;<br/>
+		4.添加及编辑完成后点击保存图标;<br/>
+		5.务必点击提交按钮，修改内容才会生效;<br/>
+		6.配置顺序最终以时间顺序从先到后排列;<br/>
+		配置说明:<br/>
+		1. 用户开启游戏客户端后，每5分钟获取一次跑马灯信息。<br/>
+		2. 跑马灯重新配置后，生效时间取决于用户开启客户端的时间。<br/>
+		3. 也就是根据用户开启客户端的时间，新配置跑马灯后，有可能在1至5分钟生效。<br/>
+		4. <span style="color:red">客户端没有添加定时跑马灯功能的产品不要配置下面的表。</span>
+	</div>
+	<table  id="dg" class="easyui-datagrid" style="width:100%;height:200px;overflow-y:scroll">
+	</table>
+	<div>
+		<a href="#" class="easyui-linkbutton" onclick="submitTable()">提交</a>
+	</div>
+</div>
+<script type="text/javascript">
+	var restartInfo = null;
+	var dat=[];
+	var datagrid; //定义全局变量datagrid
+	var editRow = undefined; //定义全局变量：当前编辑的行
+	datagrid = $("#dg").datagrid({
+		fitColumn: false, //列自适应宽度
+		striped: true, //行背景交换
+		nowrap: true, //列内容多时自动折至第二行
+		border: false,
+		collapsible:true,
+		checkOnSelect: false,
+		columns: [[//显示的列
+			{
+				field: 'Times', title: '时间', width: 80,
+				editor: {type: 'timespinner', options: {required: true}}
+			},
+			{
+				field: 'context', title: '跑马灯内容', width: 600,
+				editor: {type: 'textarea', options: {required: true}}
+			},
+			{
+				field: 'call_board', title: '公告板内容', width: 600,
+				editor: {type: 'textarea', options: {required: true}}
+			}
+		]],
+		queryParams: {}, //查询参数
+		toolbar: [{
+			text: '添加', iconCls: 'icon-add', handler: function () {//添加列表的操作按钮添加，修改，删除等
+				//添加时先判断是否有开启编辑的行，如果有则把开户编辑的那行结束编辑
+				if (editRow != undefined) {
+					datagrid.datagrid("endEdit", editRow);
+				}
+				//添加时如果没有正在编辑的行，则在datagrid的第一行插入一行
+				if (editRow == undefined) {
+					datagrid.datagrid("insertRow", {
+						index: 0, // index start with 0
+						row: {}
+					});
+					//将新插入的那一行开户编辑状态
+					datagrid.datagrid("beginEdit", 0);
+					//给当前编辑的行赋值
+					editRow = 0;
+				}
+
+			}
+		}, '-',
+			{
+				text: '删除', iconCls: 'icon-remove', handler: function () {
+				//删除时先获取选择行
+				var rows = datagrid.datagrid("getSelections");
+				//选择要删除的行
+				if (rows) {
+					$.messager.confirm("提示", "你确定要删除吗?", function (r) {
+						if (r) {
+							for(var i=0;i<rows.length;i++){
+								var indexlab=datagrid.datagrid("getRowIndex",rows[i]);
+								datagrid.datagrid("deleteRow",indexlab);
+							}
+						}
+					});
+				}
+				else {
+					$.messager.alert("提示", "请选择要删除的行", "error");
+				}
+			}
+			}, '-',
+			{
+				text: '保存', iconCls: 'icon-save', handler: function () {
+				//保存时结束当前编辑的行，自动触发onAfterEdit事件如果要与后台交互可将数据通过Ajax提交后台
+				datagrid.datagrid("endEdit", editRow);
+			}
+			}, '-',
+			{
+				text: '取消编辑', iconCls: 'icon-redo', handler: function () {
+				//取消当前编辑行把当前编辑行罢undefined回滚改变的数据,取消选择的行
+				editRow = undefined;
+				datagrid.datagrid("rejectChanges");
+				datagrid.datagrid("unselectAll");
+			}
+			}, '-'],
+		onAfterEdit: function (rowIndex, rowData, changes) {
+			//endEdit该方法触发此事件
+			editRow = undefined;
+		},
+		onDblClickRow: function (rowIndex, rowData) {
+			//双击开启编辑行
+			if (editRow != undefined) {
+				datagrid.datagrid("endEdit", editRow);
+			}
+			if (editRow == undefined) {
+				datagrid.datagrid("beginEdit", rowIndex);
+				editRow = rowIndex;
+			}
+		}
+	});
+	function readCfg(data)
+	{
+		$("#severRestart").val(data.severRestart);
+		$("#weixinBuy").val(data.weixinBuy);
+		$("#homeScroll").val(data.homeScroll);
+		$("#restartTipBegin").val(data.restartTipBegin);
+		$("#restartTipEnd").val(data.restartTipEnd);
+		$("#severRestart").val(data.severRestart);
+		$("#restartTipInterval").val(data.restartTipInterval);
+		$("#gameTip").val(data.gameTip);
+		dat=data["homeScroll2"];
+		for (var i=0;i<dat.length;i++){
+			if(!dat[i]["call_board"]){
+				dat[i]["call_board"]=data.weixinBuy;
+			}
+		}
+		$("#dg").datagrid({data:dat});
+	}
+
+	function showCfg(data)
+	{
+		for (var i = 0; i < data.rows.length; i++)
+		{
+			if (data.rows[i].file == "configuration.json")
+			{
+				restartInfo = data.rows[i];
+
+				readCfg(restartInfo);
+
+
+			}
+		}
+	}
+
+	function getCfgJson()
+	{
+		postJson("/admin/getCfgJson", {},
+				function (data)
+				{
+					if(data){
+						showCfg(data);
+					}else{
+						$.messager.confirm('操作提示', '您已处于离线状态是否重新登录', function(r){
+							if (r){
+								window.parent.open ('/login.html', '_blank');
+							}
+						});
+					}
+
+				}
+		);
+	}
+
+	getCfgJson();
+
+	function saveResetInfo(name)
+	{
+		var val = $("#" + name).val();
+		if (val.length == 0)
+		{
+			return;
+		}
+		var msg = {file: restartInfo.file};
+		msg[name] = val;
+		postJson("/admin/saveCfgJson", msg,
+				function (data)
+				{
+					if(data){
+						showCfg(data);
+						$.messager.alert('提示', '修改成功');
+					}else{
+						$.messager.confirm('操作提示', '您已处于离线状态是否重新登录', function(r){
+							if (r){
+								window.parent.open ('/login.html', '_blank');
+							}
+						});
+					}
+
+				}
+		);
+	}
+	function submitTable(){
+		var datarows =$("#dg").datagrid("getRows");
+		var homeScroll22 = [];
+		for(var l=0;l<datarows.length;l++){
+
+			if(!datarows[l].Times||!datarows[l].context||!datarows[l].call_board){
+				$.messager.alert("提示", "数据不能为空", "error");
+				return;
+			}
+			homeScroll22.push(datarows[l]);
+
+		}
+		homeScroll22.sort(function(a, b){
+			return new Date("2017/01/01 " + a.Times+":00") - new Date("2017/01/01 " + b.Times+":00");
+		});
+		var msg = {file: restartInfo.file};
+		if(!homeScroll22){
+			homeScroll22="";
+		}
+		msg["homeScroll2"] = homeScroll22;
+		postJson("/admin/saveCfgJson", msg, function (data) {
+			if (data) {
+				for (var i = 0; i < data.rows.length; i++) {
+					if (data.rows[i].file == "configuration.json") {
+						var infor = data.rows[i];
+						if(infor["homeScroll2"]){
+							$("#dg").datagrid({data:infor["homeScroll2"]});
+
+						}else{
+
+							$("#dg").datagrid({data:[]});
+
+						}
+						break;
+					}
+				}
+				$.messager.alert("提示", "操作成功");
+			}else{
+				$.messager.confirm('操作提示', '您已处于离线状态是否重新登录', function(r){
+					if (r){
+						window.parent.open ('/login.html', '_blank');
+					}
+				});
+			}
+		});
+	}
+</script>
+</body>
+</html>

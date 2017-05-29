@@ -1,0 +1,110 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>用户查询--原用户统计页面</title>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
+    <div>
+        <label>玩家ID</label>
+        <input class="easyui-validatebox" type="text" id="uid" data-options="required:true" />
+        <label>开始时间</label>
+        <input class="easyui-datebox" data-options="onSelect:onSelect" style = "width:150px"/>
+        <label>查询天数</label>
+        <input class="easyui-validatebox" type="text" id="days" value = "7" data-options="required:true" />
+        <a href="#" class="easyui-linkbutton" onclick="getUser()">搜索</a>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <label>玩家ID：</label><label id="rtn_uid"></label>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <label>余额：</label><label id="rtn_money"></label>
+    </div>
+
+    <table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+            data-options="singleSelect:true,collapsible:true">
+        <thead>
+        <tr>
+            <th data-options="field:'day',width:100">日期</th>
+            <th data-options="field:'money',width:100">钻石消耗-钻</th>
+            <th data-options="field:'create',width:100">创建房间</th>
+            <th data-options="field:'join',width:100">游戏局数</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    var startDate;
+
+    function getDay(date) {
+        if(!date) {
+            date = new Date();
+            date.setDate(date.getDate() - 7);
+        }
+
+        startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
+
+    getDay();
+
+    function onSelect(date) {
+        getDay(date);
+    }
+
+    function getUser() {
+        var uid = parseInt( $("#uid").val() );
+
+        if(!uid) {
+            alert('输入用户ID');
+            return;
+        }
+
+        var days = parseInt( $("#days").val() );
+
+        if(days < 1 || days > 7) {
+            alert('天数在1-7之间');
+            return;
+        }
+
+        postJson("/userData/getUser", {uid:uid, start:startDate, days:days}, function(rtn) {
+            if(rtn.er) {
+                if(rtn.er == 1) {
+                    alert('权限不足');
+                } else if(rtn.er == 2) {
+                    alert('参数错误');
+                } else {
+                    alert('找不到用户');
+                }
+            } else {
+                $("#rtn_uid").html(rtn.uid);
+                $("#rtn_money").html(rtn.money);
+
+                var total = {};
+                total.day = '合计';
+                total.money = 0;
+                total.create = 0;
+                total.join = 0;
+
+                for(var i = 0; i < rtn.data.length; i++) {
+                    total.money += rtn.data[i].money;
+                    total.create += rtn.data[i].create;
+                    total.join += rtn.data[i].join;
+                }
+
+                rtn.data.push(total);
+                $("#dg").datagrid("loadData", rtn.data);
+            }
+        });
+    }
+
+
+</script>
+
+
+</body>
+</html>

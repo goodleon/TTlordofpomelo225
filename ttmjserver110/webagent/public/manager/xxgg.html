@@ -1,0 +1,115 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>修改公告</title>
+</head>
+<body  class="easyui-layout">
+<div>
+    <a href="#" class="easyui-linkbutton" onclick="initNotice()">刷新</a>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    <label>公告修改</label>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    <textarea rows="3" cols="100" id="noticeContent"></textarea>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    <a href="#" class="easyui-linkbutton" onclick="noticeAdjust()">确认</a>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<hr />
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    <a href="#" class="easyui-linkbutton" onclick="getCfgJson()">刷新</a>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    <label>游戏内消息修改</label>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    标题:<textarea rows="3" cols="100" id="title"></textarea>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    内容:<textarea rows="3" cols="100" id="desc"></textarea>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    联系:<textarea rows="3" cols="100" id="contact"></textarea>
+</div>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<div>
+    <a href="#" class="easyui-linkbutton" onclick="saveCfgJson()">确认</a>
+</div>
+<script type="text/javascript">
+    function saveCfgJson(){
+        var msg = {
+            title:$("#title").val(),
+            desc:$("#desc").val(),
+            contact:$("#contact").val()
+        };
+
+        if(msg.title.length == 0 || msg.desc.length == 0 || msg.contact.length == 0){
+            return;
+        }
+
+        postJson("/admin/saveNoticeCfgJson",msg,
+                function(data) {
+                    alert("修改成功");
+                    $("#title").html(data.title);
+                    $("#desc").html(data.desc);
+                    $("#contact").html(data.contact);
+                }
+        );
+    }
+
+    function getCfgJson()
+    {
+        postJson("/admin/getNoticeCfgJson",{},
+                function(data)
+                {
+                    $("#title").html(data.title);
+                    $("#desc").html(data.desc);
+                    $("#contact").html(data.contact);
+                }
+        );
+    }
+
+    $(document).ready(function(){
+        getCfgJson();
+        initNotice();
+    });
+
+    function noticeAdjust(){
+        var msg = $("#noticeContent").val();
+        postJson("/admin/saveNoticeJson",{msg:msg},
+                function(data)
+                {
+                    if(data) {
+                        alert("修改成功");
+                        $("#noticeContent").html(data.content);
+                    }
+                }
+        );
+    }
+
+    function initNotice(){
+        postJson("/admin/getNoticeJson",{},
+                function(data)
+                {
+                    $("#noticeContent").html(data.content);
+                }
+        );
+    }
+</script>
+</body>
+</html>

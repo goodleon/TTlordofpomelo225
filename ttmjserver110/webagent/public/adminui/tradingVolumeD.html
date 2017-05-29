@@ -1,0 +1,467 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/materialRippleEffect/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/zeroModal/css/zeroModal.css">
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="/ui/materialRippleEffect/ripple.js"></script>
+    <script type="text/javascript" src="/ui/zeroModal/js/zeroModal.js"></script>
+
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'north',title:'North Title',split:true" style="height:100%;">
+    <div>
+        <label>月份:</label>
+        <input class="easyui-datebox" id="searchDate" style="width:140px"/>
+        <button data-ripple onclick="searchForRecords()">搜索</button>
+        <button data-ripple onclick="downExcel()">下载Excel</button>
+    </div>
+    <table id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+           data-options="singleSelect:true,collapsible:true">
+        <thead>
+        <tr>
+            <th data-options="field:'date',width:50">日期</th>
+            <th data-options="field:'TransactionAmount',width:60">交易金额</th>
+            <th data-options="field:'Sale1',width:80">销售(0-2百)</th>
+            <th data-options="field:'Sale2',width:88">销售(2百-5百)</th>
+            <th data-options="field:'Sale3',width:88">销售(5百-1千)</th>
+            <th data-options="field:'Sale4',width:88">销售(1千-2千)</th>
+            <th data-options="field:'Sale5',width:88">销售(2千-5千)</th>
+            <th data-options="field:'Sale6',width:88">销售(5千-1万)</th>
+            <th data-options="field:'Sale7',width:80">销售(1万++)</th>
+
+            <th data-options="field:'Buy1',width:80">购买(0-2百)</th>
+            <th data-options="field:'Buy2',width:88">购买(2百-5百</th>
+            <th data-options="field:'Buy3',width:88">购买(5百-1千)</th>
+            <th data-options="field:'Buy4',width:88">购买(1千-2千)</th>
+            <th data-options="field:'Buy5',width:88">购买(2千-5千)</th>
+            <th data-options="field:'Buy6',width:88">购买(5千-1万)</th>
+            <th data-options="field:'Buy7',width:80">购买(1万++)</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+    Array.prototype.forEach.call(document.querySelectorAll('[data-ripple]'), function (element)
+    {
+        new RippleEffect(element);
+    });
+
+    Date.prototype.Format = function (fmt)
+    {
+        var o = {
+            "M+": this.getMonth() + 1,
+            "d+": this.getDate(),
+            "h+": this.getHours(),
+            "m+": this.getMinutes(),
+            "s+": this.getSeconds(),
+            "q+": Math.floor((this.getMonth() + 3) / 3),
+            "S": this.getMilliseconds()
+        };
+        if (/(y+)/.test(fmt))
+        {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        }
+        for (var k in o)
+        {
+            if (new RegExp("(" + k + ")").test(fmt))
+            {
+                fmt =
+                        fmt.replace(RegExp.$1,
+                                (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            }
+        }
+        return fmt;
+    };
+
+    $(function ()
+    {
+        function padding(v)
+        {
+            if (v < 10)
+            {
+                return '0' + v;
+            }
+            return v;
+        }//格式化类，小于10前面增加0
+        $('#searchDate').datebox({
+            onShowPanel: function ()
+            {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); //触发click事件弹出月份层
+                if (!tds)
+                {
+                    setTimeout(function ()
+                    {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                        tds = p.find('div.calendar-menu-month-inner td');
+                        tds.click(function (e)
+                        {
+                            e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+                            var year = /\d{4}/.exec(span.html())[0]//得到年份
+                                    , month = parseInt($(this).attr('abbr'), 10); //月份，这里不需要+1
+                            $('#searchDate').datebox('hidePanel')//隐藏日期对象
+                                    .datebox('setValue', year + '-' + month); //设置日期的值
+                        });
+                    }, 0);
+                }
+                yearIpt.unbind();//解绑年份输入框中任何事件
+            },
+            parser: function (s)
+            {
+                if (!s) return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            //不需要xxxx-xx格式的去掉padding函数
+            formatter: function (d)
+            {
+                return d.getFullYear() + '-' + padding(d.getMonth() + 1);
+                /*getMonth返回的是0开始的，忘记了。。已修正*/
+            }
+        });
+        var p = $('#searchDate').datebox('panel'), //日期选择对象
+                tds = false, //日期选择对象中月份
+                yearIpt = p.find('input.calendar-menu-year'),//年份输入框
+                span = p.find('span.calendar-text'); //显示月份层的触发控件
+    });
+
+
+    function sortBS(a, b)
+    {
+        return Number(a.date) - Number(b.date);
+    }
+
+    var displayType = {
+        DAY: 0,
+        WEEK: 1
+    };
+
+
+    var currentDisplayType = displayType.DAY;
+
+    function getWeek(year, month)
+    {
+        if (!month)
+        {
+            month = String(year).substring(4, 6);
+            year = String(year).substring(0, 4);
+        }
+        var info = {};
+        var Separator = '-';
+
+        var d = new Date();
+        d.setFullYear(year, month - 1, 1);
+        var w1 = d.getDay();
+        if (w1 == 0)
+        {
+            w1 = 7;
+        }
+        d.setFullYear(year, month, 0);
+        var dd = d.getDate();
+        if (w1 != 1)
+        {
+            d1 = 2 - w1;
+//            d1 = 2 - w1 +7;  // 替换为此可以从N月份第一天算起
+        }
+        else
+        {
+            d1 = 1;
+        }
+
+        var week_count = Math.ceil((dd - d1 + 1) / 7);
+        info.date = year + Separator + month;
+        info.date = Number(new Date(info.date).Format('yyyyMMdd'));
+        info.week = [];
+
+        for (var i = 0; i < week_count; i++)
+        {
+            var monday = d1 + i * 7;
+            var sunday = monday + 6;
+
+            var from;
+//            var from = year+"/"+month+"/"+monday; // 替换为此可以从N月份第一天算起
+
+            if (monday <= 0)
+            {
+                d.setFullYear(year, month - 1, monday);
+                from = d.getFullYear() + Separator + (d.getMonth() + 1) + Separator + d.getDate();
+            }
+            else
+            {
+                from = year + Separator + month + Separator + monday;
+            }
+            from = new Date(from).Format('yyyyMMdd');
+
+
+            var to;
+            if (sunday <= dd)
+            {
+                to = year + Separator + month + Separator + sunday;
+            }
+            else
+            {
+                d.setFullYear(year, month - 1, sunday);
+                to = d.getFullYear() + Separator + (d.getMonth() + 1) + Separator + d.getDate();
+            }
+            to = new Date(to).Format('yyyyMMdd');
+            info.week.push([Number(from), Number(to)]);
+        }
+        return info;
+    }
+
+    var searchDate = null;
+    var clientData = {};
+    var cn = {
+        date: '日期',
+        TransactionAmount: '交易金额',
+        Sale1:'销售(0-2百)',
+        Sale2: '销售(2百-5百)',
+        Sale3:'销售(5百-1千)',
+        Sale4:'销售(1千-2千)',
+        Sale5:'销售(2千-5千)',
+        Sale6:'销售(5千-1万)',
+        Sale7:'销售(1万++)',
+        Buy1:'购买(0-2百)',
+        Buy2:'购买(2百-5百)',
+        Buy3:'购买(5百-1千)',
+        Buy4:'购买(1千-2千)',
+        Buy5:'购买(2千-5千)',
+        Buy6:'购买(5千-1万)',
+        Buy7:'购买(1万++)'
+    };
+
+
+
+    /**
+     * 搜索
+     * */
+    function searchForRecords()
+    {
+        searchDate = $('#searchDate').datebox('getValue');
+        searchDate = Number(searchDate.replace('-', ''));
+        console.log(searchDate);
+        getUserConsumptionTrends(searchDate);
+    }
+
+    function downExcel()
+    {
+        if (!clientData.currentData || !clientData.currentData.length)
+        {
+            zeroModal.alert('无数据可导出');
+            return;
+        }
+        postJson("/userConsumption/downloadExcelFile", {data: clientData.currentData},
+                function (data)
+                {
+                    if (data)
+                    {
+                        console.log(parent.document.location.origin);
+                        document.location.href = parent.document.location.origin + data;
+                        console.log(JSON.stringify(data));
+                    }
+                    else
+                    {
+                        zeroModal.alert('无数据可导出');
+                    }
+                }
+        );
+    }
+
+
+    /**
+     * 获取用户消费记录 的目录
+     * */
+    function getUserConsumptionTrends(date)
+    {
+        postJson("/userConsumption/getUserConsumptionTrends", {date: date},
+                function (data)
+                {
+                    if (data && data.rows && data.rows.length)
+                    {
+//                        console.log(JSON.stringify(data));
+                        refreshRecordsUI(data.rows);
+                    }
+                    else
+                    {
+                        zeroModal.alert('无数据');
+                    }
+                }
+        );
+    }
+
+
+    function falseData()
+    {
+        var rq = ['201511', '201512', '201601', '201602', '201603',
+            '201604', '201605', '201606', '201607', '201608', '201609', '201610', '201611', '201612', '201701',
+            '201702'];
+        var data = [];
+        for (var count1 = 0; count1 < rq.length; count1++)
+        {
+            var newData = {};
+            newData.date = rq[count1];
+            for (var count = 1; count < 32; count++)
+            {
+                var tc = ((count < 10) ? '0' : '') + count;
+                newData[tc] = count;
+            }
+            data.push(newData);
+        }
+
+        return data;
+    }
+
+    // 区间
+    function Contains(min, max, num)
+    {
+        return num >= min && num <= max;
+    }
+
+    /**
+     * 刷新ui
+     * */
+    function refreshRecordsUI(data)
+    {
+//        data = falseData(data);
+        var week = getWeek(searchDate);
+        var newData = [];
+        var money = 0;
+        for (var count = 0; count < data.length; count++)
+        {
+            var info = data[count];
+            var date = info.date;
+            delete  info.date;
+
+            for (var key in info)
+            {
+                if (!info.hasOwnProperty(key))
+                {
+                    continue;
+                }
+
+                switch (currentDisplayType)
+                {
+                    default:
+                    case displayType.DAY:
+                    {
+                        if (searchDate == date)
+                        {
+                            var newObj = {};
+                            var tempMoney = info[key];
+                            newObj.date = key;
+                            newObj.TransactionAmount = tempMoney;
+
+                            if (typeof tempMoney == 'object')
+                            {
+                                if ('sellDistribution' in tempMoney)
+                                {
+                                    for (var temp_x = 0; temp_x < tempMoney.sellDistribution.length; temp_x++)
+                                    {
+                                        newObj['Sale' + (temp_x + 1)] = tempMoney.sellDistribution[temp_x];
+                                    }
+                                }
+
+                                if ('buyDistribution' in tempMoney)
+                                {
+                                    for (temp_x = 0; temp_x < tempMoney.buyDistribution.length; temp_x++)
+                                    {
+                                        newObj['Buy' + (temp_x + 1)] = tempMoney.buyDistribution[temp_x];
+                                    }
+                                }
+
+                                tempMoney = Number(tempMoney.money);
+                            }
+                            else
+                            {
+                                var zero = [0,0,0,0,0,0,0];
+                                for (temp_x = 0; temp_x < zero.length; temp_x++)
+                                {
+                                    newObj['Sale' + (temp_x + 1)] = zero[temp_x];
+                                    newObj['Buy' + (temp_x + 1)] = zero[temp_x];
+                                }
+                            }
+
+                            money += tempMoney;
+                            newObj.TransactionAmount = tempMoney;
+
+                            newData.push(newObj);
+                        }
+                        break;
+                    }
+
+                    case displayType.WEEK:
+                    {
+                        var currentDate = Number(date + key);
+
+                        function addX(a, info, key)
+                        {
+                            var tempMoney = info[key];
+                            if (typeof info[key] == 'object')
+                            {
+                                tempMoney = Number(info[key].money);
+                            }
+
+                            if (newData.length > a)
+                            {
+                                newData[a].TransactionAmount += Number(tempMoney);
+                            }
+                            else
+                            {
+                                newData.push({
+                                    date: '第' + (newData.length + 1) + '周',
+                                    TransactionAmount: a == newData.length - 1 ? Number(tempMoney) : 0
+                                });
+                                addX(a, info, key);
+                            }
+                        }
+
+                        for (var a = 0; a < week.week.length; a++)
+                        {
+                            if (Contains(week.week[a][0], week.week[a][1], currentDate))
+                            {
+                                tempMoney = info[key];
+                                if (typeof info[key] == 'object')
+                                {
+                                    tempMoney = Number(info[key].money);
+                                }
+                                money += Number(tempMoney);
+
+                                addX(a, info, key);
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+        newData.sort(sortBS);
+        newData.push({date: '总金额', TransactionAmount: money});
+
+        clientData.currentData = [];
+        for (count = 0; count < newData.length; count++)
+        {
+            var currentData = {};
+            for (key in newData[count])
+            {
+                if (!newData[count].hasOwnProperty(key))
+                {
+                    continue;
+                }
+                currentData[cn[key]] = newData[count][key];
+            }
+            clientData.currentData.push(currentData);
+        }
+
+        $("#dg").datagrid("loadData", newData);
+    }
+
+</script>
+</body>
+</html>

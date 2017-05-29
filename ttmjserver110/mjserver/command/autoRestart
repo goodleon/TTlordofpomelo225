@@ -1,0 +1,27 @@
+#!/bin/bash
+currentPath=$PWD
+
+hostname=$(echo $HOSTNAME | awk -F '-' '{print $1}')
+hostType=$(echo $HOSTNAME | awk -F '-' '{print $2}')
+hostType=$(echo ${hostType} | awk -F [0-9] '{print $1}')
+
+
+
+if [ x"${hostType}" = x ]; then
+    bash echoColor "${0}: start all ${hostname} !" info;
+    bash restart -t a ${hostname}
+else
+    bash echoColor "${0}: start ${hostType} ${hostname} !!!" info;
+    bash restart -t ${hostType} ${hostname}
+fi
+
+
+if [ $? != 0 ];then
+    cd ${currentPath}
+    bash echoColor "${0}: error !!!" error;
+    exit 1;
+else
+    cd ${currentPath}
+    bash echoColor "${0}: Success!" info;
+    exit 0;
+fi

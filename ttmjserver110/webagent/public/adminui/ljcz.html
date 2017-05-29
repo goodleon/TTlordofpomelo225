@@ -1,0 +1,263 @@
+<html>
+    <head>
+        <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+        <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+        <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="/share.js"></script>
+    </head>
+
+    <body  class="easyui-layout">
+        <div id="createAct"  closed="true"  class="easyui-dialog" title="管理活动" style="width:400px;height:400px;"
+             data-options="iconCls:'icon-save',resizable:true,modal:true">
+            <br>&nbsp;&nbsp;
+            <label>开始时间:</label>&nbsp;&nbsp;
+            <input id="createStart" class="easyui-datebox" data-options="onSelect:onSelect"></input>
+            <br><br>&nbsp;&nbsp;
+            <label>结束时间:</label>&nbsp;&nbsp;
+            <input id="createEnd" class="easyui-datebox" data-options="onSelect:onSelect2"></input>
+            <br><br>&nbsp;&nbsp;
+            <label>赠送比例:</label>&nbsp;&nbsp;
+            <input class="easyui-validatebox" type="text" id="rate" data-options="required:true" />
+            <br><br>&nbsp;&nbsp;&nbsp;<label>格式说明:</label>&nbsp;&nbsp;
+            5000,0.1,6000,0.2<br>&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<5000-5999返还10%，6000以上返还20%>
+            <br><br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="saveAccrued()">确定</a>
+        </div>
+
+        <div style="margin:2px 0;">
+            <a href="#" class="easyui-linkbutton" onclick="getAccrued()">刷新</a>
+            <a href="#" class="easyui-linkbutton" onclick="newAccrued()">添加活动</a>
+            <a href="#" class="easyui-linkbutton" onclick="editAccrued()">修改活动</a>
+            <a href="#" class="easyui-linkbutton" onclick="delAccrued()">删除活动</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="rewAccrued()">发放奖励</a>
+        </div>
+
+        <table  id="accData" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+                data-options="singleSelect:true,collapsible:true">
+            <thead>
+                <tr>
+                    <th data-options="field:'id',width:80,sortable:true">活动ID</th>
+                    <th data-options="field:'begTime',sortable:true">起始时间</th>
+                    <th data-options="field:'endTime',sortable:true">结束时间</th>
+                    <th data-options="field:'rate',sortable:true">赠送比例</th>
+                    <th data-options="field:'rew',sortable:true">奖励状态</th>
+                    <th data-options="field:'byMid',sortable:true">创建人ID</th>
+                    <th data-options="field:'byName',sortable:true">创建人名字</th>
+                </tr>
+            </thead>
+        </table>
+
+    <script type="text/javascript">
+
+        var startDate;
+        var endDate;
+        var id = 0;
+
+        function strDate(date) {
+            var mydate = date.toString();
+            var year = mydate.substr(0, 4);
+            var month = mydate.substr(4, 2);
+            var day = mydate.substr(6, 2);
+            return month + "/" + day + "/" + year
+        }
+
+        function initAct(act) {
+            if(!act) {//create
+                id = 0;
+                var startDate_ = new Date();
+                startDate = getFormatDate(startDate_);
+                $('#createStart').datebox("setValue", strDate(startDate));
+                startDate_.setDate(startDate_.getDate() + 7);
+                endDate = getFormatDate(startDate_);
+                $('#createEnd').datebox("setValue", strDate(endDate));
+                $('#rate').val("");
+            } else {//edit
+                id = act.id;
+                startDate = act.begTime;
+                $('#createStart').datebox("setValue", strDate(startDate));
+                endDate = act.endTime;
+                $('#createEnd').datebox("setValue", strDate(endDate));
+                $('#rate').val(act.rate.toString());
+            }
+
+            $('#createAct').dialog('open');
+        }
+
+        function getAccrued() {
+            //$("#accData").datagrid("loadData",[{id:1, begTime:20160720,endTime:20160722,rate:0.5,rew:0}]);
+            postJson("/admin/getAccrued", {}, function(data) {
+                if(!data) {
+                    return;
+                }
+                for(var i = 0; i < data.length; i++) {
+                    data[i].rate = data[i].rate.toString();
+                }
+
+                $("#accData").datagrid("loadData",data);
+            });
+        }
+        
+        function newAccrued() {
+            initAct(false);
+        }
+        
+        function saveAccrued() {
+            if(startDate > endDate) {
+                alert('无效的时间：结束时间小于起始时间');
+                return;
+            }
+
+            var strRate = $('#rate').val();
+
+            if(strRate == "") {
+                alert('无效的赠送比例：未填写');
+                return;
+            }
+
+            var rate = strRate.split(",");
+
+            if(rate.length % 2 == 1) {
+                alert('无效的赠送比例：格式错误');
+                return;
+            }
+
+            for(var i = 0; i < rate.length; i += 2) {
+                rate[i] = parseInt(rate[i]);
+                rate[i + 1] = parseFloat(rate[i + 1]);
+            }
+
+            var msg = {
+                begTime : startDate,
+                endTime : endDate,
+                rate : rate,
+                rew : 0
+            };
+
+            if(id > 0) {
+                msg.id = id;
+            }
+
+            if(msg.rate <= 0) {
+                alert('无效的赠送比例：赠送比例小于等于0');
+                return;
+            }
+
+            $('#createAct').dialog('close');
+
+            postJson("/admin/saveAccrued", msg, function (data) {
+                if(data.er == 1) {
+                    alert('活动时间重叠，请重新设置');
+                    return;
+                } else if(data.er == -1) {
+                    alert('权限不足');
+                    return;
+                }
+
+                getAccrued();
+            });
+        }
+        
+        function editAccrued() {
+            var act = $("#accData").datagrid("getSelected");
+
+            if(!act) {
+                alert('请选择一个活动');
+                return;
+            }
+
+            if(act.rew == 1) {
+                alert('活动奖励已经发放，不可修改');
+                return;
+            }
+
+            initAct(act);
+        }
+
+        function delAccrued() {
+            var act = $("#accData").datagrid("getSelected");
+
+            if(!act) {
+                alert('请选择一个活动');
+                return;
+            }
+
+            if(window.confirm("删除活动后，累计的数据将无效，请确认?")) {
+                var msg = {id:act.id};
+                postJson("/admin/delAccrued", msg, function(data) {
+                    getAccrued();
+                });
+            }
+        }
+
+        function rewAccrued() {
+            var act = $("#accData").datagrid("getSelected");
+
+            if(!act) {
+                alert('请选择一个活动');
+                return;
+            }
+
+            if(act.rew == 1) {
+                alert('活动奖励已经发放，不能重复发奖');
+                return;
+            }
+
+            var nowDate = getFormatDate(new Date());
+
+            if(nowDate <= act.endTime) {
+                alert('活动未开始或未结束，无法发放奖励');
+                return;
+            }
+
+            postJson("/admin/rewAccrued", {id:act.id}, function(data) {
+                if(data.er == 2) {
+                    alert('无数据库配置，无法发放');
+                    return;
+                } else if(data.er == 1) {
+                    alert('权限不足');
+                    return;
+                } else if(data.er == 3) {
+                    alert('活动已被移除');
+                    return;
+                } else if(data.er == 4) {
+                    alert('活动奖励已经发放，不能重复发奖');
+                    return;
+                } else {
+                    alert('奖励发放成功，共：' + data.allCount + '人');//，成功：' + data.finCount + '人');
+                }
+                getAccrued();
+            });
+        }
+
+        function onSelect2(date) {
+            endDate = getFormatDate(date);
+            var nowDate = getFormatDate(new Date());
+
+            if(endDate < startDate) {
+                alert('无效的时间：结束时间小于起始时间');
+                return;
+            }
+
+            if(endDate < nowDate) {
+                alert('无效的时间：结束时间小于当前时间');
+            }
+        }
+
+        function onSelect(date){
+            startDate = getFormatDate(date);
+            var nowDate = getFormatDate(new Date());
+
+            if(startDate < nowDate) {
+                alert('无效的时间：开始时间小于当前时间');
+            }
+        }
+
+        getAccrued();
+    </script>
+</body>
+</html>

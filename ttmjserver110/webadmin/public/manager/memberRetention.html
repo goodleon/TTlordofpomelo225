@@ -1,0 +1,233 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/materialRippleEffect/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/zeroModal/css/zeroModal.css">
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="/ui/materialRippleEffect/ripple.js"></script>
+    <script type="text/javascript" src="/ui/zeroModal/js/zeroModal.js"></script>
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'north',title:'工具栏',split:true" style="height:100%;">
+    <div>
+        <label>日期:</label>
+        <input class="easyui-datebox" id="searchDate" style="width:140px"/>
+        <button data-ripple onclick="searchForRecords()">搜索</button>
+        <button data-ripple onclick="downExcel()">下载Excel</button>
+        <label>会员留存以会员充值作为标准判定!!!</label>
+    </div>
+    <table id="dg" class="easyui-datagrid" title="会员留存" style="width:100%;height:95%"
+           data-options="singleSelect:true,collapsible:true">
+        <thead>
+        <tr>
+            <th data-options="field:'dateOfRegistration',width:110">注册日期</th>
+            <th data-options="field:'numberOfRegistered',width:110">注册人数</th>
+            <th data-options="field:'dailyLiving',width:110">日活跃度</th>
+            <th data-options="field:'retainedInTheFollowingDay',width:110">次日留存</th>
+            <th data-options="field:'threeDaysRetained',width:110">3日留存</th>
+            <th data-options="field:'sevenDaysRetained',width:110">7日留存</th>
+            <th data-options="field:'thirtyDaysRetained',width:110">30日留存</th>
+            <th data-options="field:'soFarRetained',width:110">至今日留存</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+    Array.prototype.forEach.call(document.querySelectorAll('[data-ripple]'), function (element)
+    {
+        new RippleEffect(element);
+    });
+
+    window.onload = function ()
+    {
+        $('#searchDate').datebox('setValue', cut(dateOffset(new Date(),-1),[4,2,2], '-'));
+        searchForRecords();
+    };
+
+    var cut = function (str, rules, separator)
+    {
+        var startPos = 0;
+        var endPos = 0;
+        var newStr = '';
+        str = String(str);
+        for (var count = 0; count < rules.length; count++)
+        {
+            endPos = startPos + rules[count];
+            newStr += str.substring(startPos, endPos);
+            if (count != rules.length - 1)
+            {
+                newStr += separator;
+            }
+            startPos = endPos;
+        }
+        return newStr;
+    };
+
+    var dateOffset = function (date, day)
+    {
+        day = day || 0;
+        var cDate = (typeof  date == 'string') ? new Date(date) : date;
+        cDate.setDate(cDate.getDate() + day);
+        return Number(cDate.Format('yyyyMMdd'));
+    };
+
+
+    var cn = {
+        dateOfRegistration: '注册日期',
+        numberOfRegistered: '注册人数',
+        retainedInTheFollowingDay: '次日留存',
+        threeDaysRetained: '3日留存',
+        sevenDaysRetained: '7日留存',
+        thirtyDaysRetained: '30日留存',
+        soFarRetained: '至今日留存',
+        dailyLiving: '日活跃度'
+    };
+
+    var clientData = {};
+    clientData.currentData = null;
+
+    /**
+     * 搜索
+     * */
+    function searchForRecords()
+    {
+        var strDate = $('#searchDate').datebox('getValue');
+        if (!strDate)
+        {
+            return;
+        }
+        var date = new Date(strDate).Format('yyyyMMdd');
+        getUserConsumptionRecord(Number(date));
+    }
+
+    function toCN(originData)
+    {
+        var newData = [];
+        for(var count = 0; count < originData.length; count ++)
+        {
+            var data = originData[count];
+            var newObj = {};
+            for(var key in data)
+            {
+                if(!data.hasOwnProperty(key) || !(key in cn))
+                {
+                    continue;
+                }
+                newObj[cn[key]] = data[key];
+            }
+            newData.push(newObj);
+        }
+        return newData;
+    }
+    
+    
+    function downExcel()
+    {
+        if(!clientData.currentData || !clientData.currentData.length)
+        {
+            zeroModal.alert('无数据可导出1');
+            return;
+        }
+        var data = toCN(clientData.currentData);
+
+        postJson("/tools/downloadExcelFile",{data:data},
+                function(data)
+                {
+                    if(data)
+                    {
+                        console.log(parent.document.location.origin);
+                        document.location.href = parent.document.location.origin  + data;
+                    }else
+                    {
+                        zeroModal.alert('无数据可导出2');
+                    }
+                }
+        );
+    }
+
+    /**
+     * 获取会员留存率
+     * @param {number} date 日期
+     * */
+    function getUserConsumptionRecord(date)
+    {
+        postJson("/memberData/getMemberRetained", {date: date},
+                function (data)
+                {
+                    if (data && data.rows && data.rows.length)
+                    {
+                        refreshUI(data);
+                    }
+                    else
+                    {
+                        zeroModal.alert('无数据');
+                    }
+                }
+        );
+    }
+
+    /**
+     * 刷新ui
+     * */
+    function refreshUI(data)
+    {
+        function collection(tempDate, nDayAfter, info)
+        {
+            var currentDate = dateOffset(tempDate, nDayAfter);
+            var ret = 0;
+            if (currentDate in info)
+            {
+                ret = info[currentDate];
+            }
+            return ret;
+        }
+
+        function percentage(a, b)
+        {
+            return (a / b * 100).toFixed(2) + '%';
+        }
+
+        var newData = [];
+        var relData = data.rows;
+        for (var count = 0; count < relData.length; count++)
+        {
+            var currentMemberInfo = relData[count];
+            var dateOfRegistration = currentMemberInfo.rDate;
+            var numberOfRegistered = currentMemberInfo.count;
+            var dailyLiving = currentMemberInfo.dailyLiving;
+            var tempDate = cut(String(dateOfRegistration), [4, 2, 2], '-');
+            var retainedInTheFollowingDay = collection(tempDate, 1, currentMemberInfo);
+            var threeDaysRetained = collection(tempDate, 3, currentMemberInfo);
+            var sevenDaysRetained = collection(tempDate, 7, currentMemberInfo);
+            var thirtyDaysRetained = collection(tempDate, 30, currentMemberInfo);
+            var soFarRetained = collection(new Date(), -1, currentMemberInfo);
+
+
+            var obj = {
+                dateOfRegistration: dateOfRegistration,
+                numberOfRegistered: numberOfRegistered,
+                dailyLiving: dailyLiving,
+                retainedInTheFollowingDay: retainedInTheFollowingDay + ' / ' + percentage(retainedInTheFollowingDay,
+                        numberOfRegistered),
+                threeDaysRetained: threeDaysRetained + ' / ' + percentage(threeDaysRetained, numberOfRegistered),
+                sevenDaysRetained: sevenDaysRetained + ' / ' + percentage(sevenDaysRetained, numberOfRegistered),
+                thirtyDaysRetained: thirtyDaysRetained + ' / ' + percentage(thirtyDaysRetained, numberOfRegistered),
+                soFarRetained: soFarRetained + ' / ' + percentage(soFarRetained, numberOfRegistered)
+            };
+            newData.push(obj);
+        }
+        clientData.currentData = newData;
+        $("#dg").datagrid("loadData", newData);
+    }
+
+</script>
+</body>
+</html>

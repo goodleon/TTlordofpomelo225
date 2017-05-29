@@ -1,0 +1,35 @@
+#!/bin/sh
+
+currentPath=$PWD
+if [ $# -lt 2 ] ; then
+    bash $currentPath/command/echoColor "${0}: The number of parameters must be equal to 2" error;
+exit 1;
+fi
+
+
+hostname=$(echo $HOSTNAME | awk -F '-' '{print $1}')
+hostType=$(echo $HOSTNAME | awk -F '-' '{print $2}')
+hostType=$(echo ${hostType} | awk -F [0-9] '{print $1}')
+
+if [ $# -eq 3 ] ; then
+hostname=$3
+fi
+
+
+function getJsonVersion()
+{
+   temp=$(ls -l /root/$1/web| grep json | awk '{print $9}')
+   echo ${temp}
+}
+
+val=$(getJsonVersion $hostname)
+
+for key1 in $val
+do
+sed -i "s/$1/$2/g" /root/$hostname/web/$key1
+if [ $? != 0 ];then
+ bash $currentPath/command/echoColor "$key1: $1 -> $2 error"  error
+else
+ bash $currentPath/command/echoColor "$key1: $1 -> $2 successful"  info
+fi
+done

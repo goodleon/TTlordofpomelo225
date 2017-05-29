@@ -1,0 +1,430 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/materialRippleEffect/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/zeroModal/css/zeroModal.css">
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="/ui/materialRippleEffect/ripple.js"></script>
+    <script type="text/javascript" src="/ui/zeroModal/js/zeroModal.js"></script>
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <title>业绩查询</title>
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'north',title:'工具栏',split:true" style="height:100%;">
+    <div>
+        <label>日期:</label>
+        <input class="easyui-datebox" id="searchDate" style="width:140px"/>
+        <label class="radio inline">查询类型：<input type="radio" id="type"  name="type" value="1">日</label>
+        <label class="radio inline"><input type="radio" name="type" value="2">3日</label>
+        <label class="radio inline"><input type="radio" name="type" value="3">周</label>
+        <label class="radio inline"><input type="radio" name="type" value="4" checked="checked">月</label>
+        <span class="timelabel" style="border:1px solid #000;">本期:<span class="currentperiod"></span>|上期:<span class="lastperiod"></span></span>
+        <button data-ripple onclick="searchForRecords()">搜索</button>
+        <button data-ripple onclick="searchMemberRecords()">明细</button>
+        <button data-ripple onclick="downExcel()">下载Excel</button>
+        <label>业绩统计</label>
+    </div>
+    <table id="dg" class="easyui-datagrid" title="业绩统计" style="width:100%;height:95%"
+           data-options="singleSelect:true,collapsible:true">
+        <thead>
+        <tr>
+            <th data-options="field:'mid',width:110">客服ID</th>
+            <th data-options="field:'name',width:110">客服昵称</th>
+            <th data-options="field:'mCount',width:110">会员数量</th>
+            <th data-options="field:'curBuyMem',width:110">本期充值人数</th>
+            <th data-options="field:'lastBuyMem',width:110">上期充值人数</th>
+            <th data-options="field:'buyUp',width:110">增长</th>
+            <th data-options="field:'curSellMem',width:110">本期售卖人数</th>
+            <th data-options="field:'lastSellMem',width:110">上期售卖人数</th>
+            <th data-options="field:'sellUp',width:110">增长</th>
+            <th data-options="field:'curUserCount',width:110">本期玩家人数</th>
+            <th data-options="field:'lastUserCount',width:110">上期玩家人数</th>
+            <th data-options="field:'userUp',width:110">增长</th>
+            <th data-options="field:'curSellCount',width:110">本期玩家笔数</th>
+            <th data-options="field:'lastSellCount',width:110">上期玩家笔数</th>
+            <th data-options="field:'countUp',width:110">增长</th>
+
+
+            <th data-options="field:'curBuyMoney',width:110">本期充值总额-元</th>
+            <th data-options="field:'lastBuyMoney',width:110">上期充值总额-元</th>
+            <th data-options="field:'curBuyNum',width:110">本期充值数量-钻</th>
+            <th data-options="field:'lastBuyNum',width:110">上期充值数量-钻</th>
+            <th data-options="field:'curSellMoney',width:110">本期卖出总额-元</th>
+            <th data-options="field:'lastSellMoney',width:110">上期卖出总额-元</th>
+            
+            <th data-options="field:'curSellNum',width:110">本期卖出数量-钻</th>
+            <th data-options="field:'lastSellNum',width:110">上期卖出数量-钻</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<div id="memberDiv"  closed="true"  class="easyui-dialog" title="会员明细" style="width:80%;height:80%;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true">
+    <table  id="memberDG" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+            data-options="singleSelect:true,collapsible:true,rownumbers:true">
+        <thead>
+        <tr>
+            <th data-options="field:'date',width:110">日期</th>
+            <th data-options="field:'memberCount',width:110">会员数量</th>
+            <th data-options="field:'buyMoneyMember',width:110">充值人数</th>
+            <th data-options="field:'buyMoney',width:110">充值总额</th>
+            <th data-options="field:'buyNum',width:110">获取钻石总额</th>
+            <th data-options="field:'sellNumMember',width:110">售出人数</th>
+            <th data-options="field:'sellNum',width:110">售出钻石总额</th>
+            <th data-options="field:'userCount',width:110">玩家人数</th>
+            <th data-options="field:'sellCount',width:110">玩家笔数</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+    Array.prototype.forEach.call(document.querySelectorAll('[data-ripple]'), function (element)
+    {
+        new RippleEffect(element);
+    });
+
+    window.onload = function ()
+    {
+        $('#searchDate').datebox('setValue', cut(dateOffset(new Date(),-1),[4,2,2], '-'));
+        searchForRecords();
+    };
+
+    var cut = function (str, rules, separator)
+    {
+        var startPos = 0;
+        var endPos = 0;
+        var newStr = '';
+        str = String(str);
+        for (var count = 0; count < rules.length; count++)
+        {
+            endPos = startPos + rules[count];
+            newStr += str.substring(startPos, endPos);
+            if (count != rules.length - 1)
+            {
+                newStr += separator;
+            }
+            startPos = endPos;
+        }
+        return newStr;
+    };
+
+    var dateOffset = function (date, day)
+    {
+        day = day || 0;
+        var cDate = (typeof  date == 'string') ? new Date(date) : date;
+        cDate.setDate(cDate.getDate() + day);
+        return Number(cDate.Format('yyyyMMdd'));
+    };
+
+    var cn = {
+        mid: '客服ID',
+        name:'客服昵称',
+        mCount: '会员数量',
+        curBuyMem: '本期充值人数',
+        lastBuyMem: '上期充值人数',
+        buyUp: '增长',
+        curSellMem: '本期售卖人数',
+        lastSellMem: '上期售卖人数',
+        sellUp: '增长',
+        curUserCount:'本期玩家人数',
+        lastUserCount:'上期玩家人数',
+        userUp:'增长',
+        curSellCount:'本期玩家笔数',
+        lastSellCount:'上期玩家笔数',
+        countUp:'增长',
+
+        curBuyMoney: '本期充值总额-元',
+        lastBuyMoney: '上期充值总额-元',
+        curBuyNum: '本期充值数量-钻',
+        lastBuyNum: '上期充值数量-钻',
+        curSellMoney: '本期卖出总额-元',
+        lastSellMoney: '上期卖出总额-元',
+        curSellNum :'本期卖出数量-钻 ',
+		lastSellNum :'上期卖出数量-钻'
+    };
+    var clientData = {};
+    clientData.currentData = null;
+    clientData.type = 1;
+    clientData.date = "";
+
+    /**
+     *
+     * 按日搜索
+     * */
+    function searchForRecords()
+    {
+        var strDate = $('#searchDate').datebox('getValue');
+        if (!strDate)
+        {
+            $.messager.alert("操作提示","请选择查询日期","error");
+            return;
+        }
+        var date = new Date(strDate).Format('yyyy-MM-dd');
+        var dd=new Date(date);
+        var pp=new Date(date).getTime();
+        var qq=new Date().getTime();
+
+        if(pp>qq){
+            $.messager.alert("操作提示","只能查询当天之前的数据","error");
+            return;
+        }
+
+        var nowDayOfWeek = dd.getDay(); //今天本周的第几天
+        var nowDay = dd.getDate(); //当前日
+        var nowMonth = dd.getMonth(); //当前月
+        var nowYear = dd.getFullYear(); //当前年
+
+        var lastMonthDate = dd; //上月日期
+        lastMonthDate.setDate(1);
+        lastMonthDate.setMonth(dd.getMonth() - 1);
+        var lastMonth = lastMonthDate.getMonth();
+
+        var type = parseInt($("input[type='radio']:checked").val());
+        //获得某月的天数
+        function getMonthDays(myMonth) {
+            var monthStartDate = new Date(nowYear, myMonth, 1);
+            var monthEndDate = new Date(nowYear, myMonth + 1, 1);
+            var days = (monthEndDate - monthStartDate) / (1000 * 60 * 60 * 24);
+            return days;
+        }
+        //日 3日 周 月
+        if(type==1){
+            var lastperiod=new Date(new Date(date) - 1000 * 60*60*24);
+            $(".currentperiod").eq(0).html(date);
+            $(".lastperiod").eq(0).html(lastperiod.Format('yyyy-MM-dd'));
+        }
+        if(type==2){
+            var currentperiod=new Date(new Date(date) - 3*1000*60*60*24);
+            var lastperiod=new Date(new Date(date) - 4*1000*60*60*24);
+            var lastperiodEnd=new Date(new Date(date) - 6*1000*60*60*24);
+            $(".currentperiod").eq(0).html(currentperiod.Format('yyyy-MM-dd')+'至'+date);
+            $(".lastperiod").eq(0).html(lastperiod.Format('yyyy-MM-dd')+'至'+lastperiodEnd.Format('yyyy-MM-dd'));
+        }
+        if(type==3){
+            var weekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek).Format('yyyy-MM-dd');
+            var weekEndDate = new Date(nowYear, nowMonth, nowDay + (6 - nowDayOfWeek)).Format('yyyy-MM-dd');
+            var lastweekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek - 7).Format('yyyy-MM-dd');
+            var lastweekEndDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek - 1).Format('yyyy-MM-dd');
+            $(".currentperiod").eq(0).html(weekStartDate+"至"+ date);
+            $(".lastperiod").eq(0).html(lastweekStartDate+"至"+lastweekEndDate);
+        }
+        if(type==4){
+            var monthStartDate = new Date(nowYear, nowMonth, 1).Format('yyyy-MM-dd');//本月开始日期
+            var monthEndDate = new Date(nowYear, nowMonth, getMonthDays(nowMonth)).Format('yyyy-MM-dd');//本月结束日期
+            var lastMonthStartDate = new Date(nowYear, lastMonth, 1).Format('yyyy-MM-dd');
+            var lastMonthEndDate = new Date(nowYear, lastMonth, getMonthDays(lastMonth)).Format('yyyy-MM-dd');
+            $(".currentperiod").eq(0).html(monthStartDate+"至"+date);
+            $(".lastperiod").eq(0).html(lastMonthStartDate+"至"+lastMonthEndDate);
+        }
+        getUserConsumptionRecord(date, type, 0);//日
+    }
+   /*
+    //获得上周的开始日期
+    function getLastWeekStartDate() {
+        var lastweekStartDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek - 7);
+        return formatDate(weekStartDate);
+    }
+    //获得上周的结束日期
+    function getLastWeekEndDate() {
+        var lastweekEndDate = new Date(nowYear, nowMonth, nowDay - nowDayOfWeek - 1);
+        return formatDate(weekEndDate);
+    }
+    //获得本月的开始日期
+    function getMonthStartDate(){
+        var monthStartDate = new Date(nowYear, nowMonth, 1);
+        return formatDate(monthStartDate);
+    }
+
+    //获得本月的结束日期
+    function getMonthEndDate(){
+        var monthEndDate = new Date(nowYear, nowMonth, getMonthDays(nowMonth));
+        return formatDate(monthEndDate);
+    }
+
+    //获得上月开始时间
+    function getLastMonthStartDate(){
+        var lastMonthStartDate = new Date(nowYear, lastMonth, 1);
+        return formatDate(lastMonthStartDate);
+    }
+
+    //获得上月结束时间
+    function getLastMonthEndDate(){
+        var lastMonthEndDate = new Date(nowYear, lastMonth, getMonthDays(lastMonth));
+        return formatDate(lastMonthEndDate);
+    }*/
+
+    function searchMemberRecords()
+    {
+        var member=$("#dg").datagrid("getSelected");
+        if(!member)
+        {
+            $.messager.alert("操作提示", "请选中会员","error");
+            return;
+        }
+        var strDate = $('#searchDate').datebox('getValue');
+        if (!strDate)
+        {
+            return;
+        }
+        var date = new Date(strDate).Format('yyyy-MM-dd');
+        var type = parseInt($("input[type='radio']:checked").val());
+        getUserConsumptionRecord(date, type, parseInt(member.mid));
+    }
+
+    function toCN2(tData)
+    {
+        var newData = [];
+        var data = tData.currentData;
+
+
+
+        for(var i = 0; i < data.length; i++)
+        {
+            var nData = {};
+            for (var key in cn) {
+                nData[cn[key]] = data[i][key];
+            }
+
+            newData.push(nData);
+        }
+        return newData;
+    }
+
+    function downExcel()
+    {
+//        console.log("--- clientData.currentData:"+JSON.stringify(clientData.currentData));
+        if(!clientData.currentData)
+        {
+            zeroModal.alert('无数据可导出1');
+            return;
+        }
+        var data = toCN2(clientData);
+
+//        console.log("------- data:"+JSON.stringify(data));
+        postJson("/tools/downloadExcelFile",{data:data},
+                function(data)
+                {
+                    if(data)
+                    {
+//                        console.log(parent.document.location.origin);
+                        document.location.href = parent.document.location.origin  + data;
+                    }else
+                    {
+                        zeroModal.alert('无数据可导出2');
+                    }
+                }
+        );
+    }
+
+    /**
+     * 获取会员留存率
+     * @param {string} date 日期
+     * @param {number} type 类型:1按日2按月
+     * 日，3日，周，月
+     * */
+    function getUserConsumptionRecord(date, type, mid)
+    {
+        clientData.date = date;
+        postJson("/customerData/getCustomerData", {date: date, type: type, mid: mid},
+                function (tData)
+                {
+                    //alert(JSON.stringify(tData));
+                    if (tData.err == 0)
+                    {
+                        if(tData.mid)
+                        {
+                            refreshMemberUI(tData.type, tData.data);
+                        } else {
+                            refreshAllUI(tData.type, tData.data);
+                        }
+                    }
+                    else if(tData.err == 3)
+                    {
+                        zeroModal.alert('无数据');
+                    }
+                    else
+                    {
+                        zeroModal.alert('数据错误'+tData.err);
+                    }
+                }
+        );
+    }
+
+    /**
+     * 刷新ui
+     * */
+    function refreshAllUI(type, data) {
+        clientData.currentData = data;
+        $("#dg").datagrid("loadData", data);
+    }
+
+    //月查询
+    function refreshMemberUI(type, data) {
+        $("#memberDiv").dialog("open");
+        delete data._id;
+        var newData = [];
+        var keys = Object.keys(data);
+        keys.sort();
+
+        for(var i = 0; i < keys.length; i++) {
+            var temp = data[keys[i]];
+            temp.date = keys[i];
+            newData.push(temp);
+        }
+//        clientData.currentData = newData;
+        $("#memberDG").datagrid("loadData", newData);
+    }
+
+
+
+    /* $(function () {
+     var db = $('#searchMonth');
+     db.datebox({
+     onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+     span.trigger('click'); //触发click事件弹出月份层
+     if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+     tds = p.find('div.calendar-menu-month-inner td');
+     tds.click(function (e) {
+     e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+     var year = /\d{4}/.exec(span.html())[0]//得到年份
+     , month = parseInt($(this).attr('abbr'), 10); //月份，这里不需要+1
+     db.datebox('hidePanel')//隐藏日期对象
+     .datebox('setValue', year + "-" + month); //设置日期的值
+     });
+     }, 0);
+     yearIpt.unbind();//解绑年份输入框中任何事件
+     },
+     parser: function (s) {
+     if (!s) return new Date();
+     var arr = s.split('-');
+     return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+     },
+     formatter: function (d) { return d.getFullYear() + "-" + (d.getMonth() + 1); }//getMonth返回的是0开始的，忘记了。。已修正
+     });
+     var p = db.datebox('panel'), //日期选择对象
+     tds = false, //日期选择对象中月份
+     aToday = p.find('a.datebox-current'),
+     yearIpt = p.find('input.calendar-menu-year'),//年份输入框
+     //显示月份层的触发控件
+     span = aToday.length ? p.find('div.calendar-title span') ://1.3.x版本
+     p.find('span.calendar-text'); //1.4.x版本
+     if (aToday.length) {//1.3.x版本，取消Today按钮的click事件，重新绑定新事件设置日期框为今天，防止弹出日期选择面板
+
+     aToday.unbind('click').click(function () {
+     var now=new Date();
+     db.datebox('hidePanel').datebox('setValue', now.getFullYear() + (now.getMonth() + 1));
+     });
+     }
+     });*/
+
+</script>
+</body>
+</html>

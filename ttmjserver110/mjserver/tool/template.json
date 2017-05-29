@@ -1,0 +1,2475 @@
+{
+  "zhuzhouphz": {
+    "login": [
+      {
+        "host": "172.16.115.82",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.82",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.82",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.82",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+  "hnyymj": {
+    "login": [
+      {
+        "host": "172.16.115.89",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.89",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.89",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.89",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+  "psz": {
+    "login": [
+      {
+        "host": "172.16.115.88",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.88",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.88",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.88",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+  "zjmj": {
+    "login": [
+      {
+        "host": "172.16.115.4",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.4",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.3",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.6",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.11",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.78",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.83",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+  "phz": {
+    "login": [
+      {
+        "host": "172.16.115.25",
+        "portStart": 2010,
+        "portEnd": 2014,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.25",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.23",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.1",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.22",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.12",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.18",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.19",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.20",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.14",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.49",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.44",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.111",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.110",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.118",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.112",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.116",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.50",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.43",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.47",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.45",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.48",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.66",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.64",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.65",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.62",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.59",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.71",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.72",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.68",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.73",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.69",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.67",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.60",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.74",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.63",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.70",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.106",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.107",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.114",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.113",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.119",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.105",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.109",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.108",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.115",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.117",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+  "hnmj": {
+    "login": [
+      {
+        "host": "10.25.103.70",
+        "portStart": 2010,
+        "portEnd": 2019,
+        "length": 10
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.25.103.70",
+        "portStart": 5030,
+        "portEnd": 5039,
+        "length": 10
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.25.103.36",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.25.102.198",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.46.98.144",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.25.103.54",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.25.103.102",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.46.97.179",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+  "localhost": {
+    "login": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+  "nxmj": {
+    "login": [
+      {
+        "host": "10.26.168.247",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.26.168.247",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.26.168.247",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.26.168.247",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "xjmj": {
+    "login": [
+      {
+        "host": "172.16.115.46",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.46",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.46",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.46",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "ljmj": {
+    "login": [
+      {
+        "host": "172.17.0.4",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.17.0.4",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.17.0.4",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.17.0.4",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "dzpk": {
+    "login": [
+      {
+        "host": "172.16.115.61",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.61",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.61",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.61",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "guandan": {
+    "login": [
+      {
+        "host": "10.27.56.254",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.27.56.254",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.27.56.254",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.27.56.254",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+  "gxphz": {
+    "login": [
+      {
+        "host": "10.25.38.194",
+        "portStart": 2010,
+        "portEnd": 2019,
+        "length": 10
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.25.38.194",
+        "portStart": 5030,
+        "portEnd": 5039,
+        "length": 10
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.25.32.246",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.27.57.203",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.27.57.143",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "gsmj": {
+    "login": [
+      {
+        "host": "139.224.59.236",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "139.224.59.236",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "139.224.59.236",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "139.224.59.236",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+  
+  "hbmj": {
+    "login": [
+      {
+        "host": "10.27.255.190",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.27.255.190",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.27.255.190",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.27.255.190",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "pdk": {
+    "login": [
+      {
+        "host": "10.25.203.121",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.25.203.121",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.26.127.70",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.26.127.60",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.26.126.240",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+  "gxmj": {
+    "login": [
+      {
+        "host": "10.26.205.91",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.26.205.91",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.25.40.251",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.25.44.232",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.25.41.22",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+  "jxmj": {
+    "login": [
+      {
+        "host": "10.25.21.20",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.25.21.20",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.27.144.45",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.27.142.42",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.27.144.196",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.27.144.150",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "ynmj": {
+    "login": [
+      {
+        "host": "10.25.34.145",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.25.34.145",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.25.39.203",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.25.39.143",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.25.39.145",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+  "xynmmj": {
+    "login": [
+      {
+        "host": "10.26.168.150",
+        "portStart": 2010,
+        "portEnd": 2019,
+        "length": 10
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.26.168.150",
+        "portStart": 5030,
+        "portEnd": 5039,
+        "length": 10
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.26.35.126",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.27.66.166",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.27.220.105",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.45.12.208",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.26.162.97",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.26.34.173",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.26.35.145",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.27.66.108",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.27.218.150",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.26.164.41",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.27.218.30",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.27.220.235",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+  "jsmj": {
+    "login": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "sxmj": {
+    "login": [
+      {
+        "host": "10.26.207.211",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.26.207.211",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.26.204.164",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.26.207.191",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "10.28.163.232",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.26.204.141",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.25.43.227",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+	  {
+        "host": "10.27.115.30",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.27.115.87",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.28.164.104",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.28.164.116",
+        "portStart": 15120,
+        "portEnd": 15149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "scmj": {
+    "login": [
+      {
+        "host": "172.16.114.180",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.114.180",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.114.200",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.188",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.202",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.187",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.203",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.179",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.184",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.193",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.207",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.199",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.114.192",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.183",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.204",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.185",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.198",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.205",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.201",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.197",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.206",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.208",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.215",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.195",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.210",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.181",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.191",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.189",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.194",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.196",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.190",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.182",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "ddz": {
+    "login": [
+      {
+        "host": "10.25.171.234",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.25.171.234",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.47.116.3",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "10.47.116.7",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "10.46.74.228",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "10.24.35.219",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "10.24.32.54",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "10.24.33.161",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.47.115.212",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.47.116.30",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.47.116.20",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.47.115.183",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.47.115.251",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.47.116.29",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.24.35.157",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.24.33.179",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.24.35.147",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.24.35.128",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.24.35.205",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.24.35.197",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.24.32.39",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "gzmj": {
+    "login": [
+      {
+        "host": "172.16.114.213",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.114.213",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.114.221",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.218",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.209",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.217",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.223",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.212",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.220",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.211",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.222",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.219",
+        "portStart": 5040,
+        "portEnd": 5249,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.114.216",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.237",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.239",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.240",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.233",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.235",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.238",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.236",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.234",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.249",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.245",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.242",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.243",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.244",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.241",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.246",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.247",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.248",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.253",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.254",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "gdmj": {
+    "login": [
+      {
+        "host": "172.16.114.165",
+        "portStart": 2010,
+        "portEnd": 2019,
+        "length": 10
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.114.165",
+        "portStart": 5030,
+        "portEnd": 5039,
+        "length": 10
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.114.166",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.167",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.114.162",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.160",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.164",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.161",
+        "portStart": 15120,
+        "portEnd": 17139,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "fjmj": {
+    "login": [
+      {
+        "host": "172.16.114.251",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.114.251",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.7",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.114.252",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.17",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.115.0",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.9",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.2",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.13",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.21",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.24",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.16",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "henmj": {
+    "login": [
+      {
+        "host": "172.16.115.8",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.16.115.8",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.16.115.5",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.16.114.250",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.16.115.15",
+        "portStart": 15120,
+        "portEnd": 17149,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "hanmj": {
+    "login": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "sdmj": {
+    "login": [
+      {
+        "host": "10.25.77.69",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.25.77.69",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.25.77.69",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.25.77.69",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "shxmj": {
+    "login": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "127.0.0.1",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "kwx": {
+    "login": [
+      {
+        "host": "10.47.114.92",
+        "portStart": 2010,
+        "portEnd": 2019,
+        "length": 10
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "10.47.114.92",
+        "portStart": 5030,
+        "portEnd": 5039,
+        "length": 10
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "10.26.250.67",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "10.26.250.46",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "10.26.249.173",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      }
+    ]
+  },
+
+  "abroad": {
+    "login": [
+      {
+        "host": "172.18.2.151",
+        "portStart": 2010,
+        "portEnd": 2012,
+        "length": 3
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.18.2.151",
+        "portStart": 5030,
+        "portEnd": 5032,
+        "length": 3
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.18.2.151",
+        "portStart": 5040,
+        "portEnd": 5045,
+        "length": 6
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.31.8.204",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      },
+      {
+        "host": "172.18.2.151",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15029,
+        "length": 10
+      }
+    ]
+  },
+
+  "aFjmj": {
+    "login": [
+      {
+        "host": "172.18.2.158",
+        "portStart": 2010,
+        "portEnd": 2024,
+        "length": 15
+      }
+    ],
+    "pkplayer": [
+      {
+        "host": "172.18.2.158",
+        "portStart": 5030,
+        "portEnd": 5044,
+        "length": 15
+      }
+    ],
+    "pkroom": [
+      {
+        "host": "172.18.2.159",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      },
+      {
+        "host": "172.18.2.157",
+        "portStart": 5040,
+        "portEnd": 5069,
+        "length": 30
+      }
+    ],
+    "pkcon": [
+      {
+        "host": "172.18.2.152",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.18.2.154",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.18.2.155",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.18.2.153",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15039,
+        "length": 30
+      },
+      {
+        "host": "172.31.8.205",
+        "portStart": 15120,
+        "portEnd": 17129,
+        "clientPortStart": 15010,
+        "clientPortEnd": 15024,
+        "length": 15
+      }
+    ]
+  }
+}

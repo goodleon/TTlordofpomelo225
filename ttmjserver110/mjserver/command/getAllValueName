@@ -1,0 +1,41 @@
+#!/bin/bash
+
+ads=$(bash getCatalog /root)
+
+declare -A data
+
+for  key in $ads 
+do
+    value=$(bash getValueName $key)
+    
+    if [ $? != 0 ];then
+    data[$key]=''
+    else
+    data[$key]=$value
+    fi
+done
+
+
+function printInfo()
+{
+ count=${#data[@]}
+ currentCount=0
+ 
+ for key in $(echo ${!data[*]})
+ do 
+   let currentCount=$currentCount+1
+   if [ $count == $currentCount ];then
+    printf "%s:%s" $key ${data[$key]}
+   else
+    printf "%s:%s," $key ${data[$key]}
+   fi
+ done
+
+}
+
+if [ $? != 0 ];then
+    exit 1;
+else
+    printInfo
+    exit 0;
+fi

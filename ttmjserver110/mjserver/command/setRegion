@@ -1,0 +1,23 @@
+#!/bin/bash
+currentPath=$PWD
+
+if [ $# -lt 1 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 2" error;
+exit 1;
+fi
+
+pro=[scmj,phz,ddz,gzmj,sxmj]
+
+cd regionWithGame
+export NODE_PATH=/usr/lib/node_modules
+node setRegion.js $*
+
+if [ $? != 0 ];then
+    cd ${currentPath}
+    bash echoColor "${0}: setRegion ${1} failed !" error;
+    exit 1;
+else
+    cd ${currentPath}
+    bash echoColor "${0}: setRegion ${1} Success !" info;
+    exit 0;
+fi

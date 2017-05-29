@@ -1,0 +1,35 @@
+{
+    "pdkLocal":{
+        "login":[
+            {"host":"10.170.113.104", "portStart":2010, "portEnd":2010, "length":1}
+        ],
+        "pkplayer":[
+            {"host":"10.170.113.104", "portStart":5030, "portEnd":5033, "length":4}
+        ],
+        "pkroom":[
+            {"host":"10.25.201.59", "portStart":5040, "portEnd":5049, "length":10},
+            {"host":"10.46.97.102", "portStart":5050, "portEnd":5059, "length":10}
+        ],
+        "pkcon":[
+            {"host":"10.25.203.59", "portStart":15120, "portEnd":15129, "length":10},
+            {"host":"10.46.97.89", "portStart":16120, "portEnd":16129, "length":10},
+            {"host":"10.46.97.85", "portStart":17120, "portEnd":17129, "clientPortStart":15010, "clientPortEnd":15019, "length":10}
+        ]
+    },
+    "phz2":{
+        "login":[
+            {"host":"10.170.113.104", "portStart":2010, "portEnd":2010, "length":1}
+        ],
+        "pkplayer":[
+            {"host":"10.170.113.104", "portStart":5030, "portEnd":5033, "length":4}
+        ],
+        "pkroom":[
+            {"host":"10.25.201.59", "portStart":5040, "portEnd":5069, "length":30},
+            {"host":"10.46.97.102", "portStart":5070, "portEnd":5099, "length":30}
+        ],
+        "pkcon":[
+            {"host":"10.25.203.59", "portStart":15120, "portEnd":15149, "clientPortStart":15010, "clientPortEnd":15039, "length":30},
+            {"host":"10.46.97.89", "portStart":15120, "portEnd":15149, "clientPortStart":15010, "clientPortEnd":15039, "length":30}
+        ]
+    }
+}

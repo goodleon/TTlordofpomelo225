@@ -1,0 +1,127 @@
+	关于服务器运行状态的检查
+1. 系统状态查询
+	1. 内存	
+			1. 执行命令  free -h 
+			2. 结果查看 total 总内存 , free 剩余未使用内存, available 可用内存
+	2. 硬盘	 
+			1. 执行命令 df -h
+			2. 看下剩余的 占用百分比和剩余空间, 剩余10G以下, 就尽快添加硬盘吧, 添加硬盘的步骤在  mount.txt
+	3. cpu
+			1. 执行命令 top
+			2. 查看是否cpu负载过重, 是否有个别进程cpu跑满
+	4. 网络 
+			1. 执行命令 nload  (如果没有执行 yum install nload)
+			2. 按房间键左右或者回车键, 来查看占用的带宽,  看着快到峰值了, 请尽快加带宽
+	以上可以通过装 htop 来更好的查看系统状态	yum install -y  htop
+	
+2. 游戏服务器运行状态查询
+	1. 查看服务器是否启动
+		1. ps ax | grep 项目名
+		2. ps -A -opid,stime,etime,args|grep 项目名	// 查询具体的启动时长
+	2. cpu占用率
+		1.  执行命令 top
+		2.  按C, 查看具体的命令 和 pomelo相关进程的cpu占用率, 一般当所有游戏相关进程cpu平均占有率 超过35% 就应当添加服务器了
+	3.  检测链接数的开启个数
+		1. 执行命令 netstat -an | grep LISTEN | grep 150 | wc -l  
+		
+	4.  游戏链接数
+		1.  执行命令 netstat -an |  grep -v LISTEN | grep 150 | wc -l  
+		2.  其中150 指的是链接服务器端口, 要筛选所有150链接, 统计个数,确保总得连接数不超过5w个
+	5. 单独的进程连接数
+		1. 执行命令 netstat -an | grep -v LISTEN | grep 15010 | wc -l  
+		2. 执行命令 bash /root/mjserver/command/status
+		3. 如果连接数超过1000,  玩家应该已经喊卡了
+			1. 查看进程pid, 关闭该进程, 重启 pomelo start -e 项目名 -D -t pkcon -i pkcon000x 
+			2. 那还是重启吧
+		4. 
+			// 源代码如下, 保存为 status 然后执行即可
+			#!/bin/bash
+			currentPath=$PWD
+			jc=$(netstat -an | grep LISTEN | grep 150 | awk '{print $4}' | awk -F ':' '{print $2}' )
+			jcs=(${jc// /})
+
+			for key in ${jcs[*]}
+			do
+			log=$key:$(netstat -an | grep -v LISTEN | grep $key | wc -l)
+			bash $currentPath/echoColor $log info
+			done
+
+			if [ $? != 0 ];then
+				exit 1;
+			else
+				exit 0;
+			fi
+3. 定时任务
+	1. crontab -l 查看所有的计划任务
+		1. 在部分链接机器上,  会有 0 4 * * * bash /root/mjserver/crontab/backup.sh 备份服务器
+		2.  在部分硬盘比较小的机器上, 会有
+			0 4 * * * sh /root/mjserver/crontab/createTomorrowFolder.sh			命令是将vdb1的磁盘利用, 如果磁盘占用即将满了, 可以用此方法, 创建文件夹, 然后连接到别的硬盘
+			0 4 * * * sh /root/mjserver/crontab/cleanLog.sh		命令是定期清理3天前的回放数据, 防止回放占用过多的磁盘空间
+		
+4. 阿里云检查
+	1. 定时查看邮件, 手机短信, 是否受到攻击, 是否被入侵, 是否宕机
+	2. 查看是否有需要续费的机器, 该续费的就续费
+		1.  ECS 云服务器
+		2.  DDOS 高防
+		3.  Redis 云数据库
+		4.  云解析
+	3. 查看带宽是否足够, 保持带宽是充足的
+	4.
+		
+5. 一些问题的解决方案
+	1. 启动服务器, 使用ps检查, 发现并无游戏服务器进程 
+		1. 可能原因1:  hostname 没有更改 ,  名称如: {项目名-游戏服务器类型-index}, 注意测试服务器是固定名称 localhost-test
+		2. 使用手动启动时没有引入nodejs库	export NODE_PATH=/usr/lib/node_modules
+	2. 无法启动 webadmin
+		1. 测试服可能原因, 缺少/home/webadmin 文件夹导致无法启动
+		2. 没有相应的config/xxxx.json  配置文件 或者  alipay/xxxx.json 
+		3. 江苏，湖南重启需要在/root/webadmin/下执行：forever start activityWeb.js  ****，不带.json
+		4. 启动多个端口形成负载均衡bash admin scmj , forever start adminWeb.js sxmj.json 1, forever start adminWeb.js sxmj.json 2, forever start adminWeb.js sxmj.json 3
+		5. 检查mongod地址是否配置正确   "mongodbUrl":"mongodb://10.25.45.188:27017/sxmj", 应当跟着master.json 进行改变
+	3. 启动游戏服务器, 发现个别进程没有启动
+		1. 检查游戏代码 , node执行检查是否有语法错误
+		2. 让开发者检查是否有代码逻辑性错误
+		3. 检查servers.json 配置是否正确
+	4. 启动正常, 可以连接, 但是游戏无法登陆
+		1. 检查mongodb数据库是否配置正确 vim /etc/mongod.conf  查看bind_ip 是否跟master.json中配置的是否一样, 改正后 service mongodb restart, 然后重启服务器
+		2. 
+	5. 启动游戏服务器, 发现login服务器 进程, 规律性的占用cpu 100%
+		1. 安装redis   npm install -g redis,   配置redis, 然后重启游戏服务器
+	6. 启动成功, 发现创建房间过于卡顿, 需要转很长时间
+		1. 改成一个一个启动房间服务器, 等cpu降下来, 再启动另一个, 链接服务器同理
+	7. 进游戏特卡, 登录的时候, 或者 玩游戏的时候, 很长时间才会动一下
+		1. 检查连接数和具体的连接数,  具体查看 1 - 2 - [1,2,3,4]
+	8. 游戏大规模出现11错误
+		1. 检查负载均衡是否挂掉了, 重启800端口
+		2. 检查高防是否需要续费, 端口转发是否正确
+		3. 检查域名是否被更改
+	9.游戏大规模出现掉线, 无法连接
+		1. 检查高防是否需要续费, 端口转发是否正确
+		2. 检查游戏服务器的流量是否充足, 是否受到攻击,如果受到攻击了, 那么 配置高防或者换一个高防顶替上
+		3. 运营商网络故障  , 等待运营商修复网络即可		
+	10. 游戏出现错误5
+		1. 检查ios的 x.x.x.json是否存在
+	11. 启动游戏服务器, 可以登录, 但是无法创建房间
+		1. 检查房间服务器是否有进程存在
+	12. 游戏经常被踢下线, 结束房间出错,无法创建房间等
+		1. 检查硬盘是否写满, 检查是否是log引起的, 添加硬盘, 删除无用的数据
+	13. 点击扣钻加载房间代码, 但是不生效
+		1.有的服务器没有改变GameCfg.js的数值
+	14. webadmin 占用cpu较高
+		1. 检查是否有人在尝试破解密码  (查看ccAttackxxxx查看ip, 手动加到防火墙, 目前是这样)
+	15. 大规模充值失败
+		1. 检查
+	16. 无法下载到回放数据
+		1. 检查是否link /playlog到 public 下 
+			 ln -s /playlog/ /root/mjserver/web-server/public/
+		2. 检查是否配置回放服务器域名, 一般为 xxxxhf.happyplaygame.net
+	17. 客户端出现卡死到100%情况
+		1. 检查游戏盾, 紧急切换到高防护  setRegion
+	18. 海外无法连接, 提审失败
+		1. 检查json里是否有游戏盾配置, 如果有让他们呢去掉, 重新打包
+		2. 检查server是否正确, 执行setRegion
+		3. 检查境外境内 iptables转发是否正确
+		
+		
+		
+		

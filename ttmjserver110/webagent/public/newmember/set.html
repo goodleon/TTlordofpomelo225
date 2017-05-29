@@ -1,0 +1,759 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <meta http-equiv="pragma" content="no-cache">
+    <META http-equiv="Cache-Control" content="no-cache, must-revalidate">
+    <title>设置</title>
+    <link href="../bootstrap/css/bootstrap.min.css" title="" rel="stylesheet"/>
+    <link title="" href="../newcss/style.css" rel="stylesheet" type="text/css"  />
+    <link title="blue" href="../newcss/dermadefault.css" rel="stylesheet" type="text/css"/>
+    <link href="../newcss/templatecss.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="../newcss/intlTelInput.css">
+    <style>
+        @media only screen and (min-width:320px) and (max-width:480px)
+        {
+            .alert{
+                width:auto !important;
+                display:none;
+                position:absolute;
+                bottom:-15%;
+                left:1%;
+                right:1%;
+                z-index:2000;
+                -ms-transform: translate(0%, 0%);
+                -moz-transform: translate(0%, 0%);
+                -o-transform: translate(0%, 0%);
+                transform: translate(0%, 0%);
+            }
+            .coverWhite .modalBox{
+                position: absolute;
+                top:50%;
+                left:50%;
+                display:none;
+                z-index:1500;
+                overflow-x: hidden;
+                overflow-y: auto;
+                opacity: 1;
+                width: 100% !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                outline: none;
+                background-color: #ffffff;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                border-radius: 6px;
+                box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+                background-clip: padding-box;
+                box-sizing: border-box;
+                -ms-transform: translate(-50%,-50%);
+                -moz-transform: translate(-50%,-50%);
+                -o-transform: translate(-50%,-50%);
+                transform: translate(-50%,-50%);
+            }
+
+        }
+        @media (min-width:481px) {
+            .alert{
+                width:auto !important;
+                display:none;
+                position:absolute;
+                left:20%;
+                right:20%;
+                z-index:2000;
+                top: 50%;
+                bottom: auto;
+            }
+            .coverWhite  .modalBox{
+                right: 10%;
+                left: 10%;
+                display:none;
+                z-index:1500;
+                position: absolute;
+                top: 50%;
+                bottom: auto;
+                -webkit-transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
+                overflow-x: hidden;
+                overflow-y: auto;
+                opacity: 1;
+                width: auto !important;
+                height: auto !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                outline: none;
+                background-color: #ffffff;
+                border: 1px solid rgba(0, 0, 0, 0.2);
+                border-radius: 6px;
+                box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+                background-clip: padding-box;
+                box-sizing: border-box;
+                -ms-transform: translate(0,-50%);
+                -moz-transform: translate(0,-50%);
+                -o-transform: translate(0,-50%);
+                transform: translate(0,-50%);
+            }
+
+        }
+    </style>
+</head>
+<body>
+<div class="alert alert-info alert-dismissable" role="alert">
+    <button class="close" type="button" onclick="$('.alert').eq(0).hide();">&times;</button>
+    <span></span>
+</div>
+<nav class="nav navbar-default navbar-mystyle navbar-fixed-top">
+    <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand mystyle-brand"><span class="glyphicon glyphicon-cog"></span></a></div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown li-border"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown"><span id="userNick">3179923507@qq.com</span><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="logout">退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="down-main">
+    <div class="left-main left-off">
+        <div class="sidebar-fold"><span class="glyphicon glyphicon-menu-hamburger"></span></div>
+        <div class="subNavBox">
+            <div class="sBox">
+                <ul class="navContent" style="display:block">
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />首页</div>
+                        <a href="index.html"><span class="sublist-icon glyphicon glyphicon-home"></span><span class="sub-title">首页</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />出售</div>
+                        <a href="sale.html"><span class="sublist-icon glyphicon glyphicon-tag"></span><span class="sub-title">出售</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />充值</div>
+                        <a href="charge.html"><span class="sublist-icon glyphicon glyphicon-shopping-cart"></span><span class="sub-title">充值</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />充值记录</div>
+                        <a href="rechargerecord.html"><span class="sublist-icon glyphicon glyphicon-time"></span><span class="sub-title">充值记录</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />出售记录</div>
+                        <a href="salerecord.html"><span class="sublist-icon glyphicon glyphicon-star-empty"></span><span class="sub-title">出售记录</span></a></li>
+                    <li id="addMember">
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />添加会员</div>
+                        <a href="addmember.html"><span class="sublist-icon glyphicon glyphicon-plus"></span><span class="sub-title">添加会员</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />我的会员</div>
+                        <a href="recommand.html"><span class="sublist-icon glyphicon glyphicon-user"></span><span class="sub-title">我的会员</span></a></li>
+                    <li class="active">
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />设置</div>
+                        <a href="set.html"><span class="sublist-icon glyphicon glyphicon-cog"></span><span class="sub-title">会员中心</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="right-product right-off">
+        <div class="container-fluid">
+            <div class="manage account-manage info-center">
+                <div class="page-header">
+                    <div class="pull-left">
+                        <h4>会员中心<small id="gameName"></small></h4>
+                    </div>
+                </div>
+                <dl class="account-basic clearfix">
+                    <dt class="pull-left margin-large-right">
+                    <p class="account-head">
+                        <img src="../img/noavatar_middle.gif">
+                    </p>
+                    </dt>
+                    <dd class="pull-left margin-small-top">
+                        <p class="text-small">
+                            <span class="show pull-left base-name">会员ID</span>:<span class="margin-left" id="gId">小朱</span>
+                        </p>
+                        <p class="text-small">
+                            <span class="show pull-left base-name">昵称</span>:
+                            <span class="margin-left" id="gName">已认证</span>
+                        </p>
+                        <p class="text-small">
+                            <span class="show pull-left base-name">手机</span>:<span class="margin-left" id="gPhone">***********</span>
+                        </p>
+                        <p class="text-small">
+                            <span class="show pull-left base-name">注册时间</span>:<span class="margin-left" id="reTime">2015-01-12 11:50:22</span>
+                        </p>
+                    </dd>
+                </dl>
+                <ul class="accound-bund">
+                    <li class="clearfix">
+                        <span class="bund-class">登录密码</span>
+                        <span class="w45">安全性高的密码可以使账号更安全，建议您定期更换密码。</span>
+						<span class="pull-right margin-large-right">
+						<i class="glyphicon glyphicon-ok-circle pull-left"></i>
+						<em class="margin-right text-green-deep">已设置</em>
+						            		|
+						<a class="button-word1 margin-left btn_ajax_open"  href="#" id="changePassDia">修改</a>
+						</span>
+                    </li>
+                    <li class="clearfix">
+                        <span class="bund-class">修改手机</span>
+                        <span class="w45">绑定手机可以用于安全验证、找回密码等重要操作</span>
+						<span class="pull-right margin-large-right">
+						<i class="glyphicon glyphicon-ok-circle pull-left"></i>
+						<em class="margin-right text-green-deep">已设置</em>
+						            					            		|
+						<a class="button-word1 margin-left btn_ajax_open"  href="#" id="changePhoDia">修改</a>
+						</span>
+                    </li>
+                    <li class="clearfix border-bottom-none">
+                        <span class="bund-class">安全设置</span>
+                        <span class="w45">开启安全设置后超过7天未登录或出现异地登录等情况将需要短信验证登录</span>
+						<span class="pull-right margin-large-right">
+						<i class="glyphicon glyphicon-ok-circle pull-left"></i>
+						<em class="margin-right text-green-deep">已设置</em>
+						            					            		|
+						<a class="button-word1 margin-left btn_ajax_open" href="#" id="changeStaDia">修改</a>
+						</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--修改密码面板-->
+<div class="coverWhite">
+    <div id="responsive" class="modalBox">
+        <div class="modalHeader">
+            <button type="button" class="close closeModal closeFunc">×</button>
+            <h4 class="modalTitle">修改密码</h4>
+        </div>
+        <div class="modalBody">
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-2">原密码&nbsp;:</span><input class="col-md-5 col-xs-5 pull-left" type="password" id="oldPass" placeholder="输入原密码" required/></p>
+            <p class="row changePassTips"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>请输入原始密码</span><span></span></p>
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-2">新密码&nbsp;:</span><input class="col-md-5  col-xs-5 pull-left" type="password" id="newPass" placeholder="输入新密码" required/></p>
+            <p class="row changePassTips"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>请输入新密码</span><span></span></p>
+            <p class="row changePassTips"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>新旧密码不能相同</span><span></span></p>
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-2">再次确认:</span><input class="col-md-5  col-xs-5 pull-left" type="password" id="newPassSame"placeholder="再次输入新密码" required/></p>
+            <p class="row changePassTips"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>请再次输入密码</span><span></span></p>
+            <p class="row changePassTips"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>两次输入的新密码不一致</span><span></span></p>
+        </div>
+        <div class="modalFooter">
+            <button type="button"  class="btn btn-default cancelbutton closeFunc">取消</button>
+            <button type="button" class="btn btn-primary" id="changePass">确定</button>
+        </div>
+    </div>
+</div>
+<!--修改手机号的面板-->
+<div class="coverWhite">
+    <div id="changePhone" class="modalBox">
+        <div class="modalHeader">
+            <button type="button" class="close closeModal closeFunc">×</button>
+            <h4 class="modalTitle">修改手机</h4>
+        </div>
+        <div class="modalBody">
+            <p class="row"><span class="pull-left col-md-2  col-md-offset-3 col-xs-4">原手机号:</span><input class="col-xs-7 col-md-5 pull-left" type="text" readonly="readonly" id="oldPhone"></p>
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4">验证码:</span><input class="col-md-2 col-xs-3 pull-left" type="text" id="code" placeholder="输入验证码" required/><button id="getidenycode" class="col-md-2 col-md-offset-1 col-xs-3 col-xs-offset-1 pull-left btn btn-primary changePhoneCode">点击获取</button></p>
+            <p class="row changePhoTips" style="display:none"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>请输入正确的验证码</span><span></span></p>
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4">新手机号:</span><input class="pull-left" type="text" id="newPhone" placeholder="下拉选择国家后输入手机号" required/></p>
+            <p class="row changePhoTips" style="display:none"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>请输入正确的手机号</span></p>
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4">再次确认:</span><input class="col-md-5 pull-left col-xs-7" type="text" id="newPhoneagain" placeholder="不包括国家号" required/></p>
+            <p class="row changePhoTips" style="display:none"><span class="col-md-offset-5 col-xs-offset-3"></span><span class="glyphicon glyphicon-info-sign"></span><span>两次输入的号码不一致</span></p>
+        </div>
+        <div class="modalFooter">
+            <button type="button"  class="btn btn-default cancelbutton closeFunc">取消</button>
+            <button type="button" class="btn btn-default cancelbutton" id="confirmbtn">确定</button>
+        </div>
+    </div>
+</div>
+<!--安全设置面板-->
+<div class="coverWhite">
+    <div id="safeSet" class="modalBox">
+        <div class="modalHeader">
+            <button type="button" class="close closeModal closeFunc">×</button>
+            <h4 class="modalTitle">安全设置</h4>
+        </div>
+        <div class="modalBody">
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-1">当前状态:</span><span class="col-md-5 col-xs-5 pull-left" type="text" readonly="readonly" id="status"></span></p>
+            <p class="row"><span class="pull-left col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-1" id="changesta">开启保护:</span><input class="col-md-2 col-xs-3 pull-left" type="text" id="scode" placeholder="输入验证码"/><button class="pull-left btn btn-primary changeSta" id="changeStaCode">点击获取</button></p>
+        </div>
+        <div class="modalFooter">
+            <button type="button" class="btn btn-default cancelbutton closeFunc">取消</button>
+            <button type="button" class="btn btn-primary" id="changeStaBtn">确定</button>
+        </div>
+    </div>
+</div>
+<script src="../script/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../script/intlTelInput.js"></script>
+<script src="../script/slidemenu.js"></script>
+<script src="../share.js"></script>
+<script type="text/javascript">
+
+    $(function() {
+        $("#gameName").html(getGameType(window.location.host).agentname);
+        initStatus();
+//        changePassDia changePhoDia changeStaDia
+        function setProtect() {
+            if (protectStatus == 1) {
+                $("#status").html("已开启");
+                $("#changesta").text("关闭验证");
+            } else {
+                $("#status").html("已关闭");
+                $("#changesta").text("开启验证");
+            }
+        }
+
+        function initStatus() {
+            postJson("/admin/getMyInfo", {msg: "content"}, function (rtn) {
+                $("#userNick").html(rtn.mName);
+                if (rtn.adminLevel == 2 || rtn.adminLevel == '2') {
+
+                    $("#addMember").css("display", "block");
+
+                }
+                if (rtn.mbindphone) {
+
+                    $("#oldPhone").val(rtn.mbindphone);
+                    $("#getidenycode").removeClass('btn-default').addClass('btn-primary').removeAttr("disabled").text("点击获取");
+
+                    protectStatus = rtn.mprotect;
+                    setProtect();
+
+                } else {
+                    alert("手机验证服务未开启");
+                }
+
+                $("#gId").html(rtn.mid);
+                $("#gPhone").html(rtn.mbindphone);
+                $("#gName").html(rtn.mNick);
+                var time = rtn.mTime;
+                var timeArr = time.split(/[T]/);
+                $("#reTime").html(timeArr[0]);
+
+            });
+        }
+
+        /*国家号区号*/
+        $("#newPhone").intlTelInput({
+            nationalMode: false,
+            preferredCountries: ['cn', 'hk', 'mo']
+        });
+        //        changePassDia changePhoDia changeStaDia
+        //        responsive changePhone safeSet
+        //        请输入原始密码 0
+        //        请输入新密码 1
+        //        新旧密码不能相同 2
+        //        两次输入的新密码不一致 3
+        $("#changePassDia").click(function (e) {
+            e.preventDefault();
+            $("#responsive").css('display', 'block');
+            $("#changePhone").css('display', 'none');
+            $("#safeSet").css('display', 'none');
+            $('.coverWhite').eq(0).css('display', 'block');
+        });
+
+        $('#oldPass').focus(function () {
+            $(".changePassTips").css("display", "none");
+        });
+        $('#newPass').focus(function () {
+
+            $(".changePassTips").css("display", "none");
+            var code = $('#oldPass').val();
+            if (code.length == 0 || code==""||code==null) {
+                $(".changePassTips").eq(0).css("display", "block");
+            } else {
+                $(".changePassTips").eq(0).css("display", "none");
+            }
+
+        });
+        $('#newPassSame').focus(function () {
+            $(".changePassTips").css("display", "none");
+            var code = $('#newPass').val();
+            if (code.length == 0 || code==""||code==null) {
+                $(".changePassTips").eq(1).css("display", "block");
+            } else {
+                $(".changePassTips").eq(1).css("display", "none");
+            }
+            if(code == $('#oldPass').val()){
+                $(".changePassTips").eq(2).css("display", "block");
+            }else {
+                $(".changePassTips").eq(2).css("display", "none");
+            }
+        });
+        $('#newPassSame').blur(function () {
+            $(".changePassTips").css("display", "none");
+            var code = $('#newPassSame').val();
+            if (code.length == 0 || code==""||code==null) {
+                $(".changePassTips").eq(3).css("display", "block");
+            } else {
+                $(".changePassTips").eq(3).css("display", "none");
+            }
+            if($('#newPassSame').val()!=$('#newPass').val()){
+                $(".changePassTips").eq(4).css("display", "block");
+            }else{
+                $(".changePassTips").eq(4).css("display", "none");
+            }
+        });
+
+
+
+        $("#changePass").click(function () {
+            var newPass = $("#newPass").val();
+            var newPassSame = $("#newPassSame").val();
+            var oldPass = $("#oldPass").val();
+            if (oldPass.length > 0 && newPassSame == newPass && newPass.length > 0) {
+                $("#newPass").val("");
+                $("#newPassSame").val("");
+                $("#oldPass").val("");
+                postJson("/login/changeMyPass", {oldPass: oldPass, newPass: newPass},
+                        function (rtn) {
+                            if (rtn == 0) {
+                                $(".alert").eq(0).alertModal('修改成功，请刷新使用新密码重新登录',2000);
+                                $("#responsive").css('display', 'none');
+                                $('.coverWhite').eq(0).css('display', 'none');
+                                setTimeout(function(){
+                                    logout();
+                                },2000);
+                            }
+                            else {
+                                $(".alert").eq(0).alertModal('修改失败',2000);
+                            }
+                        });
+            }
+            else {
+                $(".alert").eq(0).alertModal('输入错误',2000);
+            }
+        });
+
+
+        /*修改电话号码*/
+        // 点击获取验证码
+        //        changePassDia changePhoDia changeStaDia
+        //        responsive changePhone safeSet
+        $("#changePhoDia").click(function (e) {
+
+            e.preventDefault();
+            $("#changePhone").css('display', 'block');
+            $("#responsive").css('display', 'none');
+            $("#safeSet").css('display', 'none');
+            $('.coverWhite').eq(1).css('display', 'block');
+
+        });
+        var InterValObj;
+        $("#getidenycode").click(function (e) {
+            e.preventDefault();
+            var msg = {
+                type: 4
+            };
+            var count = 120;
+            InterValObj = setInterval(function () {
+                if (count == 0) {
+                    clearInterval(InterValObj);//停止计时器
+                    $("#getidenycode").removeClass('btn-default').addClass('btn-primary').removeAttr("disabled").text("点击获取");
+                    count = 120;
+                }
+                else {
+                    count--;
+                    $("#getidenycode").removeClass('btn-primary').addClass('btn-default').addClass('changeSta').attr("disabled", "true").text(count + "s");
+                }
+            }, 1000);
+            postJson("/login/doGetSms", msg, function (rtn) {
+                if (rtn.er == -1) {
+                    $(".alert").eq(0).alertModal('手机验证服务未开启',2000);
+                    $("#confirmbtn").attr("disabled", "true").addClass("btn-default").removeClass("btn-primary");
+                    clearInterval(InterValObj);//停止计时器;
+                    count = 120;
+                    return;
+
+                } else if (!rtn.er) {
+                    $(".alert").eq(0).alertModal('请查收手机验证码',2000);
+                    $("#confirmbtn").addClass("btn-primary").removeClass("btn-default").removeClass("cancelbutton").removeAttr("disabled");
+                    $("#getidenycode").attr("disabled", "true").addClass("btn-default").removeClass("btn-primary");
+
+                } else {
+
+                    $("#confirmbtn").attr("disabled", "true").addClass("btn-default").removeClass("btn-primary");
+                    clearInterval(InterValObj);//停止计时器;
+                    count = 120;
+
+                    if (rtn.er == 1) {
+                        $(".alert").eq(0).alertModal('请先绑定手机',2000);
+                    } else if (rtn.er == 2) {
+                        $(".alert").eq(0).alertModal('输入有误，请检查',2000);
+                    } else if (rtn.er == 3) {
+                        $(".alert").eq(0).alertModal("请求过于频繁，请在" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                    }
+                    else if (rtn.er == 4) {
+                        $(".alert").eq(0).alertModal("1小时只能请求6次，请" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                    }
+                    else if (rtn.er == 5) {
+                        $(".alert").eq(0).alertModal('手机号码错误',2000);
+                    } else if (rtn.er == 6) {
+                        $(".alert").eq(0).alertModal('手机号码已绑定',2000);
+                    } else if (rtn.er == 7) {
+                        $(".alert").eq(0).alertModal('输入的ID有误',2000);
+                    } else if (rtn.er == 8) {
+                        $(".alert").eq(0).alertModal('登录过期，请重新登录',2000);
+                        window.location.href = "/login.html";
+                    }
+                }
+            });
+        });
+        //点击确定修改电话号码
+        $('#code').focus(function () {
+
+            $(".changePhoTips").css("display", "none");
+        });
+        $('#newPhone').focus(function () {
+
+            $(".changePhoTips").css("display", "none");
+
+        });
+        $('#newPhoneagain').focus(function () {
+
+            $(".changePhoTips").css("display", "none");
+
+        });
+        $('#code').blur(function () {
+            var code = $('#code').val();
+            if (code.length != 6) {
+                $(".changePhoTips").eq(0).css("display", "block");
+            } else {
+                $(".changePhoTips").eq(0).css("display", "none");
+            }
+        });
+        $('#newPhone').blur(function () {
+            var newPhone = $('#newPhone').val();
+
+            if (newPhone == null || newPhone == "") {
+
+                $(".changePhoTips").eq(1).css("display", "block");
+
+            } else {
+
+                $(".changePhoTips").eq(1).css("display", "none");
+
+            }
+        });
+        $('#newPhoneagain').keyup(function () {
+
+            var phone = $("#newPhone").val();
+            var phoneagain = $("#newPhoneagain").val();
+            var title = $(".selected-flag").eq(0).attr("title");
+            var areacode = title.slice(title.indexOf("+"));
+            var result = replaceAll(phone, areacode);//获取到的电话号码
+
+            if(phone.length!=0){
+                if (phoneagain!=result) {
+                    $(".changePhoTips").eq(2).css("display", "block");
+                }else{
+                    $(".changePhoTips").eq(2).css("display", "none");
+                }
+            }
+             else {
+                $(".changePhoTips").eq(2).css("display", "none");
+            }
+
+        });
+        //修改手机电话号码
+        //进行电话号码的提取函数
+        function replaceAll(str, replaceKey, replaceVal) {
+            return str.replace(replaceKey, replaceVal || '');
+        };
+        $("#confirmbtn").click(function (e) {
+            e.preventDefault();
+            var code = $("#code").val();
+            var phone = $("#newPhone").val();
+            var phoneagain = $("#newPhoneagain").val();
+
+            var title = $(".selected-flag").eq(0).attr("title");
+            var areacode = title.slice(title.indexOf("+"));
+            var diacode = replaceAll(areacode, "+");//获取到的区号
+            var result = replaceAll(phone, areacode);//获取到的电话号码
+
+            var msg = {
+                mcode: code,
+                type: 4,
+                mobile: parseFloat(result),
+                mobilecode: diacode
+            };
+            if (code != "" && code != null && phone != "" && phone != null && phoneagain != "" && phoneagain != null) {
+                postJson("/login/doCheckSms", msg, function (rtn) {
+                    if (rtn == 0) {
+                        $(".alert").eq(0).alertModal('修改手机成功,请刷新页面',2000);
+                        $("#changePhone").css('display', 'none');
+                        $('.coverWhite').eq(1).css('display', 'none');
+                    } else if (rtn == 1) {
+                        $(".alert").eq(0).alertModal('请先获取验证码',2000);
+                    } else if (rtn == 2) {
+                        $(".alert").eq(0).alertModal('输入信息有误，请检查',2000);
+                    } else if (rtn == 3) {
+                        $(".alert").eq(0).alertModal('验证码错误',2000);
+                    } else if (rtn == 4) {
+                        $(".alert").eq(0).alertModal('验证码过期请重新获取',2000);
+                    } else if (rtn == 5) {
+                        $(".alert").eq(0).alertModal('登录过期，请重新登录',2000);
+                        window.location.href = "/login.html";
+                    } else if (rtn == 6) {
+                        $(".alert").eq(0).alertModal('尝试次数过多请重新获取',2000);
+                    }else if (rtn == 7) {
+                        $(".alert").eq(0).alertModal('手机号码已经绑定',2000);
+                    }
+                });
+            } else if (code == "" || code == null) {
+                $(".alert").eq(0).alertModal('验证码不能为空',2000);
+            } else if (phone == "" || phone == null || phoneagain == "" || phoneagain == null) {
+                $(".alert").eq(0).alertModal('请填写电话号码',2000);
+            } else if (phone != phoneagain) {
+                $(".alert").eq(0).alertModal('两次填写的手机号码不一致',2000);
+            } else {
+                $(".alert").eq(0).alertModal('请填写电话号码',2000);
+            }
+        })
+
+
+        /*切换状态*/
+        //设置开启关闭保护:获取验证码
+        //        changePassDia changePhoDia changeStaDia
+        //        responsive changePhone safeSet
+        $("#changeStaDia").click(function (e) {
+
+            e.preventDefault();
+            $("#safeSet").css('display', 'block');
+            $("#responsive").css('display', 'none');
+            $("#changePhone").css('display', 'none');
+            $('.coverWhite').eq(2).css('display', 'block');
+
+        })
+        var InterValObj1;
+        $("#changeStaCode").click(function (e) {
+            e.preventDefault();
+            var msg = {
+                type: 5
+            };
+            var count = 120;
+            InterValObj1 = setInterval(function () {
+                if (count == 0) {
+                    clearInterval(InterValObj);//停止计时器
+                    $("#changeStaCode").removeClass('btn-default').addClass('btn-primary').removeAttr("disabled").text("点击获取");
+                    count = 120;
+                }
+                else {
+                    count--;
+                    $("#changeStaCode").removeClass('btn-primary').addClass('btn-default').addClass('changeSta').attr("disabled", "true").text(count + "s");
+                }
+            }, 1000);
+            //点击获取验证码之后进行的处理
+            postJson("/login/doGetSms", msg, function (rtn) {
+                if (rtn.er == -1) {
+                    $(".alert").eq(0).alertModal('手机验证服务未开启',2000);
+                    clearInterval(InterValObj1);//停止计时器;
+                    count = 120;
+                    return;
+
+                } else if (!rtn.er) {
+                    $(".alert").eq(0).alertModal('请查收手机验证码',2000);
+                    $("#changeStaBtn").addClass("btn-primary").removeClass("btn-default").removeClass("cancelbutton").removeAttr("disabled");
+
+                } else {
+                    if (rtn.er == 1) {
+                        $(".alert").eq(0).alertModal('请先绑定手机',2000);
+                    } else if (rtn.er == 2) {
+                        $(".alert").eq(0).alertModal('输入有误，请检查',2000);
+                    } else if (rtn.er == 3) {
+                        $(".alert").eq(0).alertModal("请求过于频繁，请在" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                    }
+                    else if (rtn.er == 4) {
+                        $(".alert").eq(0).alertModal("1小时只能请求6次，请" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                    }
+                    else if (rtn.er == 5) {
+                        $(".alert").eq(0).alertModal('手机号码错误',2000);
+                    } else if (rtn.er == 6) {
+                        $(".alert").eq(0).alertModal('手机号码已绑定',2000);
+                    } else if (rtn.er == 7) {
+                        $(".alert").eq(0).alertModal('输入的ID有误',2000);
+                    } else if (rtn.er == 8) {
+                        $(".alert").eq(0).alertModal('登录过期，请重新登录',2000);
+                        window.location.href = "/login.html";
+                    }
+                    clearInterval(InterValObj1);//停止计时器;
+                    count = 120;
+                }
+            });
+
+        });
+        // 点击确认修改安全状态
+        $("#changeStaBtn").click(function () {
+            var code = $("#scode").val();
+            if (code == null || code == "" || code.length == 0) {
+                $(".alert").eq(0).alertModal('请输入验证码',2000);
+                return;
+            }
+
+            var msg = {
+                type: 5,
+                mcode: code
+            };
+
+            postJson("/login/doCheckSms", msg, function (rtn) {
+                if (rtn == 0) {
+                    if (protectStatus == 1) {
+                        protectStatus = 0;
+                    } else {
+                        protectStatus = 1;
+                    }
+                    $(".alert").eq(0).alertModal('状态设置成功,请刷新页面',2000);
+                    setProtect();
+                    $("#safeSet").css('display', 'none');
+                    $('.coverWhite').eq(2).css('display', 'none');
+                } else if (rtn == 1) {
+                    $("#changeStaCode").attr("disabled", "true").addClass("btn-default").removeClass("btn-primary");
+                    $(".alert").eq(0).alertModal('请先获取验证码',2000);
+                } else if (rtn == 2) {
+                    $(".alert").eq(0).alertModal('输入信息有误，请检查',2000);
+                } else if (rtn == 3) {
+                    $(".alert").eq(0).alertModal('验证码错误',2000);
+                } else if (rtn == 4) {
+                    $(".alert").eq(0).alertModal('验证码过期请重新获取',2000);
+                }
+                else if (rtn == 5) {
+                    $(".alert").eq(0).alertModal('登录过期，请重新登录',2000);
+                    window.location.href = "/login.html";
+                } else if (rtn == 6) {
+                    $(".alert").eq(0).alertModal('尝试次数过多请重新获取',2000);
+                }else if (rtn == 7) {
+                    $(".alert").eq(0).alertModal('手机号码已经绑定',2000);
+                }
+            });
+        });
+
+        //  点击取消或者关闭按钮将弹出的对话框关闭
+        $(".closeFunc").click(function(e){
+            console.log(arguments);
+            e.preventDefault();
+            $(".coverWhite").css("display","none");
+            $(".modalBox").css("display","none");
+
+            $("#newPass").val("");
+            $("#newPassSame").val("");
+            $("#oldPass").val("");
+            $("#code").val("");
+            $("#newPhone").val("");
+            $("#newPhoneagain").val("");
+            $(".changePassTips").css("display", "none");
+            $(".cpTips").css("display", "block");
+            clearInterval(InterValObj);
+            clearInterval(InterValObj1);
+            $("#getidenycode").removeClass('btn-default').addClass('btn-primary').removeAttr("disabled").text("点击获取");
+            $("#changeStaCode").removeClass('btn-default').addClass('btn-primary').removeAttr("disabled").text("点击获取");
+        });
+        $("#logout").click(function(e){
+            e.preventDefault();
+            logout();
+        })
+
+    })
+
+</script>
+</body>
+</html>

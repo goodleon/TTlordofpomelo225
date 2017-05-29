@@ -1,0 +1,32 @@
+git clone http://git.happyplaygame.net/liuhuanqiang/slbTools.git
+
+cd /root
+mkdir web
+cd /root/slbTools
+bash setWeb
+
+cd /etc/nginx
+vi nginx.conf
+
+cd /etc
+nginx -s reload
+crontab -l
+crontab -r
+crontab -e
+
+*/1 * * * * cd /root/slbTools&&bash FileSync.sh
+crontab -l
+cat /etc/nginx/nginx.conf |grep web
+
+
+cat /etc/nginx/nginx.conf
+cat /etc/nginx/nginx.conf |grep web
+cd /etc
+nginx -s reload
+curl localhost:800/gzmj/android.json
+curl localhost:80/gzmj/android.json
+curl localhost:800/scmj/android.json
+curl localhost:80/scmj/android.json
+cat /etc/nginx/nginx.conf |grep web
+
+  ll |grep mjserver

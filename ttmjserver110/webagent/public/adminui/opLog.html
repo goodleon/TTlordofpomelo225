@@ -1,0 +1,196 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="email=no">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../css/hygl.css"/>
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+</head>
+
+<body  class="easyui-layout">
+	<div>
+		<label>日期</label>
+		<input class="easyui-datebox" data-options="onSelect:onSelect"></input>
+		<label>会员ID</label>
+		<input class="easyui-validatebox" type="text" id="mid" data-options="required:false" />
+		<label>IP</label>
+		<input class="easyui-validatebox" type="text" id="ip" data-options="required:false" />
+		<label>类型</label>
+		<input class="easyui-validatebox" type="text" id="type" data-options="required:false" />
+		<a href="#" class="easyui-linkbutton" onclick="loadData()">搜索</a>
+	</div>
+        <table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%;margin:0;padding:0"
+            data-options="singleSelect:true,collapsible:true,
+				method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false,
+				sortOrder:'desc',
+				sortName:'time'
+            ">
+        <thead>
+            <tr>
+                <th data-options="field:'mid',width:80,sortable:true">会员ID</th>
+                <th data-options="field:'type',sortable:true">操作类型</th>
+				<th data-options="field:'typeName',sortable:true">中文描述</th>
+                <th data-options="field:'ip',sortable:true">IP</th>
+                <th data-options="field:'time',sortable:true">时间</th>
+				<th data-options="field:'args',sortable:true">参数</th>
+            </tr>
+        </thead>
+    </table>
+	<div id = "pageButton" style="margin:2px 0;">
+	</div>
+
+	<script type="text/javascript">
+		var day;
+		var typeName = {};
+		typeName.login = '登录';
+		typeName.onlineReport = '在线人数';
+		typeName.fillMembersMoney = '会员补钻';
+		typeName.asManager = '客户经理';
+		typeName.changeMemberPass = '修改会员密码';
+		typeName.computeMemberReward = '发放推荐奖励';
+		typeName.saveNoticeCfgJson = '修改消息';
+		typeName.saveCfgJson = '修改跑马灯微信号';
+		typeName.addMember = '添加会员';
+		typeName.saveMember = '修改会员';
+		typeName.delMember = '删除会员';
+		typeName.forceLogout = '踢出玩家';
+		typeName.changeMyPass = '修改个人密码';
+		typeName.genAlipayCharge = '充值';
+		typeName.getAliPayMsg = '获取充值订单';
+		typeName.delActionJson = '删除活动';
+		typeName.saveActionJson = '修改活动';
+		typeName.saveRebateJson = '修改推荐返利';
+		typeName.saveAlipayJson = '修改充值比例';
+		typeName.delAlipayJson = '删除充值比例';
+		typeName.saveAccrued = '修改累计充值';
+		typeName.delAccrued = '删除累计充值';
+		typeName.rewAccrued = '发放累计充值奖励';
+		typeName.banMember = '封禁会员';
+		typeName.banAccount = '封禁玩家';
+		typeName.setGameFree = '游戏免费';
+		typeName.sendSms = '发送手机验证码';
+		typeName.checkSms = '校验手机验证码';
+		typeName.doLogout = '登出';
+		typeName.runCmd = '控制后台';
+		typeName.contentNum = '控制后台';
+		typeName.autoRestart = '重启游戏';
+		typeName.ReloadServerSelf = '加载代码';
+		typeName.ReloadServer = '加载代码';
+		typeName.testCards = '设置测试牌';
+		typeName.killSelf = '重启后台';
+		typeName.unbanPhone = '解除手机绑定';
+		typeName.saveWxUserPayJson='设置玩家微信支付配置';
+		typeName.delWxUserPayJson='删除玩家微信支付配置';
+		typeName.saveWxPayJson='保存微信配置';
+		typeName.wxgetorder='会员充值自动审核开关操作';
+		typeName.wxgetorderCallback='会员充值自动审核回调函数';
+		typeName.doWxAgentActionPass='手动通过审核微信代理信息';
+		typeName.doWxAgentActionCanel='手动拒绝审核微信代理信息';
+		typeName.doWxAgentActionRefuse='手动忽略审核微信代理信息';
+		typeName.addMemberShenhe = '手动审核添加会员';
+		typeName.addMemberAuto   ='代理自动充值添加会员';
+		typeName.wxPayUser       ='会员微信充值';
+		typeName.wxUserGetOrderCallBack ='玩家微信充值';
+
+
+
+		function getPara() {
+			var para = {};
+
+			if(!day) {
+				day = getFormatDate(new Date());
+			}
+
+			para.day = day;
+			var mid = parseInt($("#mid").val());
+
+			if(mid >= 0) {
+				para.mid = mid;
+			}
+
+			var ip = $("#ip").val();
+
+			if(ip.length > 6) {
+				para.ip = ip;
+			}
+
+			var type = $("#type").val();
+
+			if(type.length > 1) {
+				para.type = type;
+			}
+
+			return para;
+		}
+
+		function showMembersPage(para) {
+			var div = document.getElementById("pageButton");
+			div.innerHTML = "";
+
+			postJson("/admin/getOpLog", {count:1, para:para},
+					function(data)
+					{
+						if(!data) {
+							return;
+						}
+
+						var max = Math.ceil(data / 50);
+						$(document).ready(function () {
+							for(var i = 1; i <= max; i++){
+								$("#pageButton").append("<button onclick=loadData("+i+")>"+ i +"</button>");
+							}
+						});
+					}
+			);
+		}
+
+	  function loadData(page) {
+		  var para = getPara();
+
+		  if(!page) {
+			  showMembersPage(para);
+			  page = 1;
+		  }
+
+	      postJson("/admin/getOpLog", {page:page, para:para}, function(data) {
+			  if(!data) {
+				  alert('没有数据');
+				  return;
+			  }
+
+			  for (var i = 0, len = data.length; i < len; i++) {
+				  var msg = data[i];
+				  msg.time = getDateCommonFormat(new Date(msg.time));
+				  msg.args = JSON.stringify(msg.args);
+				  msg.typeName = typeName[msg.type];
+
+				  if(!msg.typeName) {
+					  msg.typeName = msg.type;
+				  }
+			  }
+
+			  $('#dg').datagrid("loadData", data);
+			  if( data.total==0|| data==""||! data){
+				  $('#dg').datagrid('appendRow',{mid:"没有数据", type:"", typeName:"",ip:"",time:"",args:""});
+			  }
+		  });
+	  }
+
+	function onSelect(date) {
+		day = getFormatDate(date);
+	}
+
+	</script>
+</body>
+</html>

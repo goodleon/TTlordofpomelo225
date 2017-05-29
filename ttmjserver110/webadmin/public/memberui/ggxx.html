@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<title>公告</title>
+</head>
+<body  class="easyui-layout">
+	<div class="easyui-dialog" id="ddNotice" title="公告" style="width:80%;height:200px;max-width:800px;padding:10px" data-options="
+				iconCls:'icon-save',
+				onResize:function(){
+					$(this).dialog('center');
+				}">
+		<p>width: 80%; height: 200px</p>
+	</div>
+	<div>
+		<label id="notice"></label>
+	</div>
+	<script type="text/javascript">
+		function initNotice(){
+			postJson("/admin/getNoticeJson",{},
+				function(data)
+				{
+					$("#notice").html(data["rows"][0]["content"]);
+				}
+			);
+		}
+		$(document).ready(function () {
+			initNotice();
+		});
+	</script>
+</body>
+</html>

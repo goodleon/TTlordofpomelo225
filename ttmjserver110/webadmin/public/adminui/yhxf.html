@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>用户消费</title>
+</head>
+<body class="easyui-layout">
+<div>
+    选择产品:
+    <input id="cc" class="easyui-combobox" name="dept"/>
+    <!--<select id="cc" class="easyui-combobox" name="dept" style="width:150px;">-->
+        <!--<option value="0">下拉选择产品</option>-->
+        <!--<option value="ddz">斗地主</option>-->
+        <!--<option value="gzmj">贵州麻将</option>-->
+        <!--<option value="phz">跑胡子</option>-->
+        <!--<option value="scmj">四川麻将</option>-->
+    <!--</select>-->
+    <!--<input class="easyui-datebox" id="db"/>-->
+    <!--<a href="#" class="easyui-linkbutton" onclick="searchForTJData()">按月查询</a>-->
+    <a href="#" class="easyui-linkbutton" onclick="searchForUserData()">点击查询</a>
+    <a href="#" class="easyui-linkbutton" onclick="downLoadXls()">下载excel</a>
+</div>
+<table  id="tt" class="easyui-datagrid" title="用户消费表" style="width:100%;height:95%"
+        data-options="singleSelect:true,collapsible:true">
+</table>
+<script>
+    var xls=[{
+        time:"年月",
+        buyNum:"充钻人数",
+        buyCount:"充钻次数",
+        buyDiamonds:"购买钻石",
+        userDiamonds:"钻石余额",
+        giveDiamonds:"赠送钻石",
+        giveCount:"赠送次数",
+        giveNum:"赠钻人数"
+    }];
+    var proname="";
+    $('#cc').combobox({
+        method:'get',
+        url:'select.json',
+        valueField:'id',
+        textField:'text',
+        onSelect: function(){
+            proname = $("#cc").combobox('getValue');
+            console.log(proname);
+        }
+    });
+    function searchForUserData(){
+        var column =  [ {field: 'time', title: '年月', width: 120, align: 'center'},
+                        {field: 'buyNum', title: '充钻人数', width: 120, align: 'center'},
+                        {field: 'buyCount', title: '充钻次数',width: 120,align: 'center'},
+                        {field: 'buyDiamonds', title: '购买钻石',width: 120, align: 'center'},
+                        {field: 'userDiamonds', title: '钻石余额',width: 120, align: 'center'},
+                        {field: 'giveDiamonds', title: '赠送钻石', width: 120, align: 'center'},
+                        {field: 'giveCount', title: '赠送次数',width: 120, align: 'center'},
+                        {field: 'giveNum', title: '赠钻人数',width: 120, align: 'center'}
+                     ];
+        $('#tt').datagrid({columns: [column]});
+        if(proname=="0"||proname==""){
+
+            $.messager.alert("操作提示","请选择产品","error");
+
+        }else{
+            postJson("/userData/getUserConsumption", {dbName:proname}, function (data) {
+//                console.log(JSON.stringify(data));
+				var comTotal = {
+					time:"合计",
+					buyNum:compute("tt","buyNum"),
+					buyCount:compute("tt","buyCount"),
+					buyDiamonds:compute("tt","buyDiamonds"),
+					userDiamonds:"",
+					giveDiamonds:compute("tt","giveDiamonds"),
+					giveCount:compute("tt","giveCount"),
+					giveNum:compute("tt","giveNum")
+				};
+                $('#tt').datagrid("loadData",data);
+                $("#tt").datagrid("appendRow",comTotal);
+                xls = xls.concat(data.rows);
+                xls.push(comTotal);
+            });
+
+        }
+    }
+    function compute(tableName,colName) {
+		var rows = $('#'+tableName).datagrid('getRows');
+		var total = 0;
+		for (var i = 0; i < rows.length; i++) {
+			if(!rows[i][colName]){
+				rows[i][colName]=0;
+			}
+			total += parseFloat(rows[i][colName]);
+		}
+		return total;
+	}
+    function downLoadXls(){
+        if(!xls)
+        {
+            $.messager.alert("操作提示", "无数据可导出1","error");
+            return;
+        }
+        postJson("/tools/downloadExcelFile",{data:xls},
+                function(data)
+                {
+                    if(data)
+                    {
+                        document.location.href = parent.document.location.origin  + data;
+                    }else
+                    {
+                        $.messager.alert("操作提示", "无数据可导出2","error");
+                    }
+                });
+    }
+</script>
+</body>
+</html>

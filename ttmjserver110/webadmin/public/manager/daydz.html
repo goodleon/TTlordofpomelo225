@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="../highchart/highcharts.js"></script>
+    <script type="text/javascript" src="../highchart/layout.js"></script>
+    <title>24小时对战查询</title>
+</head>
+<body>
+<div>
+    选择日期: <input class="easyui-datebox"  style = "width:150px" id="dateBox"/>
+    <a href="#" class="easyui-linkbutton" onclick="search24hour()">点击查询</a>
+</div>
+<table  id="tt" class="easyui-datagrid" title="24小时对战查询" style="width:100%;height:800px"
+        data-options="singleSelect:true,collapsible:true">
+    <thead>
+    <tr>
+        <th data-options="field:'startTime',width:80">起始时间</th>
+        <th data-options="field:'vipTableCount',width:80">当日场次</th>
+        <th data-options="field:'yesTableCount',width:150">前一日场次</th>
+        <th data-options="field:'todComyes',width:150">当日较前一日增长</th>
+        <th data-options="field:'weekTableTotal',width:120">前7日平均场次</th>
+        <th data-options="field:'todayComweek',width:150">当日较前7日增长</th>
+    </tr>
+    </thead>
+</table>
+<script>
+    function compute(tableName,colName) {
+        var rows = $('#'+tableName).datagrid('getRows');
+        var total = 0;
+        for (var i = 0; i < rows.length; i++) {
+            total += parseFloat(rows[i][colName]);
+        }
+        return total;
+    }
+    function format(){
+        var dat=new Date();
+        var y = dat.getFullYear();
+        var m = dat.getMonth()+1;
+        var d = dat.getDate();
+        return  y+'-'+m+'-'+d;
+    }
+    function  DateDiff(sDate1,sDate2){ //sDate1和sDate2是2006-12-18格式
+        var  aDate,  oDate1,  oDate2,  iDays;
+        aDate  =  sDate1.split("-");
+        oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0]);//转换为12-18-2006格式
+        aDate  =  sDate2.split("-");
+        oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0]);
+        iDays  =  parseInt((oDate2  -  oDate1 ) /  1000  /  60  /  60  /24);    //把相差的毫秒数转换为天数
+        return  iDays
+    }
+    function search24hour(){
+        var dayVal=$("#dateBox").datebox('getValue');
+        var dayarr1 = dayVal.split('/');
+        var selDay  = dayarr1[2] +"-" +dayarr1[0] + "-" +dayarr1[1];
+        //结束日期不得超过今日
+        var today=format();
+        //结束日期与今天的日期差
+        var d_day=DateDiff(selDay,today);
+        if(!dayVal){
+            $.messager.alert("操作提示","请选择日期","error");
+        }else if(d_day<0){
+            $.messager.alert("操作提示","选择日期超过今日","error");
+        }else{
+            var dayarr = dayVal.split('/');
+            dayVal = dayarr[2] + dayarr[0] + dayarr[1];
+            var yesterdayArr = [];
+            var temp = new Date(dayarr[2], parseInt(dayarr[0]) - 1, dayarr[1]);
+            for (var j = 1; j <= 8; j++) {
+                yesterdayArr[j - 1] = new Date(temp.getTime() - j * 24 * 60 * 60 * 1000).Format('yyyyMMdd');
+            }
+            postJson("/userData/getVipTableTime",{day:dayVal,type:1},function(rtn){
+                if (!rtn||rtn.length==0) {
+                    $.messager.alert("操作提示", "没有数据", "error");
+                    $("#tt").datagrid("loadData",{total:0,rows:[{startTime:"没有数据",vipTableCount:"",yesTableCount:"",todComyes:"",weekTableTotal:"",todayComweek:""}]});
+                }else{
+                    var dd=rtn[0].data;
+                    var rows=[];
+                    var temp={};
+                    for(var i=0;i<24;i++){
+                        temp={startTime:"",vipTableCount:0,yesTableCount:0,todComyes:0,weekTableTotal:0,todayComweek:0};
+                        temp.startTime=(i+1)+"时";
+                        var sevenday=0;
+                        for(var l=0;l<dd.length;l++){
+                            if(!dd[l]["vipTableTime"]){
+                                dd[l]["vipTableTime"]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                            }
+                            if(dd[l]["_id"]==dayVal){
+                                temp.vipTableCount=dd[l]["vipTableTime"][i];
+                            }
+                            if(dd[l]["_id"]==yesterdayArr[0]){
+                                temp.yesTableCount=dd[l]["vipTableTime"][i];
+                                sevenday+=dd[l]["vipTableTime"][i];
+                            }
+                            for(var k=1;k<yesterdayArr.length-1;k++){
+                                if(dd[l]["_id"]==yesterdayArr[k]){
+                                    sevenday+=dd[l]["vipTableTime"][i];
+                                }
+                            }
+                        }
+
+//                        temp.todComyes=temp.vipTableCount-temp.yesTableCount;
+                        var tempdd=temp.vipTableCount-temp.yesTableCount;
+                        if(!temp.yesTableCount){
+                            temp.todComyes=tempdd+"(--%)";
+                        }else{
+                            temp.todComyes=tempdd+"("+(tempdd/temp.yesTableCount*100).toFixed(2)+"%)";
+                        }
+                        temp.weekTableTotal=parseInt(sevenday/7);
+                        var temptt=temp.vipTableCount-temp.weekTableTotal;
+                        //temp.todayComweek=temp.vipTableCount-temp.weekTableTotal;
+                        if(!temp.weekTableTotal){
+                            temp.todayComweek=temptt+"(--%)";
+                        }else{
+                            temp.todayComweek=temptt+"("+(temptt/temp.weekTableTotal*100).toFixed(2)+"%)";
+                        }
+                        rows.push(temp);
+                        temp={};
+                    }
+                    var dtdd={};
+                    dtdd.total=24;
+                    dtdd.rows=rows;
+                    $('#tt').datagrid({
+                        columns:[[
+                            {field:'startTime',title:'起始时间',width:80,align:'center'},
+                            {field:'vipTableCount',title:'当日场次',width:120,align:'center'},
+                            {field:'yesTableCount',title:'前一日场次',width:120,align:'center'},
+                            {field:'todComyes',title:'当日较前日增长',width:120,align:'center',
+                                styler: function(value,row,index){
+                                    if(row.yesTableCount){
+                                        var dd=row.vipTableCount-row.yesTableCount;
+                                        if((dd/row.yesTableCount)<=-1){
+                                            return 'color:#0000FF;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>-1 && (dd/row.yesTableCount)<=-0.8){
+                                            return 'color:#3366FF;font-weight:bold;';
+                                        }else if(dd/row.yesTableCount>-0.8 && (dd/row.yesTableCount)<=-0.6){
+                                            return 'color:#339900;font-weight:bold;';
+                                        }else if(dd/row.yesTableCount>-0.6 && (dd/row.yesTableCount)<=-0.4){
+                                            return 'color:#33CC00;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>-0.4 && (dd/row.yesTableCount)<=-0.2){
+                                            return 'color:#33FF00;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>-0.2 && (dd/row.yesTableCount)<=0){
+                                            return 'color:#33FF99;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>0 && (dd/row.yesTableCount)<=0.2){
+                                            return 'color:#FF99CC;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>0.2 && (dd/row.yesTableCount)<=0.4){
+                                            return 'color:#FF6699;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>0.4 && (dd/row.yesTableCount)<=0.6){
+                                            return 'color:#FF6600;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>0.6 && (dd/row.yesTableCount)<=0.8){
+                                            return 'color:#FF3300;font-weight:bold;';
+                                        }else if((dd/row.yesTableCount)>0.8 && (dd/row.yesTableCount)<=1){
+                                            return 'color:#FF0000;font-weight:bold;';
+                                        }else if(dd/row.yesTableCount>1){
+                                            return 'color:#CC0000;font-weight:bold;';
+                                        }else{
+                                            return 'color:#990000;font-weight:bold;';
+                                        }
+                                    }else{
+                                        return 'color:#990000;font-weight:bold;';
+                                    }
+                                }
+                            },
+                            {field:'weekTableTotal',title:'前7日平均场次',width:120,align:'center'},
+                            {field:'todayComweek',title:'当日较前7日增长',width:120,align:'center',
+                                styler: function(value,row,index){
+                                    if(row.weekTableTotal){
+                                        var dd=row.vipTableCount-row.weekTableTotal;
+                                        if(dd/row.weekTableTotal<=-1){
+                                            return 'color:#0000FF;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>-1 && dd/row.weekTableTotal<=-0.8){
+                                            return 'color:#3366FF;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>-0.8 && dd/row.weekTableTotal<=-0.6){
+                                            return 'color:#339900;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>-0.6 && dd/row.weekTableTotal<=-0.4){
+                                            return 'color:#33CC00;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>-0.4 && dd/row.weekTableTotal<=-0.2){
+                                            return 'color:#33FF00;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>-0.2 && dd/row.weekTableTotal<=0){
+                                            return 'color:#33FF99;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>0 && dd/row.weekTableTotal<=0.2){
+                                            return 'color:#FF99CC;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>0.2 && dd/row.weekTableTotal<=0.4){
+                                            return 'color:#FF6699;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>0.4 && dd/row.weekTableTotal<=0.6){
+                                            return 'color:#FF6600;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>0.6 && dd/row.weekTableTotal<=0.8){
+                                            return 'color:#FF3300;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>0.8 && dd/row.weekTableTotal<=1){
+                                            return 'color:#FF0000;font-weight:bold;';
+                                        }else if(dd/row.weekTableTotal>1){
+                                            return 'color:#CC0000;font-weight:bold;';
+                                        }else{
+                                            return 'color:#990000;font-weight:bold;';
+                                        }
+                                    }else{
+                                        return 'color:#990000;font-weight:bold;';
+                                    }
+                                }
+                            }
+                        ]]
+                    });
+                    $("#tt").datagrid("loadData",dtdd);
+//                    startTime vipTableCount yesTableCount todComyes weekTableTotal todayComweek
+                    var row={
+                        startTime:"合计",
+                        vipTableCount:compute("tt","vipTableCount"),
+                        yesTableCount:compute("tt","yesTableCount"),
+                        todComyes:"-",
+                        weekTableTotal:"-",
+                        todayComweek:"-"
+                    };
+                    $("#tt").datagrid("appendRow",row);
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

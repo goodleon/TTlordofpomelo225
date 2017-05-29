@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="../highchart/highcharts.js"></script>
+    <script type="text/javascript" src="../highchart/layout.js"></script>
+    <title>玩家场次查询</title>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'center',title:'玩家场次查询'" style="padding:5px;background:#eee;">
+    <div>
+        <label>起始场次值:</label>
+        <input id="startNum" type="text" style="width:250px" placeholder="请输入值为50的倍数的正整数([0+])" class="easyui-validatebox" data-options="required:true,missingMessage:'请输入值为50的倍数的正整数([0+])',validType:'integer'">
+        <label>查询梯度:</label>
+        <input id="intervalNum" type="text" style="width:250px" placeholder="请输入值为50的倍数的正整数([50,10000])" class="easyui-validatebox" data-options="required:true,missingMessage:'请输入值为50的倍数的正整数([50,10000])',validType:'grad'" />
+        <label>查询条数:</label>
+        <input id="maxRow" type="text" style="width:250px" placeholder="请输入区间为10至50的数值([10,50])" class="easyui-validatebox"  data-options="required:true,missingMessage:'请输入区间为10至50的数值([10,50])',validType:'playnum'"/>
+        <label>查询类型:</label>
+        <label class="radio inline"><input type="radio" name="type" value="0" checked="checked">当天活跃用户的总场次分布</label>
+        <label class="radio inline"><input type="radio" name="type" value="1">历史总场次分布</label>
+        <a href="#" class="easyui-linkbutton" onclick="getPlayNum()">点击查询</a>
+        <a href="#" class="easyui-linkbutton" onclick="downLoadXls()">下载excel</a>
+        <a href="#" class="easyui-linkbutton" id="viewBtn" onclick="viewChart()">查看图表</a>
+    </div>
+    <table  id="dg" class="easyui-datagrid" title="玩家场次分布表" style="width:100%;height:80%"
+            data-options="singleSelect:true,collapsible:true">
+        <thead>
+        <tr>
+            <th data-options="field:'grad',width:150">梯度</th>
+            <th data-options="field:'plauNum',width:150">玩家数量</th>
+            <th data-options="field:'percent',width:100">百分比</th>
+        </tr>
+        </thead>
+    </table>
+    <div id="dlg" class="easyui-dialog" title="数据展示图" closed="true"  data-options="iconCls:'icon-save'" style="width:800px;height:500px;padding:10px">
+        <div id="charts"></div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $.extend($.fn.validatebox.defaults.rules, {
+            integer: {// 验证身份证
+                validator: function (value) {
+                    return /^\+?[0-9][0-9]*$/i.test(value) && (value%50==0);
+                },
+                message: '数据格式不正确'
+            },
+            grad:{
+                validator: function (value) {
+                    return /^\+?[1-9][0-9]*$/i.test(value) && (value%50==0) && (value<=10000) &&(value>=50);
+                },
+                message: '数据格式不正确'
+            },
+            playnum:{
+                validator: function (value) {
+                    return /^\+?[1-9][0-9]*$/i.test(value) && (value>=10) && (value<=50);
+                },
+                message: '数据格式不正确'
+            }
+        });
+        $('#viewBtn').linkbutton('disable');
+    });
+    var xls=[{
+        grad: "梯度",
+        plauNum:"场次数",
+        percent:"百分比"
+    }];
+    var xls1=[];
+    var xArr=[];//x坐标
+    var yArr=[];//y坐标
+    var totalCount=0;
+    function  getPlayNum(){
+        var msg={};
+        msg.type=parseInt($("input[type='radio']:checked").val());
+        msg.startNum=parseInt($("#startNum").val());
+        msg.intervalNum=parseInt($("#intervalNum").val());
+        msg.maxRow=parseInt($("#maxRow").val());
+        if(isNaN(msg.startNum)||!msg.intervalNum||!msg.maxRow){
+            $.messager.alert("操作提示","请将查询条件填写完全","error");
+            return;
+        }
+        postJson("/userData/getPlayNum",msg,function(rtn){
+            //res.json({total:12, row:[1,2,3,4,5,5,6,6,6,67]});
+            if(rtn.er==1){
+                $.messager.alert("操作提示","没有查看权限","error");
+            }else if(rtn.er==2){
+                $.messager.alert("操作提示","输入参数有误","error");
+            }else if(rtn.er==3){
+                $.messager.alert("操作提示","参数范围错误","error");
+            }else if((typeof rtn).toString()=="object"){
+                xls1=[];
+                var data={};
+                data.total=rtn.total;
+                data.rows=[];
+                var start=msg.startNum;
+                for(var l=0;l<rtn.row.length;l++){
+                    totalCount+=rtn.row[l];
+                }
+                for(var i=0;i<rtn.row.length;i++){
+                    data.rows[i]={};
+                    data.rows[i]["grad"]=start+"-"+(msg.startNum+(i+1)*msg.intervalNum);
+                    start=msg.startNum+(i+1)*msg.intervalNum+1;
+                    data.rows[i]["plauNum"]=rtn.row[i];
+                    if(totalCount){
+                        data.rows[i]["percent"]=(rtn.row[i]/totalCount*100).toFixed(2)+"%";
+                    }else{
+                        data.rows[i]["percent"]="0.00%";
+                    }
+                    xArr.push(data.rows[i]["grad"]);
+                    yArr.push(rtn.row[i]);
+                }
+                totalCount=0;
+                $("#dg").datagrid("loadData",data);
+                xls1=xls.concat(data.rows);
+                $('#viewBtn').linkbutton('enable');
+            }else{
+                $.messager.alert("操作提示","网络错误","error");
+            }
+        })
+    }
+    function downLoadXls(){
+        if(!xls1)
+        {
+            $.messager.alert("操作提示", "无数据可导出1","error");
+            return;
+        }
+        postJson("/tools/downloadExcelFile",{data:xls1},
+                function(data)
+                {
+                    console.log(data);
+                    if(data)
+                    {
+                        console.log(parent.document.location.origin);
+                        document.location.href = parent.document.location.origin  + data;
+                    }else
+                    {
+                        $.messager.alert("操作提示", "无数据可导出2","error");
+                    }
+                }
+        );
+    }
+    function viewChart(){
+        $('#dlg').dialog('open');
+        $('#charts').highcharts({
+            title: {
+                text: "玩家场次分布图",
+                x: -20 //center
+            },
+            chart:{
+                width:760,
+                height:400
+            },
+            subtitle: {
+                text: '',
+                x: -20
+            },
+            xAxis: {
+                categories: xArr
+            },
+            yAxis: {
+                title: {
+                    text: '场次数'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            credits: {
+                enabled:false
+            },
+            tooltip: {
+                valueSuffix: ''
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name:"场次数",
+                data:yArr,
+                dataLabels:{
+                    enabled : true,
+                    formatter:function() {
+                        var str ="";
+                        if(totalCount){
+                            var rate = this.y / totalCount;
+                            rate = (rate * 100).toFixed(2);
+                            str = rate + '%';
+                        }else{
+                            str="0.00%";
+                        }
+                        return str;
+                    }
+                }
+            }]
+        });
+    }
+</script>
+</body>
+</html>

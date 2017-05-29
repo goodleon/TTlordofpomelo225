@@ -1,0 +1,25 @@
+#!/bin/bash
+
+export NODE_PATH=/user/lib/node_modules
+
+currentPath=$PWD
+
+if [ $# != 1 ]; then
+   bash echoColor "${0}:The number of parameters must be equal to 1" error;
+exit 1;
+fi
+
+cd /home/hnmj
+
+touch $1.txt
+
+chown hnmj $1.txt
+
+chgrp hnmj $1.txt
+
+ln -s /home/hnmj/$1.txt /root/$!/server/log.txt
+
+if [ $? != 0 ];then
+   bash echoColor "error" error;
+exit 1;
+fi

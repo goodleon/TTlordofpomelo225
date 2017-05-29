@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="email=no">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../css/hygl.css"/>
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>补钻日志</title>
+</head>
+<body style="width:100%;height:100%;">
+<div>
+    补钻日期:<input class="easyui-datebox" id="filstarttime"/>
+          至 <input class="easyui-datebox" id="filendtime"/>
+    <a href="javascript:void(0);" class="easyui-linkbutton" id="quire" onclick="quire()">点击查询</a>
+</div>
+<table id="dg" class="easyui-datagrid"  style="width:100%;height:600px;margin:0;padding:0">
+</table>
+<div id="bzlog" class="easyui-dialog"  closed="true" title="补钻详情" style="width:800px;height:600px;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true">
+
+</div>
+<script>
+    $('#dg').datagrid({
+        title:'补钻日志',
+        border:false,
+        fitColumns:true,
+        collapsible:true,
+        singleSelect: true,
+        remoteSort:false,
+        autoRowHeight:true,
+        columns:[[
+            {field:'time',title:'日期',width:80,align:'center'},
+            {field:'mid',title:'操作员ID',width:80,align:'center'},
+            {field:'title',title:'操作类型',width:80,align:'center'},
+            {field:'operateContent',title:'操作内容',width:240,align:'center'},
+            {field:'commit',title:'备注',width:150,align:'center'},
+            {field:'detail',title:'详情',width:80,align:'center',
+                formatter:function(value,rec){
+                    var btn = '<a class="editcls" onclick="opendia()" href="javascript:void(0)">点击查看</a>';
+                    return btn;
+                }
+            }
+        ]]
+    });
+    function format(){
+        var dat=new Date();
+        var y = dat.getFullYear();
+        var m = dat.getMonth()+1;
+        var d = dat.getDate();
+        return  y+'-'+m+'-'+d;
+    }
+    function ddhandle(timestr){
+        var dayarr = timestr.split('-');
+        if(parseInt(dayarr[1])<10){
+            dayarr[1]='0'+dayarr[1];
+        }
+        if(parseInt(dayarr[2])<10){
+            dayarr[2]='0'+dayarr[2];
+        }
+        var dayVal = dayarr[0] + dayarr[1] +dayarr[2];
+        return dayVal;
+    }
+    var startDay=$("#filstarttime").datebox("getValue");
+    var endDay=$("#filendtime").datebox("getValue");
+    function getStrDate(daydval){
+        var loginbegin=new Date(new Date().getTime()-daydval*23*59*59*1000);
+        var year = loginbegin.getFullYear();//2015
+        var mon = loginbegin.getMonth()+1;//9
+        if(mon<10){
+            mon="0"+mon;
+        }
+        var day = loginbegin.getDate();//21
+        if(day<10){
+            day="0"+day;
+        }
+        return year+mon+day;
+    }
+    //页面初始化请求近3天的补钻日志
+    function quire(){
+        var msg={};
+        msg.startDay=ddhandle($("#filstarttime").datebox("getValue"));
+        msg.endDay=ddhandle($("#filendtime").datebox("getValue"));
+        postJson("/admin/getSupplyDiamond",msg,function(rtn){
+            console.log(rtn);
+            console.log(JSON.stringify(rtn));
+            var rows=rtn.rows;
+            var data={};
+            data.rows=[];
+            data.total=rows.length;
+            for(var i=0;i<rows.length;i++){
+                /* if(rows[i]["type"]==1){
+                 rows[i]["type"]="全体补钻";
+                 }else if(rows[i]["type"]==2){
+                 rows[i]["type"]="ID补钻";
+                 }else if(rows[i]["type"]==3){
+                 rows[i]["type"]="筛选补钻";
+                 }else if(rows[i]["type"]==4){
+                 rows[i]["type"]="指定补钻";
+                 }else{
+                 rows[i]["type"]="导入补钻";
+                 }*/
+                rows[i]["operateContent"]=rows[i]["title"]+":补钻人数:"+rows[i]["members"].length+"每人补钻:"+rows[i]["num"]+"补钻总额:"+rows[i]["total"];
+                data.rows.push(rows[i]);
+            }
+            $('#dg').datagrid("loadData",data);
+        });
+    }
+    //页面请求补钻日志
+    function initial(){
+        var msg={};
+        msg.startDay=getStrDate(3);
+        msg.endDay=ddhandle(format());
+        postJson("/admin/getSupplyDiamond",msg,function(rtn){
+            console.log(rtn);
+            console.log(JSON.stringify(rtn));
+            var rows=rtn.rows;
+            for(var i=0;i<rows.length;i++){
+               /* if(rows[i]["type"]==1){
+                    rows[i]["type"]="全体补钻";
+                }else if(rows[i]["type"]==2){
+                    rows[i]["type"]="ID补钻";
+                }else if(rows[i]["type"]==3){
+                    rows[i]["type"]="筛选补钻";
+                }else if(rows[i]["type"]==4){
+                    rows[i]["type"]="指定补钻";
+                }else{
+                    rows[i]["type"]="导入补钻";
+                }*/
+                rows[i]["operateContent"]=rows[i]["title"]+":补钻人数:"+rows[i]["members"].length+"每人补钻:"+rows[i]["num"]+"补钻总额:"+rows[i]["total"];
+                data.rows.push(rows[i]);
+            }
+        });
+    }
+    initial();
+    //打开对应的查看详情可以查看补钻详情
+    function opendia(){
+        $("#bzlog").dialog("open");
+    }
+</script>
+</body>
+</html>

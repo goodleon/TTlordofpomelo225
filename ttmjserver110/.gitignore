@@ -1,0 +1,17 @@
+.idea
+testCfg.json
+.idea
+testCfg.json
+game-server/logs
+web-server/public/ext5
+ccclient/src/Result.js
+ccclient/src/majiang.js
+
+
+.idea/dictionaries/Fanjiahe.xml
+.idea/misc.xml
+.idea/mjserver.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+nohup.out

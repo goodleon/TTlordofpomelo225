@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="email=no">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../css/hygl.css"/>
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>回归统计</title>
+</head>
+<body class="easyui-layout">
+<div style="margin:2px 0;">
+    <label>回归统计:</label>
+    <input class="easyui-datebox" data-options="onSelect:onSelect"/>
+    <input class="easyui-datebox" data-options="onSelect:onSelect2"/>
+    <a href="#" class="easyui-linkbutton" onclick="searchForDate()">按日期搜索</a>
+    <a href="#" class="easyui-linkbutton" onclick="getGraph()">生成图表</a>
+</div>
+
+<table id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:90%"
+       data-options="singleSelect:true,collapsible:true">
+    <thead>
+    <tr>
+        <th data-options="field:'date',width:80">日期</th>
+        <th data-options="field:'regCount',width:80">注册人数</th>
+        <th data-options="field:'activeCount',width:80">活跃人数</th>
+        <th data-options="field:'sevenup',width:150">7日以上回归人数</th>
+        <th data-options="field:'fifteenup',width:150">15日以上回归人数</th>
+        <th data-options="field:'thirtyup',width:150">30日以上回归人数</th>
+        <th data-options="field:'thirtyup',width:150">60日以上回归人数</th>
+    </tr>
+    </thead>
+</table>
+<script>
+    function LoadDate(startDate,endDate)
+    {
+        postJson("/admin/",{startDate: startDate.getTime(),endDate: endDate.getTime()},
+                function(data)
+                {
+                    $("#dg").datagrid("loadData",data);
+                    if(data.total==0){
+                        $("#dg").datagrid("appendRow",{date:"暂无数据",userTotal:'',userToday:'',newPay:'',payRate:'',sellToday:'',payTotal:'',payReal:'',playNum:'',averagePay:'',payNum:'',giftNum:''});
+                    }
+                }
+        );
+    }
+    function LoadData(dayNum)
+    {
+        var endDate=new Date();
+        var startDate=new Date();
+        startDate.setDate(startDate.getDate()-(dayNum-1));
+        LoadDate(startDate,endDate);
+    }
+
+    var startDate;
+    var endDate;
+
+    function onSelect2(date) {
+        endDate = date;
+    }
+
+    function onSelect(date){
+
+        startDate=date;
+    }
+
+    function searchForDate(){
+        LoadDate(startDate,endDate);
+    }
+    function getGraph(){
+
+    }
+</script>
+</body>
+</html>

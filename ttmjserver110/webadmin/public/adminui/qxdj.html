@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="../css/layout.css">
+	<title>权限等级</title>
+	<!-- 使用的checkbox兼容性文件 -->
+	<script type="text/javascript" src="../highchart/modernizr.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+</head>
+<body>
+	<div class="box">
+		<div class="qxdjbox">
+			<div class="qxdjmenu">
+				<div class="menubox">
+					<fieldset class="manager">
+					    <legend>管理后台级权限</legend>
+						<ul>
+							<li>超级管理员(10)</li>
+							<li>区域经理(3)</li>
+							<li>查看者(4)</li>
+							<li>客户经理(1)</li>
+					    </ul>
+					</fieldset>
+				</div>
+				<div class="menubox">
+					<fieldset class="agent">
+						<legend>代理后台级权限</legend>
+						<ul>
+							<li>高级会员(2)</li>
+							<li>普通会员(0)</li>
+						</ul>
+					</fieldset>
+				</div>
+			</div>
+			<ul class="qxdjshow">
+				<li class="cjgly">
+					<fieldset class="zyqx">
+							<legend><input type="checkbox"  disabled="disabled" id="checkbox_a11" class="chk" checked="checked"><label for="checkbox_a11"></label>主页权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a12" class="chk"checked="checked"><label for="checkbox_a12"></label>在线人数查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a13" class="chk"checked="checked"><label for="checkbox_a13"></label>数据统计查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a14" class="chk"checked="checked"><label for="checkbox_a14"></label>权限说明</li>
+							</ul>
+					</fieldset>
+					<fieldset class="kfglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a15" class="chk" checked="checked"><label for="checkbox_a15"></label>客服管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a16" class="chk" checked="checked"><label for="checkbox_a16"></label>充值记录查看</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a17" class="chk" checked="checked"><label for="checkbox_a17"></label>会员管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a18" class="chk" checked="checked"><label for="checkbox_a18"></label>会员管理(全部功能)</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a19" class="chk" checked="checked"><label for="checkbox_a19"></label>返利计算查看</li>			
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a20" class="chk" checked="checked"><label for="checkbox_a20"></label>用户管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a21" class="chk" checked="checked"><label for="checkbox_a21"></label>用户管理(全部功能)</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a22" class="chk" checked="checked"><label for="checkbox_a22"></label>对战统计查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a115" class="chk" checked="checked"><label for="checkbox_a115"></label>用户存留查看</li>
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a23" class="chk" checked="checked"><label for="checkbox_a23"></label>支付管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a24" class="chk" checked="checked"><label for="checkbox_a24"></label>支付配置</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a25" class="chk" checked="checked"><label for="checkbox_a25"></label>二级返利配置</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a26" class="chk" checked="checked"><label for="checkbox_a26"></label>三级返利配置</li>				
+							</ul>
+					</fieldset>	
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a27" class="chk" checked="checked"><label for="checkbox_a27"></label>运营管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a28" class="chk" checked="checked"><label for="checkbox_a28"></label>活动管理</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a29" class="chk" checked="checked"><label for="checkbox_a29"></label>代理传信</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a30" class="chk" checked="checked"><label for="checkbox_a30"></label>游戏传信</li>				
+							</ul>
+					</fieldset>								
+				</li>
+				<li class="qyjl">
+					<fieldset class="zyqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a31" class="chk"><label for="checkbox_a31"></label>主页权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a32" class="chk" checked="checked"><label for="checkbox_a32"></label>在线人数查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a33" class="chk"><label for="checkbox_a33"></label>数据统计查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a34" class="chk"><label for="checkbox_a34"></label>权限说明</li>
+							</ul>
+					</fieldset>
+					<fieldset class="kfglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a35" class="chk"><label for="checkbox_a35"></label>客服管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a36" class="chk"><label for="checkbox_a36"></label>充值记录查看</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a37" class="chk" checked="checked"><label for="checkbox_a37"></label>会员管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a38" class="chk" checked="checked"><label for="checkbox_a38"></label>会员管理(全部功能)</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a39" class="chk" checked="checked"><label for="checkbox_a39"></label>返利计算查看</li>			
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a40" class="chk"><label for="checkbox_a40"></label>用户管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a41" class="chk" checked="checked"><label for="checkbox_a41"></label>用户管理(全部功能)</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a42" class="chk" checked="checked"><label for="checkbox_a42"></label>对战统计查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a43" class="chk"><label for="checkbox_a43"></label>用户存留查看</li>				
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a44" class="chk" checked="checked"><label for="checkbox_a44"></label>支付管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a45" class="chk" checked="checked"><label for="checkbox_a45"></label>支付配置</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a46" class="chk" checked="checked"><label for="checkbox_a46"></label>二级返利配置</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a47" class="chk" checked="checked"><label for="checkbox_a47"></label>三级返利配置</li>				
+							</ul>
+					</fieldset>	
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a48" class="chk" checked="checked"><label for="checkbox_a48"></label>运营管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a49" class="chk" checked="checked"><label for="checkbox_a49"></label>活动管理</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a50" class="chk" checked="checked"><label for="checkbox_a50"></label>代理传信</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a51" class="chk" checked="checked"><label for="checkbox_a51"></label>游戏传信</li>				
+							</ul>
+					</fieldset>						
+				</li>
+				<li class="ckz">
+					<fieldset class="zyqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a52" class="chk"><label for="checkbox_a52"></label>主页权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a53" class="chk"><label for="checkbox_a53"></label>在线人数查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a54" class="chk"><label for="checkbox_a54"></label>数据统计查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a55" class="chk"><label for="checkbox_a55"></label>权限说明</li>
+							</ul>
+					</fieldset>
+					<fieldset class="kfglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a56" checked="checked" class="chk"><label for="checkbox_a56"></label>客服管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a57" checked="checked" class="chk"><label for="checkbox_a57"></label>充值记录查看(限制查看只可筛选查看充值日期及充值金额)</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a58" class="chk"><label for="checkbox_a58"></label>会员管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a59" class="chk" ><label for="checkbox_a59"></label>会员管理(全部功能)</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a60" class="chk" ><label for="checkbox_a60"></label>返利计算查看</li>			
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a61" class="chk"><label for="checkbox_a61"></label>用户管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a62" class="chk" ><label for="checkbox_a62"></label>用户管理(全部功能)</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a63" class="chk" checked="checked"><label for="checkbox_a63"></label>对战统计查看</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a64" class="chk"><label for="checkbox_a64"></label>用户存留查看</li>				
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a65" class="chk"><label for="checkbox_a65"></label>支付管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a66" class="chk"><label for="checkbox_a66"></label>支付配置</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a67" class="chk"><label for="checkbox_a67"></label>二级返利配置</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a68" class="chk"><label for="checkbox_a68"></label>三级返利配置</li>				
+							</ul>
+					</fieldset>	
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a69" class="chk"><label for="checkbox_a69"></label>运营管理权限</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a70" class="chk"><label for="checkbox_a70"></label>活动管理</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a71" class="chk"><label for="checkbox_a71"></label>代理传信</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a72" class="chk"><label for="checkbox_a72"></label>游戏传信</li>				
+							</ul>
+					</fieldset>					
+				</li>
+				<li class="khjl">
+					<fieldset class="zyqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a73" class="chk" checked="checked"><label for="checkbox_a73"></label>出售</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a74" class="chk" checked="checked"><label for="checkbox_a74"></label>出售钻石权限</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a111" class="chk" checked="checked"><label for="checkbox_a111"></label>查看玩家战绩</li>
+							</ul>
+					</fieldset>
+					<fieldset class="kfglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a75" class="chk" checked="checked"><label for="checkbox_a75"></label>充值</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a112" class="chk" checked="checked"><label for="checkbox_a112"></label>充值钻石相关功能</li>
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a76" class="chk" checked="checked"><label for="checkbox_a76"></label>出售记录</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a77" class="chk" checked="checked"><label for="checkbox_a77"></label>查看自己的出售记录</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a78" class="chk" checked="checked"><label for="checkbox_a78"></label>购买记录</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a79" class="chk" checked="checked"><label for="checkbox_a79"></label>查看自己的购买记录</li>			
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a80" class="chk" checked="checked"><label for="checkbox_a80"></label>我的会员</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a81" class="chk" checked="checked"><label for="checkbox_a81"></label>会员购买明细</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a82" class="chk" checked="checked"><label for="checkbox_a82">
+								</label>添加会员</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a83" class="chk" checked="checked"><label for="checkbox_a83"></label>添加钻石</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a84" class="chk" checked="checked"><label for="checkbox_a84"></label>部分会员信息查看权限</li>					
+							</ul>
+					</fieldset>			
+				</li>
+				<li class="gjhy">
+					<fieldset class="zyqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a85" class="chk" checked="checked"><label for="checkbox_a85"></label>出售</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a86" class="chk" checked="checked"><label for="checkbox_a86"></label>出售钻石权限</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a113" class="chk"><label for="checkbox_a113"></label>查看玩家战绩</li>
+							</ul>
+					</fieldset>
+					<fieldset class="kfglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a87" class="chk" checked="checked"><label for="checkbox_a87"></label>充值</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a88" class="chk" checked="checked"><label for="checkbox_a88"></label>充值钻石相关功能</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a89" class="chk" checked="checked"><label for="checkbox_a89"></label>出售记录</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a90" class="chk" checked="checked"><label for="checkbox_a90"></label>查看自己的出售记录</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a91" class="chk" checked="checked"><label for="checkbox_a91"></label>购买记录</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a92" class="chk" checked="checked"><label for="checkbox_a92"></label>查看自己的购买记录</li>			
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a93" class="chk"><label for="checkbox_a93"></label>我的会员</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a94" class="chk"><label for="checkbox_a94"></label>会员购买明细</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a95" class="chk" checked="checked"><label for="checkbox_a95"></label>添加会员</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a96" class="chk"><label for="checkbox_a96"></label>添加钻石</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a97" class="chk" checked="checked"><label for="checkbox_a97"></label>部分会员信息查看权限</li>					
+							</ul>
+					</fieldset>			
+				</li>
+				<li class="pthy">
+					<fieldset class="zyqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a98" class="chk" checked="checked"><label for="checkbox_a98"></label>出售</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a99" class="chk" checked="checked"><label for="checkbox_a99"></label>出售钻石权限</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a114" class="chk"><label for="checkbox_a114"></label>查看玩家战绩</li>
+							</ul>
+					</fieldset>
+					<fieldset class="kfglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a100" class="chk" checked="checked"><label for="checkbox_a100"></label>充值</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a101" class="chk" checked="checked"><label for="checkbox_a101"></label>充值钻石相关功能</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a102" class="chk" checked="checked"><label for="checkbox_a102"></label>出售记录</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a103" class="chk" checked="checked"><label for="checkbox_a103"></label>查看自己的出售记录</li>		
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a104" class="chk" checked="checked"><label for="checkbox_a104"></label>购买记录</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a105" class="chk" checked="checked"><label for="checkbox_a105"></label>查看自己的购买记录</li>			
+							</ul>
+					</fieldset>
+					<fieldset class="hyglqx">
+							<legend><input type="checkbox" disabled="disabled" id="checkbox_a106" class="chk"><label for="checkbox_a106"></label>我的会员</legend>
+							<ul>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a107" class="chk"><label for="checkbox_a107"></label>会员购买明细</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a108" class="chk"><label for="checkbox_a108"></label>添加会员</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a109" class="chk"><label for="checkbox_a109"></label>添加钻石</li>
+								<li><input type="checkbox" disabled="disabled" id="checkbox_a110" class="chk" checked="checked"><label for="checkbox_a110"></label>基础推荐信息查看</li>
+							</ul>
+					</fieldset>			
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script>
+	$(document).ready(function(){
+		$(".manager li").eq(0).css({"background":"#00BBEE","border-radius":"50%"});
+	})
+	// 点击按钮切换右侧菜单
+	$(".manager:eq(0) li").click(function(){
+		var len=$(".qxdjshow:eq(0)>li").length;
+		var nth=$(this).index();
+		for(var i=0;i<len;i++){
+			$(".qxdjshow:eq(0)>li").eq(i).css("display","none");
+			$(".manager:eq(0) li").eq(i).css({"background":"","border-radius":"none"});
+			$(".agent:eq(0) li").eq(i).css({"background":"","border-radius":"none"});
+		}
+
+		$(this).css({"background":"#00BBEE","border-radius":"50%"});
+		$(".qxdjshow:eq(0)>li").eq(nth).css("display","block");
+	})
+	$(".agent:eq(0) li").click(function(){
+		var len=$(".qxdjshow:eq(0)>li").length;
+		var nth=$(this).index()+4;
+		for(var i=0;i<len;i++){
+			$(".qxdjshow:eq(0)>li").eq(i).css("display","none");
+			$(".manager:eq(0) li").eq(i).css({"background":"","border-radius":"none"});
+			$(".agent:eq(0) li").eq(i).css({"background":"","border-radius":"none"});
+		}
+		$(this).css({"background":"#00BBEE","border-radius":"50%"});
+		$(".qxdjshow:eq(0)>li").eq(nth).css("display","block");
+	})
+	//设置没有选中的check后面的字为灰色
+	var chklength=$(".chk").length;
+	for(var m=0;m<chklength;m++){
+		if($(".chk").eq(m).attr("checked")=="checked"){
+			$(".chk").eq(m).parent("li").css("color","black");
+		}else{
+			$(".chk").eq(m).parent("li").css("color","#ccc");
+		}
+	}
+</script>
+</html>

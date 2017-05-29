@@ -1,0 +1,66 @@
+﻿1. 关闭本机 firewalld , 安装iptables管理防火墙
+	systemctl stop firewalld
+	systemctl mask firewalld
+	yum install iptables-services
+	systemctl enable iptables
+
+2. 打开ip转发
+	vim /etc/sysctl.conf
+	增加一条  net.ipv4.ip_forward = 1  保存
+	sysctl -p /etc/sysctl.conf
+3. 添加ip端口转发
+
+
+vim /etc/sysconfig/iptables
+
+境外服务器：
+
+*nat
+
+-A PREROUTING -p tcp -m tcp --dport 15010:15039 -j DNAT --to-destination 境内服务器内网IP（ifconfig看到的第一个ip）
+-A POSTROUTING -p tcp -m tcp --dport 15010:15039 -j MASQUERADE
+
+-A PREROUTING -p tcp -m tcp --dport 88:92 -j DNAT --to-destination 境内服务器内网IP（ifconfig看到的第一个ip）
+-A POSTROUTING -p tcp -m tcp --dport 88:92 -j MASQUERADE
+
+
+
+境内服务器：
+
+*nat
+
+-A PREROUTING -p tcp -m tcp --dport 15010:15039 -j DNAT --to-destination 国内高防或者某连接服外网IP
+-A POSTROUTING -p tcp -m tcp --dport 15010:15039 -j MASQUERADE
+
+-A PREROUTING -p tcp -m tcp --dport 88:92 -j DNAT --to-destination 国内高防或者数据服（webadmin所在服务器）外网IP
+-A POSTROUTING -p tcp -m tcp --dport 88:92 -j MASQUERADE
+
+
+修改后
+
+service iptables restart
+
+
+
+
+老的方式:指令添加的
+
+香港机器上添加: 
+iptables -t nat -I PREROUTING -p tcp --dport 15010:15039 -j DNAT --to 转向国内相应项目的vpc服务器内网ip
+iptables -t nat -I PREROUTING -p tcp --dport 88:92 -j DNAT --to 转向国内相应项目的vpc服务器内网ip
+
+
+国内机器上添加:
+iptables -t nat -I PREROUTING -p tcp --dport 15010:15039 -j DNAT --to 转向相应国内的高防 或者 某台链接服 外网ip
+iptables -t nat -I PREROUTING -p tcp --dport 88:92 -j DNAT --to 转向相应国内数据服的外网ip
+
+
+service iptables save
+
+
+vim /etc/sysconfig/iptables
+-A INPUT -p tcp -m tcp --dport 800 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 15010:15039 -j ACCEPT
+-A INPUT -p tcp -m tcp --dport 88:92 -j ACCEPT
+-A POSTROUTING -p tcp -m tcp --dport 88:92 -j MASQUERADE
+-A POSTROUTING -p tcp -m tcp --dport 15010:15039 -j MASQUERADE

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>找回密码</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="newcss/newPhonebind.css"/>
+    <link rel="stylesheet" href="newcss/reset.css"/>
+    <link rel="stylesheet" href="newcss/intlTelInput.css"/>
+</head>
+<body>
+<div class="alert alert-warning alert-dismissable"  role="alert">
+</div>
+<img  class="img-rounded img-responsive" alt="产品头像表" id="productImg" src=""/>
+<h1 id="title"></h1>
+<form role="form" class="form-horizontal">
+    <div class="form-group">
+        <label for="IuserName" class="col-xs-4  col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">用户名:</label>
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <input type="text" name="userID" class="form-control" id="IuserName" placeholder="输入用户ID" required/>
+            <span class="help-block glyphicon glyphicon-info-sign">请填写用户ID</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="userTelphone" class="col-xs-4  col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">手机号:</label>
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <input type="tel" name="userTelphone" class="form-control" id="userTelphone" placeholder="请输入绑定的手机号" required/>
+            <span class="help-block glyphicon glyphicon-info-sign">请填写正确的电话号码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="identyCode" class="col-xs-4  col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">验证码:</label>
+        <div class="col-xs-4 col-sm-4 col-md-4">
+            <input type="text" name="identyCode" class="form-control" id="identyCode" placeholder="输入验证码"/>
+            <span class="help-block glyphicon glyphicon-info-sign">请填写正确的验证码</span>
+        </div>
+        <div class="col-xs-4 col-sm-2 col-md-2">
+            <button role="button" class="btn btn-primary btn-block" id="getidentyCode">点击获取</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="newPass" class="col-xs-4  col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">新密码:</label>
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <input type="password" name="newPass" class="form-control" id="newPass" placeholder="请输入新密码" required/>
+            <span class="help-block glyphicon glyphicon-info-sign">请填写新密码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="newPassagain" class="col-xs-4  col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">再次输入:</label>
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <input type="password" name="newPassagain" class="form-control" id="newPassagain" placeholder="请再次输入新密码" required/>
+            <span class="help-block glyphicon glyphicon-info-sign">请再次填写新密码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4">
+            <button role="button" class="btn btn-default btn-block" id="confirmbtn" disabled="disabled">确定</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4">
+            <a role="button" class="btn btn-primary btn-block" href="login.html">返回</a>
+        </div>
+    </div>
+</form>
+<p class="lead">未绑定手机号的用户需要先绑定手机才能使用找回功能,如有其它疑问请联系客服</p>
+<script src="script/jquery-1.11.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="script/intlTelInput.js"></script>
+<script src="script/bootstrap-modalmanager.js"></script>
+<script src="script/bootstrap-modal.js"></script>
+<script src="script/alert.js"></script>
+<script src="script/slidemenu.js"></script>
+<script src="share.js"></script>
+<script>
+    $(function(){
+        function changeAvatarAndName(){
+            $("#productImg").attr("src", "../"+getGameType(window.location.host).loginImg);
+            $("#title").text(getGameType(window.location.host).name);
+        }
+        changeAvatarAndName();
+        var count=120;
+        var InterValObj;
+        function stopsetTime(){
+            clearInterval(InterValObj);//停止计时器;
+            $("#getidentyCode").removeClass("btn-default").addClass("btn-primary").html("点击获取");
+            count=120;
+        }
+        function setRemainTime(){
+            if(count==0){
+                clearInterval(InterValObj);//停止计时器
+                $("#getidentyCode").removeAttr("disabled").removeClass("btn-default").addClass("btn-primary").html("点击获取");
+                count=120;
+            }
+            else{
+                count--;
+                $("#getidentyCode").attr("disabled",true).removeClass('btn-primary').addClass("btn-primary").html(count+"s");
+            }
+        }
+        // 输入框的字段校验
+        $("#userID").blur(function(){
+            if($(this).val().length==""||$(this).val()==""||$(this).val()==null){
+                $(".help-block").eq(0).css("display","block");
+            }else{
+                $(".help-block").eq(0).css("display","none");
+            }
+        });
+        $("#userTelphone").blur(function(){
+            if($(this).val().length==0||$(this).val().length>15){
+                $(".help-block").eq(1).css("display","block");
+            }else{
+                $(".help-block").eq(1).css("display","none");
+            }
+        });
+        $("#inputCode").blur(function(){
+            if($(this).val().length!=6||$(this).val().length==0||$(this).val()==""){
+                $(".help-block").eq(2).css("display","block");
+            }else{
+                $(".help-block").eq(2).css("display","none");
+            }
+        });
+        $("#userPass").blur(function(){
+            if($(this).val().length==0||$(this).val()==""){
+                $(".help-block").eq(3).css("display","block");
+            }else{
+                $(".help-block").eq(3).css("display","none");
+            }
+        });
+        $("#userPassAgain").blur(function(){
+            if($(this).val().length==0||$(this).val()==""){
+                $(".help-block").eq(4).css("display","block");
+            }else{
+                $(".help-block").eq(4).css("display","none");
+            }
+        });
+        $("#getidentyCode").click(function(e){
+            e.preventDefault();
+            var userName=$("#IuserName").val();
+            var phone=$("#userTelphone").val();
+//        此处需要进行用户名的验证
+            if(userName!=""&&userName!=null){
+                var msg={
+                    mid:parseInt(userName),
+                    type:3,
+                    mobile:parseFloat(phone)
+                };
+//      此处逻辑需要提交手机号码返回验证码进行填写
+                postJson("/login/doGetSms",msg,function(rtn){
+                    if(rtn.er == -1) {
+                        $(".alert").eq(0).alertModal('手机验证服务未开启',2000);
+                        stopsetTime();
+                    } else if(!rtn.er) {
+                        $(".alert").eq(0).alertModal('请查收手机验证码',2000);
+                        InterValObj=setInterval(setRemainTime,1000);
+                        $("#confirmbtn").removeAttr("disabled").removeClass("btn-default").addClass("btn-primary");
+                    } else {
+                        if (rtn.er == 1) {
+                            $(".alert").eq(0).alertModal('请先绑定手机',2000);
+                        } else if (rtn.er == 2) {
+                            $(".alert").eq(0).alertModal('输入有误，请检查',2000);
+                        } else if (rtn.er == 3) {
+                            $(".alert").eq(0).alertModal("请求过于频繁，请在" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                        }
+                        else if (rtn.er == 4) {
+                            $(".alert").eq(0).alertModal("1小时只能请求6次，请" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                        }
+                        else if (rtn.er == 5) {
+                            $(".alert").eq(0).alertModal('手机号码错误',2000);
+                        } else if (rtn.er == 6) {
+                            $(".alert").eq(0).alertModal('手机号码已绑定',2000);
+                        } else if (rtn.er == 7) {
+                            $(".alert").eq(0).alertModal('输入的ID有误',2000);
+                        } else if (rtn.er == 8) {
+                            $(".alert").eq(0).alertModal('登录过期，请重新登录',2000);
+                            //跳到登录页面
+                            window.location.href="/login.html";
+                        }
+                        stopsetTime();
+                    }
+                });
+            }else{
+                $(".alert").eq(0).alertModal('请输入信息',2000);
+            }
+        })
+        $("#confirmbtn").click(function(e){
+            //        首先判断验证码是否正确
+                e.preventDefault();
+                var pass=$("#newPass").val();
+                var passagain=$("#newPassagain").val();
+                var identycode=$("#identyCode").val();
+                var userName=parseInt($("#IuserName").val());
+                var msg={
+                    pass:pass,
+                    mcode:identycode,
+                    mid:userName,
+                    type:3
+                };
+                if(pass!=""&&passagain!=""&&pass==passagain&&identycode!=""&&identycode!=""){
+                    postJson("/login/doCheckSms ",msg,function(rtn) {
+                        if (rtn == -1) {
+                            $(".alert").eq(0).alertModal('手机验证服务未开启', 2000);
+                        } else if (rtn == 0) {
+                            $(".alert").eq(0).alertModal('修改密码成功', 2000);
+                            $("#newPass").val("");
+                            $("#newPassagain").val("");
+                            $("#identyCode").val("");
+                            $("#IuserName").val("");
+                            $("#userTelphone").val("");
+                            stopsetTime();
+                            window.location.href = "/login.html";
+                        } else if (rtn == 1) {
+                            $(".alert").eq(0).alertModal('请先获取验证码', 2000);
+                        } else if (rtn == 2) {
+                            $(".alert").eq(0).alertModal('输入信息有误，请检查', 2000);
+                        } else if (rtn == 3) {
+                            $(".alert").eq(0).alertModal('验证码错误', 2000);
+                        } else if (rtn == 4) {
+                            $(".alert").eq(0).alertModal('验证码过期请重新获取', 2000);
+                        } else if (rtn == 5) {
+                            $(".alert").eq(0).alertModal('登录过期，请重新登录', 2000);
+                            window.location.href = "/login.html";
+                        } else if (rtn == 6) {
+                            $(".alert").eq(0).alertModal('尝试次数过多请重新获取', 2000);
+                        }else if(rtn==7){
+                            $(".alert").eq(0).alertModal('手机号码已经被绑定', 2000);
+                        }
+                    })
+                }
+            });
+    })
+</script>
+</body>
+</html>

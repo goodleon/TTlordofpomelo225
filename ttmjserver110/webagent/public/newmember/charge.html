@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cmn-Hans">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <title>充值</title>
+    <link rel="stylesheet" href="../newcss/reset.css">
+    <link href="../bootstrap/css/bootstrap.min.css" title="" rel="stylesheet" />
+    <link title="" href="../newcss/style.css" rel="stylesheet" type="text/css"  />
+    <link title="blue" href="../newcss/dermadefault.css" rel="stylesheet" type="text/css"/>
+    <link href="../newcss/templatecss.css" rel="stylesheet" title="" type="text/css" />
+</head>
+
+<body>
+<div class="alert alert-info alert-dismissable" role="alert">
+    <button class="close" type="button" onclick="$('.alert').eq(0).hide();">&times;</button>
+    <span></span>
+</div>
+<nav class="nav navbar-default navbar-mystyle navbar-fixed-top">
+    <div class="navbar-header">
+        <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand mystyle-brand"><span class="glyphicon glyphicon-shopping-cart"></span></a></div>
+    <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown li-border"><a href="#" class="dropdown-toggle mystyle-color" data-toggle="dropdown"><span id="userNick">3179923507@qq.com</span><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#" id="logout">退出</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="down-main">
+    <div class="left-main left-off">
+        <div class="sidebar-fold"><span class="glyphicon glyphicon-menu-hamburger"></span></div>
+        <div class="subNavBox">
+            <div class="sBox">
+                <ul class="navContent" style="display:block">
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />首页</div>
+                        <a href="index.html"><span class="sublist-icon glyphicon glyphicon-home"></span><span class="sub-title">首页</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />出售</div>
+                        <a href="sale.html"><span class="sublist-icon glyphicon glyphicon-tag"></span><span class="sub-title">出售</span></a></li>
+                    <li class="active">
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />充值</div>
+                        <a href="charge.html"><span class="sublist-icon glyphicon glyphicon-shopping-cart"></span><span class="sub-title">充值</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />充值记录</div>
+                        <a href="rechargerecord.html"><span class="sublist-icon glyphicon glyphicon-time"></span><span class="sub-title">充值记录</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />出售记录</div>
+                        <a href="salerecord.html"><span class="sublist-icon glyphicon glyphicon-star-empty"></span><span class="sub-title">出售记录</span></a></li>
+                    <li id="addMember">
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />添加会员</div>
+                        <a href="addmember.html"><span class="sublist-icon glyphicon glyphicon-plus"></span><span class="sub-title">添加会员</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />我的会员</div>
+                        <a href="recommand.html"><span class="sublist-icon glyphicon glyphicon-user"></span><span class="sub-title">我的会员</span></a></li>
+                    <li>
+                        <div class="showtitle" style="width:100px;"><img src="../img/leftimg.png" />会员中心</div>
+                        <a href="set.html"><span class="sublist-icon glyphicon glyphicon-cog"></span><span class="sub-title">会员中心</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="right-product view-product right-off">
+        <div class="container-fluid">
+            <div class="info-center">
+                <div class="page-header">
+                    <div class="pull-left">
+                        <h4>充值<small id="gameName"></small></h4>
+                    </div>
+                </div>
+                <div class="info-center-title nav">
+                    <span class="manage-title pull-left"><a class="active" href="#iBey" data-toggle="tab">爱贝支付<span class="hideBlock"></span></a></span>
+                    <span class="pull-left"><a href="#html5Charge" data-toggle="tab">H5支付<span class="hideBlock"></span></a></span>
+                    <span class="pull-left"><a href="#wxCharge" data-toggle="tab">微信扫码支付<span class="hideBlock"></span></a></span>
+                    <span class="pull-left"><a href="#aliCharge" data-toggle="tab">支付宝扫码支付<span class="hideBlock"></span></a></span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="indentify-class padding-lr tab-content">
+                    <div class="tab-pane fade in active" id="iBey">
+                        <p class="margin-big-tb text-sub text-default" id="chargeTip">
+                            请在浏览器内进行充值
+                        </p>
+                        <ul class="class-content clearfix">
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="html5Charge">
+                        <p class="margin-big-tb text-sub text-default" id="chargeTip1">
+                           H5充值通道
+                        </p>
+                        <ul class="class-content clearfix">
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="tab-pane fade" id="wxCharge">
+                        <ul class="class-content clearfix moneyList">
+                           <!-- <li class="pull-left"><img src="../img/selected.png" alt="selected"/></li>
+                            <li class="pull-left"><img src="../img/selected.png" alt="selected"/></li>
+                            <li class="pull-left"><img src="../img/selected.png" alt="selected"/></li>
+                            <li class="pull-left selectedBox">1000元<img src="../img/selected.png" alt="selected"></li>
+                            <li class="pull-left"><img src="../img/selected.png" alt="selected"/></li>
+                            <li class="pull-left"><img src="../img/selected.png" alt="selected"/></li>-->
+                        </ul>
+                        <p class="margin-big-tb text-sub text-default" id="chargeTip2">
+                            微信扫码充值
+                        </p>
+                        <div class="qrArea">
+                            <img src="" alt="请选择充值金额" id="weixinQR"/>
+                            <img src="../img/scan.png" alt="logo"/>
+                            <div class="scantips">
+                                <span>打开手机微信</span><br/>
+                                <span>扫一扫继续支付</span>
+                            </div>
+                        </div>
+                        <p>可获得钻石:<span class="chargeDetail"></span></p>
+                        <p>获赠钻石<span class="chargeDetail"></span>:<span class="chargeDetail"></span></p>
+                        <p>共计钻石:<span class="chargeDetail"></span></p>
+                    </div>
+                    <div class="tab-pane fade" id="aliCharge">
+                        <ul class="class-content clearfix moneyList">
+                            <!--<li class="pull-left"></li>
+                            <li class="pull-left"></li>
+                            <li class="pull-left"></li>
+                            <li class="pull-left"></li>
+                            <li class="pull-left"></li>
+                            <li class="pull-left"></li>-->
+                        </ul>
+                        <p class="margin-big-tb text-sub text-default" id="chargeTip3">
+                            支付扫码充值
+                        </p>
+                        <div class="qrArea">
+                            <img src="" alt="请选择充值金额" id="aliQR"/>
+                            <img src="../img/scan.png" alt="logo"/>
+                            <div class="scantips">
+                                <span>打开手机支付宝</span><br/>
+                                <span>扫一扫继续支付</span>
+                            </div>
+                        </div>
+                        <p>可获得钻石:<span class="chargeDetail"></span></p>
+                        <p>获赠钻石<span class="chargeDetail"></span>:<span class="chargeDetail"></span></p>
+                        <p>共计钻石:<span class="chargeDetail"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../script/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script src="../bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../script/slidemenu.js"></script>
+<script src="../script/alert.js"></script>
+<script src="../share.js"></script>
+<script type="text/javascript">
+    $(function(){
+       $("#gameName").html(getGameType(window.location.host).agentname);
+        function menuShow()
+        {
+            postJson("/admin/getMyInfo",{msg:"content"},function(rtn) {
+                $("#userNick").html(rtn.mName);
+                if (rtn) {
+                    if (rtn.adminLevel == 2 || rtn.adminLevel == '2') {
+                        $("#addMember").css("display", "block");
+                    }
+                };
+            })
+        }
+        menuShow();
+        $(".info-center-title:eq(0) a").each(function(index){
+            $(this).click(function(e){
+                $(".info-center-title:eq(0) .hideBlock").css("display","none");
+                $(".info-center-title:eq(0) a").removeClass("active");
+                e.preventDefault();
+                $(this).addClass("active");
+                $(".hideBlock:eq("+index+")").css("display","block");
+            });
+        });
+        var host = window.location.host.split(".");
+        var moneyType="";
+        if(host[0] == "pdk"){
+            moneyType="元宝";
+        }else if(host[0] == "phz"){
+            moneyType="红宝石";
+        }else if(host[0] == "ddz"){
+            moneyType="红钻";
+        }else{
+            moneyType="钻石";
+        }
+        function readItem(datas, index) {
+            var tpl = '<li class="pull-left margin-large-20"><ul class="class-detail-has margin-top text-lh-big class-detail-top class-detail pull-right">'
+                    +'<li><span class="text-black-gray">充值:</span><span class="pull-right text-gray-white">'+
+                    datas.buyNum +moneyType
+                    + '</span></li><li><span class="text-black-gray">赠送:</span><span class="pull-right text-gray-white">' +
+                    datas.buyNum * datas.givePercentage +moneyType
+                    +'</span></li><li><span class="text-black-gray">价格:</span><span class="pull-right text-gray-white">' +
+                    datas.buyMoney
+                    + '元</span></li><a class="continue text-big" data="'+
+                    index
+                    +'">充值</a></ul></li>';
+            return tpl;
+        }
+        // 动态添加微信支付和支付宝支付
+        function readItem1(datas, index){
+            var tpl1='<li class="pull-left" data="'+index+'"><img src="../img/selected.png" alt="selected"/>'+datas.buyMoney+'元</li>';
+            return tpl1;
+        }
+        var tempData=null;
+        postJson("/admin/getAlipayJson", {msg:"content"},
+                function(data) {
+                    //动态添加爱贝支付
+                    tempData=data;
+                    var oData=data;
+                    var html=[],html1=[];
+                    for (var i in oData) {
+                        html.push(readItem(oData[i],i));
+                        html1.push(readItem1(oData[i],i));
+                    }
+                    $(".class-content").eq(0).html(html.join(""));//爱贝支付
+                    $(".class-content").eq(1).html(html.join(""));//H5支付
+                    $(".class-content").eq(2).html(html1.join(""));//微信支付
+                    $(".class-content").eq(3).html(html1.join(""));//支付宝支付
+                });
+        //以下是点击购买之后的事件,使用代理的方式实现
+        $("body").undelegate();
+        $("body").delegate(".class-content:eq(0) a:nth-child(even)", 'click', function(e) {
+            e.preventDefault();
+            var str = String($(this).attr("data"));
+            var type="ali";
+            if(str != "-1"){
+                postJson("/admin/genAlipayChargeWxAli",{msg:str,type:type},function(rtn){
+                    if(rtn == 1) {
+                        $(".alert").eq(0).alertModal('您的密码不安全，请修改密码后操作',2000);
+                    } else if(rtn) {
+                        $(".blackCover").eq(0).css("display","block");
+                        $("#scanid").css("display","block");
+                        $("#scanid").attr("src",rtn) ;
+                    }
+                });
+            }
+            else {
+
+                alert("请选择充值金额");
+            }
+
+        });
+        //爱贝充值代理事件
+        $("body").delegate(".class-content:eq(0) a", 'click', function(e) {
+            e.preventDefault();
+            var str = String($(this).attr("data"));
+
+            if (str != "-1") {
+
+                postJson("/admin/genAlipayCharge", {msg: str}, function(rtn) {
+                    if(rtn == 1) {
+                        $(".alert").eq(0).alertModal('您的密码不安全，请修改密码后操作',2000);
+                    } else if(rtn) {
+                        window.location.href = rtn;
+                    }
+                });
+            }
+
+        });
+        //H5充值代理事件
+        $("body").delegate(".class-content:eq(1) a", 'click', function(e) {
+            e.preventDefault();
+            var str = String($(this).attr("data"));
+
+            if (str != "-1") {
+
+                postJson("/admin/genAlipayCharge", {msg: str,type:type}, function(rtn) {
+                    if(rtn == 1) {
+                        $(".alert").eq(0).alertModal('您的密码不安全，请修改密码后操作',2000);
+                    } else if(rtn) {
+                        window.location.href = rtn;
+                    }
+                });
+            }
+
+        });
+        $("body").delegate(".class-content:eq(2) li", 'click', function(e) {
+            e.preventDefault();
+            $(".class-content:eq(2) li").removeClass("selectedBox");
+            $(this).addClass("selectedBox");
+            var type="weixin";
+            var str = String($(this).attr("data"));
+            for(var m in tempData){
+                if(m==str){
+                    var midvaria=tempData[m];
+                    break;
+                }
+            }
+            $(".chargeDetail").eq(0).html(midvaria.buyNum);
+            $(".chargeDetail").eq(1).html(midvaria.givePercentage*100+"%");
+            $(".chargeDetail").eq(2).html(Math.ceil(midvaria.buyNum*midvaria.givePercentage));
+            $(".chargeDetail").eq(3).html(midvaria.buyNum+Math.ceil(midvaria.buyNum*midvaria.givePercentage));
+            if (str != "-1") {
+//                width:180px;height:180px;
+                $("#weixinQR").attr("src","../img/loading.gif").css({"width":"22px","height":"22px","margin":"109px auto"});
+                postJson("/admin/genAlipayChargeWxAli", {msg: str,type:type}, function(rtn) {
+                    if(rtn == 1) {
+                        $(".alert").eq(0).alertModal('您的密码不安全，请修改密码后操作',2000);
+                    } else if(rtn) {
+                        $("#weixinQR").attr("src",rtn).css({"width":"180px","height":"180px","margin":"10px auto"});
+                        $("#chargeTip2").html(getGameType(window.location.host).wxScanPayTextTip);
+                    }
+                });
+            }
+
+        });
+        //阿里充值通道
+        $("body").delegate(".class-content:eq(3) li", 'click', function(e) {
+            e.preventDefault();
+            $(".class-content:eq(3) li").removeClass("selectedBox");
+            $(this).addClass("selectedBox");
+            var type="ali";
+            var str = String($(this).attr("data"));
+            for(var m in tempData){
+                if(m==str){
+                    var midvaria=tempData[m];
+                    break;
+                }
+            }
+            $(".chargeDetail").eq(4).html(midvaria.buyNum);
+            $(".chargeDetail").eq(5).html(midvaria.givePercentage*100+"%");
+            $(".chargeDetail").eq(6).html(Math.ceil(midvaria.buyNum*midvaria.givePercentage));
+            $(".chargeDetail").eq(7).html(midvaria.buyNum+Math.ceil(midvaria.buyNum*midvaria.givePercentage));
+            if (str != "-1") {
+                $("#aliQR").attr("src","../img/loading.gif").css({"width":"22px","height":"22px","margin":"109px auto"});;
+                postJson("/admin/genAlipayChargeWxAli", {msg: str,type:type}, function(rtn) {
+                    if(rtn == 1) {
+                        $(".alert").eq(0).alertModal('您的密码不安全，请修改密码后操作',2000);
+                    } else if(rtn) {
+                        $("#aliQR").attr("src",rtn).css({"width":"180px","height":"180px","margin":"10px auto"});
+                        $("#chargeTip3").html(getGameType(window.location.host).wxScanPayTextTip);
+                    }
+                });
+            }
+
+        });
+        var ua = navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == "micromessenger"
+                || ua.match(/iphone os/i) == "iphone os" || ua.match(/ipad/i) == "ipad"
+                || ua.match(/android/i) == "android" || ua.match(/midp/i) == "midp"
+                || ua.match(/rv:1.2.3.4/i) == "rv:1.2.3.4" || ua.match(/ucweb/i) == "ucweb"
+                || ua.match(/windows ce/i) == "windows ce" || ua.match(/windows mobile/i) == "windows mobile") {
+            //移动端的代码
+//            $(".info-center-title:eq(0) a:eq(0)").css("display","none");
+//            $(".info-center-title:eq(0) a:eq(1)").css("display","none");
+/*            $(".info-center-title:eq(0)").css("display","none");*/
+//            h5的支付通道打开后去除此注释
+              $(".info-center-title:eq(0) a:eq(0)").css("border-right","1px solid #dddddd");
+              $(".info-center-title:eq(0) a:eq(1)").css("display","none");
+/*            $(".info-center-title:eq(0) a:eq(1)").css("display","block");
+            $(".info-center-title:eq(0) a:eq(1)").css("border-right","1px solid #dddddd");*/
+            $(".info-center-title:eq(0) a:eq(2)").css("display","none");
+            $(".info-center-title:eq(0) a:eq(3)").css("display","none");
+           }else{
+            //PC端代码
+            $(".info-center-title:eq(0) a:eq(1)").css("display","none");
+            //配置了微信和支付宝的通道
+            if(getGameType(window.location.host).wxScanPay){
+                $(".info-center-title:eq(0) a:eq(0)").css("display","block");
+                $(".info-center-title:eq(0) a:eq(2)").css("display","block");
+                $(".info-center-title:eq(0) a:eq(3)").css("display","block");
+            }else{
+                // 未配置微信和支付宝通道
+                /*$(".info-center-title:eq(0)").css("display","none");*/
+                $(".info-center-title:eq(0)").css("display","block");
+                $(".info-center-title:eq(0) a:eq(2)").css("display","none");
+                $(".info-center-title:eq(0) a:eq(3)").css("display","none");
+            }
+        }
+        $("#logout").click(function(e){
+            e.preventDefault();
+            logout();
+        })
+    })
+</script>
+</body>
+</html>

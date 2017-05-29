@@ -1,0 +1,4 @@
+#!/bin/bash
+killall node;
+service firewalld stop;
+bash echoColor "${0}: stop all node and stop firewalld OK" info;

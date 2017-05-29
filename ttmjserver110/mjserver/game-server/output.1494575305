@@ -1,0 +1,1236 @@
+[31m[2017-05-12 15:06:35.265] [ERROR] console - [39mregisterAdmin test
+
+[32m[2017-05-12 15:06:35.274] [INFO] console - [39mtest 4006
+
+[32m[2017-05-12 15:06:35.416] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:35.868] [ERROR] console - [39mregisterAdmin test
+
+[32m[2017-05-12 15:06:35.872] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "master", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:36.045] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:36.423] [INFO] console - [39mtest Connected correctly to server.
+
+[32m[2017-05-12 15:06:36.820] [INFO] console - [39mmaxMemberID 981018
+
+[32m[2017-05-12 15:06:36.878] [INFO] console - [39mmaxMemberID 981018
+
+[31m[2017-05-12 15:06:36.920] [ERROR] console - [39mreload login @login0000
+
+[31m[2017-05-12 15:06:36.934] [ERROR] console - [39mreload login @login0001
+
+[31m[2017-05-12 15:06:37.036] [ERROR] console - [39mreload login @login0002
+
+[31m[2017-05-12 15:06:37.085] [ERROR] console - [39mreload undefined @pkplayer0000
+
+[31m[2017-05-12 15:06:37.166] [ERROR] console - [39mstart finish test
+
+[31m[2017-05-12 15:06:37.122] [ERROR] console - [39mreload undefined @pkplayer0001
+
+[31m[2017-05-12 15:06:37.270] [ERROR] console - [39mreload undefined @matcher0000
+
+[31m[2017-05-12 15:06:37.267] [ERROR] console - [39mreload undefined @pkplayer0002
+
+[31m[2017-05-12 15:06:37.294] [ERROR] console - [39mreload undefined @pkroom0000
+
+[31m[2017-05-12 15:06:37.413] [ERROR] console - [39mreload undefined @pkroom0001
+
+[31m[2017-05-12 15:06:37.452] [ERROR] console - [39mreload undefined @pkroom0002
+
+[31m[2017-05-12 15:06:37.525] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:06:37.502] [ERROR] console - [39mreload undefined @pkroom0003
+
+[31m[2017-05-12 15:06:37.554] [ERROR] console - [39mpkroom0000 reload game code scmj
+
+[31m[2017-05-12 15:06:37.540] [ERROR] console - [39mreload undefined @pkroom0004
+
+[31m[2017-05-12 15:06:37.567] [ERROR] console - [39mreload undefined @pkroom0005
+
+[31m[2017-05-12 15:06:37.619] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:06:37.620] [ERROR] console - [39mpkroom0001 reload game code scmj
+
+[31m[2017-05-12 15:06:37.614] [ERROR] console - [39mreload undefined @pkcon0000
+
+[31m[2017-05-12 15:06:37.691] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:06:37.692] [ERROR] console - [39mpkroom0002 reload game code scmj
+
+[31m[2017-05-12 15:06:37.692] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:06:37.720] [ERROR] console - [39mpkroom0003 reload game code scmj
+
+[31m[2017-05-12 15:06:37.681] [ERROR] console - [39mreload undefined @pkcon0001
+
+[31m[2017-05-12 15:06:37.684] [ERROR] console - [39mreload undefined @pkcon0002
+
+[31m[2017-05-12 15:06:37.756] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:06:37.756] [ERROR] console - [39mpkroom0004 reload game code scmj
+
+[31m[2017-05-12 15:06:37.786] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:06:37.787] [ERROR] console - [39mpkroom0005 reload game code scmj
+
+[31m[2017-05-12 15:06:37.762] [ERROR] console - [39mreload undefined @pkcon0003
+
+[31m[2017-05-12 15:06:37.804] [ERROR] console - [39mreload undefined @pkcon0004
+
+[31m[2017-05-12 15:06:37.834] [ERROR] console - [39mreload undefined @pkcon0006
+
+[31m[2017-05-12 15:06:37.890] [ERROR] console - [39mreload undefined @pkcon0007
+
+[31m[2017-05-12 15:06:37.846] [ERROR] console - [39mreload undefined @pkcon0005
+
+[31m[2017-05-12 15:06:37.879] [ERROR] console - [39mreload undefined @pkcon0008
+
+[31m[2017-05-12 15:06:37.927] [ERROR] console - [39mreload undefined @pkcon0009
+
+[31m[2017-05-12 15:06:38.125] [ERROR] console - [39mgame create scmj @ pkroom0000
+
+[32m[2017-05-12 15:06:38.126] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:38.167] [ERROR] console - [39mgame create scmj @ pkroom0001
+
+[32m[2017-05-12 15:06:38.167] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:38.237] [ERROR] console - [39mgame create scmj @ pkroom0003
+
+[32m[2017-05-12 15:06:38.237] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:38.272] [ERROR] console - [39mgame create scmj @ pkroom0002
+
+[32m[2017-05-12 15:06:38.273] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:38.312] [ERROR] console - [39mgame create scmj @ pkroom0004
+
+[32m[2017-05-12 15:06:38.313] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:38.382] [ERROR] console - [39mgame create scmj @ pkroom0005
+
+[32m[2017-05-12 15:06:38.383] [INFO] console - [39m load game scmj
+
+[32m[2017-05-12 15:06:38.597] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:06:38.651] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:06:38.663] [INFO] console - [39mlogin0000 4005
+
+[32m[2017-05-12 15:06:38.715] [INFO] console - [39mlogin0001 3011
+
+[32m[2017-05-12 15:06:38.745] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:06:38.811] [INFO] console - [39mlogin0002 3012
+
+[31m[2017-05-12 15:06:39.848] [ERROR] console - [39mreload login @pkcon0000
+
+[31m[2017-05-12 15:06:39.944] [ERROR] console - [39mreload login @pkcon0002
+
+[31m[2017-05-12 15:06:39.979] [ERROR] console - [39mreload login @pkcon0001
+
+[31m[2017-05-12 15:06:40.048] [ERROR] console - [39mreload login @pkcon0003
+
+[31m[2017-05-12 15:06:40.105] [ERROR] console - [39mreload login @pkcon0007
+
+[31m[2017-05-12 15:06:40.085] [ERROR] console - [39mreload login @pkcon0004
+
+[31m[2017-05-12 15:06:40.152] [ERROR] console - [39mreload login @pkcon0005
+
+[31m[2017-05-12 15:06:40.159] [ERROR] console - [39mreload login @pkcon0006
+
+[31m[2017-05-12 15:06:40.192] [ERROR] console - [39mreload login @pkcon0008
+
+[31m[2017-05-12 15:06:40.194] [ERROR] console - [39mreload login @pkcon0009
+
+[31m[2017-05-12 15:06:40.217] [ERROR] console - [39mreload undefined @pkroom0000
+
+[31m[2017-05-12 15:06:40.353] [ERROR] console - [39mreload undefined @pkroom0002
+
+[31m[2017-05-12 15:06:40.363] [ERROR] console - [39mreload undefined @pkroom0001
+
+[31m[2017-05-12 15:06:40.418] [ERROR] console - [39mreload undefined @pkroom0003
+
+[31m[2017-05-12 15:06:40.498] [ERROR] console - [39mreload undefined @pkroom0005
+
+[31m[2017-05-12 15:06:40.531] [ERROR] console - [39mreload undefined @pkroom0004
+
+[32m[2017-05-12 15:06:41.082] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:06:41.101] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:06:41.117] [ERROR] console - [39mreload undefined @pkcon0000
+
+[31m[2017-05-12 15:06:41.132] [ERROR] console - [39mreload undefined @pkcon0002
+
+[32m[2017-05-12 15:06:41.142] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:06:41.165] [ERROR] console - [39mreload undefined @pkplayer0000
+
+[31m[2017-05-12 15:06:41.172] [ERROR] console - [39mreload undefined @pkcon0001
+
+[32m[2017-05-12 15:06:41.253] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:06:41.271] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:06:41.277] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:06:41.285] [ERROR] console - [39mreload undefined @pkcon0003
+
+[32m[2017-05-12 15:06:41.290] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:06:41.300] [ERROR] console - [39mreload undefined @pkcon0007
+
+[31m[2017-05-12 15:06:41.304] [ERROR] console - [39mreload undefined @pkplayer0001
+
+[31m[2017-05-12 15:06:41.308] [ERROR] console - [39mreload undefined @pkcon0005
+
+[32m[2017-05-12 15:06:41.310] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:06:41.327] [ERROR] console - [39mreload undefined @pkcon0004
+
+[31m[2017-05-12 15:06:41.341] [ERROR] console - [39mreload undefined @pkcon0009
+
+[32m[2017-05-12 15:06:41.361] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:06:41.388] [ERROR] console - [39mreload undefined @pkcon0006
+
+[32m[2017-05-12 15:06:41.408] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:06:41.444] [ERROR] console - [39mreload undefined @pkcon0008
+
+[31m[2017-05-12 15:06:41.446] [ERROR] console - [39m-----------------ye
+
+[31m[2017-05-12 15:06:41.446] [ERROR] console - [39mpkplayer0000 reload game code scmj
+
+[31m[2017-05-12 15:06:41.588] [ERROR] console - [39mreload undefined @pkplayer0002
+
+[31m[2017-05-12 15:06:41.616] [ERROR] console - [39m-----------------ye
+
+[31m[2017-05-12 15:06:41.616] [ERROR] console - [39mpkplayer0001 reload game code scmj
+
+[32m[2017-05-12 15:06:41.854] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:41.855] [ERROR] console - [39mreload login @pkroom0000
+
+[31m[2017-05-12 15:06:41.907] [ERROR] console - [39m-----------------ye
+
+[31m[2017-05-12 15:06:41.907] [ERROR] console - [39mpkplayer0002 reload game code scmj
+
+[31m[2017-05-12 15:06:41.945] [ERROR] console - [39mgame create scmj @ pkplayer0000
+
+[32m[2017-05-12 15:06:41.946] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:41.976] [ERROR] console - [39mreload undefined @pkplayer0000
+
+[32m[2017-05-12 15:06:42.012] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.012] [ERROR] console - [39mreload login @pkroom0002
+
+[32m[2017-05-12 15:06:42.039] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.039] [ERROR] console - [39mreload login @pkplayer0000
+
+[31m[2017-05-12 15:06:42.122] [ERROR] console - [39mgame create scmj @ pkplayer0001
+
+[32m[2017-05-12 15:06:42.137] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.137] [ERROR] console - [39mreload login @pkroom0005
+
+[32m[2017-05-12 15:06:42.138] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.138] [ERROR] console - [39mreload login @pkroom0003
+
+[32m[2017-05-12 15:06:42.149] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.150] [ERROR] console - [39mreload login @pkroom0001
+
+[32m[2017-05-12 15:06:42.151] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:42.153] [ERROR] console - [39mreload undefined @pkplayer0001
+
+[32m[2017-05-12 15:06:42.210] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.211] [ERROR] console - [39mreload login @pkplayer0001
+
+[32m[2017-05-12 15:06:42.352] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.353] [ERROR] console - [39mreload login @pkroom0004
+
+[31m[2017-05-12 15:06:42.463] [ERROR] console - [39mgame create scmj @ pkplayer0002
+
+[32m[2017-05-12 15:06:42.464] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:06:42.492] [ERROR] console - [39mreload undefined @pkplayer0002
+
+[32m[2017-05-12 15:06:42.555] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:06:42.555] [ERROR] console - [39mreload login @pkplayer0002
+
+[32m[2017-05-12 15:06:44.637] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:44.732] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:44.826] [ERROR] console - [39mregisterAdmin matcher0000
+
+[32m[2017-05-12 15:06:44.855] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "matcher", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:45.008] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:45.634] [INFO] console - [39mmatcher0000 Connected correctly to server.
+
+[32m[2017-05-12 15:06:45.824] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:45.855] [ERROR] console - [39mundefined afterStart matcher0000
+
+[32m[2017-05-12 15:06:45.855] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:45.857] [ERROR] console - [39mstart finish matcher0000
+
+[32m[2017-05-12 15:06:47.384] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:47.471] [ERROR] console - [39mregisterAdmin login0001
+
+[32m[2017-05-12 15:06:47.483] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "login", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:47.594] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:47.615] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:47.690] [ERROR] console - [39mregisterAdmin login0000
+
+[32m[2017-05-12 15:06:47.691] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "login", "127.0.0.1", 3005
+
+[33m[2017-05-12 15:06:47.769] [WARN] console - [39mnode_redis: Warning: Redis server does not require a password, but a password was supplied.
+
+[32m[2017-05-12 15:06:47.807] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:47.840] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:47.908] [ERROR] console - [39mregisterAdmin login0002
+
+[32m[2017-05-12 15:06:47.938] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "login", "127.0.0.1", 3005
+
+[33m[2017-05-12 15:06:47.992] [WARN] console - [39mnode_redis: Warning: Redis server does not require a password, but a password was supplied.
+
+[31m[2017-05-12 15:06:48.097] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:48.189] [INFO] console - [39mlogin0001 Connected correctly to server.
+
+[32m[2017-05-12 15:06:48.190] [INFO] console - [39m--loginCode--LoginData.prototype.mongodbReady
+
+[33m[2017-05-12 15:06:48.227] [WARN] console - [39mnode_redis: Warning: Redis server does not require a password, but a password was supplied.
+
+[32m[2017-05-12 15:06:48.256] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:48.340] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:48.353] [ERROR] console - [39mregisterAdmin pkroom0000
+
+[31m[2017-05-12 15:06:48.365] [ERROR] console - [39mmaxuid 100023
+
+[32m[2017-05-12 15:06:48.372] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:48.355] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:48.400] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:48.431] [ERROR] console - [39mLoginData afterStart login0001
+
+[32m[2017-05-12 15:06:48.433] [INFO] console - [39mlogin0000 Connected correctly to server.
+
+[31m[2017-05-12 15:06:48.444] [ERROR] console - [39mregisterAdmin pkplayer0000
+
+[31m[2017-05-12 15:06:48.458] [ERROR] console - [39mstart finish login0001
+
+[32m[2017-05-12 15:06:48.463] [INFO] console - [39m--loginCode--LoginData.prototype.mongodbReady
+
+[32m[2017-05-12 15:06:48.472] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkplayer", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:48.495] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:48.548] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:48.557] [ERROR] console - [39mmaxuid 100023
+
+[31m[2017-05-12 15:06:48.591] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:48.609] [ERROR] console - [39mregisterAdmin pkroom0002
+
+[32m[2017-05-12 15:06:48.616] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:48.628] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:48.629] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:48.661] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:48.680] [ERROR] console - [39mregisterAdmin pkroom0005
+
+[32m[2017-05-12 15:06:48.683] [INFO] console - [39mlogin0002 Connected correctly to server.
+
+[32m[2017-05-12 15:06:48.683] [INFO] console - [39m--loginCode--LoginData.prototype.mongodbReady
+
+[32m[2017-05-12 15:06:48.682] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[33m[2017-05-12 15:06:48.712] [WARN] console - [39mnode_redis: Warning: Redis server does not require a password, but a password was supplied.
+
+[32m[2017-05-12 15:06:48.714] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:48.718] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:48.720] [ERROR] console - [39mLoginData afterStart login0000
+
+[31m[2017-05-12 15:06:48.748] [ERROR] console - [39mregisterAdmin pkplayer0001
+
+[31m[2017-05-12 15:06:48.754] [ERROR] console - [39mstart finish login0000
+
+[31m[2017-05-12 15:06:48.776] [ERROR] console - [39mmaxuid 100023
+
+[31m[2017-05-12 15:06:48.755] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:48.749] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkplayer", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:48.804] [ERROR] console - [39mregisterAdmin pkroom0003
+
+[32m[2017-05-12 15:06:48.805] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:48.828] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:48.851] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:48.903] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:48.924] [ERROR] console - [39mregisterAdmin pkroom0001
+
+[32m[2017-05-12 15:06:48.938] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:48.940] [ERROR] console - [39mLoginData afterStart login0002
+
+[31m[2017-05-12 15:06:48.947] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:48.953] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:48.969] [INFO] console - [39mpkroom0000 Connected correctly to server.
+
+[31m[2017-05-12 15:06:48.970] [ERROR] console - [39mstart finish login0002
+
+[32m[2017-05-12 15:06:48.988] [INFO] console - [39minfo: socket.io started
+
+[33m[2017-05-12 15:06:49.041] [WARN] console - [39mnode_redis: Warning: Redis server does not require a password, but a password was supplied.
+
+[32m[2017-05-12 15:06:49.069] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:49.083] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:49.085] [ERROR] console - [39mregisterAdmin pkroom0004
+
+[32m[2017-05-12 15:06:49.102] [INFO] console - [39mpkplayer0000 Connected correctly to server.
+
+[32m[2017-05-12 15:06:49.086] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:49.083] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:49.121] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:49.137] [ERROR] console - [39mundefined afterStart pkroom0000
+
+[31m[2017-05-12 15:06:49.137] [ERROR] console - [39mundefined afterStart pkroom0000
+
+[32m[2017-05-12 15:06:49.137] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.138] [ERROR] console - [39mServerClass afterStart pkroom0000
+
+[31m[2017-05-12 15:06:49.164] [ERROR] console - [39mstart finish pkroom0000
+
+[32m[2017-05-12 15:06:49.166] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:49.168] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:49.170] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:49.172] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:49.183] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:49.214] [ERROR] console - [39mregisterAdmin pkplayer0002
+
+[32m[2017-05-12 15:06:49.215] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkplayer", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:49.222] [INFO] console - [39mpkroom0002 Connected correctly to server.
+
+[32m[2017-05-12 15:06:49.229] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:49.233] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:49.271] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:49.279] [INFO] console - [39mpkroom0005 Connected correctly to server.
+
+[31m[2017-05-12 15:06:49.302] [ERROR] console - [39mundefined afterStart pkplayer0000
+
+[32m[2017-05-12 15:06:49.303] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.304] [ERROR] console - [39mundefined afterStart pkplayer0000
+
+[31m[2017-05-12 15:06:49.304] [ERROR] console - [39mundefined afterStart pkplayer0000
+
+[32m[2017-05-12 15:06:49.304] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.305] [ERROR] console - [39mServerClass afterStart pkplayer0000
+
+[31m[2017-05-12 15:06:49.332] [ERROR] console - [39mstart finish pkplayer0000
+
+[31m[2017-05-12 15:06:49.356] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:49.360] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:49.395] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:49.412] [INFO] console - [39mpkplayer0001 Connected correctly to server.
+
+[32m[2017-05-12 15:06:49.395] [INFO] console - [39mpkroom0003 Connected correctly to server.
+
+[31m[2017-05-12 15:06:49.418] [ERROR] console - [39mundefined afterStart pkroom0002
+
+[31m[2017-05-12 15:06:49.418] [ERROR] console - [39mundefined afterStart pkroom0002
+
+[32m[2017-05-12 15:06:49.419] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.419] [ERROR] console - [39mServerClass afterStart pkroom0002
+
+[31m[2017-05-12 15:06:49.420] [ERROR] console - [39mstart finish pkroom0002
+
+[33m[2017-05-12 15:06:49.458] [WARN] console - [39mnode_redis: Warning: Redis server does not require a password, but a password was supplied.
+
+[32m[2017-05-12 15:06:49.496] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:49.499] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:49.500] [ERROR] console - [39mundefined afterStart pkroom0005
+
+[31m[2017-05-12 15:06:49.500] [ERROR] console - [39mundefined afterStart pkroom0005
+
+[32m[2017-05-12 15:06:49.501] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.501] [ERROR] console - [39mServerClass afterStart pkroom0005
+
+[31m[2017-05-12 15:06:49.502] [ERROR] console - [39mstart finish pkroom0005
+
+[32m[2017-05-12 15:06:49.519] [INFO] console - [39mpkroom0001 Connected correctly to server.
+
+[32m[2017-05-12 15:06:49.552] [INFO] console - [39mpkplayer0002 Connected correctly to server.
+
+[32m[2017-05-12 15:06:49.608] [INFO] console - [39mpkroom0004 Connected correctly to server.
+
+[32m[2017-05-12 15:06:49.609] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:49.673] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:49.677] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:49.678] [ERROR] console - [39mundefined afterStart pkroom0003
+
+[31m[2017-05-12 15:06:49.678] [ERROR] console - [39mundefined afterStart pkroom0003
+
+[32m[2017-05-12 15:06:49.678] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.678] [ERROR] console - [39mServerClass afterStart pkroom0003
+
+[32m[2017-05-12 15:06:49.692] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:49.696] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:49.697] [ERROR] console - [39mundefined afterStart pkplayer0001
+
+[32m[2017-05-12 15:06:49.697] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[32m[2017-05-12 15:06:49.710] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:49.714] [ERROR] console - [39mstart finish pkroom0003
+
+[31m[2017-05-12 15:06:49.725] [ERROR] console - [39mundefined afterStart pkplayer0001
+
+[31m[2017-05-12 15:06:49.725] [ERROR] console - [39mundefined afterStart pkplayer0001
+
+[32m[2017-05-12 15:06:49.725] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.726] [ERROR] console - [39mServerClass afterStart pkplayer0001
+
+[31m[2017-05-12 15:06:49.728] [ERROR] console - [39mstart finish pkplayer0001
+
+[31m[2017-05-12 15:06:49.729] [ERROR] console - [39mregisterAdmin pkcon0002
+
+[32m[2017-05-12 15:06:49.738] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:49.730] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:49.758] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:49.766] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:49.777] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:49.780] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:49.781] [ERROR] console - [39mundefined afterStart pkroom0001
+
+[31m[2017-05-12 15:06:49.781] [ERROR] console - [39mundefined afterStart pkroom0001
+
+[32m[2017-05-12 15:06:49.781] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.782] [ERROR] console - [39mServerClass afterStart pkroom0001
+
+[32m[2017-05-12 15:06:49.801] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:49.801] [ERROR] console - [39mstart finish pkroom0001
+
+[32m[2017-05-12 15:06:49.810] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:49.832] [ERROR] console - [39mregisterAdmin pkcon0000
+
+[32m[2017-05-12 15:06:49.836] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:49.837] [ERROR] console - [39mundefined afterStart pkroom0004
+
+[31m[2017-05-12 15:06:49.838] [ERROR] console - [39mundefined afterStart pkroom0004
+
+[31m[2017-05-12 15:06:49.818] [ERROR] console - [39mregisterAdmin pkcon0001
+
+[32m[2017-05-12 15:06:49.839] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:49.841] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:49.859] [ERROR] console - [39mregisterAdmin pkcon0007
+
+[32m[2017-05-12 15:06:49.860] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.860] [ERROR] console - [39mServerClass afterStart pkroom0004
+
+[31m[2017-05-12 15:06:49.862] [ERROR] console - [39mstart finish pkroom0004
+
+[32m[2017-05-12 15:06:49.862] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:49.882] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:49.887] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:49.888] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:49.894] [ERROR] console - [39mregisterAdmin pkcon0009
+
+[32m[2017-05-12 15:06:49.895] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:06:49.905] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:49.908] [ERROR] console - [39mregisterAdmin pkcon0005
+
+[32m[2017-05-12 15:06:49.900] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:06:49.928] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:49.929] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:49.929] [ERROR] console - [39mundefined afterStart pkplayer0002
+
+[32m[2017-05-12 15:06:49.930] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[32m[2017-05-12 15:06:49.937] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:06:49.947] [ERROR] console - [39mundefined afterStart pkplayer0002
+
+[31m[2017-05-12 15:06:49.947] [ERROR] console - [39mundefined afterStart pkplayer0002
+
+[32m[2017-05-12 15:06:49.947] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:49.948] [ERROR] console - [39mServerClass afterStart pkplayer0002
+
+[31m[2017-05-12 15:06:49.949] [ERROR] console - [39mstart finish pkplayer0002
+
+[31m[2017-05-12 15:06:49.948] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:49.953] [ERROR] console - [39mregisterAdmin pkcon0003
+
+[31m[2017-05-12 15:06:49.955] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:49.954] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:49.977] [ERROR] console - [39mregisterAdmin pkcon0004
+
+[31m[2017-05-12 15:06:49.984] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:49.985] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:49.993] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:49.998] [ERROR] console - [39mregisterAdmin pkcon0006
+
+[32m[2017-05-12 15:06:50.005] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:50.039] [ERROR] console - [39mregisterAdmin pkcon0008
+
+[31m[2017-05-12 15:06:50.049] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:50.041] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:06:50.064] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:50.077] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:50.096] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:50.116] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:50.118] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:06:50.124] [ERROR] console - [39mundefined afterStart pkcon0002
+
+[31m[2017-05-12 15:06:50.126] [ERROR] console - [39mLoginData afterStart pkcon0002
+
+[31m[2017-05-12 15:06:50.126] [ERROR] console - [39mundefined afterStart pkcon0002
+
+[32m[2017-05-12 15:06:50.127] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[32m[2017-05-12 15:06:50.134] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:50.140] [ERROR] console - [39mstart finish pkcon0002
+
+[31m[2017-05-12 15:06:50.141] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:06:50.151] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:50.170] [ERROR] console - [39mundefined afterStart pkcon0000
+
+[31m[2017-05-12 15:06:50.170] [ERROR] console - [39mLoginData afterStart pkcon0000
+
+[31m[2017-05-12 15:06:50.170] [ERROR] console - [39mundefined afterStart pkcon0000
+
+[32m[2017-05-12 15:06:50.170] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:50.180] [ERROR] console - [39mstart finish pkcon0000
+
+[32m[2017-05-12 15:06:50.187] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:50.206] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:50.233] [ERROR] console - [39mundefined afterStart pkcon0001
+
+[31m[2017-05-12 15:06:50.234] [ERROR] console - [39mLoginData afterStart pkcon0001
+
+[31m[2017-05-12 15:06:50.239] [ERROR] console - [39mundefined afterStart pkcon0001
+
+[32m[2017-05-12 15:06:50.240] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[32m[2017-05-12 15:06:50.245] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:50.251] [ERROR] console - [39mstart finish pkcon0001
+
+[32m[2017-05-12 15:06:50.266] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:50.274] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:50.282] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:50.283] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:50.293] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:50.294] [ERROR] console - [39mundefined afterStart pkcon0009
+
+[31m[2017-05-12 15:06:50.296] [ERROR] console - [39mLoginData afterStart pkcon0009
+
+[31m[2017-05-12 15:06:50.298] [ERROR] console - [39mundefined afterStart pkcon0009
+
+[31m[2017-05-12 15:06:50.300] [ERROR] console - [39mundefined afterStart pkcon0007
+
+[32m[2017-05-12 15:06:50.300] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:50.301] [ERROR] console - [39mLoginData afterStart pkcon0007
+
+[31m[2017-05-12 15:06:50.301] [ERROR] console - [39mundefined afterStart pkcon0007
+
+[32m[2017-05-12 15:06:50.301] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:50.304] [ERROR] console - [39mundefined afterStart pkcon0005
+
+[32m[2017-05-12 15:06:50.304] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[32m[2017-05-12 15:06:50.309] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:50.311] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:06:50.316] [ERROR] console - [39mLoginData afterStart pkcon0005
+
+[31m[2017-05-12 15:06:50.318] [ERROR] console - [39mundefined afterStart pkcon0005
+
+[32m[2017-05-12 15:06:50.319] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:50.320] [ERROR] console - [39mundefined afterStart pkcon0004
+
+[31m[2017-05-12 15:06:50.323] [ERROR] console - [39mLoginData afterStart pkcon0004
+
+[31m[2017-05-12 15:06:50.323] [ERROR] console - [39mundefined afterStart pkcon0004
+
+[32m[2017-05-12 15:06:50.324] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[32m[2017-05-12 15:06:50.327] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:50.326] [ERROR] console - [39mstart finish pkcon0009
+
+[31m[2017-05-12 15:06:50.327] [ERROR] console - [39mstart finish pkcon0007
+
+[31m[2017-05-12 15:06:50.338] [ERROR] console - [39mstart finish pkcon0005
+
+[31m[2017-05-12 15:06:50.340] [ERROR] console - [39mstart finish pkcon0004
+
+[31m[2017-05-12 15:06:50.342] [ERROR] console - [39mundefined afterStart pkcon0003
+
+[31m[2017-05-12 15:06:50.344] [ERROR] console - [39mLoginData afterStart pkcon0003
+
+[31m[2017-05-12 15:06:50.346] [ERROR] console - [39mundefined afterStart pkcon0003
+
+[32m[2017-05-12 15:06:50.346] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:50.359] [ERROR] console - [39mstart finish pkcon0003
+
+[32m[2017-05-12 15:06:50.364] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:50.372] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:06:50.375] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:06:50.379] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:06:50.383] [ERROR] console - [39mundefined afterStart pkcon0006
+
+[31m[2017-05-12 15:06:50.384] [ERROR] console - [39mLoginData afterStart pkcon0006
+
+[31m[2017-05-12 15:06:50.385] [ERROR] console - [39mundefined afterStart pkcon0006
+
+[32m[2017-05-12 15:06:50.385] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:50.385] [ERROR] console - [39mundefined afterStart pkcon0008
+
+[31m[2017-05-12 15:06:50.388] [ERROR] console - [39mLoginData afterStart pkcon0008
+
+[31m[2017-05-12 15:06:50.389] [ERROR] console - [39mundefined afterStart pkcon0008
+
+[32m[2017-05-12 15:06:50.389] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:06:50.390] [ERROR] console - [39mstart finish pkcon0006
+
+[31m[2017-05-12 15:06:50.396] [ERROR] console - [39mstart finish pkcon0008
+
+[32m[2017-05-12 15:06:51.510] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/masterAgent.js] [39mclient user : admin login to master
+
+[32m[2017-05-12 15:07:07.809] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"code":"uu4xt3","mail":"100858","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:07:07.846] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"code":"uu4xt3","mail":"100858","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:07:07.849] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"code":"uu4xt3","mail":"100858","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:07:07.864] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"code":"uu4xt3","mail":"100858","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:07:10.403] [INFO] console - [39m--loginCode--LoginData.prototype.reqGuestID{"__route__":"login.handler.reqGuestID"}
+
+[32m[2017-05-12 15:07:11.343] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"code":"HetuqI","mail":"100024","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:07:11.357] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"code":"HetuqI","mail":"100024","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:07:12.162] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CreateVipTable{"round":"round1","canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":true,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":false,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":1,"playType":1,"isTrust":10,"__route__":"pkplayer.handler.CreateVipTable"}, uid = 100024
+
+[32m[2017-05-12 15:07:12.196] [INFO] console - [39m--matcherCode--serverClass.prototype.FindCoinTable{"isVIPTable":0,"gameid":"scmj","uid":100024,"ip":"111.207.103.66","coinCategory":"1:1","coin":5000000,"winRate":100,"full":4}, uid = 100024
+
+[32m[2017-05-12 15:07:12.196] [INFO] console - [39m1 match , len = 0,gameid =scmj
+
+[32m[2017-05-12 15:07:12.199] [INFO] console - [39mfind_table_cost:3
+
+[32m[2017-05-12 15:07:12.200] [INFO] console - [39mpkplayer0001create coin vip tb id = 778355768,uid = 100024
+
+[32m[2017-05-12 15:16:54.253] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:16:54.273] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:16:54.405] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100014
+
+[32m[2017-05-12 15:16:54.930] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:16:54.938] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:16:55.085] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100013
+
+[32m[2017-05-12 15:20:54.932] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100014,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:20:55.943] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100013,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:21:01.151] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CreateVipTable{"round":"round8","canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":7,"playType":7,"isTrust":20,"isVIPTable":1,"__route__":"pkplayer.handler.CreateVipTable"}, uid = 100014
+
+[32m[2017-05-12 15:21:01.160] [INFO] console - [39m--matcherCode--serverClass.prototype.FindCoinTable{"isVIPTable":1,"gameid":"scmj","uid":100014,"ip":"111.207.103.66","coinCategory":"7:7","coin":4985000,"winRate":100,"full":4}, uid = 100014
+
+[32m[2017-05-12 15:21:01.161] [INFO] console - [39mfind_table_cost:0
+
+[32m[2017-05-12 15:21:01.162] [INFO] console - [39mpkplayer0000create coin vip tb id = 74159277,uid = 100014
+
+[32m[2017-05-12 15:21:01.303] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":74159277,"__route__":"pkplayer.handler.JoinGame"}uid :100014
+
+[32m[2017-05-12 15:21:01.324] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"74159277","__route__":"pkplayer.handler.JoinGame","gameid":"scmj","canCreate":true,"createPara":{"round":8,"canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":7,"playType":7,"isTrust":20,"isVIPTable":1,"__route__":"pkplayer.handler.CreateVipTable","gameid":"scmj","CoinPara":{"type":"7","cost":5000,"win":5000,"min":100000,"max":-1},"owner":100014,"full":4,"coinCategory":"7:7","money":3,"vipTable":74159277,"createtime":1494573661162}}, server id =pkroom0003,uid =100014
+
+[32m[2017-05-12 15:21:01.335] [INFO] console - [39ma:74159277 e: l: f:
+
+[32m[2017-05-12 15:21:01.335] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100014,tb id =74159277
+
+[32m[2017-05-12 15:22:52.255] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":74159277,"__route__":"pkplayer.handler.JoinGame"}uid :100013
+
+[32m[2017-05-12 15:22:52.269] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"74159277","__route__":"pkplayer.handler.JoinGame","gameid":"scmj"}, server id =pkroom0003,uid =100013
+
+[32m[2017-05-12 15:22:52.282] [INFO] console - [39ma:74159277 e: l: f:
+
+[32m[2017-05-12 15:22:52.283] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100013,tb id =74159277
+
+[32m[2017-05-12 15:23:02.336] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:23:03.801] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:23:03.822] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0002 {"roomtype":1,"uids":["100013","100014"],"tableid":"74159277"}
+
+[32m[2017-05-12 15:23:03.827] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100013
+
+[32m[2017-05-12 15:23:03.826] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0000 {"roomtype":1,"uids":["100013","100014"],"tableid":"74159277"}
+
+[32m[2017-05-12 15:23:03.829] [INFO] console - [39mpkplayer0002leave game uid 100013, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:23:03.831] [INFO] console - [39m--matcherCode--serverClass.prototype.EndCoinTable{"coinCategory":"7:7","tid":"74159277"}
+
+[32m[2017-05-12 15:23:03.836] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100014
+
+[32m[2017-05-12 15:23:03.837] [INFO] console - [39mdestroy table 74159277
+
+[32m[2017-05-12 15:23:03.839] [INFO] console - [39mpkplayer0000leave game uid 100014, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:23:03.839] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100013,"tid":74159277}, uid = 100013
+
+[32m[2017-05-12 15:23:03.841] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100014,"coinCategory":"7:7","tid":74159277}, uid = 100014
+
+[32m[2017-05-12 15:23:07.345] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:23:08.095] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:23:12.198] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:23:14.990] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100013
+
+[32m[2017-05-12 15:23:15.337] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100014
+
+[32m[2017-05-12 15:23:20.319] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:23:20.322] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:23:20.472] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100013
+
+[32m[2017-05-12 15:23:20.614] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:23:20.617] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:23:20.718] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100014
+
+[32m[2017-05-12 15:23:23.967] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100014,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:23:24.520] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100013,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:23:38.753] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CreateVipTable{"round":"round8","canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":7,"playType":7,"isTrust":20,"isVIPTable":1,"__route__":"pkplayer.handler.CreateVipTable"}, uid = 100013
+
+[32m[2017-05-12 15:23:38.754] [INFO] console - [39m--matcherCode--serverClass.prototype.FindCoinTable{"isVIPTable":1,"gameid":"scmj","uid":100013,"ip":"111.207.103.66","coinCategory":"7:7","coin":1580000,"winRate":100,"full":4}, uid = 100013
+[32m[2017-05-12 15:23:38.755] [INFO] console - [39mfind_table_cost:0
+
+[32m[2017-05-12 15:23:38.755] [INFO] console - [39mpkplayer0002create coin vip tb id = 18159229,uid = 100013
+
+[32m[2017-05-12 15:23:38.859] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":18159229,"__route__":"pkplayer.handler.JoinGame"}uid :100013
+
+[32m[2017-05-12 15:23:38.890] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"18159229","__route__":"pkplayer.handler.JoinGame","gameid":"scmj","canCreate":true,"createPara":{"round":8,"canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":7,"playType":7,"isTrust":20,"isVIPTable":1,"__route__":"pkplayer.handler.CreateVipTable","gameid":"scmj","CoinPara":{"type":"7","cost":5000,"win":5000,"min":100000,"max":-1},"owner":100013,"full":4,"coinCategory":"7:7","money":3,"vipTable":18159229,"createtime":1494573818755}}, server id =pkroom0001,uid =100013
+
+[32m[2017-05-12 15:23:38.900] [INFO] console - [39ma:18159229 e: l: f:
+
+[32m[2017-05-12 15:23:38.900] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100013,tb id =18159229
+
+[32m[2017-05-12 15:23:50.941] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:23:50.950] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0002 {"roomtype":1,"uids":["100013"],"tableid":"18159229"}
+
+[32m[2017-05-12 15:23:50.953] [INFO] console - [39m--matcherCode--serverClass.prototype.EndCoinTable{"coinCategory":"7:7","tid":"18159229"}
+
+[32m[2017-05-12 15:23:50.954] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100013
+
+[32m[2017-05-12 15:23:50.956] [INFO] console - [39mdestroy table 18159229
+
+[32m[2017-05-12 15:23:50.959] [INFO] console - [39mpkplayer0002leave game uid 100013, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:23:50.960] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100013,"coinCategory":"7:7","tid":18159229}, uid = 100013
+
+[32m[2017-05-12 15:23:52.093] [INFO] console - [39m--pkplayerCode--serverClass.prototype.LeaveGame{"__route__":"pkplayer.handler.LeaveGame"}
+
+[32m[2017-05-12 15:23:56.601] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CreateVipTable{"round":"round8","canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":7,"playType":7,"isTrust":20,"isVIPTable":1,"__route__":"pkplayer.handler.CreateVipTable"}, uid = 100013
+
+[32m[2017-05-12 15:23:56.603] [INFO] console - [39m--matcherCode--serverClass.prototype.FindCoinTable{"isVIPTable":1,"gameid":"scmj","uid":100013,"ip":"111.207.103.66","coinCategory":"7:7","coin":1580000,"winRate":100,"full":4}, uid = 100013
+
+[32m[2017-05-12 15:23:56.603] [INFO] console - [39mfind_table_cost:0
+
+[32m[2017-05-12 15:23:56.604] [INFO] console - [39mpkplayer0002create coin vip tb id = 98066868,uid = 100013
+
+[32m[2017-05-12 15:23:56.704] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":98066868,"__route__":"pkplayer.handler.JoinGame"}uid :100013
+
+[32m[2017-05-12 15:23:56.719] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"98066868","__route__":"pkplayer.handler.JoinGame","gameid":"scmj","canCreate":true,"createPara":{"round":8,"canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":7,"playType":7,"isTrust":20,"isVIPTable":1,"__route__":"pkplayer.handler.CreateVipTable","gameid":"scmj","CoinPara":{"type":"7","cost":5000,"win":5000,"min":100000,"max":-1},"owner":100013,"full":4,"coinCategory":"7:7","money":3,"vipTable":98066868,"createtime":1494573836604}}, server id =pkroom0000,uid =100013
+
+[32m[2017-05-12 15:23:56.729] [INFO] console - [39ma:98066868 e: l: f:
+
+[32m[2017-05-12 15:23:56.729] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100013,tb id =98066868
+
+[32m[2017-05-12 15:24:14.196] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":98066868,"__route__":"pkplayer.handler.JoinGame"}uid :100014
+
+[32m[2017-05-12 15:24:14.207] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"98066868","__route__":"pkplayer.handler.JoinGame","gameid":"scmj"}, server id =pkroom0000,uid =100014
+
+[32m[2017-05-12 15:24:14.220] [INFO] console - [39ma:98066868 e: l: f:
+
+[32m[2017-05-12 15:24:14.220] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100014,tb id =98066868
+
+[32m[2017-05-12 15:27:14.106] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"gameid":"scmj","roomid":"symj1","tableid":"778355768","__route__":"pkplayer.handler.JoinGame"}uid :100024
+
+[32m[2017-05-12 15:27:14.134] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"gameid":"scmj","roomid":"symj1","tableid":"778355768","__route__":"pkplayer.handler.JoinGame","canCreate":true,"createPara":{"round":1,"canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":true,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":false,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":1,"playType":1,"isTrust":10,"__route__":"pkplayer.handler.CreateVipTable","gameid":"scmj","CoinPara":{"type":"1","cost":500,"win":500,"min":2000,"max":15000},"owner":100024,"full":4,"coinCategory":"1:1","money":0,"vipTable":778355768,"createtime":1494572832200}}, server id =pkroom0002,uid =100024
+
+[32m[2017-05-12 15:27:14.145] [INFO] console - [39ma:778355768 e: l: f:
+
+[32m[2017-05-12 15:27:14.145] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100024,tb id =778355768
+
+[32m[2017-05-12 15:31:59.173] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:32:01.092] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:32:58.408] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:33:00.440] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":false,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:33:17.805] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:33:19.286] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:34:36.263] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:34:37.929] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:35:34.346] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:35:38.091] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:35:39.351] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:35:39.374] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0000 {"roomtype":1,"uids":["100013","100014"],"tableid":"98066868"}
+[32m[2017-05-12 15:35:39.374] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0002 {"roomtype":1,"uids":["100013","100014"],"tableid":"98066868"}
+
+[32m[2017-05-12 15:35:39.375] [INFO] console - [39m--matcherCode--serverClass.prototype.EndCoinTable{"coinCategory":"7:7","tid":"98066868"}
+
+[32m[2017-05-12 15:35:39.377] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100014
+
+[32m[2017-05-12 15:35:39.379] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100013
+
+[32m[2017-05-12 15:35:39.379] [INFO] console - [39mdestroy table 98066868
+
+[32m[2017-05-12 15:35:39.379] [INFO] console - [39mpkplayer0000leave game uid 100014, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:35:39.381] [INFO] console - [39mpkplayer0002leave game uid 100013, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:35:39.383] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100013,"coinCategory":"7:7","tid":98066868}, uid = 100013
+
+[32m[2017-05-12 15:35:39.384] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100014,"coinCategory":"7:7","tid":98066868}, uid = 100014
+
+[32m[2017-05-12 15:35:48.997] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100017","code":"hLTvrE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:35:49.001] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100017","code":"hLTvrE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:35:49.155] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100017
+
+[32m[2017-05-12 15:35:54.710] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100014
+
+[32m[2017-05-12 15:35:55.111] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100013
+
+[32m[2017-05-12 15:35:56.247] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100017,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:36:00.220] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:36:00.221] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:36:00.374] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100014
+
+[32m[2017-05-12 15:36:00.684] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:36:00.685] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:36:00.836] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100013
+
+[32m[2017-05-12 15:36:05.848] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CreateVipTable{"round":"round9999","canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":true,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":false,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":9,"playType":5,"isTrust":20,"isVIPTable":3,"__route__":"pkplayer.handler.CreateVipTable"}, uid = 100017
+
+[32m[2017-05-12 15:36:05.849] [INFO] console - [39m--matcherCode--serverClass.prototype.FindCoinTable{"isVIPTable":3,"gameid":"scmj","uid":100017,"ip":"111.207.103.66","coinCategory":"5:9","coin":4202000,"winRate":100,"full":4}, uid = 100017
+
+[32m[2017-05-12 15:36:05.850] [INFO] console - [39mfind_table_cost:1
+[32m[2017-05-12 15:36:05.850] [INFO] console - [39mpkplayer0000create coin vip tb id = 77101887,uid = 100017
+
+[32m[2017-05-12 15:36:05.950] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":77101887,"__route__":"pkplayer.handler.JoinGame"}uid :100017
+
+[32m[2017-05-12 15:36:05.954] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"77101887","__route__":"pkplayer.handler.JoinGame","gameid":"scmj","canCreate":true,"createPara":{"round":9999,"canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":false,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":true,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":false,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":9,"playType":5,"isTrust":20,"isVIPTable":3,"__route__":"pkplayer.handler.CreateVipTable","gameid":"scmj","CoinPara":{"type":"9","cost":50000,"win":50000,"min":500000,"max":-1},"owner":100017,"full":4,"coinCategory":"5:9","money":0,"vipTable":77101887,"createtime":1494574565850}}, server id =pkroom0003,uid =100017
+
+[32m[2017-05-12 15:36:05.958] [INFO] console - [39ma:77101887 e: l: f:
+[32m[2017-05-12 15:36:05.958] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100017,tb id =77101887
+
+[32m[2017-05-12 15:36:07.519] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100014,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:36:08.634] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100013,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:36:23.583] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":77101877,"__route__":"pkplayer.handler.JoinGame"}uid :100014
+
+[32m[2017-05-12 15:36:23.601] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"77101877","__route__":"pkplayer.handler.JoinGame","gameid":"scmj"}, server id =pkroom0005,uid =100014
+
+[32m[2017-05-12 15:36:23.603] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer error = pl null, tb id =77101877
+
+[32m[2017-05-12 15:36:33.762] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":77101887,"__route__":"pkplayer.handler.JoinGame"}uid :100014
+
+[32m[2017-05-12 15:36:33.766] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"77101887","__route__":"pkplayer.handler.JoinGame","gameid":"scmj"}, server id =pkroom0003,uid =100014
+
+[32m[2017-05-12 15:36:33.768] [INFO] console - [39ma:77101887 e: l: f:
+
+[32m[2017-05-12 15:36:33.768] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100014,tb id =77101887
+
+[32m[2017-05-12 15:36:38.370] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":77101887,"__route__":"pkplayer.handler.JoinGame"}uid :100013
+
+[32m[2017-05-12 15:36:38.372] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"77101887","__route__":"pkplayer.handler.JoinGame","gameid":"scmj"}, server id =pkroom0003,uid =100013
+
+[32m[2017-05-12 15:36:38.382] [INFO] console - [39ma:77101887 e: l: f:
+
+[32m[2017-05-12 15:36:38.382] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100013,tb id =77101887
+
+[32m[2017-05-12 15:37:06.205] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:37:08.034] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":false,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:38:23.868] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:38:25.385] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:38:26.675] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:40:18.857] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:40:22.245] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:40:29.678] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:04.551] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:06.094] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:07.306] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:09.922] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:11.462] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:11.479] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0002 {"roomtype":1,"uids":["100013","100014","100017"],"tableid":"77101887"}
+
+[32m[2017-05-12 15:42:11.481] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0000 {"roomtype":1,"uids":["100013","100014","100017"],"tableid":"77101887"}
+[32m[2017-05-12 15:42:11.481] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100013
+
+[32m[2017-05-12 15:42:11.482] [INFO] console - [39m--matcherCode--serverClass.prototype.EndCoinTable{"coinCategory":"5:9","tid":"77101887"}
+
+[32m[2017-05-12 15:42:11.482] [INFO] console - [39mpkplayer0002leave game uid 100013, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:42:11.484] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100013,"coinCategory":"7:7","tid":77101887}, uid = 100013
+
+[32m[2017-05-12 15:42:11.486] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100014
+
+[32m[2017-05-12 15:42:11.486] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100017
+
+[32m[2017-05-12 15:42:11.486] [INFO] console - [39mdestroy table 77101887
+
+[32m[2017-05-12 15:42:11.488] [INFO] console - [39mpkplayer0000leave game uid 100014, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:42:11.490] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100014,"coinCategory":"7:7","tid":77101887}, uid = 100014
+
+[32m[2017-05-12 15:42:11.493] [INFO] console - [39mpkplayer0000leave game uid 100017, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:42:11.496] [INFO] console - [39m--matcherCode--serverClass.prototype.LeaveCoinTable{"gameid":"scmj","uid":100017,"coinCategory":"5:9","tid":77101887}, uid = 100017
+
+[32m[2017-05-12 15:42:18.040] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:22.962] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:24.326] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:25.635] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100014
+
+[32m[2017-05-12 15:42:26.197] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100013
+
+[32m[2017-05-12 15:42:26.864] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100017
+
+[32m[2017-05-12 15:42:31.185] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:42:31.187] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100014","code":"SJBAbE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:42:31.342] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100014
+
+[32m[2017-05-12 15:42:31.737] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:42:31.739] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100013","code":"dOEtG4","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:42:31.890] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100013
+
+[32m[2017-05-12 15:42:32.138] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"mail":"100017","code":"hLTvrE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:42:32.138] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"mail":"100017","code":"hLTvrE","packageVs":"win32","resVersion":"1.335","app":{"appid":"com.coolgamebox.scmj","os":"Windows"},"geogData":{"latitude":0,"longitude":0},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:42:32.288] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CanSignIn + 100017
+
+[32m[2017-05-12 15:42:33.243] [INFO] console - [39m--pkplayerCode--serverClass.prototype.doLogout100014
+
+[32m[2017-05-12 15:42:35.174] [INFO] console - [39m--pkplayerCode--serverClass.prototype.GetRoomCfg + {"uid":100017,"version":100,"__route__":"pkplayer.handler.GetRoomCfg"}
+
+[32m[2017-05-12 15:42:39.426] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CreateVipTable{"round":"round4","canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":8,"with3":false,"zimofan":false,"yaojiu":false,"zhuanyu":false,"blood":false,"doubleCarHouse":false,"coinRoomCreate":false,"fight3p":false,"menqing":false,"gshdianpao":true,"gshzimo":false,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":0,"playType":7,"isTrust":0,"isVIPTable":0,"__route__":"pkplayer.handler.CreateVipTable"}, uid = 100017
+
+[32m[2017-05-12 15:42:39.427] [INFO] console - [39mpkplayer0000new tableid  id = 593259,uid = 100017viptable:{"round":4,"canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":8,"with3":false,"zimofan":false,"yaojiu":false,"zhuanyu":false,"blood":false,"doubleCarHouse":false,"coinRoomCreate":false,"fight3p":false,"menqing":false,"gshdianpao":true,"gshzimo":false,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":0,"playType":7,"isTrust":0,"isVIPTable":0,"gameid":"scmj","owner":100017,"money":2,"vipTable":593259,"createtime":1494574959427}
+
+[32m[2017-05-12 15:42:39.574] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":593259,"__route__":"pkplayer.handler.JoinGame"}uid :100017
+
+[32m[2017-05-12 15:42:39.577] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"593259","__route__":"pkplayer.handler.JoinGame","gameid":"scmj","canCreate":true,"createPara":{"round":4,"canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":8,"with3":false,"zimofan":false,"yaojiu":false,"zhuanyu":false,"blood":false,"doubleCarHouse":false,"coinRoomCreate":false,"fight3p":false,"menqing":false,"gshdianpao":true,"gshzimo":false,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":true,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":0,"playType":7,"isTrust":0,"isVIPTable":0,"gameid":"scmj","owner":100017,"money":2,"vipTable":593259,"createtime":1494574959427}}, server id =pkroom0003,uid =100017
+
+[32m[2017-05-12 15:42:39.580] [INFO] console - [39ma:593259 e: l: f:
+
+[32m[2017-05-12 15:42:39.580] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100017,tb id =593259
+
+[32m[2017-05-12 15:42:51.497] [INFO] console - [39m--pkplayerCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":593259,"__route__":"pkplayer.handler.JoinGame"}uid :100013
+
+[32m[2017-05-12 15:42:51.498] [INFO] console - [39m--pkroomCode--serverClass.prototype.JoinGame{"roomid":"symj1","tableid":"593259","__route__":"pkplayer.handler.JoinGame","gameid":"scmj"}, server id =pkroom0003,uid =100013
+
+[32m[2017-05-12 15:42:51.503] [INFO] console - [39ma:593259 e: l: f:
+
+[32m[2017-05-12 15:42:51.503] [INFO] console - [39m--------->serverClass.prototype.JoinGame  AddPlayer uid =  100013,tb id =593259
+
+[32m[2017-05-12 15:42:54.097] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPut","card":8,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:42:59.566] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:43:00.607] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"DelRoom","yes":true,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:43:00.615] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0002 {"uids":["100013","100017"],"tableid":"593259"}
+[32m[2017-05-12 15:43:00.615] [INFO] console - [39m--pkplayerCode--serverClass.prototype.endVipTable pkplayer0000 {"uids":["100013","100017"],"tableid":"593259"}
+
+[32m[2017-05-12 15:43:00.616] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100013
+
+[32m[2017-05-12 15:43:00.617] [INFO] console - [39m--pkroomCode--serverClass.prototype.LeaveGame{"isDisconnect":false}|| uid:100017
+
+[32m[2017-05-12 15:43:00.617] [INFO] console - [39mpkplayer0002leave game uid 100013, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:43:00.617] [INFO] console - [39mdestroy table 593259
+
+[32m[2017-05-12 15:43:00.618] [INFO] console - [39mpkplayer0000leave game uid 100017, pl vipTb = 0ret : 
+
+[32m[2017-05-12 15:43:20.692] [INFO] console - [39m--pkroomCode--serverClass.prototype.tableMsg{"cmd":"MJPass","eatFlag":0,"__route__":"pkroom.handler.tableMsg"}
+
+[32m[2017-05-12 15:46:07.720] [INFO] console - [39m--pkplayerCode--serverClass.prototype.LeaveGame{"__route__":"pkplayer.handler.LeaveGame"}
+

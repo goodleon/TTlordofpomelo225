@@ -1,0 +1,17 @@
+#!/bin/bash
+
+export NODE_PATH=/usr/lib/node_modules
+
+currentPath=$PWD
+
+if [ $# != 1 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 1" error;
+exit 1;
+fi
+
+ls -l $1 |grep ^d | awk '{print $9}'
+
+if [ $? != 0 ];then
+    bash echoColor "error" error;
+    exit 1;
+fi

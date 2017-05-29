@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>产品对战查询</title>
+</head>
+<body>
+   <div>
+       请选择需要查询的时间:<input class="easyui-datetimebox" id="timeBox" data-options="required:true,showSeconds:false" style="width:150px"/>
+       <a href="#" class="easyui-linkbutton" onclick="searchForall()">点击查询</a>
+   </div>
+   <table  id="tt" class="easyui-datagrid" title="各产品对战查询" style="width:100%;height:800px"
+           data-options="singleSelect:true,collapsible:true">
+       <thead>
+       <tr>
+           <th data-options="field:'pn',width:80">产品名称</th>
+           <th data-options="field:'vipTableCount',width:80">当日场次</th>
+           <th data-options="field:'yesTableCount',width:80">前一日场次</th>
+           <th data-options="field:'todaycom',width:150">当日较前日增长</th>
+           <th data-options="field:'dayTableTotal',width:120">前7日平均场次</th>
+           <th data-options="field:'yescom',width:150">当日较前7日增长</th>
+       </tr>
+       </thead>
+   </table>
+   <script>
+       function myformatter(date){
+           var y = date.getFullYear();
+           var m = date.getMonth()+1;
+           var d = date.getDate();
+           var h=  date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+           var min=  date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+           return (m<10?('0'+m):m)+'/'+(d<10?('0'+d):d)+'/'+y+' '+h+":"+min;
+       }
+/*       window.onload =function (){
+           $("#timeBox").datetimebox('setValue',myformatter(new Date()));
+           searchForall();
+       };*/
+       $(document).ready(function(){
+           $("#timeBox").datetimebox('setValue',myformatter(new Date()));
+           searchForall();
+       });
+    function searchForall() {
+        var dayVal = $("#timeBox").datebox('getValue');
+        var dayvalArr=dayVal.split(/[/:\s]/);
+        dayVal=dayvalArr[2]+dayvalArr[0]+dayvalArr[1];
+        dayvalArr[3]=dayvalArr[3].replace(/\b(0+)/gi,"");
+        var yesterdayArr=[];
+        var temp = new Date(dayvalArr[2],parseInt(dayvalArr[0])-1,dayvalArr[1]);
+        for(var j=1;j<=8;j++){
+            yesterdayArr[j-1] = new Date(temp.getTime()-j*24*60*60*1000).Format('yyyyMMdd');
+        }
+        if (!dayVal) {
+            $.messager.alert("操作提示", "请选择日期", "error");
+        } else {
+            postJson("/userData/getVipTableTime", {day:dayVal, type:0},function (rtn) {
+               if (!rtn||rtn.length==0) {
+                    $.messager.alert("操作提示", "没有数据", "error");
+                    $("#tt").datagrid("loadData",{total:0,rows:[{pn:"没有数据",vipTableCount:"",yesTableCount:"",dayTableTotal:"",todaycom:"",yescom:""}]});
+                } else {
+                    var allprorows = [];
+                    var prorows={};
+                    var weekaver=0;
+                    for (var i=0;i<rtn.length;i++){
+                        //initData!!!
+                        prorows={pn:"",vipTableCount:0,yesTableCount:0,todaycom:0,dayTableTotal:0,yescom:0};
+                        prorows["pn"]=rtn[i]["pValue"];
+                        var dd=rtn[i]["data"];
+                        for(var j=0;j<dd.length;j++){
+                            if(dd[j]["_id"]==dayVal){
+                                prorows["vipTableCount"]=dd[j]["vipTableTime"][dayvalArr[3]];
+                            }
+                            if(dd[j]["_id"]==yesterdayArr[0]){
+                                prorows["yesTableCount"]=dd[j]["vipTableTime"][dayvalArr[3]];
+                            }
+                            for(var l=0;l<yesterdayArr.length-1;l++){
+                                if(dd[j]["_id"]==yesterdayArr[l]){
+                                    weekaver+=dd[j]["vipTableTime"][dayvalArr[3]];
+                                }
+                            }
+                        }
+                        var tempdd=prorows["vipTableCount"]-prorows["yesTableCount"];
+                        if(!prorows["yesTableCount"]){
+                            prorows["todaycom"]=tempdd+"(--%)";
+                        }else{
+                            prorows["todaycom"]=tempdd+"("+(tempdd/prorows["yesTableCount"]*100).toFixed(2)+"%)";
+                        }
+                        prorows["dayTableTotal"]=parseInt(weekaver/7);
+                        var temptt=prorows["vipTableCount"]-prorows["dayTableTotal"];
+                        if(!prorows["dayTableTotal"]){
+                            prorows["yescom"]=temptt+"(--%)";
+                        }else{
+                            prorows["yescom"]=temptt+"("+(temptt/prorows["dayTableTotal"]*100).toFixed(2)+"%)"
+                        }
+
+                        allprorows.push(prorows);
+                        prorows={};
+                        weekaver=0;
+                    }
+                    var dtdd={};
+                    dtdd.total=rtn.length;
+                    dtdd.rows=allprorows;
+                   $('#tt').datagrid({
+                       columns:[[
+                           {field:'pn',title:'产品名称',width:80,align:'center'},
+                           {field:'vipTableCount',title:'当日场次',width:120,align:'center'},
+                           {field:'yesTableCount',title:'前一日场次',width:120,align:'center'},
+                           {field:'todaycom',title:'当日较前日增长',width:120,align:'center',
+                               styler: function(value,row,index){
+                                  /* if(index==0){
+                                       return 'color:#0000FF;font-weight:bold;font-size:4em';
+                                   }else if(index==1){
+                                       return 'color:#3366FF;font-weight:bold;font-size:3em';
+                                   }else if(index==2){
+                                       return 'color:#339900;font-weight:bold;font-size:2em';
+                                   }else if(index==3){
+                                       return 'color:#33CC00;font-weight:bold;font-size:1.5em';
+                                   }else if(index==4){
+                                       return 'color:#33FF00;font-weight:bold;font-size:22px';
+                                   }else if(index==5){
+                                       return 'color:#33FF99;font-weight:bold;font-size:20px';
+                                   }else if(index==6){
+                                       return 'color:#FF99CC;font-weight:bold;font-size:18px';
+                                   }else if(index==7){
+                                       return 'color:#FF6699;font-weight:bold;font-size:16px';
+                                   }else if(index==8){
+                                       return 'color:#FF6600;font-weight:bold;font-size:14px';
+                                   }else if(index==9){
+                                       return 'color:#FF3300;font-weight:bold;font-size:12px';
+                                   }else if(index==10){
+                                       return 'color:#FF0000;font-weight:bold;font-size:1.5em';
+                                   }else if(index==11){
+                                       return 'color:#CC0000;font-weight:bold;font-size:1.5em';
+                                   }else if(index==12){
+                                       return 'color:#990000;font-weight:bold;font-size:1.5em';
+                                   }*/
+                                   if(row.yesTableCount){
+                                       var d_val=row.vipTableCount-row.yesTableCount;
+                                       if((d_val/row.yesTableCount)<=-1){
+                                           return 'color:#0000FF;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>-1 && (d_val/row.yesTableCount)<=-0.8){
+                                           return 'color:#3366FF;font-weight:bold;';
+                                       }else if(d_val/row.yesTableCount>-0.8 && (d_val/row.yesTableCount)<=-0.6){
+                                           return 'color:#339900;font-weight:bold;';
+                                       }else if(d_val/row.yesTableCount>-0.6 && (d_val/row.yesTableCount)<=-0.4){
+                                           return 'color:#33CC00;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>-0.4 && (d_val/row.yesTableCount)<=-0.2){
+                                           return 'color:#33FF00;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>-0.2 && (d_val/row.yesTableCount)<=0){
+                                           return 'color:#33FF99;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>0 && (d_val/row.yesTableCount)<=0.2){
+                                           return 'color:#FF99CC;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>0.2 && (d_val/row.yesTableCount)<=0.4){
+                                           return 'color:#FF6699;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>0.4 && (d_val/row.yesTableCount)<=0.6){
+                                           return 'color:#FF6600;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>0.6 && (d_val/row.yesTableCount)<=0.8){
+                                           return 'color:#FF3300;font-weight:bold;';
+                                       }else if((d_val/row.yesTableCount)>0.8 && (d_val/row.yesTableCount)<=1){
+                                           return 'color:#FF0000;font-weight:bold;';
+                                       }else if(d_val/row.yesTableCount>1){
+                                           return 'color:#CC0000;font-weight:bold;';
+                                       }else{
+                                           return 'color:#990000;font-weight:bold;';
+                                       }
+                                   }else{
+                                       return 'color:#990000;font-weight:bold;';
+                                   }
+                               }
+                           },
+                           {field:'dayTableTotal',title:'前7日平均场次',width:120,align:'center'},
+                           {field:'yescom',title:'当日较前7日增长',width:120,align:'center',
+                               styler: function(value,row,index){
+                                   if(row.dayTableTotal){
+                                        var d_val=row.vipTableCount-row.dayTableTotal;
+                                        if(d_val/row.dayTableTotal<=-1){
+                                            return 'color:#0000FF;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>-1 && d_val/row.dayTableTotal<=-0.8){
+                                            return 'color:#3366FF;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>-0.8 && d_val/row.dayTableTotal<=-0.6){
+                                            return 'color:#339900;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>-0.6 && d_val/row.dayTableTotal<=-0.4){
+                                            return 'color:#33CC00;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>-0.4 && d_val/row.dayTableTotal<=-0.2){
+                                            return 'color:#33FF00;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>-0.2 && d_val/row.dayTableTotal<=0){
+                                            return 'color:#33FF99;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>0 && d_val/row.dayTableTotal<=0.2){
+                                            return 'color:#FF99CC;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>0.2 && d_val/row.dayTableTotal<=0.4){
+                                            return 'color:#FF6699;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>0.4 && d_val/row.dayTableTotal<=0.6){
+                                            return 'color:#FF6600;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>0.6 && d_val/row.dayTableTotal<=0.8){
+                                            return 'color:#FF3300;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>0.8 && d_val/row.dayTableTotal<=1){
+                                            return 'color:#FF0000;font-weight:bold;';
+                                        }else if(d_val/row.dayTableTotal>1){
+                                            return 'color:#CC0000;font-weight:bold;';
+                                        }else{
+                                            return 'color:#990000;font-weight:bold;';
+                                        }
+                                    }else{
+                                       return 'color:#990000;font-weight:bold;';
+                                   }
+                               }
+                           }
+                       ]]
+                   });
+//                   pn vipTableCount yesTableCount todaycom dayTableTotal yescom
+                  $("#tt").datagrid("loadData",dtdd);
+                }
+            })
+        }
+    }
+   </script>
+</body>
+</html>

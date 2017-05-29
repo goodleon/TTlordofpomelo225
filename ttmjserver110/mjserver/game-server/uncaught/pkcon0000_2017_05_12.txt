@@ -1,0 +1,37 @@
+
+domain Error: write EPIPE
+    at errnoException (net.js:905:11)
+    at Object.afterWrite (net.js:721:19)
+domain Error: write EPIPE
+    at errnoException (net.js:905:11)
+    at Object.afterWrite (net.js:721:19)
+domain Error: write EPIPE
+    at errnoException (net.js:905:11)
+    at Object.afterWrite (net.js:721:19)
+domain Error: This socket is closed.
+    at Socket._write (net.js:638:19)
+    at doWrite (_stream_writable.js:226:10)
+    at writeOrBuffer (_stream_writable.js:216:5)
+    at Socket.Writable.write (_stream_writable.js:183:11)
+    at Socket.write (net.js:616:40)
+    at Console.log (console.js:54:16)
+    at Logger.<anonymous> (/usr/lib/node_modules/pomelo/node_modules/pomelo-logger/node_modules/log4js/lib/appenders/console.js:8:5)
+    at Logger.emit (events.js:117:20)
+    at Logger.log (/usr/lib/node_modules/pomelo/node_modules/pomelo-logger/node_modules/log4js/lib/logger.js:58:10)
+    at Logger.(anonymous function) [as error] (/usr/lib/node_modules/pomelo/node_modules/pomelo-logger/node_modules/log4js/lib/logger.js:77:30)
+domain Error: write EPIPE
+    at errnoException (net.js:905:11)
+    at Object.afterWrite (net.js:721:19)
+domain Error: This socket is closed.
+    at Socket._write (net.js:638:19)
+    at doWrite (_stream_writable.js:226:10)
+    at writeOrBuffer (_stream_writable.js:216:5)
+    at Socket.Writable.write (_stream_writable.js:183:11)
+    at Socket.write (net.js:616:40)
+    at Console.log (console.js:54:16)
+    at Logger.<anonymous> (/usr/lib/node_modules/pomelo/node_modules/pomelo-logger/node_modules/log4js/lib/appenders/console.js:8:5)
+    at Logger.emit (events.js:117:20)
+    at Logger.log (/usr/lib/node_modules/pomelo/node_modules/pomelo-logger/node_modules/log4js/lib/logger.js:58:10)
+    at Logger.(anonymous function) [as error] (/usr/lib/node_modules/pomelo/node_modules/pomelo-logger/node_modules/log4js/lib/logger.js:77:30)
+    at Object.pLogger.(anonymous function) [as error] (/usr/lib/node_modules/pomelo/node_modules/pomelo-logger/lib/logger.js:47:17)
+    at SocketNamespace.<anonymous> (/usr/lib/node_modules/pomelo/node_modules/pomelo-rpc/lib/rpc-client/mailboxes/ws-mailbox.js:70:12)

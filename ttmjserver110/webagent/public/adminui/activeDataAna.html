@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <title>活跃分析</title>
+</head>
+<style>
+    .a-ca-table{
+        margin:0 auto;
+        min-width: 800px;
+    }
+    .a-ca-head-title {
+        padding: 0 !important;
+    }
+    .a-ca-table>thead:nth-of-type(1){
+        background:#7cb5ec;
+    }
+    table th {
+        padding: 5px;
+    }
+    table caption{
+        font:600 20px/24px '微软雅黑';
+        margin:10px 0;
+    }
+    table td {
+        padding: 5px;
+        font:400 12px/16px '宋体';
+    }
+    .a-ca-table tbody tr td {
+        text-align: center;
+    }
+    .a-ca-table>th{
+        border-left:none;
+    }
+    .a-ca-t-worker th{
+    }
+    .a-ca-table tbody tr td {
+        text-align: center;
+    }
+    .a-ca-ht-div {
+        background-image: url(../images/image/xiexian.png);
+        background-size: 100% 100%;
+    }
+    .a-ca-ht-div th:nth-of-type(1),.a-ca-ht-div th:nth-of-type(2),.a-ca-ht-div th:nth-of-type(3),
+    .a-ca-ht-div th:nth-of-type(4){
+        border:none;
+    }
+</style>
+<body>
+<table class="a-ca-table" border="1" cellspacing="0">
+    <caption>用户活跃分析表</caption>
+    <thead>
+    <tr class="a-ca-t-worker">
+        <th rowspan="2" class="a-ca-head-title">
+            <div class="a-ca-ht-div">
+                <table>
+                    <thead>
+                    <tr class="a-ca-ht-day">
+                        <th></th>
+                        <th>时间</th>
+                    </tr>
+                    <tr class="a-ca-ht-worker">
+                        <th>日期</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </th>
+        <th rowspan="2">0</th>
+        <th rowspan="2">1</th>
+        <th rowspan="2">2</th>
+        <th rowspan="2">3</th>
+        <th rowspan="2">4</th>
+        <th rowspan="2">5</th>
+        <th rowspan="2">6</th>
+        <th rowspan="2">7</th>
+        <th rowspan="2">8</th>
+        <th rowspan="2">9</th>
+        <th rowspan="2">10</th>
+        <th rowspan="2">11</th>
+        <th rowspan="2">12</th>
+        <th rowspan="2">13</th>
+        <th rowspan="2">14</th>
+        <th rowspan="2">15</th>
+        <th rowspan="2">16</th>
+        <th rowspan="2">17</th>
+        <th rowspan="2">18</th>
+        <th rowspan="2">19</th>
+        <th rowspan="2">20</th>
+        <th rowspan="2">21</th>
+        <th rowspan="2">22</th>
+        <th rowspan="2">23</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>2016/09/06</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+        </tr>
+        <tr>
+            <td>2016/09/07</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+        </tr>
+        <tr>
+            <td>2016/09/08</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+        </tr>
+        <tr>
+            <td>2016/09/09</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+        </tr>
+        <tr>
+            <td>2016/09/10</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+        </tr>
+        <tr>
+            <td>2016/09/11</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+            <td>10000000</td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

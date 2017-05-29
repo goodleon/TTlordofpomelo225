@@ -1,0 +1,83 @@
+[{
+  "id":"0",
+  "text":"下拉选择产品",
+  "selected":true
+},{
+  "id":"ddz",
+  "text":"斗地主"
+},{
+  "id":"gzmj",
+  "text":"贵州麻将"
+},{
+  "id":"scmj",
+  "text":"四川麻将"
+},{
+  "id":"phz",
+  "text":"跑胡子"
+},{
+  "id":"ahmj",
+  "text":"安徽麻将"
+},{
+  "id":"fjmj",
+  "text":"福建麻将"
+},{
+  "id":"gdmj",
+  "text":"广东麻将"
+},{
+  "id":"gsmj",
+  "text":"甘肃麻将"
+},{
+"id":"guandan",
+"text":"掼蛋麻将"
+},{
+"id":"gxmj",
+"text":"广西麻将"
+},{
+"id":"gxphz",
+"text":"广西跑胡子"
+},{
+"id":"hanmj",
+"text":"海南麻将"
+},{
+"id":"henmj",
+"text":"河南麻将"
+},{
+"id":"hnmj",
+"text":"湖南麻将"
+},{
+"id":"jsmj",
+"text":"江苏麻将"
+},{
+"id":"jxmj",
+"text":"江西麻将"
+},{
+"id":"kwx",
+"text":"卡五星"
+},{
+"id":"nxmj",
+"text":"宁夏麻将"
+},{
+"id":"pdk",
+"text":"跑得快"
+},{
+"id":"sdmj",
+"text":"山东麻将"
+},{
+"id":"sxmj",
+"text":"山西麻将"
+},{
+"id":"xynmmj",
+"text":"内蒙麻将"
+},{
+"id":"ynmj",
+"text":"云南麻将"
+},{
+"id":"zjmj",
+"text":"浙江麻将"
+},{
+  "id":"jsmj",
+  "text":"江苏麻将"
+},{
+  "id":"psz",
+  "text":"热血海南"
+}]

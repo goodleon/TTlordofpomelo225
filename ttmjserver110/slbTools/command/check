@@ -1,0 +1,72 @@
+#!/bin/sh
+#检查进程
+#列出日志目录
+
+MJ_PATH='/root/mjserver'
+SLB_PATH='/root/slbTools'
+proce_list_all="pkplayer login pkroom pkcon web.js adminWeb.js activityWeb.js"
+
+SINGLE="sdmj dzpk xjmj gsmj jsmj hanmj ahmj guandan ljmj nxmj"
+no_loginpkplayer="ddz gzmj phz fjmj scmj gxmj ynmj sxmj"
+HOST_NAME=$(hostname|awk -F- '{print $1}')
+Host_TYPE=$(hostname|awk -F- '{print $2}')
+
+check_process() {
+proc="$1"
+proc_count=$(ps aux |grep node|grep -v grep|grep -v forever|grep "${1}"|wc -l)
+if [ $proc_count -gt 0 ];then
+  echo -e "\033[32m ${1} count:${proc_count} \033[0m"
+else
+  echo -e "\033[31m ${1} down.\033[0m"
+fi
+
+}
+
+list_log() {
+  month=$(date +%b)
+  day=$(date +%-d)  #不填充0
+  hour=$(date +%H)
+  last_hour=$(date +%H -d "-1 hours")
+ echo -e "\n-----------------------------" 
+  echo -e "\033[31m list logs: \033[0m"
+  cd ${MJ_PATH}/game-server/logs 
+  ls -l|grep -e "${month} \{1,2\}${day} \{1,2\}${hour}" -e "${month} \{1,2\}${day} \{1,2\}${last_hour}"|awk -v NPWD="$PWD" '{print $6,$7,$8,NPWD"/"$9}'
+
+  echo -e "\n\033[31mlist uncaught: \033[0m"
+  cd ${MJ_PATH}/game-server/uncaught
+  ls -l|grep -e "${month} \{1,2\}${day} \{1,2\}${hour}" -e "${month} \{1,2\}${day} \{1,2\}${last_hour}"|awk -v NPWD="$PWD" '{print $6,$7,$8,NPWD"/"$9}' 
+
+}
+
+check_port() {
+  echo -e "\n-----------------------------"
+  echo "check ports:"
+  python ${SLB_PATH}/ydx/check_port.py $HOST_NAME
+
+}
+
+if [ "`echo $SINGLE|grep ${HOST_NAME}`" != "" ] ;then
+  check_list=${proce_list_all}
+elif [ "${Host_TYPE}" == "master" -o "${Host_TYPE}" == "data" ];then
+  if [ "`echo ${no_loginpkplayer}|grep ${HOST_NAME}`" != "" ] ;then
+    check_list="web.js adminWeb.js activityWeb.js"
+  else
+    check_list="login pkplayer web.js adminWeb.js activityWeb.js"
+  fi
+elif [ "${Host_TYPE}" == "room" ];then
+  check_list="pkroom web.js"
+elif [ "${Host_TYPE}" == "loginPkplayer" ];then
+  check_list="login pkplayer"
+elif [ "${Host_TYPE}" == "link" ];then
+  check_list="pkcon"
+fi
+
+echo -e "\n-----------------------------"
+echo "check process:"
+for key in `echo ${check_list}|xargs`
+do
+  check_process $key
+done
+
+check_port
+list_log

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+	<link rel="stylesheet" type="text/css" href="../css/layout.css">
+	<script type="text/javascript" src="/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<script type="text/javascript" src="../highchart/highcharts.js"></script>
+	<script type="text/javascript" src="../highchart/layout.js"></script>
+	<title>数据统计部分展示</title>
+</head>
+<body>
+<div id="table_container">
+	<div id="data_table_header">
+		<table  cellspacing="0">
+			<caption>数据分析&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#dlg').window('open')">查看图表</a></caption>
+			<tr>
+				<th>日&nbsp;&nbsp;期</th>
+				<th>注册人数</th>
+				<th>新增用户</th>
+				<th>活跃人数</th>
+				<th>新增活跃</th>
+				<th>对战场数</th>
+				<th>新增对战</th>
+				<th>人均场次</th>
+			</tr>
+		</table>
+	</div>
+	<div id="data_table">
+		<table  border= "1" cellspacing="0">
+
+		</table>
+	</div>
+</div>
+<div id="dlg" class="easyui-dialog" title="数据展示图" closed="true"  data-options="iconCls:'icon-save'" style="width:800px;height:500px;padding:10px">
+	<p>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="showChart('新增用户',adduserArr);">新增用户</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="showChart('活跃人数',activeUserArr);">活跃人数</a>
+		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="showChart('对战场数',pkCountArr);">对战场数</a>
+	</p>
+	<div id="charts"></div>
+</div>
+<script type="text/javascript">
+	var dateArr = [];
+	var adduserArr = [];
+	var activeUserArr = [];
+	var pkCountArr = [];
+	var startDate_ = new Date();
+	startDate_.setDate(startDate_.getDate() - 61);
+	var endDate_ = new Date();
+	endDate_.setDate(endDate_.getDate() - 1);
+
+	var startDate = getFormatDate(startDate_);
+	var endDate   = getFormatDate(endDate_);
+
+	function weekData(start,data){
+		var reg=0,inc=0,act=0,actinc=0,pk=0,pkinc=0,pkii=0;
+		var averreg=0,averinc=0,averact=0,averactinc=0,averpk=0,averpkinc=0,averpkii=0;
+//		allcount incnum gamecount actinc pkcount pkinc  pkaver
+		for(var j=start;j<start+7;j++){
+			reg+=data[j]["allcount"];
+			inc+=data[j]["incnum"];
+			act+=data[j]["gamecount"];
+			actinc+=data[j]["actinc"];
+			pk+=data[j]["pkcount"];
+			pkinc+=data[j]["pkinc"];
+			pkii+=parseFloat(data[j]["pkaver"]);
+		}
+		averreg=(reg/7).toFixed(2);
+		averinc=(inc/7).toFixed(2);
+		averact=(act/7).toFixed(2);
+		averactinc=(actinc/7).toFixed(2);
+		averpk=(pk/7).toFixed(2);
+		averpkinc=(pkinc/7).toFixed(2);
+		averpkii=(pkii/7).toFixed(2);
+		$("table").eq(1).append("<tr><td>"+(start/7+1)+"周内日均:</td><td>"+averreg+"</td><td>"+averinc+"</td><td>" +averact + "</td><td>"+averactinc+"</td><td>" +averpk+ "</td><td>"+averpkinc+"</td><td>"+averpkii+"</td></tr>");
+	}
+
+	postJson("/admin/getDayCountLog",{"_id":{$gte:startDate, $lte:endDate}},
+			function(data) {
+				if(data.total==0||data.total=='0'){
+					$("table").eq(1).append('<tr><td colspan="4" color="red">没有数据</td></tr>');
+				}else{
+					var series=data.rows.reverse();
+					var incnum=[];
+					var actinc=[];
+					var pkinc=[];
+					var pkaver=[];
+					var len=data.rows.length;
+					var allcountaver=0;
+					var gamecountaver=0;
+					var pkcountaver=0;
+					var temp1 = series[0]["allcount"] - series[len-1]["allcount"];
+					var temp2=series[0]["gamecount"]-series[len-1]["gamecount"];
+					var temp3=series[0]["pkcount"]-series[len-1]["pkcount"];
+					allcountaver+=temp1;
+					gamecountaver+=temp2;
+					pkcountaver+=temp3;
+					for(var i=0;i<len-1;i++) {
+						time = String(series[i]["date"]);
+						var arr0 = time.substring(0, 4) + "/";
+						var arr1 = time.substring(4, 6) + "/";
+						var arr2 = time.substring(6, 8);
+						series[i]["date"] = arr0.concat(arr1, arr2);
+						incnum[i] = series[i]["allcount"]- series[i+1]["allcount"];
+						series[i]["incnum"]=incnum[i];
+						actinc[i] = series[i]["gamecount"]- series[i+1]["gamecount"];
+						series[i]["actinc"]=actinc[i];
+						pkinc[i] = series[i]["pkcount"]- series[i+1]["pkcount"];
+						series[i]["pkinc"]=pkinc[i];
+						if(series[i]["gamecount"]==0){
+							pkaver[i]=0;
+						}else{
+							pkaver[i]=(series[i]["pkcount"]/series[i]["gamecount"]).toFixed(2);
+						}
+						series[i]["pkaver"]=pkaver[i];
+						dateArr.push(series[i]["date"]);
+						adduserArr.push(incnum[i]);
+						activeUserArr.push(series[i]["gamecount"]);
+						pkCountArr.push(series[i]["pkcount"]);
+						$("table").eq(1).append("<tr><td>" + series[i]["date"] + "</td><td>" + series[i]["allcount"] + "</td><td>"+incnum[i]+"</td><td>" + series[i]["gamecount"] + "</td><td>"+actinc[i]+"</td><td>" + series[i]["pkcount"] + "</td><td>"+pkinc[i]+"</td><td>"+pkaver[i]+"</td></tr>");
+					}
+					$("table").eq(1).append("<tr><td>统计天数:<br/>"+Math.floor(len-1)+ "</td><td>平均日注册增长:<br/>" + Math.floor(allcountaver/(len-1)) + "</td><td></td><td>平均日活跃增长:<br/>" + Math.floor(gamecountaver/(len-1)) + "</td><td></td><td>平均日场次增长:<br/>" + Math.floor(pkcountaver/(len-1)) + "</td><td></td><td></td></tr>");
+					dateArr.reverse();
+					adduserArr.reverse();
+					activeUserArr.reverse();
+					pkCountArr.reverse();
+					showChart('新增用户',adduserArr);
+					for(var l=0;l<42;l+=7){
+						weekData(l,series);
+					}
+				}
+			}
+	);
+	function showChart(title,arr) {
+		$('#charts').html('');
+		$('#charts').highcharts({
+			title: {
+				text: title,
+				x: -20 //center
+			},
+			chart:{
+				width:760,
+				height:400
+			},
+			subtitle: {
+				text: '',
+				x: -20
+			},
+			xAxis: {
+				categories: dateArr
+			},
+			yAxis: {
+				title: {
+					text: '数值'
+				},
+				plotLines: [{
+					value: 0,
+					width: 1,
+					color: '#808080'
+				}]
+			},
+			credits: {
+				enabled:false
+			},
+			tooltip: {
+				valueSuffix: ''
+			},
+			legend: {
+				layout: 'vertical',
+				align: 'right',
+				verticalAlign: 'middle',
+				borderWidth: 0
+			},
+			series: [ {
+				name: title,
+				data: arr
+			}]
+		});
+
+	};
+</script>
+</body>
+</html>

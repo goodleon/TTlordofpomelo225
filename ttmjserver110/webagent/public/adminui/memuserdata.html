@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="email=no">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" href="../css/hygl.css"/>
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>会员充值/玩家活跃</title>
+</head>
+<body  class="easyui-layout">
+<div>
+    <input class="easyui-datebox" id="db"/>
+    <a href="#" class="easyui-linkbutton" onclick="searchForTJData()">按月查询</a>
+    <a href="#" class="easyui-linkbutton" onclick="downLoadXls()">下载excel</a>
+</div>
+<table  id="tt" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+        data-options="singleSelect:true,collapsible:true">
+</table>
+<script type="text/javascript">
+    var xls=[];
+    function compute(tableName,colName){
+        var rows = $('#'+tableName).datagrid('getRows');
+        var total = 0;
+        for (var i = 1; i < rows.length; i++) {
+            if(!rows[i][colName]){
+                rows[i][colName]=0;
+            }
+            total += parseFloat(rows[i][colName]);
+        }
+        return total;
+    }
+
+    function computeAll(tableName){
+        var rows = $('#'+tableName).datagrid('getRows');
+        var data = {};
+        for (var i = 0; i < rows.length; i++) {
+
+            for (var key in rows[i])
+            {
+                if(!data[key])
+                {
+                    data[key] = 0;
+                }
+                if(typeof rows[i][key] == 'string')
+                {
+
+                    data[key] += parseFloat(rows[i][key]);
+                }
+                else
+                {
+                    data[key] += rows[i][key];
+                }
+            }
+        }
+        return data;
+    }
+    function searchForTJData() {
+        var row ={};
+        var startDate = $("#db").datebox('getValue');
+        var dateArr = startDate.split('-');
+        var daycount1=new Date(parseInt(dateArr[0]),parseInt(dateArr[1]),0).getDate();
+        if (dateArr[1] < 10) {
+            dateArr[1] = '0' + dateArr[1];
+        }
+        startDate = dateArr[0] + dateArr[1];
+
+        var nextDate = new Date(startDate.substr(0, 4) + '-' + startDate.substr(4, 2) + '-' + '01');
+        nextDate.setMonth(nextDate.getMonth() - 1);
+        nextDate = nextDate.Format('yyyyMMdd');//20170131
+        nextDate = nextDate.substr(0, 4) + nextDate.substr(4, 2);
+
+        var middle = new Date(parseInt(nextDate.substr(0, 4)), parseInt(nextDate.substr(4, 2)), 0);
+        var daycount = middle.getDate();//前一月份的天数
+        var column1 = [{field: 'space', title: '分类', width: 120, align: 'center'},
+            {field: 'memcharge', title: '会员充值', colspan: 8, align: 'center'},
+            {field: 'userAct', title: '玩家日活跃', colspan: 8, align: 'center'},
+            {field: 'userpkNum', title: '玩家场次', colspan: 8, align: 'center'}];
+        var column2 = [
+            {field: 'pValue', title: '产品名称', width: 120},
+            {field: 'buyMoneyMember1', title: startDate + '交易总额', width: 120},
+            {field: 'buyMoneyMember2', title: nextDate + '交易总额', width: 120},
+            {field: 'monthInc', title: '月增长率', width: 120},
+            {field: 'buyMoneyMember1aver', title: startDate + '交易平均额度', width: 120},
+            {field: 'buyMoneyMember2aver', title: nextDate + '交易平均额度', width: 120},
+            {field: 'buyMoneyMember4', title: '上月7天', width: 120},
+            {field: 'buyMoneyMember3', title: '最近7天', width: 120},
+            {field: 'sevendayInc', title: '7天增长率', width: 120},
+            {field: 'gameCountUser1', title: startDate + '总日活跃', width: 120},
+            {field: 'gameCountUser2', title: nextDate + '总日活跃', width: 120},
+            {field: 'month1Inc', title: '月增长率', width: 120},
+            {field: 'gameCountUser1aver', title: startDate + '平均日活跃', width: 120},
+            {field: 'gameCountUser2aver', title: nextDate + '平均日活跃', width: 120},
+            {field: 'gameCountUser4', title: '上月7天', width: 120},
+            {field: 'gameCountUser3', title: '最近7天', width: 120},
+            {field: 'sevendayInc1', title: '7天增长率', width: 120},
+            {field: 'totalsUser1', title: startDate + '总场次', width: 120},
+            {field: 'totalsUser2', title: nextDate + '总场次', width: 120},
+            {field: 'month2Inc', title: '月增长率', width: 120},
+            {field: 'totalsUser1aver', title: startDate + '平均场次', width: 120},
+            {field: 'totalsUser2aver', title: nextDate + '平均场次', width: 120},
+            {field: 'totalsUser4', title: '上月7天', width: 120},
+            {field: 'totalsUser3', title: '最近7天', width: 120},
+            {field: 'sevendayInc2', title: '7天增长率', width: 120}
+        ];
+        xls=[{
+            pValue:'产品名称',
+            buyMoneyMember1:startDate + '交易总额',
+            buyMoneyMember2:nextDate + '交易总额',
+            monthInc:'月增长率',
+            buyMoneyMember1aver:startDate + '交易平均额度',
+            buyMoneyMember2aver:nextDate + '交易平均额度',
+            buyMoneyMember4:'上月7天',
+            buyMoneyMember3:'最近7天',
+            sevendayInc:'7天增长率',
+            gameCountUser1:startDate + '总日活跃',
+            gameCountUser2:nextDate + '总日活跃',
+            month1Inc:'月增长率',
+            gameCountUser1aver:startDate + '平均日活跃',
+            gameCountUser2aver:nextDate + '平均日活跃',
+            gameCountUser4:'上月7天',
+            gameCountUser3:'最近7天',
+            sevendayInc1:'7天增长率',
+            totalsUser1:startDate + '总场次',
+            totalsUser2:nextDate + '总场次',
+            month2Inc:'月增长率',
+            totalsUser1aver:startDate + '平均场次',
+            totalsUser2aver:nextDate + '平均场次',
+            totalsUser4:'上月7天',
+            totalsUser3:'最近7天',
+            sevendayInc2:'7天增长率'
+        }];
+        if(startDate){
+            postJson("/userData/getMemberUserDayLog", {month: startDate}, function (data) {
+
+                if (data && data.rows) {
+                    for (var i = 0; i < data.rows.length; i++) {
+
+                        data.rows[i]["buyMoneyMember1aver"] = (data.rows[i]["buyMoneyMember1"]/daycount1).toFixed(2);
+                        data.rows[i]["buyMoneyMember2aver"] = (data.rows[i]["buyMoneyMember2"]/daycount).toFixed(2);
+
+                        if(!data.rows[i]["buyMoneyMember2"]){
+                            data.rows[i]["monthInc"] = 0;
+                        }else{
+                            data.rows[i]["monthInc"]=((data.rows[i]["buyMoneyMember1"] - data.rows[i]["buyMoneyMember2"])/data.rows[i]["buyMoneyMember2"] * 100 ).toFixed(2)+"%";
+                        }
+
+                        if(!data.rows[i]["buyMoneyMember4"]){
+                            data.rows[i]["sevendayInc"] = 0;
+                        }else{
+                            data.rows[i]["sevendayInc"] = (((data.rows[i]["buyMoneyMember3"] - data.rows[i]["buyMoneyMember4"]) / data.rows[i]["buyMoneyMember4"] * 100)).toFixed(2)+"%";
+                        }
+
+                        data.rows[i]["gameCountUser1aver"] = (data.rows[i]["gameCountUser1"] / daycount1).toFixed(2);
+                        data.rows[i]["gameCountUser2aver"] = (data.rows[i]["gameCountUser2"] / daycount).toFixed(2);
+
+                        if(!data.rows[i]["gameCountUser2"]){
+                            data.rows[i]["month1Inc"] = 0;
+                        }else{
+                            data.rows[i]["month1Inc"] = ((data.rows[i]["gameCountUser1"] - data.rows[i]["gameCountUser2"]) / data.rows[i]["gameCountUser2"] * 100).toFixed(2) + "%";
+                        }
+
+                        if(!data.rows[i]["gameCountUser4"]){
+                            data.rows[i]["sevendayInc1"] = 0;
+                        }else{
+                            data.rows[i]["sevendayInc1"] = ((data.rows[i]["gameCountUser3"] - data.rows[i]["gameCountUser4"]) / data.rows[i]["gameCountUser4"] * 100).toFixed(2) + "%";
+                        }
+                        data.rows[i]["totalsUser1aver"] = (data.rows[i]["totalsUser1"] / daycount1).toFixed(2);
+                        data.rows[i]["totalsUser2aver"] = (data.rows[i]["totalsUser2"] / daycount).toFixed(2);
+
+                        if(!data.rows[i]["totalsUser2"]){
+                            data.rows[i]["month2Inc"] = 0;
+                        }else{
+                            data.rows[i]["month2Inc"] = ((data.rows[i]["totalsUser1"] - data.rows[i]["totalsUser2"]) / data.rows[i]["totalsUser2"] * 100).toFixed(2) + "%";
+                        }
+                        if(!data.rows[i]["totalsUser4"]){
+                            data.rows[i]["sevendayInc2"] = 0;
+                        }else{
+                            data.rows[i]["sevendayInc2"] = ((data.rows[i]["totalsUser3"] - data.rows[i]["totalsUser4"]) / data.rows[i]["totalsUser4"] * 100).toFixed(2) + "%";
+                        }
+                    }
+                    $('#tt').datagrid({columns: [column1, column2]});
+                    $('#tt').datagrid("loadData",data);
+                    xls = xls.concat(data.rows);
+                    row["pValue"]='合计';
+                    row["buyMoneyMember1"]=compute("tt","buyMoneyMember1");
+                    row["buyMoneyMember2"]=compute("tt","buyMoneyMember2");
+                    row["buyMoneyMember1aver"]=(row["buyMoneyMember1"]/daycount1).toFixed(2);
+                    row["buyMoneyMember2aver"]=(row["buyMoneyMember2"]/daycount).toFixed(2);
+
+                    if(!row["buyMoneyMember2"]){
+                        row["monthInc"]=0;
+                    }else{
+                        row["monthInc"]=((row["buyMoneyMember1"]-row["buyMoneyMember2"])/row["buyMoneyMember2"]*100).toFixed(2)+"%";
+                    }
+
+                    row["buyMoneyMember3"]=compute("tt","buyMoneyMember3");
+                    row["buyMoneyMember4"]=compute("tt","buyMoneyMember4");
+                    if(!["buyMoneyMember4"]){
+                        row["sevendayInc"]=0;
+                    }else{
+                        row["sevendayInc"]=((row["buyMoneyMember3"]-row["buyMoneyMember4"])/row["buyMoneyMember4"]*100).toFixed(2)+"%";
+                    }
+                    row["gameCountUser1"]=compute("tt","gameCountUser1");
+                    row["gameCountUser2"]=compute("tt","gameCountUser2");
+                    row["gameCountUser1aver"]=(row["gameCountUser1"]/daycount1).toFixed(2);
+                    row["gameCountUser2aver"]=(row["gameCountUser2"]/daycount).toFixed(2);
+                    if(!row["gameCountUser2aver"]){
+                        row["month1Inc"]=0;
+                    }else{
+                        row["month1Inc"]=((row["gameCountUser1"]-row["gameCountUser2"])/row["gameCountUser2"]*100).toFixed(2)+"%";
+                    }
+
+                    row["gameCountUser3"]=compute("tt","gameCountUser3");
+                    row["gameCountUser4"]=compute("tt","gameCountUser4");
+
+                    if(!row["gameCountUser4"]){
+                        row["sevendayInc1"]=0;
+                    }else{
+                        row["sevendayInc1"]=((row["gameCountUser3"]-row["gameCountUser4"])/row["gameCountUser4"]*100).toFixed(2)+"%";
+                    }
+
+                    row["totalsUser1"]=compute("tt","totalsUser1");
+                    row["totalsUser2"]=compute("tt","totalsUser2");
+                    row["totalsUser1aver"]=(row["totalsUser1"]/daycount1).toFixed(2);
+                    row["totalsUser2aver"]=(row["totalsUser2"]/daycount).toFixed(2);
+                    if(!row["totalsUser2"]){
+                        row["month2Inc"]=0
+                    }else{
+                        row["month2Inc"]=((row["totalsUser1"]-row["totalsUser2"])/row["totalsUser2"]*100).toFixed(2)+"%";
+                    }
+                    row["totalsUser3"]=compute("tt","totalsUser3");
+                    row["totalsUser4"]=compute("tt","totalsUser4");
+                    if(!row["totalsUser4"]){
+                        row["sevendayInc2"]=0;
+                    }else{
+                        row["sevendayInc2"]=((row["totalsUser3"]-row["totalsUser4"])/row["totalsUser4"]*100).toFixed(2)+"%";
+                    }
+                    $("#tt").datagrid('appendRow',row);
+                    xls.push(row);
+                }else{
+                    $.messager.alert("操作提示", "数据获取失败","error");
+                }
+            })
+        }else{
+            $.messager.alert("操作提示", "请选择日期","error");
+        }
+
+    }//<------------------最后的括号--------------------------->
+    // 数据格式
+    function downLoadXls(){
+        if(!xls)
+        {
+            $.messager.alert("操作提示", "无数据可导出1","error");
+            return;
+        }
+        postJson("/tools/downloadExcelFile",{data:xls},
+                function(data)
+                {
+                    if(data)
+                    {
+                        document.location.href = parent.document.location.origin  + data;
+                    }else
+                    {
+                        $.messager.alert("操作提示", "无数据可导出2","error");
+                    }
+                });
+
+    }
+    $(function () {
+        var db = $('#db');
+        db.datebox({
+            onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); //触发click事件弹出月份层
+                if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                    tds = p.find('div.calendar-menu-month-inner td');
+                    tds.click(function (e) {
+                        e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+                        var year = /\d{4}/.exec(span.html())[0]//得到年份
+                                , month = parseInt($(this).attr('abbr'), 10); //月份，这里不需要+1
+                        db.datebox('hidePanel')//隐藏日期对象
+                                .datebox('setValue', year + "-" + month); //设置日期的值
+                    });
+                }, 0);
+                yearIpt.unbind();//解绑年份输入框中任何事件
+            },
+            parser: function (s) {
+                if (!s) return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                return d.getFullYear()+ '-'+(d.getMonth()+1);
+            }
+        });
+        var p = db.datebox('panel'), //日期选择对象
+                tds = false, //日期选择对象中月份
+                aToday = p.find('a.datebox-current'),
+                yearIpt = p.find('input.calendar-menu-year'),//年份输入框
+        //显示月份层的触发控件
+                span = aToday.length ? p.find('div.calendar-title span') ://1.3.x版本
+                        p.find('span.calendar-text'); //1.4.x版本
+        if (aToday.length) {//1.3.x版本，取消Today按钮的click事件，重新绑定新事件设置日期框为今天，防止弹出日期选择面板
+
+            aToday.unbind('click').click(function () {
+                var now = new Date();
+                db.datebox('hidePanel').datebox('setValue', now.getFullYear() + (now.getMonth() + 1));
+            });
+        }
+    });
+</script>
+</body>
+</html>

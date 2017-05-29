@@ -1,0 +1,222 @@
+<html>
+
+<head>
+	<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+	<script type="text/javascript" src="/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<title>金币场配置</title>
+</head>
+
+<body  class="easyui-layout">
+<div id="ddJbcpz" class="easyui-dialog"  closed="true" title="充值修改" style="width:400px;height:400px;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+
+	<table width="100%">
+		<tr><td><label>Id:</label></td> <td><label id="id">0</label></td></tr>
+		<tr><td><label>类型:</label></td> <td><input class="easyui-validatebox" type="text" id="type" data-options="required:true" /></td></tr>
+		<tr><td><label>金币额度:</label></td> <td><input class="easyui-validatebox" type="text" id="value" data-options="required:true" /></td></tr>
+
+
+	</table>
+	<a href="#" class="easyui-linkbutton" onclick="editJbcpzYes()">确定</a>
+</div>
+<div>
+	<a href="#" class="easyui-linkbutton" onclick="showCfg()">刷新</a>
+	<a href="#" class="easyui-linkbutton" onclick="addJbcpz()">添加配置</a>
+	<a href="#" class="easyui-linkbutton" onclick="editJbcpz()">修改配置</a>
+	<a href="#" class="easyui-linkbutton" onclick="deleteJbcpz()">删除配置</a>
+</div>
+
+<table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%"
+		data-options="singleSelect:true,collapsible:true,
+				method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false
+            ">
+	<thead>
+	<tr>
+		<th data-options="field:'id',width:80,sortable:true">Id</th>
+		<th data-options="field:'type',width:80,sortable:true">类型</th>
+		<th data-options="field:'value',sortable:true">金币</th>
+
+	</tr>
+	</thead>
+</table>
+
+<script type="text/javascript">
+	var data_ = {};
+	var addId = 0;
+
+	function saveJbcpzData(msg){
+
+		postJson("/redisData/saveJbcDataJson",{msg:{type:"content", content:msg}},
+
+			
+				function(data)
+				{
+					if(data > 0){
+						alert("修改成功");
+						showCfgCommon();
+					}
+				}
+		);
+	}
+
+	function deleteJbcpz(){
+		var Jbcpz = $("#dg").datagrid("getSelected");
+		if(Jbcpz){
+			var id = Jbcpz.id;
+
+			if(window.confirm("删除，请确认?")) {
+				postJson("/redisData/delJbcpzJson", {msg:id.toString()}, function(data) {
+
+					data_ = data;
+
+					showCfgCommon();
+				});
+			}
+		}
+		else {
+			alert("请选择删除条目");
+		}
+	}
+
+	function editJbcpzYes(){
+		//id:parseInt($('#id').val())
+		var idlabel = document.getElementById("id").innerHTML;
+		var msg={
+			id:parseInt(idlabel),
+			type:parseInt($('#type').val()),
+			value:parseFloat($('#value').val()),
+			//givePercentage:parseFloat($('#givePercentage').val())
+
+		};
+
+		if(msg.type === void 0 || msg.type == null || isNaN(msg.type) || msg.type <= 0) {
+			alert("无效类型");
+			return;
+		}
+		if(msg.value === void 0 || msg.value == null || isNaN(msg.value) || msg.value <= 0) {
+			alert("无效数量");
+			return;
+		}
+
+		var itemInfo = {};
+		var obj = {"type":msg.type,"value":msg.value};
+
+		//console.log(obj);
+		data_[msg.id] = obj;
+		itemInfo["id"] = msg.id;
+		itemInfo["content"] = obj;
+      //  alert(itemInfo);
+
+		saveJbcpzData(itemInfo);
+
+		$('#ddJbcpz').dialog('close');
+	}
+
+	function editJbcpz(){
+		var itemSelected = $("#dg").datagrid("getSelected");
+		if(itemSelected){
+//				document.getElementById("id").style.display = "none";
+
+			$("#id").html(itemSelected.id);
+
+			$('#type').val(itemSelected.type);
+			$('#value').val(itemSelected.value);
+
+			$('#ddJbcpz').dialog('open');
+		}
+		else {
+			alert("请选择条目");
+		}
+	}
+
+	function getAddId(){
+		return (addId + 1).toString();
+	}
+
+	function addJbcpz(){
+		$("#id").html(getAddId());
+
+		$('#type').val("");
+		$('#value').val("");
+		$('#ddJbcpz').dialog('open');
+	}
+	//显示
+	function showCfgCommon(){
+     var result=[];
+	//	var obj = $.parseJSON(data_['data'][0]);
+		for(var key in resluts) {
+			var cell = {};
+			cell["id"] = key;
+
+			if (resluts[key].type) {
+			cell["type"] = resluts[key].type;
+			cell["value"] = resluts[key].value;
+
+		}
+	if(parseInt(key) > addId){
+				addId = parseInt(key);
+			}
+
+			cell[key] = resluts[key];
+
+			result.push(cell);
+		}
+
+		var da = {};
+		da["total"] = result.length;
+
+		da["rows"] = result;
+
+		$("#dg").datagrid("loadData", da);
+		if(da.total==0||da==""||!da){
+			$('#dg').datagrid('appendRow',{id:"没有数据", type:"", value:""});
+		}
+	}
+	var  resluts =  [];
+	function showCfg(){
+		postJson("/redisData/getJbcpzJson",{msg:"content"},
+
+				function(data) {
+
+					if(!data){
+						$('#dg').datagrid('appendRow',{id:"没有数据", type:"", value:""});
+						return;
+					}
+					data_ = data;
+				//	console.log(data);
+					//console.log(data_['data']);
+					var len =data_['data'].length;
+					//resluts =JSON.parse(data_['data']);
+
+				//	console.log(resluts);
+
+					for( var  i=0; i< len ; i++) {
+					//	resluts.push(JSON.parse(data_['data'][i]));
+						resluts[i] =JSON.parse(data_['data'][i]);
+
+					}
+				   //console.log(resluts);
+					//console.log(121212);
+
+					showCfgCommon();
+				}
+		);
+	}
+
+	$(document).ready(function () {
+		showCfg();
+
+	});
+
+</script>
+</body>
+</html>

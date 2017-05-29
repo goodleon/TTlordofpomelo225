@@ -1,0 +1,519 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+</head>
+<body>
+	<div title="项目" style="padding:10px">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select class="easyui-combobox" id="project" name="DoPullProject" style="width:250px;">
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="easyui-linkbutton" onclick="DoPullProject()">更新项目</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<select class="easyui-combobox" id="branch" name="switchbranch" style="width:250px;">
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="easyui-linkbutton" onclick="checkOutProject()">切换分支</a>
+	</div>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+    <div style="margin:2px 0;">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="easyui-linkbutton" onclick="ReloadServer(0)">加载房间代码</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" class="easyui-linkbutton" onclick="ReloadServer(1)">关闭游戏服务器</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="#" class="easyui-linkbutton" onclick="ReloadServer(2)">启动游戏服务器</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="#" class="easyui-linkbutton" onclick="DoPull('webadmin')">更新后台代码</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="#" class="easyui-linkbutton" onclick="killSelf()">重启后台代码</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="easyui-linkbutton" onclick="checkout()">后台checkout</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="easyui-linkbutton" id="ReloadServerSelf0" onclick="ReloadServerSelf(1)">关闭游戏独立服务器</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="easyui-linkbutton" id="ReloadServerSelf1" onclick="ReloadServerSelf(2)">启动游戏独立服务器</a>
+    </div>
+
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<!--<div style="margin:2px 0;">-->
+		<!--<label id="contentNum">contentNum</label>-->
+		<!--<a href="#" class="easyui-linkbutton" onclick="autoRestart()">重启所有</a>-->
+		<!--<a href="#" class="easyui-linkbutton" onclick="contentNum()">测试连接数</a>-->
+	<!--</div>-->
+
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<div style="margin:2px 0;">
+		&nbsp;&nbsp;&nbsp;&nbsp;uid<input type="text" id="uid"/> <a href="#" class="easyui-linkbutton" onclick="testCards()">设置测试牌</a>
+    </div>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<div style="margin:2px 0;">
+        cards
+        <textarea rows="3" cols="100" id="cards"></textarea>
+    </div>
+	&nbsp;&nbsp;&nbsp;&nbsp;
+	<div style="margin:2px 0;">
+        房间id<input type="text" id="tableid"/> <a href="#" class="easyui-linkbutton" onclick="roomData()">查看房间数据</a>
+    </div>
+
+	<div title="错误日志uncaught" style="padding:10px">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select class="easyui-combobox" id="error2" name="doerror2" style="width:250px;">
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="easyui-linkbutton" onclick="downloaderror()">打开日志</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+	</div>
+	<div title="错误日志logs" style="padding:10px">
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select class="easyui-combobox" id="error3" name="doerror3" style="width:250px;">
+		</select>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="easyui-linkbutton" onclick="downloaderror2()">打开日志</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		
+	</div>
+<!--	<div style="margin-bottom:20px">
+		<div>上传帮助文档:</div>
+		<form class = "form-horizontal" enctype='multipart/form-data' method='post' action='javascript:;' role = "form" id = "frmUploadFile">
+			<div class = "form-group">
+				<label class = "control-label col-sm-2">上传选择</label>
+				<div class = "col-sm-4">
+					<input type = "file" name = "files" class = "form-control" />
+				</div>
+			</div>
+			<div class = "form-group">
+				<div class = "col-sm-offset-2 col-sm-4">
+					<button class = "btn btn-primary" onClick = "uploadFile()">上传</button>
+					<span class = "help-inline" id = "spanMessage">选择文件，并上传</span>
+				</div>
+			</div>
+		</form>
+	</div>-->
+	<div style="margin:2px 0;">
+    </div>
+	<script type="text/javascript">
+		var branches_local = [];//本地分支
+		var branches_server = [];//远端分支
+		var branch_current = "";
+/*		function uploadFile(){
+			var formData = new FormData($("#frmUploadFile")[0]);
+			$.ajax({
+				url: '/upload',
+				type: 'POST',
+				data: formData,
+				async: false,
+				cache: false,
+				contentType: false,
+				processData: false,
+				success: function(data){
+					if(200 === data.code) {
+						$("#imgShow").attr('src', data.msg.url);
+						$("#spanMessage").html("上传成功");
+					} else {
+						$("#spanMessage").html("上传失败");
+					}
+					console.log('imgUploader upload success, data:', data);
+				},
+				error: function(){
+					$("#spanMessage").html("与服务器通信发生错误");
+				}
+			});
+		}*/
+		function ReloadServerSelf(onlyCode){
+			postJson("/test/ReloadServerSelf",{onlyCode:onlyCode},function(rtn){alert(rtn);});
+		}
+
+		$(document).ready(function(){
+			var hash = window.location.hash.split('#');
+
+			if(hash[1] == "webadmin"){
+			}
+			else {
+				$("#ReloadServerSelf0").hide();
+				$("#ReloadServerSelf1").hide();
+			}
+		});
+
+		function isHaveChinese(temp)
+		{
+			var re = /[\u4e00-\u9fa5]/g;
+			if (re.test(temp))return true;
+			return false;
+		}
+
+		function switchBranch(){
+			var strProject = $('#project').combobox('getValue');
+			var strBranch = $('#branch').combobox('getValue');
+
+			var isHaveLocalBranch = false;
+
+			for(var i = 0; i < branches_local.length; i++){
+				if(branches_local[i] == strBranch){
+					isHaveLocalBranch = true;
+					break;
+				}
+			}
+
+			var str;
+
+			if(isHaveLocalBranch){
+				str = strBranch;
+			}
+			else {
+				str = "origin/" + strBranch;
+			}
+
+			var msg = {};
+			msg["proj"] = strProject;
+			msg["branch"] = str;
+
+			postJson("/test/switchBranches",{msg:msg},function(rtn){
+				if(!isHaveLocalBranch){
+					msg["branch"] = strBranch;
+					postJson("/test/switchBranches",{msg:msg},function(rtn){
+						//alert("本地没有远端分支->" + rtn);
+						alert("切换成功");
+						setBranch($('#project').combobox('getValue'));
+					});
+				}
+				else {
+					//alert("本地有远端分支");
+					alert("切换成功");
+					setBranch($('#project').combobox('getValue'));
+				}
+			});
+		}
+
+		function checkOutProject(){
+			var strBranch = $('#branch').combobox('getValue');
+
+			if(strBranch.indexOf("*") >= 0){
+				alert("无效切换（当前分支与目标切换分支相同）");
+				return;
+			}
+
+			var str = $('#project').combobox('getValue');
+
+			postJson("/test/DoCheckout",{proj:str},function(rtn){
+				switchBranch();
+			});
+		}
+
+		function DoPullProject(){
+			var str = $('#project').combobox('getValue');
+			if(str == "start"){
+				alert("请选择项目");
+			}
+			else {
+				DoPull(str);
+			}
+		}
+
+		function setBranch(val){
+			if(val == 0){
+				var result = [];
+				result.push({"value": "start", "text": "请选择分支", "selected":true});
+				$("#branch").combobox("loadData", result);
+				return;
+			}
+
+			postJson("/test/getFoldersList",{proj:"/root"},function(rtn){
+				var str = rtn.split('\n');
+				var isChangeValid = false;
+				for(var i = 0; i < str.length; i++){
+					if(str[i].length != 0){
+						if(val == str[i]){
+							isChangeValid = true;
+						}
+					}
+				}
+
+				if(!isChangeValid){
+					alert("服务器项目不存在（请先添加项目）");
+					return;
+				}
+
+				postJson("/test/getBranches",{proj:val},function(rtn){
+					
+					branches_local = [];
+					branches_server = [];
+					branch_current = "";
+
+					var result = [];
+
+					result.push({"value": "start", "text": "请选择分支"});
+
+					var str = rtn.split('remotes/origin/HEAD -> origin/master');
+
+					var str0 = str[0].split('\n');
+					var j = 0;
+					for(var i = 0; i < str0.length; i++){
+						var temp = str0[i].replace(/\s+/g,'');
+						if(temp.indexOf('*') >= 0){
+							var tem = temp.split('*');
+							temp = tem[1];
+							branch_current = tem[1];
+						}
+						if(temp.indexOf('remotes/origin') >=0)
+						{
+						branches_server.push(temp);
+						}
+						if(temp.length != 0){
+							branches_local[j] = temp;
+							j++;
+						}
+					}
+
+					var str1 = str[1].split('\n');
+					j = branches_server.length;
+					for(var i = 0; i < str1.length; i++){
+						var temp = str1[i].replace(/\s+/g,'');
+						if(temp.length != 0){
+							var tem = temp.split('remotes/origin/');
+							for(var k = 0; k < tem.length; k++){
+								if(tem[k].length != 0){
+									branches_server[j] = tem[k];
+									j++;
+								}
+							}
+						}
+					}
+					for(var i = 0; i < branches_server.length; i++){
+						var temp = branches_server[i].replace(/\s+/g,'');
+						if(temp.length != 0){
+							var tem = temp.split('remotes/origin/');
+							for(var k = 0; k < tem.length; k++){
+								if(tem[k].length != 0){
+									branches_server[i] = tem[k];
+									}
+							}
+						}
+					}	
+
+
+					for(var i = 0; i < branches_server.length; i++){
+						if(branches_server[i] == branch_current){
+							var temp = "* " + branch_current;
+							branches_server[i] = temp;
+						}
+					}
+					
+
+					for(var i = 0; i < branches_server.length; i++){
+						result.push({"value": branches_server[i], "text": branches_server[i]});
+					}
+
+					for(var i = 0; i < result.length; i++){
+						if(result[i]["value"] == "* " + branch_current){
+							result[i]["selected"] = true;
+							break;
+						}
+					}
+
+					$("#branch").combobox("loadData", result);
+				});
+			});
+		}
+
+		$(document).ready(function () {
+			$("#project").combobox({onChange:function (news, olds) {
+				if(news == "start"){
+					setBranch(0);
+				}
+				else {
+					setBranch(news);
+				}
+			}});
+		});
+		function initProject2(){
+			postJson("/test/getAlllogs", {}, function (data){
+				var result = [];
+			//	result.push({"value": "start", "text": "请选择文件"});
+               console.info(data);
+				var str = eval(data);//data.parseJSON();
+				for(var i = 0; i < str.length; i++){
+					var str_ = str[i].split('/');
+					var slen=str_.length;
+						var cell = {};
+					
+						cell["value"] = str_[slen-1];
+						cell["text"] = str_[slen-1];
+
+						result.push(cell);
+					
+				}
+
+			
+				
+
+				
+
+				$("#error3").combobox("loadData", result);
+
+				
+				
+			});
+		}
+
+		function initProject3(){
+			postJson("/test/getAlluncaught", {}, function (data){
+				var result = [];
+			//	result.push({"value": "start", "text": "请选择文件"});
+               console.info(data);
+				var str = eval(data);//data.parseJSON();
+				for(var i = 0; i < str.length; i++){
+					var str_ = str[i].split('/');
+					var slen=str_.length;
+						var cell = {};
+					
+						cell["value"] = str_[slen-1];
+						cell["text"] = str_[slen-1];
+
+						result.push(cell);
+					
+				}
+
+			
+				
+
+				
+
+				$("#error2").combobox("loadData", result);
+
+				
+				
+			});
+		}
+		function initProject(){
+			postJson("/test/getAllValueName", {}, function (data){
+				var result = [];
+				result.push({"value": "start", "text": "请选择项目"});
+
+				var str = data.split(',');
+				for(var i = 0; i < str.length; i++){
+					var str_ = str[i].split(':');
+
+					if(str_[1].length != 0){
+						var cell = {};
+						cell["value"] = str_[0];
+						cell["text"] = str_[1] + "(" + str_[0] + ")";
+
+						result.push(cell);
+					}
+					if(str_[0] == "webadmin"){
+						var cell = {};
+						cell["value"] = str_[0];
+						cell["text"] = "皮皮后台管理" + "(" + str_[0] + ")";
+
+						result.push(cell);
+					}
+				}
+
+				var hash = window.location.hash.split('#');
+
+				if(hash[1] == "mjserver"){
+					result.push({"value": "mjserver", "text": "mjserver"});
+				}
+
+				var index = -1;
+
+				for(var i = 0; i < result.length; i++){
+					var obj = result[i];
+					if(obj["value"] == hash[1]){
+						index = i;
+					}
+				}
+
+				if(index == -1){
+					result[0]["selected"] = true;
+				}
+				else {
+					result[index]["selected"] = true;
+				}
+
+				$("#project").combobox("loadData", result);
+			});
+		}
+
+		$(document).ready(function(){
+			initProject();
+			initProject2();
+			initProject3();
+		});
+
+	  function DoPull(proj)
+	  {
+	     postJson("/test/DoPull",{proj:proj},function(rtn){
+		    alert(rtn);
+		 });
+	  }
+	  function downloaderror2()
+	  {
+		  //error3
+	   var urls= $('#error3').combobox('getValue');
+	    window.open("http://git.game-yes.com:88/logs/"+urls);
+	  }
+	  function downloaderror()
+	  {
+		 
+	   var urls=$('#error2').combobox('getValue');
+		window.open("http://git.game-yes.com:88/uncaught/"+urls);
+	  }
+	  function ReloadServer(onlyCode)
+	  {
+	     postJson("/test/ReloadServer",{onlyCode:onlyCode},function(rtn){alert(rtn);});
+	  }
+	  function testCards()
+	  {
+	      var uid=parseInt($("#uid").val());
+		  var cards=JSON.parse("["+$("#cards").val()+"]");
+		  if(uid>0&&Array.isArray(cards))
+		  {
+		     postJson("/test/testCards",{uid:uid,cards:cards},function(rtn){alert(rtn);});
+		  }
+		  else
+		  {
+		     alert("输入错误");
+		  }
+	  }
+	  function killSelf() {  postJson("/test/killSelf",{},function(rtn){  alert("kill "+rtn);  });  }
+
+	  function checkout(){
+		  postJson("/test/DoCheckout",{proj:"webadmin"},function(rtn){
+			  alert("DoCheckout "+rtn);
+		  });
+	  }
+//	  function autoRestart()
+//	  {
+//		  postJson("/test/autoRestart",{proj:"webadmin"},function(rtn){
+////			  alert("autoRestart "+rtn);
+//		  });
+//
+//		  setInterval(refreshStatus, 5000);
+//	  }
+	  
+//	  function contentNum()
+//	  {
+//		  postJson("/test/contentNum",{proj:"webadmin"},function(rtn)
+//		  {
+////		  	console.log("servercount is: " + rtn);
+////		  	document.getElementById('contentNum').innerHTML = ("contentNum:" + rtn);
+//		  });
+//
+//		  setInterval(refreshStatus, 5000);
+//	  }
+
+//	  function refreshStatus()
+//	  {
+//		  postJson("/test/getContentNum",{proj:"webadmin"},function(rtn)
+//		  {
+//			  console.log("servercount is: " + rtn);
+//		  });
+//	  }
+	  
+	</script>
+</body>
+</html>

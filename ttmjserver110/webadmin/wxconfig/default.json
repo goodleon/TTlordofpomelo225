@@ -1,0 +1,7 @@
+{
+  "content":{
+    "1000":{"buyName":"果粒橙","buyNum":10,"buyMoney":10,"giveNum":1},
+    "1001":{"buyName":"营养快线","buyNum":20,"buyMoney":20,"giveNum":2},
+    "1002":{"buyName":"红牛","buyNum":50,"buyMoney":50,"giveNum":5}
+  }
+}

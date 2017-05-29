@@ -1,0 +1,23 @@
+#!/bin/bash
+
+currentPath=$PWD
+
+if [ $# != 1 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 1" error;
+exit 1;
+fi
+
+filePath=/root/$1/android/res/values/strings.xml
+value=""
+if [ -f $filePath ];then
+value=$(cat $filePath | grep app_name | awk -F '[><]' '{print $3}')
+else
+exit 128;
+fi
+
+if [ $? != 0 ];then
+    exit 1;
+else
+    echo $value
+    exit 0;
+fi

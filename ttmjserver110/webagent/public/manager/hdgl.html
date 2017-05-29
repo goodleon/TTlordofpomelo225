@@ -1,0 +1,1431 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+</head>
+
+<body  class="easyui-layout">
+
+
+<!--添加推荐返利对话框-->
+<div id="ddRecommendGift" class="easyui-dialog"  closed="true" title="活动" style="width:80%;height:100%;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true">
+    <table width="100%">
+        <tr><td><label>活动ID:</label></td><td><label id="_idRecoGift">0</label></td></tr>
+        <tr><td><label>活动类型:</label></td><td><label id="actTypeRecoGift">0</label></td></tr>
+        <tr><td><label>活动名称:</label></td><td><label id="actNameRecoGift">0</label></td></tr>
+        <tr><td><label>活动说明:</label></td><td><textarea rows="1" cols="50" id="actNoteRecoGift"></textarea></td></tr>
+        <tr><td><label>最高累计人数:</label></td><td><input class="easyui-validatebox" type="text" id="maxNum" data-options="required:true" /></tr>
+        <tr><td><label>完成条件:</label></td><td>场次:<input class="easyui-validatebox" type="text" id="recoCondition" data-options="required:true" /></tr>
+        <tr><td><label>活动奖励:</label></td><td>
+            达标人数:<input class="easyui-validatebox" type="text" id="recoPeople0" data-options="required:true" placeholder="不要超过最高累计人数" />
+            钻石:<input class="easyui-validatebox" type="text" id="recoDiamond0" data-options="required:true" /></td></tr>
+        <tr><td><label></label></td><td>
+            达标人数:<input class="easyui-validatebox" type="text" id="recoPeople1" data-options="required:true" placeholder="不要超过最高累计人数"/>
+            钻石:<input class="easyui-validatebox" type="text" id="recoDiamond1" data-options="required:true" /></td></tr>
+        <tr><td><label></label></td><td>
+            达标人数:<input class="easyui-validatebox" type="text" id="recoPeople2" data-options="required:true" placeholder="不要超过最高累计人数"/>
+            钻石:<input class="easyui-validatebox" type="text" id="recoDiamond2" data-options="required:true" /></td></tr>
+        <tr><td><label></label></td><td>
+            达标人数:<input class="easyui-validatebox" type="text" id="recoPeople3" data-options="required:true" placeholder="不要超过最高累计人数"/>
+            钻石:<input class="easyui-validatebox" type="text" id="recoDiamond3" data-options="required:true" /></td></tr>
+        <tr><td><label></label></td><td>
+            达标人数:<input class="easyui-validatebox" type="text" id="recoPeople4" data-options="required:true" placeholder="不要超过最高累计人数"/>
+            钻石:<input class="easyui-validatebox" type="text" id="recoDiamond4" data-options="required:true" /></td></tr>
+    </table>
+    <a href="#" class="easyui-linkbutton" onclick="addRecoGiftYes()">确定</a>
+</div>
+
+
+
+<!--添加新手奖励对话框-->
+<div id="ddNewGift" class="easyui-dialog"  closed="true" title="活动" style="width:80%;height:100%;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true">
+    <table width="100%">
+        <tr><td><label>活动ID:</label></td><td><label id="_idNewGift">0</label></td></tr>
+        <tr><td><label>活动类型:</label></td><td><label id="actTypeNewGift">0</label></td></tr>
+        <tr><td><label>活动名称:</label></td><td><label id="actNameNewGift">0</label></td></tr>
+        <tr><td><label>活动说明:</label></td><td><textarea rows="1" cols="50" id="actNoteNewGift"></textarea></td></tr>
+        <tr><td><label>有效时间:</label></td><td><label>小时:</label><input class="easyui-validatebox" type="text" id="validTime" data-options="required:true" /></td></tr>
+        <tr><td><label>活动奖励:</label></td><td><label>钻石:</label><input class="easyui-validatebox" type="text" id="newGiftR" data-options="required:true" /></td></tr>
+    </table>
+    <a href="#" class="easyui-linkbutton" onclick="addNewGiftYes()">确定</a>
+</div>
+<div id="ddAction" class="easyui-dialog"  closed="true" title="活动" style="width:80%;height:100%;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true">
+    <table width="100%" id="ddTable">
+        <tr><td><label>活动ID:</label></td> <td><label id="_id"></label></td></tr>
+        <tr><td><label>活动类型:</label></td> <td><label id="actType"></label></td></tr>
+        <tr><td><label>活动名称:</label></td> <td><label id="actName"></label></td></tr>
+        <tr><td><label>活动说明:</label></td> <td><textarea rows="1" cols="50" id="actNote"></textarea></td></tr>
+        <tr><td><label>预热时间:</label></td> <td><input class="easyui-datebox" id="timeSelect" data-options="onSelect:onSelect" style = "width:150px"/></td></tr>
+        <tr><td><label>起始日期:</label></td> <td><input class="easyui-datebox" id="timeSelect2" data-options="onSelect:onSelect2" style = "width:150px"/></td></tr>
+        <tr><td><label>结束日期:</label></td> <td><input class="easyui-datebox" id="timeSelect3" data-options="onSelect:onSelect3" style = "width:150px"/></td></tr>
+        <tr><td><label>余热时间:</label></td> <td><input class="easyui-datebox" id="timeSelect4" data-options="onSelect:onSelect4" style = "width:150px"/></td></tr>
+        <tr><td><label>星期:</label></td><td><div>
+            <a href="#" class="easyui-linkbutton" onclick="week(1,'1')">星期一</a><label id="weekLabel1">0</label>&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="week(2,'1')">星期二</a><label id="weekLabel2">0</label>&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="week(3,'1')">星期三</a><label id="weekLabel3">0</label>&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="week(4,'1')">星期四</a><label id="weekLabel4">0</label>&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="week(5,'1')">星期五</a><label id="weekLabel5">0</label>&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="week(6,'1')">星期六</a><label id="weekLabel6">0</label>&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="week(0,'1')">星期日</a><label id="weekLabel0">0</label>&nbsp;&nbsp;&nbsp;
+            <a href="#" class="easyui-linkbutton" onclick="weekAll(1,'1')">全部开启</a>
+        </div></td></tr>
+        <tr><td><label>日开始:</label></td> <td><input class="easyui-validatebox" type="text" id="beginTime" data-options="required:true" /></td></tr>
+        <tr><td><label>日结束:</label></td> <td><input class="easyui-validatebox" type="text" id="endTime" data-options="required:true" /></td></tr>
+        <tr><td><label>免费次数:</label></td> <td><input class="easyui-validatebox" type="text" id="timesFree" data-options="required:true" /></td></tr>
+        <tr><td><label>活动奖励:</label></td><td>
+            <select class='easyui-combobox' id="idRewards0"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN0" style='width:50px' data-options='required:true' />
+            <label id="idRLabelNN0">概率:</label><input class='easyui-validatebox' type='text' id="idRewardsNN0" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards1"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN1" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN1" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards2"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN2" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN2" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards3"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN3" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN3" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards4"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN4" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN4" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards5"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN5" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN5" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards6"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN6" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN6" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards7"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN7" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN7" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards8"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN8" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN8" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards9"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN9" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN9" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards10"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN10" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN10" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label></label></td><td>
+            <select class='easyui-combobox' id="idRewards11"  name='charge' style='width:150px;'></select>
+            数量:<input class='easyui-validatebox' type='text' id="idRewardsN11" style='width:50px' data-options='required:true' />
+            概率:<input class='easyui-validatebox' type='text' id="idRewardsNN11" style='width:50px' data-options='required:true' /></td></tr>
+        <tr><td><label>活动标题:</label></td> <td><textarea rows="1" cols="50" id="acTitle"></textarea></td></tr>
+        <tr><td><label>活动文本:</label></td> <td><textarea rows="3" cols="50" id="actText"></textarea></td></tr>
+    </table>
+    <a href="#" class="easyui-linkbutton" onclick="addActionYes()">确定</a>
+</div>
+
+
+<!--添加维护补偿对话框-->
+<div id="whbc" class="easyui-dialog"  closed="true" title="活动" style="width:80%;height:100%;"
+     data-options="iconCls:'icon-save',resizable:true,modal:true">
+    <table width="100%">
+        <tr><td><label>活动ID:</label></td> <td><label id="_id1"></label></td></tr>
+        <tr><td><label>活动类型:</label></td> <td><label id="actType1"></label></td></tr>
+        <tr><td><label>活动名称:</label></td> <td><label id="actName1"></label></td></tr>
+        <tr><td><label>活动说明:</label></td> <td><textarea rows="1" cols="50" id="actNote1"></textarea></td></tr>
+        <tr><td><label>预热时间:</label></td> <td><input class="easyui-datebox" id="timeSelectb1" data-options="onSelect:onSelect" style = "width:150px"/></td></tr>
+        <tr><td><label>起始日期:</label></td> <td><input class="easyui-datebox" id="timeSelectb2" data-options="onSelect:onSelect2" style = "width:150px"/></td></tr>
+        <tr><td><label>结束日期:</label></td> <td><input class="easyui-datebox" id="timeSelectb3" data-options="onSelect:onSelect3" style = "width:150px"/></td></tr>
+        <tr><td><label>活动奖励:</label></td><td><label>钻石:</label><input class="easyui-validatebox" type="text" id="idRewardsNb0" data-options="required:true"/></td></tr>
+    </table>
+    <a href="#" class="easyui-linkbutton" onclick="addWhbcYes()">确定</a>
+</div>
+
+
+<!--添加微信新手奖励对话框-->
+<!--<div id="wxNewbieReward" class="easyui-dialog"  closed="true" title="微信新手奖励活动" style="width:80%;height:100%;"-->
+<!--data-options="iconCls:'icon-save',resizable:true,modal:true">-->
+<!--<table width="100%">-->
+<!--<tr><td><label>活动ID:</label></td><td><label id="_idwxNewbieReward">0</label></td></tr>-->
+<!--<tr><td><label>活动类型:</label></td><td><label id="actTypeWxNewbie">5</label></td></tr>-->
+<!--<tr><td><label>活动名称:</label></td><td><label id="actNamewxNewbie">微信新手邀请活动</label></td></tr>-->
+<!--<tr><td><label>活动说明:</label></td><td><textarea rows="3" cols="50" id="actNotewxNewbie"></textarea></td></tr>-->
+<!--<tr><td><label>操作说明:</label></td>-->
+<!--<td>-->
+<!--1.点击添加按钮添加活动;<br/>-->
+<!--2.一个活动配置完成后点击保存进行下一个活动的添加;<br/>-->
+<!--3.活动添加完成后，点击表头选框进行全选，选中所有活动;<br/>-->
+<!--4.<span style="color:red">双击</span>每一行进行已编辑活动的<span style="color:red">修改</span>;<br/>-->
+<!--5.点击“确定”按钮提交;<br/>-->
+<!--<span style="color:red">-->
+<!--注意：在编辑或修改完成后点击表头选框选中所有活动再点击“确定”按钮提交<br/>-->
+<!--表格数据均为数字-->
+<!--</span>-->
+<!--</td>-->
+<!--</tr>-->
+<!--<tr><td><label>起始日期:</label></td> <td><input class="easyui-datebox" id="timewxNewbieStart"  data-options="onSelect:onSelect2" style = "width:150px"/></td></tr>     -->
+<!--<tr><td><label>结束日期:</label></td> <td><input class="easyui-datebox" id="timewxNewbieEnd"  data-options="onSelect:onSelect3" style = "width:150px"/></td></tr>       -->
+<!--<table id="wxNewbieConf">-->
+<!--</table>-->
+<!--</table>-->
+<!--<a href="#" class="easyui-linkbutton" onclick="addWxNewbieRewardYes()">确定</a>-->
+<!--</div>-->
+
+
+<!--添加微信推荐返利对话框-->
+<!--<div id="wxInviteReward" class="easyui-dialog"  closed="true" title="微信邀请奖励活动" style="width:80%;height:100%;"-->
+<!--data-options="iconCls:'icon-save',resizable:true,modal:true">-->
+<!--<table width="100%">-->
+<!--<tr><td><label>活动ID:</label></td><td><label id="_idWxInviteReward">0</label></td></tr>-->
+<!--<tr><td><label>活动类型:</label></td><td><label id="actTypewxInvite">6</label></td></tr>-->
+<!--<tr><td><label>活动名称:</label></td><td><label id="actNamewxInvite">微信新手邀请活动</label></td></tr>-->
+<!--<tr><td><label>活动说明:</label></td><td><textarea rows="3" cols="50" id="actNotewxInvite"></textarea></td></tr>-->
+<!--<tr><td><label>操作说明:</label></td>-->
+<!--<td>-->
+<!--1.点击添加按钮添加活动;<br/>-->
+<!--2.一个活动配置完成后点击保存进行下一个活动的添加;<br/>-->
+<!--3.活动添加完成后，点击表头选框进行全选，选中所有活动;<br/>-->
+<!--4.<span style="color:red">双击</span>每一行进行已编辑活动的<span style="color:red">修改</span>;<br/>-->
+<!--5.点击“确定”按钮提交;<br/>-->
+<!--<span style="color:red">-->
+<!--注意：在编辑或修改完成后点击表头选框选中所有活动再点击“确定”按钮提交;<br/>-->
+<!--表格数据均为数字-->
+<!--</span>-->
+<!--</td>-->
+<!--</tr>-->
+<!--<tr><td><label>起始日期:</label></td> <td><input class="easyui-datebox" id="timewxInviteStart"  data-options="onSelect:onSelect2" style = "width:150px"/></td></tr> -->
+<!--<tr><td><label>结束日期:</label></td> <td><input class="easyui-datebox" id="timewxInviteEnd"-->
+<!--data-options="onSelect:onSelect3" style = "width:150px"/></td></tr> -->
+<!--<table id="wxInviteConf">-->
+<!--</table>-->
+<!--</table>-->
+<!--<a href="#" class="easyui-linkbutton" onclick="addWxInviteRewardYes()">确定</a>-->
+<!--</div>-->
+<!--活动数据展示表格-->
+<div>
+    <a href="#" class="easyui-linkbutton" onclick="showCfg()" >刷新</a>
+    <select class="easyui-combobox" id="action" name="charge" style="width:200px;">
+    </select>
+    <a href="#" class="easyui-linkbutton" onclick="addAction()">添加活动</a>
+    <a href="#" class="easyui-linkbutton" onclick="editAction()">修改活动</a>
+    <a href="#" class="easyui-linkbutton" onclick="deleteAction()">删除活动</a>
+    <a href="#" class="easyui-linkbutton" onclick="syncAction()">从数据库同步</a>
+</div>
+<table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%"
+        data-options="singleSelect:true,collapsible:true,
+                    method:'get',
+                    remoteSort:false,
+                    multiSort:true,
+                    rownumbers:true,
+                    singleSelect:true,
+                    autoRowHeight:false
+                ">
+    <thead>
+    <tr>
+        <th data-options="field:'_id',width:80,sortable:true">活动ID</th>
+        <th data-options="field:'actType',width:80,sortable:true">活动类型</th>
+        <th data-options="field:'actName',sortable:true">活动名称</th>
+        <th data-options="field:'actNote',width:80,sortable:true">活动说明</th>
+        <th data-options="field:'warmDay',width:80,sortable:true">预热时间</th>
+        <th data-options="field:'beginDay',width:80,sortable:true">起始日期</th>
+        <th data-options="field:'endDay',sortable:true">结束日期</th>
+        <th data-options="field:'afterDay',sortable:true">余热时间</th>
+        <th data-options="field:'weekDay',width:80,sortable:true">星期</th>
+        <th data-options="field:'beginTime',width:80,sortable:true">日开始</th>
+        <th data-options="field:'endTime',sortable:true">日结束</th>
+    </tr>
+    </thead>
+</table>
+
+<script type="text/javascript">
+    var actionPreData = {//手动与服务器宏的activityPredefine.json同步
+        "actionChName" : {
+            "1":"转盘抽奖","2":"维护补偿","3":"新手礼包","4":"推荐礼包"
+        },
+//        "actionChName" : {
+//            "1":"转盘抽奖","2":"维护补偿","3":"新手礼包","4":"推荐礼包","5":"微信新手奖励活动","6":"微信邀请奖励活动"
+//        },
+        "rewTypeAll":{
+            "1":"钻石",
+            "2":"iPhone6s",
+            "3":"iPadMini",
+            "4":"红米手机",
+            "5":"10元话费",
+            "6":"50元话费",
+            "7":"100元话费"
+        },
+        "rewType":
+        {
+            "turntable":[1,2,3,4,5,6,7],
+            "compensate":[1],
+            "newGift":[1],
+            "recommendGift":[1]
+        },
+
+        "actRewardNum":
+        {
+            "turntable":12,
+            "compensate":1,
+            "newGift":1,
+            "recommendGift":5
+        }
+    };
+    $(document).ready(function () {
+        var dat = [];
+        dat.push({"value": 0, "text": "请选择活动", "selected": true});
+
+        for (var key in actionPreData.actionChName) {
+            dat.push({"value": key, "text": actionPreData.actionChName[key]});
+        }
+
+        $("#action").combobox("loadData", dat);
+        showCfg();
+    });
+
+
+
+
+    var actionData=[];
+
+    var selectId = 0;
+
+    var timesActCond={1:1,2:1};//参与活动的条件
+    var timesRewCond={1:1,2:1};//完成活动的条件
+
+    var timeMsg = {};//预热 开始 结束 余热
+    var weekMsg = {};
+
+    var wardsType = {1:"钻石",2:"iPhone6s",3:"iPadMini",4:"红米手机",5:"10元话费",6:"50元话费",7:"100元话费"};
+
+    var wxNewbieAct=[];
+
+    function editRecoGift(msg) {
+        $("#ddRecommendGift").dialog("open");
+
+        $("#_idRecoGift").html(msg["_id"]);
+        $("#actTypeRecoGift").html(msg["actType"]);
+
+        var actData = msg["actData"];
+
+        $("#actNameRecoGift").html(actData["actName"]);
+        $("#actNoteRecoGift").val(actData["actNote"]);
+        $("#recoCondition").val(actData["playNum"]);
+        $("#maxNum").val(actData["maxNum"]);
+
+
+        for (var i = 0; i < actionPreData["actRewardNum"]["recommendGift"]; i++) {
+            var obj = actData["rewards"];
+            $("#recoPeople" + i).val(obj[i][2]);
+            $("#recoDiamond" + i).val(obj[i][1]);
+        }
+    }
+    function addRecoGiftYes() {
+        var msg = {};
+        msg["_id"] = parseInt($("#_idRecoGift").html());
+        msg["actType"] = parseInt($("#actTypeRecoGift").html());
+        msg["delStatus"] = 0;
+
+        var actData = {};
+
+        actData["actName"] = $("#actNameRecoGift").html();
+        actData["actNote"] = $("#actNoteRecoGift").val();
+        actData["playNum"] = parseInt($("#recoCondition").val());
+        actData["maxNum"] = parseInt($("#maxNum").val());
+
+        var reward = [];
+
+        for (var i = 0; i < actionPreData["actRewardNum"]["recommendGift"]; i++) {
+            var obj = [];
+            obj.push(1);
+            // 修改增加部分
+            if (parseInt($("#recoPeople" + i).val()) <= actData["maxNum"]) {
+                obj.push(parseInt($("#recoDiamond" + i).val()));
+                obj.push(parseInt($("#recoPeople" + i).val()));
+                reward.push(obj);
+            } else {
+                $.messager.alert("操作提示", "超过最高累计人数请重新填写","error");
+                $("#recoPeople" + i).val("");
+                return;
+            }
+        }
+
+        actData["rewards"] = reward;
+
+        msg["actData"] = actData;
+
+        //alert(JSON.stringify(msg));
+
+        var msgd = msg["actData"];
+
+        if (msgd["actNote"] == "" || checkContentNum(msgd["playNum"])) {
+            $.messager.alert("操作提示", "信息不完整 请检查","error");
+            return;
+        }
+
+        for (var i = 0; i < msgd["rewards"].length; i++) {
+            if (checkContentNum(msgd["rewards"][i][1]) || checkContentNum(msgd["rewards"][i][2])) {
+                $.messager.alert("操作提示", "信息不完整 请检查","error");
+                return;
+            }
+        }
+
+        postJson("/admin/saveActionJson", {msg: msg}, function (rtn) {
+            if (rtn) {
+                alert("成功");
+                actionData = rtn;
+                $("#ddRecommendGift").dialog('close');
+                showCfgCommon();
+            }
+        });
+    }
+
+    function addRecoGift() {
+
+        $("#_idRecoGift").html(0);
+        $("#actTypeRecoGift").html(selectId);
+        $("#actNameRecoGift").html("推荐礼包");
+        $("#actNoteRecoGift").val("");
+        $("#recoCondition").val("");
+        // 修改增加部分
+        $("#maxNum").val("");
+
+        for (var i = 0; i < actionPreData["actRewardNum"]["recommendGift"]; i++) {
+            $("#recoPeople" + i).val("");
+            $("#recoDiamond" + i).val("");
+        }
+
+        $("#ddRecommendGift").dialog('open');
+    }
+
+    function editNewGift(msg) {
+        $("#ddNewGift").dialog("open");
+
+        $("#_idNewGift").html(msg["_id"]);
+        $("#actTypeNewGift").html(msg["actType"]);
+
+        var actData = msg["actData"];
+
+        $("#actNameNewGift").html(actData["actName"]);
+        $("#actNoteNewGift").val(actData["actNote"]);
+        $("#validTime").val(actData["validTime"]);
+        $("#newGiftR").val(actData["rewards"][1]);
+    }
+
+    function checkContent(msg) {
+        if (msg == null || msg == "" || msg.length == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    function checkContentNum(msg) {
+        if (msg == null || msg == "" || msg.length == 0 || isNaN(msg)) {
+            return true;
+        }
+        return false;
+    }
+
+    function addNewGiftYes() {
+        $("#ddNewGift").dialog('close');
+        var msg = {};
+        msg["_id"] = parseInt($("#_idNewGift").html());
+        msg["actType"] = parseInt($("#actTypeNewGift").html());
+        msg["delStatus"] = 0;
+
+        var actData = {};
+
+        actData["actName"] = $("#actNameNewGift").html();
+        actData["actNote"] = $("#actNoteNewGift").val();
+        actData["validTime"] = parseInt($("#validTime").val());
+
+        var reward = [];
+        reward.push(1);
+        reward.push(parseInt($("#newGiftR").val()));
+
+        actData["rewards"] = reward;
+
+        msg["actData"] = actData;
+
+        var msgd = msg["actData"];
+
+        if (msgd["actNote"] == "" || checkContentNum(msgd["validTime"]) || checkContentNum($("#newGiftR").val())) {
+            $.messager.alert("操作提示", "信息不完整 请检查","error");
+            return;
+        }
+        postJson("/admin/saveActionJson", {msg: msg}, function (rtn) {
+            if (rtn) {
+                $.messager.alert("操作提示", "成功");
+                actionData = rtn;
+                showCfgCommon();
+            }
+        });
+    }
+
+    function addNewGift() {
+        $("#_idNewGift").html(0);
+        $("#actTypeNewGift").html(selectId);
+        $("#actNameNewGift").html("新手礼包");
+        $("#actNoteNewGift").val("");
+        $("#validTime").val("");
+        $("#newGiftR").val("");
+
+        $("#ddNewGift").dialog("open");
+    }
+
+    function weekAll_(state, gameid) {
+        var msg = {0: "关闭", 1: "开启"};
+
+        if (gameid == "1") {
+            for (var key in state) {
+                $("#" + "weekLabel" + key).html(msg[state[key]]);
+            }
+            weekMsg = state;
+        }
+        if (gameid == "2") {
+            for (var key in state) {
+                $("#" + "weekLabel1" + key).html(msg[state[key]]);
+            }
+            weekMsg = state;
+        }
+
+    }
+
+    function weekAll(state, gameid) {
+
+        var msg = {0: "关闭", 1: "开启"};
+
+        var ids = {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6, 7: 0};
+
+        if (gameid == "1") {
+            for (var i = 1; i < 8; i++) {
+                $("#" + "weekLabel" + ids[i]).html(msg[state]);
+                weekMsg[ids[i]] = state;
+            }
+        }
+        if (gameid == "2") {
+            for (var i = 1; i < 8; i++) {
+                $("#" + "weekLabel1" + ids[i]).html(msg[state]);
+                weekMsg[ids[i]] = state;
+            }
+        }
+
+    }
+
+    function week(day, gameids) {
+        var msg = {0: "关闭", 1: "开启"};
+        if (gameids == "1") {
+
+            var label = document.getElementById("weekLabel" + day).innerHTML;
+
+        } else if (gameids == "2") {
+
+            var label = document.getElementById("weekLabel1" + day).innerHTML;
+
+        }
+
+        if (label == 0) {
+            $("#" + "weekLabel" + day).html(msg[0]);
+        }
+        else if (label == msg[0]) {
+            $("#" + "weekLabel" + day).html(msg[1]);
+            weekMsg[day] = 1;
+        }
+        else if (label == msg[1]) {
+            $("#" + "weekLabel" + day).html(msg[0]);
+            weekMsg[day] = 0;
+        }
+    }
+
+    function onSelect(date) {
+        timeMsg["warmDay"] = getFormatDate(date);
+    }
+
+    function onSelect2(date) {
+        timeMsg["beginDay"] = getFormatDate(date);
+    }
+
+    function onSelect3(date) {
+        timeMsg["endDay"] = getFormatDate(date);
+    }
+
+    function onSelect4(date) {
+        timeMsg["afterDay"] = getFormatDate(date);
+    }
+
+    function deleteAction() {
+        var action = $("#dg").datagrid("getSelected");
+        if (action) {
+            var id = action._id;
+
+            if (window.confirm("删除，请确认?")) {
+                postJson("/admin/delActionJson", {msg: id}, function (data) {
+                    actionData = data;
+                    showCfgCommon();
+                });
+            }
+        }
+        else {
+            $.messager.alert("操作提示", "请选择修改条目","error");
+        }
+    }
+
+    function editAction() {
+        var action = $("#dg").datagrid("getSelected");
+
+        if (action) {
+            var msg = {};
+            for (var i = 0; i < actionData.length; i++) {
+                if (action["_id"] == actionData[i]["_id"]) {
+                    msg = actionData[i];
+                    break;
+                }
+            }
+            if (msg["actType"] == "3") {
+                editNewGift(msg);
+                return;
+            }
+            else if (msg["actType"] == "4") {
+                editRecoGift(msg);
+                return;
+            }
+            else if (msg["actType"] == "2") {
+
+                editWhbc(msg);
+                return;
+            } else if (msg["actType"] == "1") {
+
+                editZpcj(msg);
+                return;
+            }else if(msg["actType"]=='5'){
+
+                editWxNewBie(msg);
+                return;
+            }else if(msg["actType"]=='6'){
+
+                editWxInvite(msg);
+                return;
+            }
+
+        }
+        else {
+            $.messager.alert("操作提示", "请选择修改条目","error");
+        }
+    }
+
+    function editZpcj(msg) {
+
+        $("#ddAction").dialog('open');
+        var table = document.getElementById("ddTable");
+        for (var i = 0; i < actionPreData["actRewardNum"]["turntable"] - 1; i++) {
+
+            table.rows[13 + i].style.display = "table-row";
+
+        }
+
+        $("#idRewardsNN0").show();
+        $("#idRLabelNN0").show();
+        $("#_id").html(msg["_id"]);
+        $("#actType").html(msg["actType"]);
+
+        var actData = msg["actData"];
+
+        $("#actName").html(actData["actName"]);
+        $("#actNote").val(actData["actNote"]);
+
+        timeMsg["warmDay"] = actData["warmDay"];
+        timeMsg["beginDay"] = actData["beginDay"];
+        timeMsg["endDay"] = actData["endDay"];
+        timeMsg["afterDay"] = actData["afterDay"];
+
+        var warmDay = actData["warmDay"] + "";
+        var warmDay_ = warmDay[4] + warmDay[5] + "/" + warmDay[6] + warmDay[7] + "/" + warmDay[0] + warmDay[1] + warmDay[2] + warmDay[3];
+        var beginDay = actData["beginDay"] + "";
+        var beginDay_ = beginDay[4] + beginDay[5] + "/" + beginDay[6] + beginDay[7] + "/" + beginDay[0] + beginDay[1] + beginDay[2] + beginDay[3];
+        var endDay = actData["endDay"] + "";
+        var endDay_ = endDay[4] + endDay[5] + "/" + endDay[6] + endDay[7] + "/" + endDay[0] + endDay[1] + endDay[2] + endDay[3];
+        var afterDay = actData["afterDay"] + "";
+        var afterDay_ = afterDay[4] + afterDay[5] + "/" + afterDay[6] + afterDay[7] + "/" + afterDay[0] + afterDay[1] + afterDay[2] + afterDay[3];
+
+        $("#timeSelect").datebox('setValue', warmDay_);
+        $("#timeSelect2").datebox('setValue', beginDay_);
+        $("#timeSelect3").datebox('setValue', endDay_);
+        $("#timeSelect4").datebox('setValue', afterDay_);
+
+        var weekDay = actData["weekDay"];
+        var weekDay_ = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 0: 0};
+        for (var i = 0; i < weekDay.length; i++) {
+            weekDay_[weekDay[i]] = 1;
+        }
+
+        weekAll_(weekDay_, msg["actType"]);
+
+        $("#beginTime").val(actData["beginTime"]);
+        $("#endTime").val(actData["endTime"]);
+
+        var selecttype = msg["actType"];
+        selectId = selecttype;
+
+        var i = 0;
+
+        $("#timesFree").val(actData["timesFree"]);
+
+        i = 0;
+
+        var wards = actionPreData["rewType"]["turntable"];
+
+        for(var i = 0; i < actionPreData["actRewardNum"]["turntable"]; i++){
+            var d_= [];
+            for(var j = 0; j < wards.length; j++){
+                if(j ==0){
+                    d_.push({"value":j + 1 + "", "text": wardsType[j+1], "selected": true});
+                }
+                else {
+                    d_.push({"value":j+1+"", "text": wardsType[j+1]});
+                }
+            }
+            $("#idRewards"+i).combobox("loadData", d_);
+        }
+
+        var reward = actData["rewards"];
+        for(var j = 0; j < reward.length; j++){
+            var obj = reward[j];
+            $('#idRewards'+j).combobox('setValue', obj[0]);
+            $("#idRewardsN"+j).val(obj [1]);
+            $("#idRewardsNN"+j).val(obj[2]);
+        }
+
+        $("#acTitle").val(actData["acTitle"]);
+        $("#actText").val(actData["actText"]);
+
+    }
+    function editWhbc(msg){
+
+        $("#whbc").dialog('open');
+        $("#_id1").html(msg["_id"]);
+        $("#actType1").html(msg["actType"]);
+
+        var actData = msg["actData"];
+
+        $("#actName1").html(actData["actName"]);
+        $("#actNote1").val(actData["actNote"]);
+
+        timeMsg["warmDay"] =actData["warmDay"];
+        timeMsg["beginDay"] = actData["beginDay"];
+        timeMsg["endDay"] = actData["endDay"];
+
+        var warmDay = actData["warmDay"] + "";
+        var warmDay_ = warmDay[4] + warmDay[5] + "/" + warmDay[6] + warmDay[7] + "/" + warmDay[0] + warmDay[1] + warmDay[2] + warmDay[3];
+        var beginDay = actData["beginDay"] + "";
+        var beginDay_ = beginDay[4] + beginDay[5] + "/" + beginDay[6] + beginDay[7] + "/" + beginDay[0] + beginDay[1] + beginDay[2] + beginDay[3];
+        var endDay = actData["endDay"] + "";
+        var endDay_ = endDay[4] + endDay[5] + "/" + endDay[6] + endDay[7] + "/" + endDay[0] + endDay[1] + endDay[2] + endDay[3];
+
+        $("#timeSelectb1").datebox('setValue', warmDay_);
+        $("#timeSelectb2").datebox('setValue', beginDay_);
+        $("#timeSelectb3").datebox('setValue', endDay_);
+
+
+        $("#beginTime").val(actData["beginTime"]);
+        $("#endTime").val(actData["endTime"]);
+        var selecttype = msg["actType"];
+        selectId = selecttype;
+        var wards = actionPreData["rewType"]["compensate"];
+
+        for (var i = 0; i < actionPreData["actRewardNum"]["compensate"]; i++) {
+            var d_ = [];
+            for (var j = 0; j < wards.length; j++) {
+                if (j == 0) {
+                    d_.push({"value": j + 1 + "", "text": wardsType[j + 1], "selected": true});
+                }
+                else {
+                    d_.push({"value": j + 1 + "", "text": wardsType[j + 1]});
+                }
+            }
+            $("#idRewards" + i).combobox("loadData", d_);
+        }
+
+        var reward = actData["rewards"];
+        for (var j = 0; j < reward.length; j++) {
+            $("#idRewardsNb" + j).val(reward[1]);
+        }
+    }
+
+    function addActionYes() {
+        var msg = {};
+        msg["_id"] = parseInt($("#_id").html());
+        msg["actType"] = parseInt($("#actType").html());
+        msg["delStatus"] = 0;
+
+        var actData = {};
+
+        actData["actName"] = $("#actName").html();
+        actData["actNote"] = $("#actNote").val();
+
+        for (var key in timeMsg) {
+            actData[key] = timeMsg[key];
+        }
+
+        var weekDay = [];
+
+        for (var key in weekMsg) {
+            if (weekMsg[key] == 1) {
+                weekDay.push(parseInt(key));
+            }
+        }
+
+        actData["weekDay"] = weekDay;
+        actData["beginTime"] = $("#beginTime").val();
+
+        if (actData.beginTime.length < 1 || actData.beginTime.indexOf(':') < 1) {
+            $.messager.alert("操作提示", "错误的起始时间:hh:mm","error");
+            return;
+        }
+
+        var timeData = actData.beginTime.split(':');
+
+        if (timeData.length != 2) {
+            $.messager.alert("操作提示", "错误的起始时间:hh:mm","error");
+            return;
+        }
+
+        timeData[0] = parseInt(timeData[0]);
+        timeData[1] = parseInt(timeData[1]);
+
+        if (timeData[0] < 0 || timeData[0] > 23 || timeData[1] < 0 || timeData[1] > 59) {
+            $.messager.alert("操作提示", "错误的起始时间:hh:mm","error");
+            return;
+        }
+
+        actData["endTime"] = $("#endTime").val();
+
+        if (actData.endTime.length < 1 || actData.endTime.indexOf(':') < 1) {
+            $.messager.alert("操作提示", "错误的结束时间:hh:mm","error");
+            return;
+        }
+
+        timeData = actData.endTime.split(':');
+
+        if (timeData.length != 2) {
+            $.messager.alert("操作提示", "错误的结束时间:hh:mm","error");
+            return;
+        }
+
+        timeData[0] = parseInt(timeData[0]);
+        timeData[1] = parseInt(timeData[1]);
+
+        if (timeData[0] < 0 || timeData[0] > 23 || timeData[1] < 0 || timeData[1] > 59) {
+            $.messager.alert("操作提示", "错误的结束时间:hh:mm","error");
+            return;
+        }
+        var actCond = {};
+
+        actData.actCond = 0;
+        actData.timesFree = parseInt($('#timesFree').val());
+
+        if(actData.timesFree < 1) {
+            $.messager.alert("操作提示", "请输入免费次数","error");
+            return;
+        }
+        actData.timesPay = 0;
+        actData.payCost = 0;
+
+        var reward = [];
+        for(var i = 0; i < actionPreData["actRewardNum"]["turntable"]; i++){
+            var type = $('#idRewards'+i).combobox('getValue');
+            var num = $("#idRewardsN"+i).val();
+            var num_ = $("#idRewardsNN"+i).val();
+
+            var obj = [];
+            obj.push(parseInt(type));
+            obj.push(parseInt(num));
+            obj.push(parseInt(num_));
+
+            reward.push(obj);
+        }
+
+        actData["rewards"]= reward;
+
+        actData["acTitle"]=$(" #acTitle").val();
+        actData["actText"]=$(" #actText").val();
+
+        msg["actData"]=actData;
+
+
+        var msgd = msg["actData"];
+        if(msgd["actNote"] == "" || msgd["warmDay"] == null || msgd["beginDay"] == null || msgd["endDay"] == null ||
+                msgd["afterDay"] == null || msgd["weekDay"].length == 0 || msgd["beginTime"].length == 0 || msgd["endTime"].length == 0 ||
+                msgd["acTitle"] == "" || msgd["actText"] == ""){
+            $.messager.alert("操作提示", "信息不完整 请检查","error");
+            return;
+        }
+        for(var i = 0; i < msgd["rewards"].length; i++){
+            for(var j = 0; j < msgd["rewards"][i].length; j++){
+                if(isNaN(msgd["rewards"][i] [j])){
+                    alert("信息不完整 请检查");
+                    return;
+                }
+            }
+        }
+        if(msgd["warmDay"] <= msgd["beginDay"] && msgd["beginDay"] < msgd["endDay"] && msgd["endDay"] <= msgd[
+                        "afterDay"]){}
+        else {
+            $.messager.alert("操作提示", "日期选择错误 请检查","error");
+            return;
+        }
+
+        postJson("/admin/saveActionJson",{msg: msg}, function(rtn){
+            if(rtn){
+                $.messager.alert("操作提示", "成功");
+                $("#ddAction").dialog('close');
+                actionData = rtn;
+                showCfgCommon();
+            }
+        });
+
+    }
+    //<------------------增加的维护补偿按钮点击确定后的页面---------------------->
+    function addWhbcYes(){
+        var msg = {};
+        msg["_id"]=parseInt($("#_id1").html());
+        msg["actType"]=parseInt($("#actType1").html());
+        msg["delStatus"]=0;
+
+        var actData = {};
+
+        actData["actName"]=$("#actName1").html();
+        actData["actNote"]=$("#actNote1").val();
+        for(var key in timeMsg){
+            if(key!= "afterDay"){
+                actData[key]=timeMsg[key];
+            }
+        }
+
+        var reward = [];
+        reward.push(1);
+        reward.push(parseInt($("#idRewardsNb"+0).val()));
+        actData["rewards"]=reward;
+        msg["actData"]=actData;
+
+
+        var msgd = msg["actData"];
+        if(msgd["actNote"] == "" || msgd["warmDay"] == null || msgd["beginDay"] == null || msgd["endDay"] == null){
+            $.messager.alert("操作提示", "信息不完整 请检查","error");
+            return;
+        }
+        if(msgd["warmDay"] <= msgd["beginDay"] && msgd["beginDay"] < msgd["endDay"]){}
+        else {
+            $.messager.alert("操作提示", "日期选择错误 请检查","error");
+            return;
+        }
+
+        postJson("/admin/saveActionJson", {msg: msg}, function (rtn){
+            if (rtn){
+                $.messager.alert("操作提示", "成功");
+                $("#whbc").dialog('close');
+                actionData = rtn;
+                showCfgCommon();
+            }
+        });
+
+    }
+    function addAction(){
+        selectId = $('#action').combobox('getValue');
+
+        if(selectId == "0"){
+            $.messager.alert("操作提示", "请选择活动","error");
+            return;
+        }
+        else if(selectId == "3"){
+
+            if(isExistNewGift()){
+                $.messager.alert("操作提示", "新手礼包已存在","error");
+                return;
+            }
+
+            addNewGift();
+            return;
+        } else if(selectId == "4"){
+            if(isExistRecGift()){
+                $.messager.alert("操作提示", "推荐礼包已存在","error");
+                return;
+            }
+
+            addRecoGift();
+            return; //<------------------------------- 添加打开的页面------------------------------->
+        } else if(selectId == "1"){
+
+            addZpcj();
+            return;
+        }else if(selectId == "2"){
+
+            addWhbc();
+            return;
+
+        }else if(selectId == "5"){
+            if(isExistWxNewbie()){
+                $.messager.alert("操作提示", "微信新手奖励已存在","error");
+                return;
+            }
+            addWxNewbieReWard();
+            return;
+
+        }else{
+            if(isExistWxinvite()){
+                $.messager.alert("操作提示", "微信邀请奖励已存在","error");
+                return;
+            }
+            addWxInviteReWard();
+            return;
+
+        }
+    }
+    function initDataGrid(tableID,data){
+        var datagrid; //定义全局变量datagrid
+        var editRow = undefined; //定义全局变量：当前编辑的行
+        datagrid = $("#"+tableID).datagrid({
+            data:data||[],
+            iconCls: 'icon-save', //图标
+            fitColumn: false, //列自适应宽度
+            striped: true, //行背景交换
+            nowap: true, //列内容多时自动折至第二行
+            border: false,
+            checkOnSelect:false,
+            idField: 'id',
+            columns: [[//显示的列
+                {field: 'id', width: 80, sortable: true, checkbox: true },
+                { field: 'actid', title: '活动标号', width: 80,
+                    editor: { type: 'numberbox', options: { required: true}}
+                },
+                { field: 'wxGameNum', title: '达标局数', width: 80,
+                    editor: { type: 'numberbox', options: { required: true} }
+                },
+                { field: 'wxPlayNum', title: '达标人数', width: 80,
+                    editor: { type: 'numberbox', options: { required: true} }
+                },
+                { field: 'wxRewardType', title: '奖励类型', width: 80,
+                    editor: { type: 'numberbox', options: { required: true} }
+                },
+                { field: 'wxRewardNum', title: '奖励数量', width: 80,
+                    editor: { type: 'numberbox', options: { required: true} }
+                }
+            ]],
+            queryParams: {}, //查询参数
+            toolbar: [{ text: '添加', iconCls: 'icon-add', handler: function () {//添加列表的操作按钮添加，修改，删除等
+                //添加时先判断是否有开启编辑的行，如果有则把开户编辑的那行结束编辑
+                if (editRow != undefined) {
+                    datagrid.datagrid("endEdit", editRow);
+                }
+                //添加时如果没有正在编辑的行，则在datagrid的第一行插入一行
+                if (editRow == undefined) {
+                    datagrid.datagrid("insertRow", {
+                        index: 0, // index start with 0
+                        row: {
+
+                        }
+                    });
+                    //将新插入的那一行开户编辑状态
+                    datagrid.datagrid("beginEdit", 0);
+                    //给当前编辑的行赋值
+                    editRow = 0;
+                }
+
+            }
+            }, '-',
+                { text: '删除', iconCls: 'icon-remove', handler: function () {
+                    //删除时先获取选择行
+                    var rows = datagrid.datagrid("getSelections")||datagrid.datagrid("getChecked");
+                    //选择要删除的行
+                    if (rows.length > 0) {
+                        $.messager.confirm("提示", "你确定要删除吗?", function (r) {
+                            if (r) {
+                                var ids = [];
+                                for (var i = 0; i < rows.length; i++) {
+                                    datagrid.datagrid("deleteRow",rows[i].id);
+                                }
+                            }
+                        });
+                    }
+                    else {
+                        $.messager.alert("提示", "请选择要删除的行", "error");
+                    }
+                }
+                }, '-',
+                { text: '保存', iconCls: 'icon-save', handler: function () {
+                    //保存时结束当前编辑的行，自动触发onAfterEdit事件如果要与后台交互可将数据通过Ajax提交后台
+                    datagrid.datagrid("endEdit", editRow);
+                }
+                }, '-',
+                { text: '取消编辑', iconCls: 'icon-redo', handler: function () {
+                    //取消当前编辑行把当前编辑行罢undefined回滚改变的数据,取消选择的行
+                    editRow = undefined;
+                    datagrid.datagrid("rejectChanges");
+                    datagrid.datagrid("unselectAll");
+                }
+                }, '-'],
+            onAfterEdit: function (rowIndex, rowData, changes) {
+                //endEdit该方法触发此事件
+                editRow = undefined;
+            },
+            onDblClickRow: function (rowIndex, rowData) {
+                //双击开启编辑行
+                if (editRow != undefined) {
+                    datagrid.datagrid("endEdit", editRow);
+                }
+                if (editRow == undefined) {
+                    datagrid.datagrid("beginEdit", rowIndex);
+                    editRow = rowIndex;
+                }
+            }
+        });
+    }
+    //添加微信新手奖励
+    function addWxNewbieReWard(){
+        $("#_idwxNewbieReward").html(0);
+        $("#actTypeWxNewbie").html(selectId);
+        $("#actNamewxNewbie").html("微信新手奖励");
+        $("#actNotewxNewbie").val("");
+        $("#timewxNewbieStart").datebox("setValue","");
+        $("#timewxNewbieEnd").datebox("setValue","");
+        initDataGrid("wxNewbieConf",[]);
+        $("#wxNewbieReward").dialog('open');
+    }
+    function addWxNewbieRewardYes(){
+        var msg = {};
+        msg["_id"] = parseInt($("#_idwxNewbieReward").html());
+        msg["actType"] = parseInt($("#actTypeWxNewbie").html());
+        msg["delStatus"] = 0;
+
+        var actData = {};
+
+        actData["actName"] = $("#actNamewxNewbie").html();
+        actData["actNote"] = $("#actNotewxNewbie").val();
+
+        for (var key in timeMsg) {
+            actData[key] = timeMsg[key];
+        }
+        //$("#wxNewbieConf").datagrid("checkAll");
+        actData["rewards"]=$("#wxNewbieConf").datagrid("getChecked");
+
+        console.log(actData["rewards"]);
+        msg["actData"]=actData;
+
+        var msgd = msg["actData"];
+
+        if(msgd["actNote"] == "" ||msgd["beginDay"] == null || msgd["endDay"] == null){
+            $.messager.alert("操作提示", "信息不完整 请检查","error");
+            return;
+        }
+        if(msgd["beginDay"] > msgd["endDay"])
+        {
+            $.messager.alert("操作提示", "日期选择错误 请检查","error");
+            return;
+        }
+
+        postJson("/admin/saveActionJson",{msg: msg}, function(rtn){
+
+            if(rtn){
+                $.messager.alert("操作提示", "成功");
+                $("#wxNewbieReward").dialog('close');
+                actionData = rtn;
+                showCfgCommon();
+            }
+        });
+
+    }
+    function editWxNewBie(msg){
+
+        $("#wxNewbieReward").dialog('open');
+
+        $("#_idwxNewbieReward").html(msg["_id"]);
+        $("#actTypeWxNewbie").html(msg["actType"]);
+
+        var actData = msg["actData"];
+
+        $("#actNamewxNewbie").html(actData["actName"]);
+        $("#actNotewxNewbie").val(actData["actNote"]);
+
+        timeMsg["beginDay"] = actData["beginDay"];
+        timeMsg["endDay"] = actData["endDay"];
+
+        var beginDay = actData["beginDay"] + "";
+        var beginDay_ = beginDay[4] + beginDay[5] + "/" + beginDay[6] + beginDay[7] + "/" + beginDay[0] + beginDay[1] + beginDay[2] + beginDay[3];
+        var endDay = actData["endDay"] + "";
+        var endDay_ = endDay[4] + endDay[5] + "/" + endDay[6] + endDay[7] + "/" + endDay[0] + endDay[1] + endDay[2] + endDay[3];
+
+        $("#timewxNewbieStart").datebox('setValue', beginDay_);
+        $("#timewxNewbieEnd").datebox('setValue', endDay_);
+
+
+        //$("#wxNewbieConf").datagrid("unselectAll");
+        var reward = actData["rewards"];
+        for(var i= 0,len=reward.length;i<len;i++){
+            reward[i]['id']=i;
+        }
+        console.log(reward);
+        initDataGrid("wxNewbieConf",reward);
+    }
+    //   添加推荐奖励
+    function addWxInviteReWard(){
+        $("#_idWxInviteReward").html(0);
+        $("#actTypewxInvite").html(selectId);
+        $("#actNamewxInvite").html("微信邀请奖励");
+        $("#actNotewxInvite").val("");
+        $("#timewxInviteStart").datebox("setValue","");
+        $("#timewxInviteEnd").datebox("setValue","");
+        initDataGrid("wxInviteConf",[]);
+        $("#wxInviteReward").dialog('open');
+    }
+    function addWxInviteRewardYes(){
+        var msg = {};
+        msg["_id"] = parseInt($("#_idWxInviteReward").html());
+        msg["actType"] = parseInt($("#actTypewxInvite").html());
+        msg["delStatus"] = 0;
+
+        var actData = {};
+
+        actData["actName"] = $("#actNamewxInvite").html();
+        actData["actNote"] = $("#actNotewxInvite").val();
+
+        for (var key in timeMsg) {
+            actData[key] = timeMsg[key];
+        }
+        //$("#wxInviteConf").datagrid("checkAll");
+        actData["rewards"]= $("#wxInviteConf").datagrid('getChecked');
+
+        msg["actData"]=actData;
+
+        var msgd = msg["actData"];
+
+        if(msgd["actNote"] == "" ||msgd["beginDay"] == null || msgd["endDay"] == null){
+            $.messager.alert("操作提示", "信息不完整 请检查","error");
+            return;
+        }
+        if(msgd["beginDay"] > msgd["endDay"])
+        {
+            $.messager.alert("操作提示", "日期选择错误 请检查","error");
+            return;
+        }
+        postJson("/admin/saveActionJson",{msg: msg}, function(rtn){
+            if(rtn){
+                $.messager.alert("操作提示", "操作成功");
+                $("#wxInviteReward").dialog('close');
+                actionData = rtn;
+                showCfgCommon();
+            }
+        });
+
+    }
+    function editWxInvite(msg){
+
+        $("#wxInviteReward").dialog('open');
+
+        $("#_idWxInviteReward").html(msg["_id"]);
+        $("#actTypewxInvite").html(msg["actType"]);
+
+        var actData = msg["actData"];
+
+        $("#actNamewxInvite").html(actData["actName"]);
+        $("#actNotewxInvite").val(actData["actNote"]);
+
+        timeMsg["beginDay"] = actData["beginDay"];
+        timeMsg["endDay"] = actData["endDay"];
+
+        var beginDay = actData["beginDay"] + "";
+        var beginDay_ = beginDay[4] + beginDay[5] + "/" + beginDay[6] + beginDay[7] + "/" + beginDay[0] + beginDay[1] + beginDay[2] + beginDay[3];
+        var endDay = actData["endDay"] + "";
+        var endDay_ = endDay[4] + endDay[5] + "/" + endDay[6] + endDay[7] + "/" + endDay[0] + endDay[1] + endDay[2] + endDay[3];
+
+        $("#timewxInviteStart").datebox('setValue', beginDay_);
+        $("#timewxInviteEnd").datebox('setValue', endDay_);
+
+        var reward = actData["rewards"];
+
+        for(var i= 0,len=reward.length;i<len;i++){
+            reward[i]['id']=i;
+        }
+        initDataGrid("wxInviteConf",reward);
+    }
+    //<--------------------新添加的打开转盘抽奖的页面------------------>
+    function addZpcj(){
+
+        selectId = $('#action').combobox('getValue');
+
+        $("#_id").html(0);
+
+        $("#actType").html(selectId);
+
+        $("#actName").html("转盘抽奖");
+
+        $("#actNote").val("");
+
+        $("#timeSelect").datebox('setValue', "");
+        $("#timeSelect2").datebox('setValue', "");
+        $("#timeSelect3").datebox('setValue', "");
+        $("#timeSelect4").datebox('setValue', "");
+        weekAll(0,selectId);
+
+        $("#beginTime").val("");
+        $("#endTime").val("");
+
+        for(var i = 0; i < actionPreData["actRewardNum"]["turntable"]; i++){
+            $("#idRewardsN"+i).val("");
+            $(
+                    "#idRewardsNN" + i).val("");
+        }
+        $("#acTitle").val("");//活动标题
+        $("#actText").val("");//活动文本
+        var wards = actionPreData["rewType"]["turntable"];
+        for (var i = 0; i < actionPreData["actRewardNum"]["turntable"]; i++) {
+            var d_ = [];
+            for (var j = 0; j < wards.length; j++) {
+                if (j == 0) {
+                    d_.push({"value": j + 1 + "", "text": wardsType[j + 1], "selected": true});
+                }
+                else {
+                    d_.push({"value": j + 1 + "", "text": wardsType[j + 1]});
+                }
+            }
+            $("#idRewards" + i).combobox("loadData", d_);
+        }
+
+        var table = document.getElementById("ddTable");
+        for (var i = 0; i < actionPreData["actRewardNum"]["turntable"] - 1; i++) {
+            table.rows[13 + i].style.display = "table-row";
+        }
+
+        $("#idRewardsNN0").show();
+        $("#idRLabelNN0").show();
+
+
+        $("#ddAction").dialog('open');
+    }
+
+    //<--------------------新添加的打开维护补偿的页面------------------>
+    function addWhbc() {
+
+        selectId = $('#action').combobox('getValue');
+
+        $("#_id1").html(0);
+
+        $("#actType1").html(selectId);
+
+
+        $("#actName1").html("维护补偿");
+
+        $("#actNote1").val("");
+
+        $("#timeSelectb1").datebox('setValue', "");
+        $("#timeSelectb2").datebox('setValue', "");
+        $("#timeSelectb3").datebox('setValue', "");
+
+        $("#beginTime1").val("");
+        $("#endTime1").val("");
+        $("#idRewardsNb0").val("");
+
+        $("#whbc").dialog('open');
+    }
+
+    function showCfgCommon() {
+        var result = [];
+        for (var i = 0; i < actionData.length; i++) {
+            var obj = actionData[i];
+
+            var weekmsg = "";
+            var weekmsg_ = {0: "周日", 1: "周一", 2: "周二", 3: "周三", 4: "周四", 5: "周五", 6: "周六"};
+            if (obj["actData"]["weekDay"]) {
+                for (var j = 0; j < obj["actData"]["weekDay"].length; j++) {
+                    weekmsg += weekmsg_[obj["actData"]["weekDay"][j]] + " ";
+                    if (j == obj["actData"]["weekDay"].length - 1) {
+                        weekmsg += "开启";
+                    }
+                }
+            }
+
+            result.push({
+                "_id": obj["_id"],
+                "actType": obj["actType"],
+                "actName": obj["actData"]["actName"],
+                "actNote": obj["actData"]["actNote"],
+                "warmDay": obj["actData"]["warmDay"],
+                "beginDay": obj["actData"]["beginDay"],
+                "endDay": obj["actData"]["endDay"],
+                "afterDay": obj["actData"]["afterDay"],
+                "weekDay": weekmsg,
+                "beginTime": obj["actData"]["beginTime"],
+                "endTime": obj["actData"]["endTime"]
+            });
+        }
+
+        var da = {};
+        da["total"] = actionData.length;
+        da["rows"] = result;
+
+
+        $("#dg").datagrid("loadData", da);
+    }
+    function isExistNewGift() {
+        for (var i = 0; i < actionData.length; i++) {
+            if (actionData[i]["actType"] == 3) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function isExistRecGift() {
+        for (var i = 0; i < actionData.length; i++) {
+            if (actionData[i]["actType"] == 4) {
+                return true;
+            }
+        }
+        return false;
+    }
+    function isExistWxNewbie(){
+        for (var i = 0; i < actionData.length; i++) {
+            if (actionData[i]["actType"] == 5) {
+                return true;
+            }
+        }
+        return false;
+    }
+    function isExistWxinvite(){
+        for (var i = 0; i < actionData.length; i++) {
+            if (actionData[i]["actType"] == 6) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function showCfg() {
+        postJson("/admin/getActionJson", {},
+                function (data) {
+                    if (data <= 0) {
+                        $('#dg').datagrid('appendRow',{_id:"没有数据", actType:"", actName:"", actNote:"",warmDay:"",beginDay:"",endDay:"",afterDay:"",weekDay:"",beginTime:"",endTime:""});
+                        return;
+                    }
+
+                    actionData = data;
+                    showCfgCommon();
+                }
+        );
+    }
+
+    function syncAction() {
+        postJson("/admin/syncAction", {}, function (data) {
+            actionData = data;
+            showCfgCommon();
+        });
+    }
+</script>
+</body>
+</html>

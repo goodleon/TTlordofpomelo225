@@ -1,0 +1,22 @@
+
+domain Error: listen EADDRINUSE
+    at errnoException (net.js:905:11)
+    at Server._listen2 (net.js:1043:14)
+    at listen (net.js:1065:10)
+    at net.js:1147:9
+    at dns.js:72:18
+    at process._tickDomainCallback (node.js:502:13)
+    at Function.Module.runMain (module.js:499:11)
+    at startup (node.js:119:16)
+    at node.js:945:3
+domain Error: listen EADDRINUSE
+    at errnoException (net.js:905:11)
+    at Server._listen2 (net.js:1043:14)
+    at listen (net.js:1065:10)
+    at Server.listen (net.js:1139:5)
+    at Object.exports.listen (/root/mjserver/game-server/node_modules/pomelo/node_modules/socket.io/lib/socket.io.js:74:12)
+    at pro.listen (/root/mjserver/game-server/node_modules/pomelo/node_modules/pomelo-rpc/lib/rpc-server/acceptors/ws-acceptor.js:34:21)
+    at pro.start (/root/mjserver/game-server/node_modules/pomelo/node_modules/pomelo-rpc/lib/rpc-server/gateway.js:43:17)
+    at pro.start (/root/mjserver/game-server/node_modules/pomelo/lib/components/remote.js:54:15)
+    at /root/mjserver/game-server/node_modules/pomelo/lib/util/appUtil.js:111:19
+    at iterate (/root/mjserver/game-server/node_modules/pomelo/node_modules/async/lib/async.js:123:13)

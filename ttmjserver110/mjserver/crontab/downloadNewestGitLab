@@ -1,0 +1,48 @@
+#!/bin/bash
+
+currentPath=$PWD
+www=https://mirrors.tuna.tsinghua.edu.cn/gitlab-ce/yum/el7/
+rm -rf /home/git/download/index.html
+wget -q -O /home/git/download/index.html $www
+versionA=$(cat /home/git/download/index.html | grep gitlab-ce | awk -F 'gitlab-ce-' '{print $2}' | awk -F '.el7.x86_64.rpm">' '{print $1}' | grep ce)
+versionA=(${versionA// /})
+numA=$(cat /home/git/download/index.html | grep gitlab-ce | awk -F 'gitlab-ce-' '{print $2}' | awk -F '.el7.x86_64.rpm">' '{print $1}' | grep ce| awk -F '-ce' '{print $1.$2}' | awk -F '.' '{print $1*10000+$2*1000+$3*100+$4*10+$5}')
+pathFileA=$(ls -l /home/git/download | awk '{print $9}')
+tempMax=0
+tempMaxPos=0
+currentPos=-1
+for key in $numA
+do
+let key=$key+0
+let tempMax=$tempMax+0
+if [ $tempMax -lt $key ]
+then
+tempMax=$key
+let tempMaxPos=$currentPos+1
+fi
+let currentPos=$currentPos+1
+done
+maxVersion=${versionA[$tempMaxPos]}
+
+fileName=$(cat /home/git/download/index.html | grep 8.10.4-ce.0 | awk -F '>|<' '{printf $3}')
+
+for key1 in $pathFileA
+do
+if [ "$key1" = "$fileName" ]
+then
+bash $currentPath/../command/echoColor "have file" info
+exit 50
+fi
+done
+
+
+html=$www$fileName
+wget -q -O /home/git/download/$fileName $html
+
+if [ $? != 0 ]
+then
+bash $currentPath/../command/echoColor "download html error: ${html}" error
+else
+bash $currentPath/../command/echoColor "download html successful: ${html}" info
+fi
+

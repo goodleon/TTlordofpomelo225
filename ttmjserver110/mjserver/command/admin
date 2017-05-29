@@ -1,0 +1,26 @@
+#!/bin/bash
+
+export NODE_PATH=/usr/lib/node_modules
+
+webadmin=/root/webadmin
+currentPath=$PWD
+
+
+if [ $# != 1 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 1" error;
+exit 1;
+fi
+
+
+cd ${webadmin}
+forever start adminWeb.js ${1}.json
+
+if [ $? != 0 ];then
+    cd ${currentPath}
+    bash echoColor "${0}: can't start adminWeb.js !!!" error;
+    exit 1;
+else
+    cd ${currentPath}
+    bash echoColor "${0}: start adminWeb.js Success!" info;
+    exit 0;
+fi

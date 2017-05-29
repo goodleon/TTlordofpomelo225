@@ -1,0 +1,189 @@
+安装服务器指南
+
+说明:服务器版本信息为CentOS Linux release 7.2.1511
+
+0.更新系统
+	  yum -y update
+	  按照机器类型修改主机名
+	  hostname 项目名-data           数据服
+	  hostname 项目名-link-序号      链接服
+	  hostname 项目名-room-序号      房间服
+	  hostname 项目名-loginPkplayer  登录
+	  单服的只需要改成               项目名-data
+	  登录服和数据服在一起的主机     项目名-data
+	  主机名有8中
+	  xxxx-data 
+	  xxxx-link-x
+	  xxxx-room-x
+	  xxxx-login-x
+	  xxxx-pkplayer-x
+	  xxxx-loginPkplayer-x
+	  xxxx-master
+	  localhost-test
+
+1.安装mongod
+	vi /etc/yum.repos.d/mongodb.repo
+  	[mongodb]
+	name=MongoDB Repository
+	baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
+	gpgcheck=0
+	enabled=1
+        执行安装
+        yum -y install mongodb-org mongodb-org-server	
+
+	修改mongod配置文件  /etc/mongod.conf     ip地址改为数据服务器的
+2.准备安装
+	service firewalld stop
+	yum install -y gcc-c++ make
+
+	curl -sL https://rpm.nodesource.com/setup | bash -
+	yum install -y nodejs       // 版本用0.10.46
+	yum -y install git
+	yum -y install sysstat
+	yum -y install net-tools 
+	yum -y install zip unzip
+	yum -y install psmisc
+	yum -y install wget
+	yum -y install epel-release
+	yum -y install nload
+	yum -y install iftop
+	yum -y install mysql-server
+
+	使用淘宝npm镜像地址
+	// -------------------------------淘宝npm镜像地址	
+	alias cnpm="npm --registry=https://registry.npm.taobao.org \
+	--cache=$HOME/.npm/.cache/cnpm \
+	--disturl=https://npm.taobao.org/dist \
+	--userconfig=$HOME/.cnpmrc"
+	// --------------------------------淘宝npm镜像地址	
+
+
+	npm install -g pomelo@1.1.7
+	npm install -g pomelo-admin
+	npm install -g heapdump
+	npm install -g mysql
+	npm install -g nodemailer
+	npm install -g express
+	npm install -g body-parser
+	npm install -g cookie-parser
+	npm install -g forever
+	npm install -g mongodb
+	npm install -g redis
+	npm install -g urllib
+	npm install -g json2xls		
+	npm install -g jpush-sdk
+	npm install -g request
+	npm install -g node-schedule
+
+3目录配置(add by wcx  工作目录在哪里,在哪里执行 mkdir /playlog)
+	 // 回放数据
+	mkdir /playlog
+	ln -s /playlog /root/mjserver/web-server/public/
+
+4.crontab 配置
+  数据服
+	10 4 * * * bash /root/webadmin/tool/money.sh
+	20 4 * * * cd /root/webadmin/statistics/crontab&&bash memberConsumption.sh
+	30 4 * * * cd /root/webadmin/statistics/crontab&&bash membersActive.sh
+	32 4 * * * cd /root/webadmin/statistics/crontab&&bash adminStatistics.sh
+	35 4 * * * cd /root/webadmin/statistics/crontab&&bash memberStatistics.sh
+	36 4 * * * cd /root/webadmin/statistics/crontab&&bash userConsumption.sh 
+	38 4 * * * cd /root/webadmin/dataCenterService/crontab&&bash exportDbTask.sh
+  链接服
+         0 4 * * * sh /root/mjserver/crontab/cleanLog.sh
+  房间服
+         0 4 * * * sh /root/mjserver/crontab/cleanLog.sh
+  登录服
+        0 4 * * * sh /root/mjserver/crontab/cleanLog.sh
+  
+5. iptables 部署(这个是做什么用的)
+	/etc/sysconfig/iptables
+	对于大项目 相应的数据可以放宽一些. 注意修改外网地址为本机的外网地址
+	*filter
+	:INPUT ACCEPT [0:0]
+	:FORWARD ACCEPT [0:0]
+	:OUTPUT ACCEPT [0:0]
+	:TEST - [0:0]
+	-A INPUT -j TEST
+	-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+	-A INPUT -p icmp -j ACCEPT
+	-A INPUT -i lo -j ACCEPT
+	-A INPUT -p tcp -i eth1 -d 139.224.25.69 --syn -m recent --name suduip --rcheck --seconds 1 --hitcount 15 -j DROP
+	-A INPUT -p tcp -i eth1 -d 139.224.25.69 --syn -m recent --name suduip --set
+	-A INPUT -i eth1 -p tcp -m tcp -d 139.224.25.69 --syn -m connlimit --connlimit-above 50 --connlimit-mask 32 --connlimit-saddr -j DROP
+	-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG SYN -m length --length 0:128 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 88 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 800 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 2010:2039 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 3001 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 3005 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 4005 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 5030:5069 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 6030:6069 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 15010:15039 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 15120:15149 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 16010:16039 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 16120:16149 -j ACCEPT
+	-A INPUT -p tcp -m state --state NEW -m tcp --dport 27017 -j ACCEPT
+	-A INPUT -j DROP
+	-A INPUT -j REJECT --reject-with icmp-host-prohibited
+	-A FORWARD -j TEST
+	-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+	-A OUTPUT -j TEST
+	-A TEST -j RETURN
+	COMMIT
+  
+6常用命令()
+    //add by wcx 问题:pomel + mongo + redis + mysql 等, 就是我想重启服务器要怎么操作
+    systemctl start mongod  启动mongo
+	systemctl status mongod 查看mongo状态
+	查看错误登录less /var/log/secure	
+	查看文件数量    find dirpath -type f |wc -l
+	查看文件夹大小  du dirpath -h
+	同步linux时间服务器
+	rm -rf /etc/localtime
+	ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+	ntpdate time.nist.gov	
+
+7修改master servers文件里的配置
+        修改mjserver\game-server\config 目录里master.json中项目名host改为服务器实际的内网IP
+        修改mjserver\game-server\config 目录里servers.json中的login  pkplayer pkroom pkcon里的ip地址,
+        可以用tool目录下的createInLine.js  template.json生成.
+
+8.按照服务器类型clone对应的代码(add by wcx 什么也没有)
+       房间服 项目代码 mjserver
+       数据服 项目代码 mjserver  webadmin webagent dataCenter代码
+       链接服 mjserver
+9.替换pomelo 底层(add by wcx 这个有效)
+       切换到mjserver/version 目录下 执行bash copy.sh
+       替换之后需要重启游戏服务
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+

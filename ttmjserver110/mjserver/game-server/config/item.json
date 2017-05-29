@@ -1,0 +1,8 @@
+[
+  {"id": 72000,   "type": 1, "duration": 30000, "addtoken": 2, "addcount":72000,    "costtoken":1, "costcount":20,"desc":"아"},
+  {"id": 220000,  "type": 1, "duration": 30000, "addtoken": 2, "addcount":220000,   "costtoken":1, "costcount":20,"desc":"아"},
+  {"id": 380000,  "type": 1, "duration": 30000, "addtoken": 2, "addcount":380000,   "costtoken":1, "costcount":20,"desc":"아"},
+  {"id": 900000,  "type": 1, "duration": 30000, "addtoken": 2, "addcount":900000,   "costtoken":1, "costcount":20,"desc":"아"},
+  {"id": 1750000, "type": 1, "duration": 30000, "addtoken": 2, "addcount":1750000,  "costtoken":1, "costcount":20,"desc":"아"},
+  {"id": 4100000, "type": 1, "duration": 30000, "addtoken": 2, "addcount":4100000,  "costtoken":1, "costcount":20,"desc":"아"}
+]

@@ -1,0 +1,818 @@
+[31m[2017-05-12 15:05:23.903] [ERROR] console - [39mregisterAdmin test
+
+[32m[2017-05-12 15:05:23.912] [INFO] console - [39mtest 4006
+
+[32m[2017-05-12 15:05:24.054] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:24.411] [ERROR] console - [39mregisterAdmin test
+
+[32m[2017-05-12 15:05:24.414] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "master", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:24.565] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:24.956] [INFO] console - [39mtest Connected correctly to server.
+
+[32m[2017-05-12 15:05:25.471] [INFO] console - [39mmaxMemberID 981018
+
+[32m[2017-05-12 15:05:25.528] [INFO] console - [39mmaxMemberID 981018
+
+[31m[2017-05-12 15:05:25.612] [ERROR] console - [39mreload login @login0000
+
+[31m[2017-05-12 15:05:25.738] [ERROR] console - [39mreload login @login0001
+
+[31m[2017-05-12 15:05:25.826] [ERROR] console - [39mstart finish test
+
+[31m[2017-05-12 15:05:25.824] [ERROR] console - [39mreload login @login0002
+
+[31m[2017-05-12 15:05:25.856] [ERROR] console - [39mreload undefined @pkplayer0000
+
+[31m[2017-05-12 15:05:25.974] [ERROR] console - [39mreload undefined @pkplayer0001
+
+[31m[2017-05-12 15:05:26.025] [ERROR] console - [39mreload undefined @pkplayer0002
+
+[31m[2017-05-12 15:05:26.035] [ERROR] console - [39mreload undefined @pkroom0000
+
+[31m[2017-05-12 15:05:26.042] [ERROR] console - [39mreload undefined @matcher0000
+
+[31m[2017-05-12 15:05:26.083] [ERROR] console - [39mreload undefined @pkroom0001
+
+[31m[2017-05-12 15:05:26.151] [ERROR] console - [39mreload undefined @pkroom0002
+
+[31m[2017-05-12 15:05:26.187] [ERROR] console - [39mreload undefined @pkroom0003
+
+[31m[2017-05-12 15:05:26.226] [ERROR] console - [39mreload undefined @pkroom0004
+
+[31m[2017-05-12 15:05:26.291] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:05:26.292] [ERROR] console - [39mpkroom0000 reload game code scmj
+
+[31m[2017-05-12 15:05:26.300] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:05:26.301] [ERROR] console - [39mpkroom0001 reload game code scmj
+
+[31m[2017-05-12 15:05:26.282] [ERROR] console - [39mreload undefined @pkcon0000
+
+[31m[2017-05-12 15:05:26.296] [ERROR] console - [39mreload undefined @pkroom0005
+
+[31m[2017-05-12 15:05:26.331] [ERROR] console - [39mreload undefined @pkcon0001
+
+[31m[2017-05-12 15:05:26.402] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:05:26.402] [ERROR] console - [39mpkroom0002 reload game code scmj
+
+[31m[2017-05-12 15:05:26.390] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:05:26.413] [ERROR] console - [39mpkroom0003 reload game code scmj
+
+[31m[2017-05-12 15:05:26.433] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:05:26.433] [ERROR] console - [39mpkroom0004 reload game code scmj
+
+[31m[2017-05-12 15:05:26.408] [ERROR] console - [39mreload undefined @pkcon0002
+
+[31m[2017-05-12 15:05:26.427] [ERROR] console - [39mreload undefined @pkcon0003
+
+[31m[2017-05-12 15:05:26.483] [ERROR] console - [39mreload undefined @pkcon0006
+
+[31m[2017-05-12 15:05:26.512] [ERROR] console - [39m-----------------00
+
+[31m[2017-05-12 15:05:26.513] [ERROR] console - [39mpkroom0005 reload game code scmj
+
+[31m[2017-05-12 15:05:26.492] [ERROR] console - [39mreload undefined @pkcon0005
+
+[31m[2017-05-12 15:05:26.508] [ERROR] console - [39mreload undefined @pkcon0004
+
+[31m[2017-05-12 15:05:26.518] [ERROR] console - [39mreload undefined @pkcon0007
+
+[31m[2017-05-12 15:05:26.535] [ERROR] console - [39mreload undefined @pkcon0008
+
+[31m[2017-05-12 15:05:26.605] [ERROR] console - [39mreload undefined @pkcon0009
+
+[31m[2017-05-12 15:05:26.831] [ERROR] console - [39mgame create scmj @ pkroom0001
+
+[32m[2017-05-12 15:05:26.832] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:05:26.859] [ERROR] console - [39mgame create scmj @ pkroom0000
+
+[32m[2017-05-12 15:05:26.859] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:05:26.928] [ERROR] console - [39mgame create scmj @ pkroom0003
+
+[32m[2017-05-12 15:05:26.928] [INFO] console - [39m load game scmj
+
+[32m[2017-05-12 15:05:26.947] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:05:26.932] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:26.972] [ERROR] console - [39mgame create scmj @ pkroom0004
+
+[32m[2017-05-12 15:05:26.973] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:05:26.973] [ERROR] console - [39mgame create scmj @ pkroom0002
+
+[32m[2017-05-12 15:05:26.973] [INFO] console - [39m load game scmj
+
+[32m[2017-05-12 15:05:26.981] [INFO] console - [39mlogin0001 3011
+
+[32m[2017-05-12 15:05:26.989] [INFO] console - [39mlogin0000 4005
+
+[32m[2017-05-12 15:05:27.026] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:27.064] [ERROR] console - [39mgame create scmj @ pkroom0005
+
+[32m[2017-05-12 15:05:27.065] [INFO] console - [39m load game scmj
+
+[32m[2017-05-12 15:05:27.056] [INFO] console - [39mlogin0002 3012
+
+[31m[2017-05-12 15:05:28.256] [ERROR] console - [39mreload undefined @pkroom0003
+
+[31m[2017-05-12 15:05:28.533] [ERROR] console - [39mreload login @pkcon0000
+
+[31m[2017-05-12 15:05:28.603] [ERROR] console - [39mreload login @pkcon0001
+
+[31m[2017-05-12 15:05:28.750] [ERROR] console - [39mreload login @pkcon0002
+
+[31m[2017-05-12 15:05:28.754] [ERROR] console - [39mreload login @pkcon0003
+
+[31m[2017-05-12 15:05:28.773] [ERROR] console - [39mreload login @pkcon0006
+
+[31m[2017-05-12 15:05:28.775] [ERROR] console - [39mreload login @pkcon0007
+
+[31m[2017-05-12 15:05:28.780] [ERROR] console - [39mreload login @pkcon0005
+
+[31m[2017-05-12 15:05:28.827] [ERROR] console - [39mreload login @pkcon0004
+
+[31m[2017-05-12 15:05:28.851] [ERROR] console - [39mreload login @pkcon0008
+
+[31m[2017-05-12 15:05:28.951] [ERROR] console - [39mreload login @pkcon0009
+
+[31m[2017-05-12 15:05:28.983] [ERROR] console - [39mreload undefined @pkroom0001
+
+[31m[2017-05-12 15:05:29.017] [ERROR] console - [39mreload undefined @pkroom0000
+
+[31m[2017-05-12 15:05:29.089] [ERROR] console - [39mreload undefined @pkroom0004
+
+[31m[2017-05-12 15:05:29.170] [ERROR] console - [39mreload undefined @pkroom0002
+
+[31m[2017-05-12 15:05:29.218] [ERROR] console - [39mreload undefined @pkroom0005
+
+[32m[2017-05-12 15:05:29.645] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:29.650] [ERROR] console - [39mreload undefined @pkplayer0000
+
+[31m[2017-05-12 15:05:29.677] [ERROR] console - [39mreload undefined @pkcon0001
+
+[31m[2017-05-12 15:05:29.692] [ERROR] console - [39mreload undefined @pkplayer0002
+
+[32m[2017-05-12 15:05:29.724] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:29.759] [ERROR] console - [39mreload undefined @pkcon0000
+
+[32m[2017-05-12 15:05:29.815] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:05:29.812] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:29.840] [ERROR] console - [39m-----------------ye
+
+[31m[2017-05-12 15:05:29.840] [ERROR] console - [39mpkplayer0000 reload game code scmj
+
+[31m[2017-05-12 15:05:29.845] [ERROR] console - [39mreload undefined @pkcon0002
+
+[31m[2017-05-12 15:05:29.818] [ERROR] console - [39mreload undefined @pkplayer0001
+
+[31m[2017-05-12 15:05:29.869] [ERROR] console - [39mreload undefined @pkcon0006
+
+[31m[2017-05-12 15:05:29.885] [ERROR] console - [39m-----------------ye
+
+[31m[2017-05-12 15:05:29.886] [ERROR] console - [39mpkplayer0002 reload game code scmj
+
+[32m[2017-05-12 15:05:29.928] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:05:29.940] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:05:29.941] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[32m[2017-05-12 15:05:29.953] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:29.959] [ERROR] console - [39mreload undefined @pkcon0008
+
+[31m[2017-05-12 15:05:29.973] [ERROR] console - [39mreload undefined @pkcon0007
+
+[31m[2017-05-12 15:05:29.981] [ERROR] console - [39mreload undefined @pkcon0003
+
+[31m[2017-05-12 15:05:30.015] [ERROR] console - [39mreload undefined @pkcon0005
+
+[32m[2017-05-12 15:05:30.028] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:30.040] [ERROR] console - [39m-----------------ye
+
+[31m[2017-05-12 15:05:30.040] [ERROR] console - [39mpkplayer0001 reload game code scmj
+
+[31m[2017-05-12 15:05:30.061] [ERROR] console - [39mreload undefined @pkcon0004
+
+[32m[2017-05-12 15:05:30.156] [INFO] console - [39midplayers:[object Object]|| mailplayers[object Object]
+
+[31m[2017-05-12 15:05:30.192] [ERROR] console - [39mreload undefined @pkcon0009
+
+[31m[2017-05-12 15:05:30.485] [ERROR] console - [39mgame create scmj @ pkplayer0000
+
+[32m[2017-05-12 15:05:30.486] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:05:30.515] [ERROR] console - [39mreload undefined @pkplayer0000
+
+[31m[2017-05-12 15:05:30.534] [ERROR] console - [39mgame create scmj @ pkplayer0002
+
+[32m[2017-05-12 15:05:30.534] [INFO] console - [39m load game scmj
+
+[32m[2017-05-12 15:05:30.544] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.545] [ERROR] console - [39mreload login @pkroom0003
+
+[31m[2017-05-12 15:05:30.564] [ERROR] console - [39mreload undefined @pkplayer0002
+
+[32m[2017-05-12 15:05:30.578] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.578] [ERROR] console - [39mreload login @pkplayer0000
+
+[32m[2017-05-12 15:05:30.625] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.625] [ERROR] console - [39mreload login @pkplayer0002
+
+[32m[2017-05-12 15:05:30.655] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.656] [ERROR] console - [39mreload login @pkroom0001
+
+[31m[2017-05-12 15:05:30.688] [ERROR] console - [39mgame create scmj @ pkplayer0001
+
+[32m[2017-05-12 15:05:30.688] [INFO] console - [39m load game scmj
+
+[31m[2017-05-12 15:05:30.719] [ERROR] console - [39mreload undefined @pkplayer0001
+
+[32m[2017-05-12 15:05:30.786] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.787] [ERROR] console - [39mreload login @pkplayer0001
+
+[32m[2017-05-12 15:05:30.788] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.823] [ERROR] console - [39mreload login @pkroom0004
+
+[32m[2017-05-12 15:05:30.840] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.841] [ERROR] console - [39mreload login @pkroom0000
+
+[32m[2017-05-12 15:05:30.923] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:30.923] [ERROR] console - [39mreload login @pkroom0005
+
+[32m[2017-05-12 15:05:31.009] [INFO] console - [39m###### leader
+
+[31m[2017-05-12 15:05:31.040] [ERROR] console - [39mreload login @pkroom0002
+
+[32m[2017-05-12 15:05:33.335] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:33.394] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:33.511] [ERROR] console - [39mregisterAdmin matcher0000
+
+[32m[2017-05-12 15:05:33.513] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "matcher", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:33.692] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:34.291] [INFO] console - [39mmatcher0000 Connected correctly to server.
+
+[32m[2017-05-12 15:05:34.458] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:05:34.482] [ERROR] console - [39mundefined afterStart matcher0000
+
+[32m[2017-05-12 15:05:34.482] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:34.483] [ERROR] console - [39mstart finish matcher0000
+
+[32m[2017-05-12 15:05:36.088] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:36.134] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:36.183] [ERROR] console - [39mregisterAdmin login0000
+
+[32m[2017-05-12 15:05:36.204] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:36.214] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "login", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:36.230] [ERROR] console - [39mregisterAdmin login0001
+
+[32m[2017-05-12 15:05:36.258] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "login", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:36.265] [ERROR] console - [39mregisterAdmin login0002
+
+[32m[2017-05-12 15:05:36.265] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "login", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:36.353] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:36.387] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:36.418] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:36.851] [INFO] console - [39mlogin0001 Connected correctly to server.
+
+[32m[2017-05-12 15:05:36.852] [INFO] console - [39m--loginCode--LoginData.prototype.mongodbReady
+
+[32m[2017-05-12 15:05:36.875] [INFO] console - [39mlogin0000 Connected correctly to server.
+
+[32m[2017-05-12 15:05:36.903] [INFO] console - [39m--loginCode--LoginData.prototype.mongodbReady
+
+[32m[2017-05-12 15:05:36.905] [INFO] console - [39mlogin0002 Connected correctly to server.
+
+[32m[2017-05-12 15:05:36.905] [INFO] console - [39m--loginCode--LoginData.prototype.mongodbReady
+
+[31m[2017-05-12 15:05:36.982] [ERROR] console - [39mmaxuid 100022
+
+[31m[2017-05-12 15:05:37.014] [ERROR] console - [39mmaxuid 100022
+
+[32m[2017-05-12 15:05:37.034] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:37.075] [ERROR] console - [39mmaxuid 100022
+
+[32m[2017-05-12 15:05:37.097] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:37.145] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:05:37.166] [ERROR] console - [39mregisterAdmin pkplayer0000
+
+[31m[2017-05-12 15:05:37.180] [ERROR] console - [39mLoginData afterStart login0000
+
+[31m[2017-05-12 15:05:37.181] [ERROR] console - [39mstart finish login0000
+
+[32m[2017-05-12 15:05:37.199] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkplayer", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:37.283] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:37.301] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:05:37.353] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:37.326] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:37.364] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:37.367] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:05:37.375] [ERROR] console - [39mregisterAdmin pkroom0003
+
+[32m[2017-05-12 15:05:37.376] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:37.402] [ERROR] console - [39mLoginData afterStart login0001
+
+[31m[2017-05-12 15:05:37.403] [ERROR] console - [39mstart finish login0001
+
+[32m[2017-05-12 15:05:37.415] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:05:37.418] [ERROR] console - [39mLoginData afterStart login0002
+
+[31m[2017-05-12 15:05:37.427] [ERROR] console - [39mregisterAdmin pkplayer0001
+
+[32m[2017-05-12 15:05:37.431] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:37.438] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:37.440] [ERROR] console - [39mregisterAdmin pkroom0000
+
+[31m[2017-05-12 15:05:37.449] [ERROR] console - [39mstart finish login0002
+
+[32m[2017-05-12 15:05:37.453] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkplayer", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:37.464] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:37.441] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:37.511] [ERROR] console - [39mregisterAdmin pkroom0001
+
+[32m[2017-05-12 15:05:37.512] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:37.524] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:37.543] [ERROR] console - [39mregisterAdmin pkplayer0002
+
+[32m[2017-05-12 15:05:37.545] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkplayer", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:37.571] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:37.586] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:37.614] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:37.619] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:37.648] [ERROR] console - [39mregisterAdmin pkroom0004
+
+[32m[2017-05-12 15:05:37.649] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:37.626] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:37.674] [ERROR] console - [39mregisterAdmin pkroom0002
+
+[31m[2017-05-12 15:05:37.674] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:37.675] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:37.731] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:37.774] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:37.812] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:37.813] [ERROR] console - [39mregisterAdmin pkroom0005
+
+[32m[2017-05-12 15:05:37.823] [INFO] console - [39mpkplayer0000 Connected correctly to server.
+
+[32m[2017-05-12 15:05:37.814] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkroom", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:37.889] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:05:37.890] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+[32m[2017-05-12 15:05:37.891] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:05:37.891] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:05:37.938] [INFO] console - [39mpkroom0003 Connected correctly to server.
+
+[32m[2017-05-12 15:05:37.952] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:05:37.962] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:37.981] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.007] [ERROR] console - [39mundefined afterStart pkplayer0000
+
+[32m[2017-05-12 15:05:38.008] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.009] [ERROR] console - [39mundefined afterStart pkplayer0000
+
+[31m[2017-05-12 15:05:38.009] [ERROR] console - [39mundefined afterStart pkplayer0000
+
+[32m[2017-05-12 15:05:38.009] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.009] [ERROR] console - [39mServerClass afterStart pkplayer0000
+
+[31m[2017-05-12 15:05:38.048] [ERROR] console - [39mstart finish pkplayer0000
+
+[32m[2017-05-12 15:05:38.066] [INFO] console - [39mpkroom0001 Connected correctly to server.
+
+[32m[2017-05-12 15:05:38.067] [INFO] console - [39mpkroom0000 Connected correctly to server.
+
+[32m[2017-05-12 15:05:38.082] [INFO] console - [39mpkplayer0001 Connected correctly to server.
+
+[32m[2017-05-12 15:05:38.095] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.127] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:05:38.130] [INFO] console - [39mpkplayer0002 Connected correctly to server.
+
+[31m[2017-05-12 15:05:38.156] [ERROR] console - [39mundefined afterStart pkroom0003
+
+[31m[2017-05-12 15:05:38.157] [ERROR] console - [39mundefined afterStart pkroom0003
+
+[32m[2017-05-12 15:05:38.157] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.157] [ERROR] console - [39mServerClass afterStart pkroom0003
+
+[31m[2017-05-12 15:05:38.158] [ERROR] console - [39mstart finish pkroom0003
+
+[32m[2017-05-12 15:05:38.214] [INFO] console - [39mpkroom0004 Connected correctly to server.
+
+[32m[2017-05-12 15:05:38.276] [INFO] console - [39mpkroom0002 Connected correctly to server.
+
+[32m[2017-05-12 15:05:38.332] [INFO] console - [39mpkroom0005 Connected correctly to server.
+
+[32m[2017-05-12 15:05:38.346] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.349] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.351] [ERROR] console - [39mundefined afterStart pkplayer0001
+
+[32m[2017-05-12 15:05:38.351] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.351] [ERROR] console - [39mundefined afterStart pkplayer0001
+
+[31m[2017-05-12 15:05:38.352] [ERROR] console - [39mundefined afterStart pkplayer0001
+
+[32m[2017-05-12 15:05:38.352] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.352] [ERROR] console - [39mServerClass afterStart pkplayer0001
+
+[32m[2017-05-12 15:05:38.372] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:38.374] [ERROR] console - [39mstart finish pkplayer0001
+
+[32m[2017-05-12 15:05:38.424] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.427] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.428] [ERROR] console - [39mundefined afterStart pkroom0000
+
+[31m[2017-05-12 15:05:38.428] [ERROR] console - [39mundefined afterStart pkroom0000
+
+[32m[2017-05-12 15:05:38.429] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.429] [ERROR] console - [39mServerClass afterStart pkroom0000
+
+[31m[2017-05-12 15:05:38.430] [ERROR] console - [39mstart finish pkroom0000
+
+[32m[2017-05-12 15:05:38.452] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:38.467] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[31m[2017-05-12 15:05:38.468] [ERROR] console - [39mregisterAdmin pkcon0000
+
+[32m[2017-05-12 15:05:38.470] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.472] [ERROR] console - [39mundefined afterStart pkroom0001
+
+[31m[2017-05-12 15:05:38.472] [ERROR] console - [39mundefined afterStart pkroom0001
+
+[32m[2017-05-12 15:05:38.472] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.473] [ERROR] console - [39mServerClass afterStart pkroom0001
+
+[32m[2017-05-12 15:05:38.477] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:38.469] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:38.492] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.495] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.497] [ERROR] console - [39mundefined afterStart pkplayer0002
+
+[32m[2017-05-12 15:05:38.498] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.498] [ERROR] console - [39mundefined afterStart pkplayer0002
+
+[31m[2017-05-12 15:05:38.502] [ERROR] console - [39mstart finish pkroom0001
+
+[31m[2017-05-12 15:05:38.523] [ERROR] console - [39mundefined afterStart pkplayer0002
+
+[32m[2017-05-12 15:05:38.523] [INFO] console - [39m--matcher--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.523] [ERROR] console - [39mServerClass afterStart pkplayer0002
+
+[31m[2017-05-12 15:05:38.525] [ERROR] console - [39mstart finish pkplayer0002
+
+[32m[2017-05-12 15:05:38.532] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:38.546] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:38.548] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:38.564] [ERROR] console - [39mregisterAdmin pkcon0007
+
+[32m[2017-05-12 15:05:38.565] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:38.570] [ERROR] console - [39mregisterAdmin pkcon0001
+
+[32m[2017-05-12 15:05:38.585] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:38.591] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:38.595] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:38.622] [ERROR] console - [39mregisterAdmin pkcon0005
+
+[31m[2017-05-12 15:05:38.628] [ERROR] console - [39mregisterAdmin pkcon0003
+
+[32m[2017-05-12 15:05:38.627] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:38.631] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.633] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.635] [ERROR] console - [39mundefined afterStart pkroom0004
+
+[31m[2017-05-12 15:05:38.635] [ERROR] console - [39mundefined afterStart pkroom0004
+
+[32m[2017-05-12 15:05:38.635] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.636] [ERROR] console - [39mServerClass afterStart pkroom0004
+
+[31m[2017-05-12 15:05:38.637] [ERROR] console - [39mstart finish pkroom0004
+
+[32m[2017-05-12 15:05:38.634] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:38.640] [INFO] console - [39minfo: socket.io started
+
+[32m[2017-05-12 15:05:38.641] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:38.645] [ERROR] console - [39mregisterAdmin pkcon0006
+
+[32m[2017-05-12 15:05:38.654] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.655] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.657] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+[32m[2017-05-12 15:05:38.657] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.659] [ERROR] console - [39mundefined afterStart pkroom0005
+
+[31m[2017-05-12 15:05:38.659] [ERROR] console - [39mundefined afterStart pkroom0005
+
+[31m[2017-05-12 15:05:38.659] [ERROR] console - [39mundefined afterStart pkroom0002
+
+[32m[2017-05-12 15:05:38.659] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.659] [ERROR] console - [39mServerClass afterStart pkroom0005
+
+[31m[2017-05-12 15:05:38.659] [ERROR] console - [39mundefined afterStart pkroom0002
+
+[32m[2017-05-12 15:05:38.660] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.660] [ERROR] console - [39mServerClass afterStart pkroom0002
+
+[31m[2017-05-12 15:05:38.670] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:38.672] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:38.678] [ERROR] console - [39mstart finish pkroom0002
+
+[31m[2017-05-12 15:05:38.679] [ERROR] console - [39mstart finish pkroom0005
+
+[31m[2017-05-12 15:05:38.698] [ERROR] console - [39mregisterAdmin pkcon0002
+
+[32m[2017-05-12 15:05:38.699] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:38.701] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:38.713] [INFO] console - [39minfo: socket.io started
+
+[31m[2017-05-12 15:05:38.727] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:38.731] [ERROR] console - [39mregisterAdmin pkcon0004
+
+[31m[2017-05-12 15:05:38.735] [ERROR] console - [39mregisterAdmin pkcon0008
+
+[32m[2017-05-12 15:05:38.732] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:38.755] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:38.740] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[31m[2017-05-12 15:05:38.776] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:38.791] [ERROR] console - [39mregisterAdmin pkcon0009
+
+[32m[2017-05-12 15:05:38.809] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.800] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/consoleService.js] [39mtry to connect master: "pkcon", "127.0.0.1", 3005
+
+[32m[2017-05-12 15:05:38.821] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.826] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:38.838] [ERROR] console - [39mundefined afterStart pkcon0000
+
+[31m[2017-05-12 15:05:38.839] [ERROR] console - [39mLoginData afterStart pkcon0000
+
+[31m[2017-05-12 15:05:38.838] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:38.842] [ERROR] console - [39mundefined afterStart pkcon0000
+
+[32m[2017-05-12 15:05:38.844] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.852] [ERROR] console - [39mstart finish pkcon0000
+
+[31m[2017-05-12 15:05:38.858] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[32m[2017-05-12 15:05:38.869] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.872] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.881] [ERROR] pomelo-admin - [39m[31m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/monitorAgent.js] [39magent can not notify now, state:1
+
+[31m[2017-05-12 15:05:38.882] [ERROR] console - [39mundefined afterStart pkcon0007
+
+[31m[2017-05-12 15:05:38.883] [ERROR] console - [39mLoginData afterStart pkcon0007
+
+[31m[2017-05-12 15:05:38.884] [ERROR] console - [39mundefined afterStart pkcon0007
+
+[32m[2017-05-12 15:05:38.884] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.891] [ERROR] console - [39mstart finish pkcon0007
+
+[32m[2017-05-12 15:05:38.951] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.955] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:05:38.962] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:38.967] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:38.965] [ERROR] console - [39mundefined afterStart pkcon0003
+
+[31m[2017-05-12 15:05:38.972] [ERROR] console - [39mLoginData afterStart pkcon0003
+
+[31m[2017-05-12 15:05:38.974] [ERROR] console - [39mundefined afterStart pkcon0003
+
+[32m[2017-05-12 15:05:38.974] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.978] [ERROR] console - [39mundefined afterStart pkcon0005
+
+[31m[2017-05-12 15:05:38.978] [ERROR] console - [39mLoginData afterStart pkcon0005
+
+[31m[2017-05-12 15:05:38.979] [ERROR] console - [39mundefined afterStart pkcon0005
+
+[32m[2017-05-12 15:05:38.979] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:38.984] [ERROR] console - [39mstart finish pkcon0005
+
+[31m[2017-05-12 15:05:38.983] [ERROR] console - [39mstart finish pkcon0003
+
+[32m[2017-05-12 15:05:39.021] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:39.025] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:39.035] [ERROR] console - [39mundefined afterStart pkcon0001
+
+[31m[2017-05-12 15:05:39.036] [ERROR] console - [39mLoginData afterStart pkcon0001
+
+[31m[2017-05-12 15:05:39.037] [ERROR] console - [39mundefined afterStart pkcon0001
+
+[32m[2017-05-12 15:05:39.037] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:39.043] [ERROR] console - [39mstart finish pkcon0001
+
+[32m[2017-05-12 15:05:39.061] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:39.064] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[32m[2017-05-12 15:05:39.068] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:39.072] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:39.093] [ERROR] console - [39mundefined afterStart pkcon0006
+
+[31m[2017-05-12 15:05:39.093] [ERROR] console - [39mundefined afterStart pkcon0002
+
+[31m[2017-05-12 15:05:39.093] [ERROR] console - [39mLoginData afterStart pkcon0002
+
+[31m[2017-05-12 15:05:39.093] [ERROR] console - [39mundefined afterStart pkcon0002
+
+[31m[2017-05-12 15:05:39.094] [ERROR] console - [39mLoginData afterStart pkcon0006
+
+[31m[2017-05-12 15:05:39.095] [ERROR] console - [39mundefined afterStart pkcon0006
+
+[32m[2017-05-12 15:05:39.096] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[32m[2017-05-12 15:05:39.096] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:39.113] [ERROR] console - [39mstart finish pkcon0002
+[31m[2017-05-12 15:05:39.114] [ERROR] console - [39mstart finish pkcon0006
+
+[32m[2017-05-12 15:05:39.134] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:39.139] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:39.149] [ERROR] console - [39mundefined afterStart pkcon0004
+
+[31m[2017-05-12 15:05:39.150] [ERROR] console - [39mLoginData afterStart pkcon0004
+
+[31m[2017-05-12 15:05:39.150] [ERROR] console - [39mundefined afterStart pkcon0004
+
+[32m[2017-05-12 15:05:39.151] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+[32m[2017-05-12 15:05:39.151] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:39.153] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:39.156] [ERROR] console - [39mstart finish pkcon0004
+
+[31m[2017-05-12 15:05:39.169] [ERROR] console - [39mundefined afterStart pkcon0008
+
+[31m[2017-05-12 15:05:39.171] [ERROR] console - [39mLoginData afterStart pkcon0008
+
+[31m[2017-05-12 15:05:39.172] [ERROR] console - [39mundefined afterStart pkcon0008
+
+[32m[2017-05-12 15:05:39.172] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:39.183] [ERROR] console - [39mstart finish pkcon0008
+
+[32m[2017-05-12 15:05:39.193] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/matcher/remote
+
+[32m[2017-05-12 15:05:39.195] [INFO] console - [39m++++++++++++++++:RPC dir/root/mjserver/game-server/app/servers/pkplayer/remote
+
+[31m[2017-05-12 15:05:39.202] [ERROR] console - [39mundefined afterStart pkcon0009
+
+[31m[2017-05-12 15:05:39.202] [ERROR] console - [39mLoginData afterStart pkcon0009
+
+[31m[2017-05-12 15:05:39.203] [ERROR] console - [39mundefined afterStart pkcon0009
+
+[32m[2017-05-12 15:05:39.203] [INFO] console - [39m--pkplayerCode--serverClass.prototype.afterStartServer
+
+[31m[2017-05-12 15:05:39.209] [ERROR] console - [39mstart finish pkcon0009
+
+[32m[2017-05-12 15:05:40.243] [INFO] pomelo-admin - [39m[32m[/usr/lib/node_modules/pomelo/node_modules/pomelo-admin/lib/masterAgent.js] [39mclient user : admin login to master
+
+[32m[2017-05-12 15:05:51.201] [INFO] console - [39m--loginCode--LoginData.prototype.reqGuestID{"__route__":"login.handler.reqGuestID"}
+
+[32m[2017-05-12 15:05:52.161] [INFO] console - [39m--pkconCode--serverClass.prototype.doLogin{"code":"xJIKtd","mail":"100023","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:05:52.176] [INFO] console - [39m--loginCode--LoginData.prototype.verifyPlayer{"code":"xJIKtd","mail":"100023","resVersion":"3.7.1","app":{"appid":"com.coolgamebox.scmj","os":"Android"},"geogData":{"latitude":"39.986261","longitude":"116.480651"},"__route__":"pkcon.handler.doLogin"}
+
+[32m[2017-05-12 15:05:53.099] [INFO] console - [39m--pkplayerCode--serverClass.prototype.CreateVipTable{"round":"round1","canEatHu":false,"withWind":false,"canEat":false,"noBigWin":false,"maxWin":256,"with3":false,"zimofan":true,"yaojiu":true,"zhuanyu":true,"blood":true,"doubleCarHouse":false,"coinRoomCreate":true,"fight3p":false,"menqing":true,"gshdianpao":false,"gshzimo":true,"tiandihu":false,"deyangType":false,"fight2p":false,"xiaohu":false,"fight2pDoubleCard":false,"fight3pWith3":false,"yesBigWin":false,"jiaxinwu":false,"yitiaolong":false,"wanZhou":false,"xuezhandd":false,"yaojidai":false,"zhuanGen":false,"coinType":1,"playType":1,"isTrust":10,"__route__":"pkplayer.handler.CreateVipTable"}, uid = 100023
+

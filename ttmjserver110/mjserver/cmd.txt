@@ -1,0 +1,3 @@
+git pull   811025
+killall node
+./startServer.sh

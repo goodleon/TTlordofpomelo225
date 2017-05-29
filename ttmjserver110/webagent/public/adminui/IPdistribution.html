@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/materialRippleEffect/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/zeroModal/css/zeroModal.css">
+    <title>IP分布图</title>
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <!--<script type="text/javascript" src="../highchart/highcharts.js"></script>-->
+    <!--<script type="text/javascript" src="../highchart/layout.js"></script>-->
+    <!--<script type="text/javascript" src="../highchart/highcharts-zh_CN.js"></script>-->
+    <script type="text/javascript" src="/highchart/echarts.js"></script>
+    <script type="text/javascript" src="/js/jquery.cityselect.js"></script>
+    <script type="text/javascript" src="/highchart/china.js"></script>
+    <script type="text/javascript" src="/highchart/world.js"></script>
+</head>
+<body>
+    <div id="dlg" class="easyui-dialog" title="地图数据" closed="true"  data-options="iconCls:'icon-save'" style="width:800px;height:600px;padding:10px">
+        <div id="charts" style="width:760px;height:560px;margin:0 auto"></div>
+    </div>
+    选择产品:<input id="dd" class="easyui-combobox" name="dept"/>
+    选择日期: <input class="easyui-datebox"  style = "width:150px" id="dateBox"/>
+    选择地区:
+    <span id="city_2">
+        <select class="prov"></select>
+        <select class="city" disabled="disabled"></select>
+    </span>
+    <a href="#" class="easyui-linkbutton" onclick="getIPdistribution()">点击查询</a>
+    <a href="#" class="easyui-linkbutton" onclick="downLoadXls()">下载excel</a>
+    <a href="#" class="easyui-linkbutton" onclick="checkChart()" data-options="disabled:true" id="chartBtn">查看图表</a>
+    <table  id="tt" class="easyui-datagrid" title="IP分布情况表" style="width:100%;height:800px"
+            data-options="singleSelect:true,collapsible:true">
+        <thead>
+        <tr>
+            <th data-options="field:'addr',width:180">地区名称</th>
+            <th data-options="field:'total',width:120">分布数量</th>
+        </tr>
+        </thead>
+    </table>
+    <script>
+        $(document).ready(function(){
+            $("#city_2").citySelect({
+                prov:"",
+                city:"",
+                dist:"",
+                nodata:"none",
+                required:false
+            });
+        });
+
+        var xls=[];
+        var proname="";
+        $('#dd').combobox({
+            method:'get',
+            url:'select.json',
+            valueField:'id',
+            textField:'text',
+            onSelect: function(){
+                proname = $("#dd").combobox('getValue');
+            }
+        });
+        //对话框查看
+        function checkChart(){
+            $("#dlg").dialog("open");
+            /*=======================================================地图数据加载过程===============================================================================================*/
+            var provinces = ['shanghai', 'hebei','shanxi','neimenggu','liaoning','jilin','heilongjiang','jiangsu','zhejiang','anhui','fujian','jiangxi','shandong','henan','hubei','hunan','guangdong','guangxi','hainan','sichuan','guizhou','yunnan','xizang','shanxi1','gansu','qinghai','ningxia','xinjiang', 'beijing', 'tianjin', 'chongqing', 'xianggang', 'aomen'];
+            var provincesText = ['上海', '河北', '山西', '内蒙古', '辽宁', '吉林','黑龙江',  '江苏', '浙江', '安徽', '福建', '江西', '山东','河南', '湖北', '湖南', '广东', '广西', '海南', '四川', '贵州', '云南', '西藏', '陕西', '甘肃', '青海', '宁夏', '新疆', '北京', '天津', '重庆', '香港', '澳门'];
+            var options=$("select:eq(0) option:selected").text();  //获取选中的项
+            var options1=$("select:eq(1) option:selected").text();  //获取选中的项
+            /*===========================================================地图数据加载完成========================================================================================================================================*/
+            /*======================================================填充地图=================================================================*/
+            var myChart = echarts.init(document.getElementById('charts'));//地图容器
+            var dis={};//中间量
+            var val=[];//数据
+            if(options=="全部"){
+                // 没有选择任何城市
+                $("#charts").html("请选择地区");
+            }else if(options!="全部" && options1=="全部"){
+                //选择了国家没有选择城市  展示国家地图
+                dis={};
+                val=[];
+                $.getJSON("/citylist/china.json", function (data1) {
+                    dis=data1;
+                    for(var key in rtn.rows){
+                        var temp=rtn.rows[key]["addr"];
+                        for(var city in dis){
+                            if(temp.indexOf(city)>0){
+                                dis[city]+=rtn.rows[key]["total"];
+                            }
+                        }
+                    }
+                    for(var prop in dis){
+                        var obj={};
+                        obj["name"]=prop;
+                        obj["value"]=dis[prop];
+                        val.push(obj);
+                    }
+                    var option = {
+                        tooltip: {},
+                        title: {
+                            text: '每日在线区域分布',
+                            left: 'center',
+                            textStyle: {
+                                color: 'black'
+                            }
+                        },
+                        backgroundColor: '#fff',
+                        visualMap: {
+                            pieces: [
+                                {min:1000000,label: '1000k+', color: '#000099'},
+                                {min:500000,max:1000000,label: '500k-1000k', color: '#0000CC'},
+                                {min:200000,max:500000,label: '200k-500k', color: '#0033FF'},
+                                {min:100000,max:200000,label: '100k-200k', color: '#0066FF'},
+                                {min:50000,max:100000,label: '50k-100k', color: '#0099FF'},
+                                {min:20000,max:50000,label: '20k-50k', color: '#00CCFF'},
+                                {min:5000,max:20000,label: '5k-20k', color: '#93CFE3'},
+                                {min:1000,max:5000,label: '1k-5k', color: '#B9D8E3'},
+                                {min:0,max:1000,label: '0-1k', color: '#D1E1E6'}
+                            ],
+                            textStyle: {
+                                color: '#000'
+                            }
+                        },
+                        geo: {
+                            map: 'china',
+                            roam: true,
+                            label: {
+                                normal: {
+                                    show: true,
+                                    textStyle: {
+                                        color: 'rgba(0,0,0,1)'
+                                    }
+                                }
+                            }
+                        },
+                        series: [
+                            {
+                                type: 'scatter',
+                                coordinateSystem: 'geo',
+                                label: {
+                                    normal: {
+                                        formatter: '{b}',
+                                        position: 'right',
+                                        show: false
+                                    },
+                                    emphasis: {
+                                        show: true
+                                    }
+                                }
+                            },
+                            {name: '每日在线人数',
+                                type: 'map',
+                                geoIndex: 0,
+                                data:val
+                            }]
+                    };
+                    if (option && typeof option === "object") {
+                        myChart.setOption(option, true);
+                    }
+                });
+            }else if(options!="全部" && options1!="全部" ){
+                dis={};
+                val=[];
+                //选择国家和省分 展示每个省份的地图
+                for(var i=0;i<provincesText.length;i++){
+                    if(options1.indexOf(provincesText[i])>=0){
+                        // 读取的json数据为对应的provinces中的数据
+                        var jsonurl=provinces[i];
+                        var name = provincesText[i];
+                        break;
+                    }
+                }
+                $.getJSON("/citylist/"+jsonurl+"11.json", function (data1) {
+                    dis = data1;
+                    console.log("dis"+JSON.stringify(dis));
+                    for (var key=0;key<rtn.rows.length;key++) {
+                        var temp = rtn.rows[key]["addr"];
+                        console.log("temp"+temp);
+                        for (var city in dis) {
+                            var citysplice=city;
+                            if(city.indexOf('市')>=0){
+                                citysplice=city.substring(0,city.length-1);
+                            }
+                            if (temp.indexOf(citysplice) >= 0) {
+                                dis[city] += rtn.rows[key]["total"];
+                            }
+                        }
+                    }
+                    for (var prop in dis) {
+                        var obj = {};
+                        obj["name"] = prop;
+                        obj["value"] = dis[prop];
+                        val.push(obj);
+                    }
+                    $.get('/citylist/'+jsonurl+'.json', function (geoJson) {
+                        echarts.registerMap(name, geoJson);
+                        myChart.setOption(option = {
+                            tooltip: {},
+                            backgroundColor: '#fff',
+                            title: {
+                                text:name,
+                                left: 'center',
+                                textStyle: {
+                                    color: '#fff'
+                                }
+                            },
+                            visualMap: {
+                                pieces: [
+                                    {min:1000000,label: '1000k+', color: '#000099'},
+                                    {min:500000,max:1000000,label: '500k-1000k', color: '#0000CC'},
+                                    {min:200000,max:500000,label: '200k-500k', color: '#0033FF'},
+                                    {min:100000,max:200000,label: '100k-200k', color: '#0066FF'},
+                                    {min:50000,max:100000,label: '50k-100k', color: '#0099FF'},
+                                    {min:20000,max:50000,label: '20k-50k', color: '#00CCFF'},
+                                    {min:5000,max:20000,label: '5k-20k', color: '#93CFE3'},
+                                    {min:1000,max:5000,label: '1k-5k', color: '#B9D8E3'},
+                                    {min:0,max:1000,label: '0-1k', color: '#D1E1E6'}
+                                ],
+                                textStyle: {
+                                    color: '#000'
+                                }
+                            },
+                            geo: {
+                                map: name,//jsonurl
+                                roam: true,
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        textStyle: {
+                                            color: 'rgba(0,0,0,1)'
+                                        }
+                                    }
+                                }
+                            },
+                            series: [
+                                {
+                                    type: 'scatter',
+                                    coordinateSystem: 'geo',
+                                    label: {
+                                        normal: {
+                                            formatter: '{b}',
+                                            position: 'right',
+                                            show: false
+                                        },
+                                        emphasis: {
+                                            show: true
+                                        }
+                                    }
+                                },
+                                {name: '每日在线人数',
+                                    type: 'map',
+                                    geoIndex: 0,
+                                    data:val
+                                }
+                            ]
+                        });
+                    });
+
+                });
+            }
+        }
+       var rtn;//全局变量用来传数据
+        function getIPdistribution(){
+        /*=================================表格数据加载=================================*/
+            xls=[];
+            var row = {};//新增的合计栏
+            var dayVal=$("#dateBox").datebox('getValue');
+            if(dayVal){
+                var dayarr = dayVal.split('-');
+                dayVal = dayarr[0] + dayarr[1] + dayarr[2];
+                console.log(!dayVal);
+            }
+            if(proname=="0"||proname==" "||!proname){
+                $.messager.alert("操作提示","请选择产品","error");
+            }else if(!dayVal){
+                console.log("dayVal");
+                $.messager.alert("操作提示","请选择日期","error");
+            }else {
+                postJson("/userData/getIpLog",{day:dayVal,dbName:proname},function(data){
+                    if(data.total==0){
+                        $.messager.alert("操作提示","没有数据","error");
+                    }else{
+                        $("#chartBtn").linkbutton('enable');
+                        /*表格数据填充*/
+                        var options=$("select:eq(0) option:selected").text();  //获取选中的项
+                        var options1=$("select:eq(1) option:selected").text();  //获取选中的项
+                        var lData={};
+                        lData.total=0;
+                        lData.rows=[];
+                        for(var i=0;i<data.rows.length;i++){
+                           if(options!="全部" && options1!="全部"){
+                                if(data.rows[i]["addr"].indexOf("中国")>=0 && data.rows[i]["addr"].indexOf(options1)>=0){
+                                    lData.total++;
+                                    lData.rows.push(data.rows[i]);
+                                }
+                            }else if(options!="全部" && options1=="全部"){
+                                if(data.rows[i]["addr"].indexOf("中国")>=0){
+                                    lData.total++;
+                                    lData.rows.push(data.rows[i]);
+                                }
+                            }else{
+                               lData.total++;
+                               lData.rows.push(data.rows[i]);
+                           }
+                        }
+                        $("#tt").datagrid("loadData",lData);
+                        /*合计栏*/
+                        row["addr"]="合计";
+                        row["total"]=compute("tt","total");
+                        /*下载数据*/
+                        xls=[{addr:"地区名称",total:"分布数量"}];
+                        xls=xls.concat(lData.rows);
+                        xls.push(row);
+                        $("#tt").datagrid("appendRow",row);
+                        rtn=data;//传递至地图数据
+                    }
+                });
+            }
+        }
+        //表格合计函数
+        function compute(tableName,colName){
+            var rows = $('#'+tableName).datagrid('getRows');
+            var total = 0;
+            for (var i = 1; i < rows.length; i++) {
+                if(!rows[i][colName]){
+                    rows[i][colName]=0;
+                }
+                total += parseFloat(rows[i][colName]);
+            }
+            return total;
+        }
+        function downLoadXls(){
+            if(!xls)
+            {
+                $.messager.alert("操作提示", "无数据可导出1","error");
+                return;
+            }
+            postJson("/tools/downloadExcelFile",{data:xls},
+                    function(data)
+                    {
+                        console.log(data);
+                        if(data)
+                        {
+                            console.log(parent.document.location.origin);
+                            document.location.href = parent.document.location.origin  + data;
+                        }else
+                        {
+                            $.messager.alert("操作提示", "无数据可导出2","error");
+                        }
+                    }
+            );
+
+        }
+    </script>
+</body>
+</html>

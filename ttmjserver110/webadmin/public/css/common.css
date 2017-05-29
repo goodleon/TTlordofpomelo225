@@ -1,0 +1,169 @@
+/*
+ * author : wanglingyu
+ * time : 2017-03-4
+ *
+ */
+html {
+	font-size: 100%;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+	margin: 0;
+	padding: 0;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+	-webkit-tap-highlight-color: transparent;
+	/*去除点击出现的背景框 */
+}
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+ul, ol, li, span, p, b, img, input, textarea, a, body, head, form, h1, h2, h3, h4, h5, h6, select {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style: none;
+}
+		input, textarea {
+	outline: none;
+}
+
+a, a:hover, a:visited, a:active {
+	text-decoration: none;
+}
+
+img {
+	-ms-interpolation-mode: bicubic;
+}
+
+input {
+	vertical-align: top;
+	text-align: center
+}
+
+input[type="text"], input[type="button"], input[type="submit"], input[type="reset"] {
+	-webkit-appearance: none;
+}
+		input[type="text"], input[type="password"], select, textarea {
+	border: solid 1px #C9C9C9;
+}
+
+		input[disabled] {
+	background-color: #EFEFEF;
+}
+
+textarea {
+	vertical-align: top;
+	resize: none;
+	padding-left: 10px;
+}
+
+textarea[disabled] {
+	background-color: #EFEFEF;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+	color: #C0C0C0;
+}
+body {
+	background: #FFFFFF;
+	font-family: "微软雅黑", Helvetica, Arial;
+	margin: 0;
+	padding: 0;
+	-webkit-text-size-adjust: 100% !important;
+	font-size: 14px;
+	color: #555;
+}
+
+em, i, b {
+	font-weight: normal;
+	font-style: normal;
+}			
+.page_box {	
+	text-align: center;
+	/*margin-top: 50px;*/
+}
+.page_common {
+	display: inline-block;
+	height: 30px;
+	font-size: 14px;
+	color: #014fb7;
+	text-align: center;
+}
+.page_common > i {
+	float: left;
+	display: inline-block;
+	margin-right: 6px;
+	padding: 0px 6px;
+	height: 28px;
+	/*width: 70px;*/
+	border: 1px solid #EBEBEB;
+	text-align: center;
+	line-height: 28px;
+	cursor: pointer;
+}
+.page_common > i.readonly, .page_common > i.disabled {
+	cursor: default;
+	color: #999;
+}
+.page_common .pageSize {
+	float: left;
+	display: inline-block;
+	margin-right: 6px;
+	padding: 0px 6px;
+	height: 30px;
+	text-align: center;
+	line-height: 30px;
+	cursor: pointer;
+}
+.page_common .pageSize select {
+	height: 100%;
+	width: 60px;
+}
+.page_common .prevPage {
+	margin-right: 0px;
+}
+.page_common .pageList {
+	float: left;
+	cursor: pointer;
+}
+.page_common .pageList li {
+	float: left;
+	padding: 0px 8px;
+	/*min-width: 40px;*/
+	text-align: center;
+	line-height: 30px;
+	color: #999;
+}
+.page_common .pageList li.active, .page_common .pageList li:hover {
+	font-weight: bold;
+	color: #014fb7;
+}
+.page_common .totalItemNum {
+	cursor: default;
+}
+.page_common .totalItemNum span {
+	color: #ea4d5a;
+	cursor: default;
+}
+.page_common .totalPageNum {
+	cursor: default;
+}
+.page_common .goPagebox {
+	float: left;
+	line-height: 28px;
+	color: #999;
+}
+.page_common .go2PageIpt {
+	display: inline-block;
+	margin: 0 6px;
+	width: 28px;
+	height: 28px;
+	border: 1px solid #EBEBEB;
+	text-align: center;
+}
+.page_common .goPagebox img {
+	float: right;
+	cursor: pointer;
+}

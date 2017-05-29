@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="email=no">
+    <link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/pagination.css"/>
+    <link rel="stylesheet" href="../css/layout.css">
+
+    <script type="text/javascript" src="../easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../easyui/jquery.pagination.js"></script>
+    <script type="text/javascript" src="../easyui/modernizr.js"></script>
+    <script type="text/javascript" src="../share.js"></script>
+    <title>会员审核</title>
+</head>
+<body  class="easyui-layout">
+<!--上部功能按钮-->
+<div style="margin:2px 0;">
+    <a href="#" class="easyui-linkbutton" onclick="opendia('egisdl')" style="margin-top:5px">同意</a>
+    <a href="#" class="easyui-linkbutton" onclick="opendia('rejectdl')" style="margin-top:5px">拒绝</a>
+    <a href="#" class="easyui-linkbutton" onclick="opendia('shielddl')" style="margin-top:5px">屏蔽</a>
+    <span style="line-height:32px">是否需要充值:</span>
+        <input style="line-height:32px" type="checkbox" id="checkbox_d1" class="chk_4" /><label for="checkbox_d1"></label>
+    <span>条件查询:</span>
+    <select class="easyui-combobox" id="filter" name="查询" style="width:15%;">
+        <option value="5">全部</option>
+        <option value="1">审核通过</option>
+        <option value="0">待审核</option>
+        <option value="2">被拒绝</option>
+		<option value="3">被屏蔽</option>
+    </select>
+</div>
+<!--对话框信息-->
+<div id="egisdl" class="easyui-dialog" title="同意审批" style="width:400px;height:200px;padding:10px"
+     data-options="resizable:true,closed:true,modal:true,buttons:'#aa'">
+    <input class="easyui-textbox" id="egisremark" data-options="multiline:true,prompt:'运营备注：同意注册申请后会自动为申请人分配会员ID，通过微信公众号将ID和密码发送至申请人'"
+           style="width:300px;height:100px"/>
+</div>
+<div id="rejectdl" class="easyui-dialog" title="拒绝申请" style="width:400px;height:200px;padding:10px"
+     data-options="resizable:true,closed:true,modal:true,buttons:'#bb'">
+    <input class="easyui-textbox" id="rejremark" data-options="multiline:true,prompt:'运营备注：拒绝用户申请后用户需重新申请'"  style="width:300px;height:100px"/>
+</div>
+<div id="shielddl" class="easyui-dialog" title="屏蔽用户" style="width:400px;height:200px;padding:10px"
+     data-options="resizable:true,closed:true,modal:true,buttons:'#cc'">
+    <input class="easyui-textbox" id="shieremark" data-options="multiline:true,prompt:'运营备注：屏蔽该用户的审核信息后同一手机号不可再通过微信公众号申请会员'"  style="width:300px;height:100px"/>
+</div>
+<!--name:dialog名称；type:审批类型，1：通过，2：拒绝，3：加黑名单；textbox:备注值-->
+<div id="aa">
+    <a href="#" class="easyui-linkbutton" onclick="setStatus('egisdl',1,'egisremark')">同意注册</a>
+</div>
+<div id="bb">
+    <a href="#" class="easyui-linkbutton" onclick="setStatus('rejectdl',2,'rejremark')">拒绝注册</a>
+</div>
+<div id="cc">
+    <a href="#" class="easyui-linkbutton" onclick="setStatus('shielddl',3,'shieremark')">屏蔽申请</a>
+</div>
+<!--用户信息表-->
+<table id="dg" class="easyui-datagrid" title="用户审核表" style="width:100%;height:80%" data-options="method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				autoRowHeight:false,
+				sortOrder:'desc',
+				sortName:'mTime'
+            ">
+    <thead>
+    <tr>
+		 <th data-options="field:'_id',width:150,sortable:true,hidden:true"></th>
+        <th data-options="field:'mTime',width:150,sortable:true">申请时间</th>
+        <th data-options="field:'mNick',width:150,sortable:true">微信昵称</th>
+        <th data-options="field:'mName',width:150,sortable:true">微信号</th>
+        <th data-options="field:'mAddress',width:200,sortable:true">地址</th>
+        <th data-options="field:'mbindphone',width:150,sortable:true">手机号</th>
+        <th data-options="field:'status',width:80,sortable:true">审核状态</th>
+        <th data-options="field:'approver',width:80,sortable:true">审核人</th>
+        <th data-options="field:'approvTime',width:200,sortable:true">审核时间</th>
+        <th data-options="field:'remarks',width:200,sortable:true">备注</th>
+    </tr>
+    </thead>
+</table>
+<!--底部页签栏-->
+<div class="pages">
+    <div id="Pagination"></div>
+    <div class="searchPage">
+        <span class="page-sum">共<strong class="allPage">200</strong>页</span>
+        <span class="page-go">跳转<input type="text" id="gopage"/>页</span>
+        <a href="javascript:;" class="page-btn">GO</a>
+    </div>
+</div>
+</body>
+<script>
+    var pageLimit=50;//每页数据量
+    var pageNum=0;//初始化第几页
+    var filter=5;//进行条件筛选的参数
+    var pageTotal;
+	var checkSta,agentmoney,diamond,giftmoney;
+    var uid;
+    $(document).ready(function(){
+        postJson("/admin/getMyInfo",{msg:"content"},function(rtn){
+            if(rtn){
+                uid = rtn.mid;
+            }
+        });
+        postJson("/wxData/getAgentCount",{},
+                function(data)
+                {
+                    pageTotal=getTotalPage(data);
+                    $(".allPage").eq(0).text(pageTotal);
+                    $("#Pagination").pagination(pageTotal,{
+                        callback:function(p){
+                            //点击选择某一页数
+                            // 在此处进行页面数据的加载
+                            pageNum=p;
+                            getMembers();
+                        }
+                    });
+                }
+        );
+        getMembers();
+        initBtn();
+    });
+    //初始化页数总数
+    //getMembers();//初始化表格
+    // 获取总的页数
+    function getTotalPage(data){
+        return ((data % pageLimit>0 ? 1 : 0) +Math.floor(data / pageLimit));
+    }
+    //初始化表格
+    function getMembers(){
+        console.log(filter);
+        postJson("/wxData/getAgentMembers",{"limit": pageLimit, "skip":pageNum * pageLimit,filter:filter},function(data){
+            for(var key in data.rows){
+                var time = data.rows[key]["time"];
+                time = new Date(time);
+                time = getDateCommonFormat(time);
+                data.rows[key]["time"] = time;
+                if(data.rows[key]["status"]==1){
+                    data.rows[key]["status"]="通过";
+                }else if(data.rows[key]["status"]==0){
+                    data.rows[key]["status"]="待审核";
+                }else if(data.rows[key]["status"]==3){
+                    data.rows[key]["status"]="被屏蔽";
+                }else if(data.rows[key]["status"]==2){
+                    data.rows[key]["status"]="拒绝";
+                }
+            }
+            $("#dg").datagrid("loadData",data.rows);
+            if(data.total==0){
+                $('#dg').datagrid('appendRow',{time:"没有数据", nickname:"", wxid:"", address:"", mbindphone:"", byMid:"", status:"", approver:"", approvTime:"",remarks:""});
+            }
+        })
+    }
+    //    输入框输入跳转的页数进行的页面效果
+    $(".page-btn").on("click",function(){
+        var allPage = $(".allPage").text();
+        var goPage = $("#gopage").val() - 1; //跳转页数
+        var opts1={
+            items_per_page:1,
+            num_display_entries:4,
+            current_page:0,
+            num_edge_entries:1,
+            link_to:"#",
+            prev_text:"<i></i>上一页",
+            next_text:"下一页 <i></i>",
+            ellipse_text:"...",
+            prev_show_always:true,
+            next_show_always:true,
+            renderer:"defaultRenderer",
+            show_if_single_page:false,
+            load_first_page:false,
+            callback:function(){}
+        };
+        if(goPage > -1 && goPage < allPage){
+            opts1.current_page = goPage;
+            $("#Pagination").pagination(allPage,opts1);
+        }else {
+            $("#Pagination").pagination(allPage);
+        }
+//                清空用户跳转页数
+        $(".page-go input").val("");
+        pageNum=parseInt($(".current").eq(0).text())-1;
+        getMembers();
+
+    });
+    // 打开弹窗操作
+    function opendia(name){
+
+        var member=$("#dg").datagrid("getSelected");
+        if(!member)
+        {
+            $.messager.alert("操作提示", "请先选择需要审批的会员","error");
+            return;
+        }
+        $("#"+name).dialog("open");
+    }
+    //选择会员以后进行屏蔽
+    //name:dialog名称；type:审批类型，1：通过，2：拒绝，3：加黑名单；textbox:备注值
+    function setStatus(name,type,textbox){//屏蔽会员
+        var member=$("#dg").datagrid("getSelected");
+        var commit=$("#"+textbox).textbox("getValue");
+        var msg={
+            type:type,
+			id:member._id,
+            phone:member.mbindphone,
+            commit:commit,
+            uid:uid
+        };
+        postJson("/wxData/doWxAgentAction",{msg},function(data){
+            
+            $.messager.alert("操作提示", data.desc);
+            $("#"+name).dialog("close");
+            getMembers();
+        })
+    }
+    $("#filter").combobox({
+        onSelect: function () {
+            filter=parseInt($("#filter").combobox('getValue'));
+            console.log(filter);
+            getMembers();
+        }
+    });
+   //以下是设置是否选中框
+    function initBtn(){
+        postJson("/wxData/getWxPayJson",{},
+                function(data) {
+                    if(data){
+						checkSta=data.checkStatus;
+                        agentmoney=data.agentMoney;
+                        diamond=data.diamond;
+                        giftmoney=data.giftDiamond;
+                        if(checkSta==0){
+                            $("#checkbox_d1").attr("checked",false);
+                        }else{
+                            $("#checkbox_d1").attr("checked",true);
+                        }
+                        return;
+                    }
+                }
+        );
+    }
+    $(".chk_4").eq(0).click(function(){
+        var msg={
+           	agentMoney:agentmoney,
+            diamond:diamond,
+            giftDiamond:giftmoney
+        };
+
+        if($("#checkbox_d1").is(':checked')){
+            msg.checkstatus=1;
+        }else{
+            msg.checkstatus=0;
+        }
+        postJson("/wxData/saveWxPayJson",{msg},
+                function(data)
+                {
+                    if(data > 0){
+                        $.messager.alert("操作提示", "修改成功");
+                    }
+                }
+        );
+    })
+</script>
+</html>

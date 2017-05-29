@@ -1,0 +1,46 @@
+#!/bin/bash
+
+currentPath=$PWD
+OK=0
+ads=$(bash getCatalog /root)
+
+function getJsonOrJsFile ()
+{
+  tempFiles=$(ls -l $1 | grep .js | awk '{print $9}')
+  echo $tempFiles 
+}
+
+
+
+for key in $ads
+do
+
+  if [ -d /root/$key/server ]
+  then
+
+    tempFiles=$(getJsonOrJsFile /root/$key/server)
+
+    for key1 in $tempFiles
+    do
+      log=$(node /root/$key/server/$key1)
+      let OK=$?+${OK}
+      if [ "$log" != "" ]
+      then
+	#bash echoColor "/root/$key/server/$key1:----$log" info
+	bash echoColor "/root/$key/server/$key1:----have log. " info
+      fi
+    done
+
+  fi
+done
+
+
+if [ ${OK} != 0 ];then
+    cd ${currentPath}
+    bash echoColor "${0}:  ${1} failed !" error;
+    exit 1;
+else
+    cd ${currentPath}
+    bash echoColor "${0}:  ${1} Success !" info;
+    exit 0;
+fi

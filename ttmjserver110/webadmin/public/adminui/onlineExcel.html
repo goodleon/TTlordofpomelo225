@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/layout.css">
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="../highchart/highcharts.js"></script>
+    <script type="text/javascript" src="../highchart/layout.js"></script>
+    <title>在线统计</title>
+</head>
+<body>
+    <div id="chart_container">
+        <div id="chart1"></div>
+        <div id="chart2"></div>
+    </div>
+    <div class="user_number zxrstj">
+        <p>在线人数:<span id="onlineNumToday">10000000</span>注册人数:<span id="registerNum">21000000</span><span id="p" class="easyui-progressbar" data-options="value:80"  style="width:30%;height:20"></span></p>
+    </div>
+    <script>
+        $(document).ready(function(){
+            //以下是进度条部分的内容
+            $('#p').progressbar({value:60
+            });
+            var title={
+
+                text:"本日人数在线统计"
+
+            };
+
+            var xAxis={
+
+                categories:['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24']
+
+            };
+
+            var yAxis={
+
+                plotLines: [{
+                    value:0,
+                    width:1,
+                    color:'#808080'
+                }]
+
+            };
+
+            var plotOptions={
+                line:{
+                    dataLabels:{
+                        enable:true
+                    },
+//      			    enableMouseTracking:false
+                }
+            };
+
+            var credits = {
+                enabled: false
+            };
+
+            var legend={
+                layout:'vertical',
+                align:'right',
+                verticalAlign:'middle',
+                borderWidth:0
+            };
+
+
+            var json={};
+            json.title=title;
+            json.xAxis=xAxis;
+            json.yAxis=yAxis;
+            json.plotOptions=plotOptions;
+            json.legend=legend;
+            json.credits=credits;
+            //表格2数据
+            var title1={
+
+                text:"本周人数在线统计"
+
+            };
+
+            var xAxis1={
+
+                categories:['1','2','3','4','5','6','7']
+
+            };
+
+            var yAxis1={
+
+                plotLines: [{
+                    value:0,
+                    width:1,
+                    color:'#808080'
+                }]
+
+            };
+
+            var plotOptions1={
+                line:{
+                    dataLabels:{
+                        enable:true
+                    },
+//      			    enableMouseTracking:false
+                }
+            };
+
+            var credits1= {
+                enabled: false
+            };
+
+            var legend1={
+                layout:'vertical',
+                align:'right',
+                verticalAlign:'middle',
+                borderWidth:0
+            };
+            var json1={};
+            json1.title=title1;
+            json1.xAxis=xAxis1;
+            json1.yAxis=yAxis1;
+            json1.plotOptions=plotOptions1;
+            json1.legend=legend1;
+            json1.credits=credits1;
+            $.ajax({
+                type:"get",
+                url:"../chart1.json",
+                async:true,
+                success:function(data){
+                    json.series=data.series;
+                    json1.series=data.series1;
+                    //以下是填写表格1
+                    $('#chart1').highcharts(json);
+                    $('#chart2').highcharts(json1);
+                }
+           })
+        })
+    </script>
+</body>
+</html>

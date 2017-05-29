@@ -1,0 +1,25 @@
+#!/bin/bash
+currentPath=$PWD
+
+hostname=$(echo $HOSTNAME | awk -F '-' '{print $1}')
+hostType=$(echo $HOSTNAME | awk -F '-' '{print $2}')
+hostType=$(echo ${hostType} | awk -F [0-9] '{print $1}')
+
+pid=$(ps ax|grep $hostname|grep id|awk '{print $1}')
+pids=(${pid// /})
+currentCount=0
+count=${#pids[@]}
+cpuCount=$(cat /proc/cpuinfo |grep "processor"|sort -u|wc -l)
+
+
+for key in $(echo ${!pids[*]})
+ do
+   let cpuId=$currentCount%$cpuCount
+   let currentCount=$currentCount+1
+   log=$(taskset -pc $cpuId ${pids[$key]}) 
+   if [ $? != 0 ];then
+     bash $currentPath/echoColor "setPid ${pids[$key]} on $cpuId error" error
+   else
+     bash $currentPath/echoColor "setPid ${pids[$key]} on $cpuId successful" info
+   fi
+ done

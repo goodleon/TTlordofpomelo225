@@ -1,0 +1,205 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+</head>
+<body  class="easyui-layout">
+<div>
+    <input class="easyui-datebox" data-options="onSelect:onSelect"/>
+    <input class="easyui-datebox" data-options="onSelect:onSelect2"/>
+    <a href="#" class="easyui-linkbutton" onclick="searchForTJData()">按日期搜索</a>
+    <label>列过滤</label>
+    <input class="easyui-validatebox" type="text" id="rowName" data-options="required:true" />
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="#" class="easyui-linkbutton" onclick="getCount()">获取人数</a>
+    <label id="userCount">0</label>
+    <a href="#" class="easyui-linkbutton" onclick="downLoadXls()">下载excel</a>
+</div>
+<table  id="tt" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+        data-options="singleSelect:true,collapsible:true">
+</table>
+<script type="text/javascript">
+    var xls={};
+    function getCount() {
+        postJson("/admin/getUserCount",{},
+                function(data) {
+                    $("#userCount").html(data);
+                }
+        );
+    }
+
+    var rowName = "";
+
+    var startDate_ = new Date();
+    startDate_.setDate(startDate_.getDate() - 2);
+
+    var startDate = getFormatDate(startDate_);
+    var endDate = getFormatDate(new Date());
+
+    function getDayLog() {
+
+        postJson("/admin/getDayLog", {"_id": {$gte: startDate, $lte: endDate}},
+                function (data) {
+                    var host = window.location.host.split(".");
+                    var gamename = host[0];
+                    var rows = data.rows;
+                    var rowlen=rows.length;
+                    var result = [];
+                    var columns = {};
+                    var totalEscape = {};
+                    var totalline=['_id','totals','allCount','gameCount','gameCount7','gameCount15','gameCount30','dayMoney','userMoney','memberMoney', 'fillMembersMoney'];
+                    totalEscape._id = 1;
+                    totalEscape.dayMoney = 1;
+                    totalEscape.allCount = 1;
+                    totalEscape.gameCount = 1;
+                    totalEscape.gameCount3 = 1;
+                    totalEscape.gameCount7 = 1;
+                    totalEscape.gameCount15 = 1;
+                    totalEscape.gameCount30 = 1;
+                    totalEscape.gameMoney = 1;
+                    totalEscape.gameMoney3 = 1;
+                    totalEscape.gameMoney7 = 1;
+                    totalEscape.gameMoney15 = 1;
+                    totalEscape.gameMoney30 = 1;
+                    totalEscape.memberMoney = 1;
+                    totalEscape.userMoney = 1;
+                    totalEscape.fillMembersMoney = 1;
+
+                    result.push({field: '_id', title: '_id', width: 100});
+                    result.push({field: 'totals', title: 'totals', width: 100});
+                    result.push({field: 'allCount', title: 'allCount', width: 100});
+                    result.push({field: 'gameCount', title: 'gameCount', width: 100});
+                    result.push({field: 'dayMoney', title: 'dayMoney', width: 100});
+                    result.push({field: 'userMoney', title: 'userMoney', width: 100});
+                    result.push({field: 'memberMoney', title: 'memberMoney', width: 100});
+
+                    var cn = {_id: '日期', dayMoney:'钻石消耗', allCount:'注册人数',
+                        gameCount:'活跃人数',memberMoney:'会员剩余钻石',totals:'对战场次', userMoney:'用户剩余钻石'};
+
+
+                    /*  var rows = data.rows;
+                     var rowlen=rows.length;*/
+
+                    for (var i = 0, len = rows.length; i <len; i++) {
+                        var total = 0;
+                        var keys = Object.keys(rows[i]);
+
+
+                        for (var k = 0, size = keys.length; k < size; k++) {
+
+                            var key = keys[k];
+
+                            if (rowName.length > 0) {//过滤的列
+                                if (!totalEscape[key] && !(key.indexOf(rowName) >= 0)) {
+                                    continue;
+                                }
+                            }
+
+                            //将结算总数放置此处是进行列筛选后的总数
+                            if (!totalEscape[key]) {//结算总数
+                                total += rows[i][key];
+                            }
+
+                            if (columns[key]) {
+                                continue;
+                            }
+
+                            columns[key] = 1;
+
+                            var ch = (key in cn) ? cn[key] : analyzeStatistics(gamename, key);
+
+                            if(!totalEscape[key]) {
+                                result.push({field: key, title: key, width:100});
+                                cn[key] = ch;
+                                totalline.push(key);
+                            }
+                        }
+
+                        rows[i].totals = total;
+                    }
+
+                    data.rows.splice(0, 0, cn);//写入中文行
+                    $('#tt').datagrid({columns:[result]});
+                    $("#tt").datagrid("loadData", data);
+                    $("#tt").datagrid("freezeRow", 0);
+                    var row={},rowaver={};
+                    for(var z= 0,len=totalline.length;z<len;z++){
+                        row[totalline[z]]= compute("tt",totalline[z]);
+                        rowaver[totalline[z]]=compute("tt",totalline[z])/rowlen;
+                        rowaver[totalline[z]]=Math.round(rowaver[totalline[z]]*100)/100;
+                    }
+                    row["_id"]='合计';
+                    row["allCount"]='';
+                    row["gameCount"]='';
+                    row["userMoney"]='';
+                    row["memberMoney"]='';
+
+
+                    rowaver["_id"]='平均';
+                    rowaver["allCount"]='';
+                    rowaver["gameCount"]='';
+                    rowaver["userMoney"]='';
+                    rowaver["memberMoney"]='';
+                    $("#tt").datagrid('appendRow',row);
+                    $("#tt").datagrid('appendRow',rowaver);
+                    xls=data.rows;
+                });
+    }
+    function compute(tableName,colName) {
+        var rows = $('#'+tableName).datagrid('getRows');
+        var total = 0;
+        for (var i = 1; i < rows.length; i++) {
+            if(!rows[i][colName]){
+                rows[i][colName]=0;
+            }
+            total += parseFloat(rows[i][colName]);
+        }
+
+        return Math.round(total*100)/100;
+    }
+    $(document).ready(function(){
+        getDayLog();
+    });
+    function onSelect2(date) {
+        endDate = getFormatDate(date);
+    }
+
+    function onSelect(date){
+        startDate = getFormatDate(date);
+    }
+
+    function searchForTJData(){//tongji
+        rowName = $("#rowName").val();
+        getDayLog();
+    }
+    //数据格式
+    function downLoadXls(){
+        if(!xls)
+        {
+            $.messager.alert("操作提示", "无数据可导出1","error");
+            return;
+        }
+        console.log(xls);
+        postJson("/tools/downloadExcelFile",{data:xls},
+                function(data)
+                {
+                    console.log(data);
+                    if(data)
+                    {
+                        console.log(parent.document.location.origin);
+                        document.location.href = parent.document.location.origin  + data;
+                    }else
+                    {
+                        $.messager.alert("操作提示", "无数据可导出2","error");
+                    }
+                }
+        );
+
+    }
+</script>
+</body>
+</html>

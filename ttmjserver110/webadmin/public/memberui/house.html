@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+
+  <title>用户服务>房主统计</title>
+
+  <!--responsive table-->
+  <link href="../lvcss/table-responsive.css" rel="stylesheet" />
+
+  <link href="../lvcss/style.css" rel="stylesheet">
+  <link href="../lvcss/style-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body class="sticky-header">
+<div class="jsmajiang">
+   <span>江苏麻将会员客服后台</span>
+   <ol>
+       <li><i class="fa fa-user"></i>测试</li>
+       <li><i class="fa fa-trophy"></i></li>
+       <li><a href="placement.html"><i class="fa fa-gear"></i></a></li>
+       <li><i class="fa fa-share-square-o"></i></li>
+   </ol>
+</div>
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side">
+        <!--logo and iconic logo start-->
+        <!-- <div class="logo">
+            <a href="index.html"><img src="images/logo.png" alt=""></a>
+        </div> -->
+        <!-- <div class="logo-icon text-center">
+            <a href="index.html"><img src="images/logo_icon.png" alt=""></a>
+        </div> -->
+        <div class="left-side-inner">
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li><a href="performance.html"><i class="fa fa-home"></i> <span>首页</span></a></li>
+                <li class="menu-list"><a href=""><i class="fa fa-th-large"></i> <span>用户业务</span></a>
+                    <ul class="sub-menu-list">
+                        <li ><a href="manager.html">用户服务</a></li>
+                        <li><a href="carry.html">补钻记录</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-suitcase"></i> <span>奖励发放</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="#">实物发奖</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-comment-o"></i> <span>反馈处理</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="#">玩家反馈</a></li>
+                        <li><a href="#">会员反馈</a></li>
+                    </ul>
+                </li>
+
+
+                <li class="menu-list"><a href=""><i class="fa fa-user"></i> <span>会员业务</span></a>
+                    <ul class="sub-menu-list">
+                        <li><a href="membership.html">我的会员</a></li>
+                        <li><a href="memberresults.html">我的业绩</a></li>
+                        <li><a href="resultsperform.html">代理业绩</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <div class="main-content" >
+        <div class="wrapper">
+        <div class="row">
+        <div class="col-sm-12">
+<!-- 头部 -->
+            <div class="information">
+                    <b>用户业务>房主统计</b>
+                        <p>
+                        <label>玩家ID</label>
+                        <input type="text" id="uid" data-options="required:true" />
+                        <label>开始时间</label>
+                        <input data-options="onSelect:onSelect" style = "width:150px"/>
+                        <label>查询天数</label>
+                        <input type="text" id="days" value = "7" data-options="required:true" />
+                        <button style="border:none;width:100px;height:30px;background:#4BAED0;outline:none;"><a href="#"  onclick="getUser()">搜索</a></button>
+                        <!-- 
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label>玩家ID：</label><label id="rtn_uid"></label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <label>余额：</label><label id="rtn_money"></label> -->
+                        </p>
+
+
+                    <div id="user">
+                        <span><img src="../images/port.png" alt="头像" class="avatar" id = "image" style="margin:2px 8px;"></span>
+                        <p>玩家ID:&nbsp&nbsp&nbsp<span id="rtn_uid">100458</span></p>
+                        <p>玩家余额 :<span id="rtn_money">32</spanb></p>
+                    </div>
+            </div>
+        <section class="panel">
+            <div class="panel-body">
+                <section id="unseen">
+                    <table class="table table-bordered table-striped table-condensed" id="dg">
+                        <thead>
+                        <tr>
+                            <th class="numeric">日期</th>
+                            <th class="numeric">消耗</th>
+                            <th class="numeric">创建房间</th>
+                            <th class="numeric">游戏局数</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </section>
+            </div>
+        </section>
+        </div>
+        </div>
+        </div>
+    </div>
+</section>
+<script src="../jsjava/jquery-1.10.2.min.js"></script>
+<script src="../jsjava/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="../jsjava/jquery-migrate-1.2.1.min.js"></script>
+<script src="../jsjava/bootstrap.min.js"></script>
+<script src="../jsjava/modernizr.min.js"></script>
+<script src="../jsjava/jquery.nicescroll.js"></script>
+<script src="../jsjava/scripts.js"></script>
+<script src="../share.js"></script>
+<script>
+    
+    var startDate;
+
+    function getDay(date) {
+        if(!date) {
+            date = new Date();
+            date.setDate(date.getDate() - 7);
+        }
+
+        startDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
+
+    getDay();
+
+    function onSelect(date) {
+        getDay(date);
+    }
+
+    function getUser() {
+        var uid = parseInt( $("#uid").val() );
+
+        if(!uid) {
+            alert('输入用户ID');
+            return;
+        }
+
+        var days = parseInt( $("#days").val() );
+
+        if(days < 1 || days > 7) {
+            alert('天数在1-7之间');
+            return;
+        }
+
+        postJson("/userData/getUser", {uid:uid, start:startDate, days:days}, function(rtn) {
+            if(rtn.er) {
+                if(rtn.er == 1) {
+                    alert('权限不足');
+                } else if(rtn.er == 2) {
+                    alert('参数错误');
+                } else {
+                    alert('找不到用户');
+                }
+            } else {
+                $("#rtn_uid").html(rtn.uid);
+                $("#rtn_money").html(rtn.money);
+
+                var total = {};
+                total.day = '合计';
+                total.money = 0;
+                total.create = 0;
+                total.join = 0;
+
+                for(var i = 0; i < rtn.data.length; i++) {
+                    total.money += rtn.data[i].money;
+                    total.create += rtn.data[i].create;
+                    total.join += rtn.data[i].join;
+                }
+
+                rtn.data.push(total);
+                $("#dg").datagrid("loadData", rtn.data);
+            }
+        });
+    }
+</script>
+</body>
+</html>

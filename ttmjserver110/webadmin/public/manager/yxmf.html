@@ -1,0 +1,127 @@
+<html>
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/layout.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>游戏免费</title>
+</head>
+
+<body  class="easyui-layout">
+<table  id="dg" style="width:80%;height:40%;margin:10px auto;text-align:center;min-width:340px" class="yxmfTab"  border= "1" cellspacing="0">
+    <tr><td><label>说明:</label></td> <td><label id="note">游戏服务器重启后需要重新设置活动</label></td></tr>
+    <tr><td><label>起始日期:</label></td> <td><input class="easyui-datebox" id="beginDay" style = "width:140px"/></td></tr>
+    <tr><td><label>结束日期:</label></td> <td><input class="easyui-datebox" id="endDay" style = "width:140px"/></td></tr>
+    <tr><td><label>起始时间:</label></td> <td><input class="easyui-validatebox" type="text" id="beginHm" style="width:140px" data-options="required:true" placeholder="输入格式hh:mm(00:00)"/></td></tr>
+    <tr><td><label>结束时间:</label></td> <td><input class="easyui-validatebox" type="text" id="endHm" style="width:140px" data-options="required:true" placeholder="输入格式hh:mm(24:00)"/></td></tr>
+    <tr><td><label>设置:</label></td><td><a href="#" class="easyui-linkbutton" onclick="editFreeAct()" style="width:15%">设置</a></td></tr>
+</table>
+<div class="cancelPlayFree">
+    <a href="#" class="easyui-linkbutton" onclick="cancelFreeAct()">取消游戏免费</a>
+</div>
+<script type="text/javascript">
+    function getDay(strDate) {
+        var data = strDate.split('/');
+
+        return parseInt(data[2]) * 10000 + parseInt(data[0]) * 100 + parseInt(data[1]);
+    }
+
+    function getHm(strHm) {
+        if(strHm.length < 1) {
+            alert('时间格式错误');
+            return -1;
+        }
+
+        var data = strHm.split(':');
+
+        if(data.length != 2) {
+            alert('时间格式错误');
+            return -1;
+        }
+
+        var h = parseInt(data[0]);
+        var m = parseInt(data[1]);
+
+        if(h < 0 || h > 24) {
+            alert('时间格式错误');
+            return -1;
+        }
+
+        if(m < 0 || m > 59) {
+            alert('时间格式错误');
+            return -1;
+        }
+
+        return h * 100 + m;
+    }
+
+    function editFreeAct() {
+        var msg = {};
+        var strDate = $('#beginDay').datebox('getValue');
+
+        if(strDate.length < 1) {
+            alert('请选择起始日期');
+            return;
+        }
+
+        msg.beginDay = getDay(strDate);
+
+        strDate = $('#endDay').datebox('getValue');
+
+        if(strDate.length < 1) {
+            alert('请选择结束日期');
+            return;
+        }
+
+        msg.endDay = getDay(strDate);
+
+        if(msg.endDay < msg.beginDay) {
+            alert('结束日期不能小于起始日期');
+            return;
+        }
+
+        var strHm = $('#beginHm').val();
+        msg.beginHm = getHm(strHm);
+
+        if(msg.beginHm < 0) {
+            return;
+        }
+
+        strHm = $('#endHm').val();
+        msg.endHm = getHm(strHm);
+
+        if(msg.endHm < 0) {
+            return;
+        }
+
+        if(msg.endHm < msg.beginHm) {
+            alert('结束时间不能小于起始时间');
+            return;
+        }
+
+        msg.type = 'set';
+
+        postJson('/admin/setGameFree', msg, function(data) {
+            {
+                if(!data) alert("修改成功");
+                else alert(data)
+            }
+        });
+    }
+
+    function cancelFreeAct() {
+        postJson('/admin/setGameFree', {type:'del'}, function(data) {
+            {
+                if(!data) alert("取消成功");
+                else alert(data)
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

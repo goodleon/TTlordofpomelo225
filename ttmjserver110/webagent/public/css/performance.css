@@ -1,0 +1,31 @@
+.bor{
+	width:97%;
+	height:900px;
+	border:1px solid #CCC;
+	background:#FFF;
+	margin:20px;
+}
+.bor .pancl{
+	width:27%;
+	float:left;
+	border:1px solid #CCC;
+	margin:25px 15px;
+}
+.bor .pandl{
+	width:47%;
+	float:left;
+	border:1px solid #CCC;
+	margin:15px;
+
+}
+.panel-heading{
+	text-align:center; 
+		background:#CCC;
+		font-size:14px;
+}
+.panel-body .table tr th{
+	text-align: center;
+}
+.panel-body .table tr td{
+	text-align: center;
+}

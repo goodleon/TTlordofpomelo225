@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="../highchart/highcharts.js"></script>
+    <script type="text/javascript" src="../highchart/layout.js"></script>
+    <title>24小时对战查询</title>
+</head>
+<body>
+<div>
+    选择产品:<input id="dd" class="easyui-combobox" name="dept"/>
+    选择日期: <input class="easyui-datebox"  style = "width:150px" id="dateBox" />
+    <!--data-options="formatter:myformatter,parser:myparser"-->
+    <a href="#" class="easyui-linkbutton" onclick="search24hour()">点击查询</a>
+</div>
+<table  id="tt" class="easyui-datagrid" title="24小时对战查询" style="width:100%;height:800px"
+        data-options="singleSelect:true,collapsible:true">
+    <thead>
+        <tr>
+            <th data-options="field:'startTime',width:80">起始时间</th>
+            <th data-options="field:'vipTableCount',width:80">当日场次</th>
+            <th data-options="field:'yesTableCount',width:150">前一日场次</th>
+            <th data-options="field:'todComyes',width:150">当日较前一日增长</th>
+            <th data-options="field:'weekTableTotal',width:120">前7日平均场次</th>
+            <th data-options="field:'todayComweek',width:150">当日较前7日增长</th>
+        </tr>
+    </thead>
+</table>
+<!--<div id="dlg" class="easyui-dialog" title="数据展示图" closed="true"  data-options="iconCls:'icon-save'" style="width:800px;height:500px;padding:10px">-->
+    <!--<p>-->
+        <!--<a href="javascript:void(0)" class="easyui-linkbutton" onclick="showChart('场次展示',seriesArr,tooltip1,'数值');">场次展示</a>-->
+        <!--<a href="javascript:void(0)" class="easyui-linkbutton" onclick="showChart('增长率',seriesArr1,tooltip,'数值(%)');">增长率</a>-->
+    <!--</p>-->
+    <!--<div id="charts"></div>-->
+<!--</div>-->
+<script>
+/*    window.onload =function (){
+        $("#dateBox").datebox('setValue',myformatter(new Date()));
+        search24hour();
+        $('#dd').combobox({
+            method:'get',
+            url:'select.json',
+            valueField:'id',
+            textField:'text',
+            onSelect: function(){
+                proname = $("#dd").combobox('getValue');
+            }
+        });
+    };*/
+var proname="";
+function compute(tableName,colName) {
+    var rows = $('#'+tableName).datagrid('getRows');
+    var total = 0;
+    for (var i = 0; i < rows.length; i++) {
+        total += parseFloat(rows[i][colName]);
+    }
+    return total;
+}
+function search24hour(){
+    var dayVal=$("#dateBox").datebox('getValue');
+    if(proname=="0"||proname==" "){
+        $.messager.alert("操作提示","请选择产品","error");
+    }else if(!dayVal){
+        $.messager.alert("操作提示","请选择日期","error");
+    }else {
+        var dayarr = dayVal.split('/');
+        dayVal = dayarr[2] + dayarr[0] + dayarr[1];
+        var yesterdayArr = [];
+        var temp = new Date(dayarr[2], parseInt(dayarr[0]) - 1, dayarr[1]);
+        for (var j = 1; j <= 8; j++) {
+            yesterdayArr[j - 1] = new Date(temp.getTime() - j * 24 * 60 * 60 * 1000).Format('yyyyMMdd');
+        }
+        postJson("/userData/getVipTableTime",{day:dayVal,type:1,dbName:proname},function(rtn){
+            if (!rtn||rtn.length==0) {
+                $.messager.alert("操作提示", "没有数据", "error");
+                $("#tt").datagrid("loadData",{total:0,rows:[{startTime:"没有数据",vipTableCount:"",yesTableCount:"",todComyes:"",weekTableTotal:"",todayComweek:""}]});
+            }else{
+                var dd=rtn[0].data;
+                var rows=[];
+                var temp={};
+                for(var i=0;i<24;i++){
+                    temp={startTime:"",vipTableCount:0,yesTableCount:0,todComyes:0,weekTableTotal:0,todayComweek:0};
+                    temp.startTime=(i+1)+"时";
+                    var sevenday=0;
+                    for(var l=0;l<dd.length;l++){
+                        if(!dd[l]["vipTableTime"]){
+                            dd[l]["vipTableTime"]=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+                        }
+                        if(dd[l]["_id"]==dayVal){
+                            temp.vipTableCount=dd[l]["vipTableTime"][i];
+                        }
+                        if(dd[l]["_id"]==yesterdayArr[0]){
+                            temp.yesTableCount=dd[l]["vipTableTime"][i];
+                            sevenday+=dd[l]["vipTableTime"][i];
+                        }
+                        for(var k=1;k<yesterdayArr.length-1;k++){
+                            if(dd[l]["_id"]==yesterdayArr[k]){
+                                sevenday+=dd[l]["vipTableTime"][i];
+                            }
+                        }
+                    }
+
+//                        temp.todComyes=temp.vipTableCount-temp.yesTableCount;
+                    var tempdd=temp.vipTableCount-temp.yesTableCount;
+                    if(!temp.yesTableCount){
+                        temp.todComyes=tempdd+"(--%)";
+                    }else{
+                        temp.todComyes=tempdd+"("+(tempdd/temp.yesTableCount*100).toFixed(2)+"%)";
+                    }
+                    temp.weekTableTotal=parseInt(sevenday/7);
+                    var temptt=temp.vipTableCount-temp.weekTableTotal;
+                    //temp.todayComweek=temp.vipTableCount-temp.weekTableTotal;
+                    if(!temp.weekTableTotal){
+                        temp.todayComweek=temptt+"(--%)";
+                    }else{
+                        temp.todayComweek=temptt+"("+(temptt/temp.weekTableTotal*100).toFixed(2)+"%)";
+                    }
+                    rows.push(temp);
+                    temp={};
+                }
+                var dtdd={};
+                dtdd.total=24;
+                dtdd.rows=rows;
+                $('#tt').datagrid({
+                    columns:[[
+                        {field:'startTime',title:'起始时间',width:80,align:'center'},
+                        {field:'vipTableCount',title:'当日场次',width:120,align:'center'},
+                        {field:'yesTableCount',title:'前一日场次',width:120,align:'center'},
+                        {field:'todComyes',title:'当日较前日增长',width:120,align:'center',
+                            styler: function(value,row,index){
+                                if(row.yesTableCount){
+                                    var dd=row.vipTableCount-row.yesTableCount;
+                                    if((dd/row.yesTableCount)<=-1){
+                                        return 'color:#0000FF;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>-1 && (dd/row.yesTableCount)<=-0.8){
+                                        return 'color:#3366FF;font-weight:bold;';
+                                    }else if(dd/row.yesTableCount>-0.8 && (dd/row.yesTableCount)<=-0.6){
+                                        return 'color:#339900;font-weight:bold;';
+                                    }else if(dd/row.yesTableCount>-0.6 && (dd/row.yesTableCount)<=-0.4){
+                                        return 'color:#33CC00;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>-0.4 && (dd/row.yesTableCount)<=-0.2){
+                                        return 'color:#33FF00;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>-0.2 && (dd/row.yesTableCount)<=0){
+                                        return 'color:#33FF99;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>0 && (dd/row.yesTableCount)<=0.2){
+                                        return 'color:#FF99CC;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>0.2 && (dd/row.yesTableCount)<=0.4){
+                                        return 'color:#FF6699;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>0.4 && (dd/row.yesTableCount)<=0.6){
+                                        return 'color:#FF6600;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>0.6 && (dd/row.yesTableCount)<=0.8){
+                                        return 'color:#FF3300;font-weight:bold;';
+                                    }else if((dd/row.yesTableCount)>0.8 && (dd/row.yesTableCount)<=1){
+                                        return 'color:#FF0000;font-weight:bold;';
+                                    }else if(dd/row.yesTableCount>1){
+                                        return 'color:#CC0000;font-weight:bold;';
+                                    }else{
+                                        return 'color:#990000;font-weight:bold;';
+                                    }
+                                }else{
+                                    return 'color:#990000;font-weight:bold;';
+                                }
+                            }
+                        },
+                        {field:'weekTableTotal',title:'前7日平均场次',width:120,align:'center'},
+                        {field:'todayComweek',title:'当日较前7日增长',width:120,align:'center',
+                            styler: function(value,row,index){
+                                if(row.weekTableTotal){
+                                    var dd=row.vipTableCount-row.weekTableTotal;
+                                    if(dd/row.weekTableTotal<=-1){
+                                        return 'color:#0000FF;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>-1 && dd/row.weekTableTotal<=-0.8){
+                                        return 'color:#3366FF;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>-0.8 && dd/row.weekTableTotal<=-0.6){
+                                        return 'color:#339900;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>-0.6 && dd/row.weekTableTotal<=-0.4){
+                                        return 'color:#33CC00;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>-0.4 && dd/row.weekTableTotal<=-0.2){
+                                        return 'color:#33FF00;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>-0.2 && dd/row.weekTableTotal<=0){
+                                        return 'color:#33FF99;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>0 && dd/row.weekTableTotal<=0.2){
+                                        return 'color:#FF99CC;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>0.2 && dd/row.weekTableTotal<=0.4){
+                                        return 'color:#FF6699;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>0.4 && dd/row.weekTableTotal<=0.6){
+                                        return 'color:#FF6600;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>0.6 && dd/row.weekTableTotal<=0.8){
+                                        return 'color:#FF3300;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>0.8 && dd/row.weekTableTotal<=1){
+                                        return 'color:#FF0000;font-weight:bold;';
+                                    }else if(dd/row.weekTableTotal>1){
+                                        return 'color:#CC0000;font-weight:bold;';
+                                    }else{
+                                        return 'color:#990000;font-weight:bold;';
+                                    }
+                                }else{
+                                    return 'color:#990000;font-weight:bold;';
+                                }
+                            }
+                        }
+                    ]]
+                });
+                $("#tt").datagrid("loadData",dtdd);
+//                    startTime vipTableCount yesTableCount todComyes weekTableTotal todayComweek
+                var row={
+                    startTime:"合计",
+                    vipTableCount:compute("tt","vipTableCount"),
+                    yesTableCount:compute("tt","yesTableCount"),
+                    todComyes:"-",
+                    weekTableTotal:"-",
+                    todayComweek:"-"
+                };
+                $("#tt").datagrid("appendRow",row);
+            }
+        })
+    }
+}
+    $(document).ready(function(){
+        function myformatter(date){
+            var y = date.getFullYear();
+            var m = date.getMonth()+1;
+            var d = date.getDate();
+            return (m<10?('0'+m):m)+'/'+(d<10?('0'+d):d)+'/'+y;
+        }
+        $("#dateBox").datebox('setValue',myformatter(new Date()));
+        search24hour();
+        $('#dd').combobox({
+            method:'get',
+            url:'select.json',
+            valueField:'id',
+            textField:'text',
+            onSelect: function(){
+                proname = $("#dd").combobox('getValue');
+            }
+        });
+    });
+  /* var proname ='';
+   var dateArr = ["0时","1时","2时","3时","4时","5时","6时","7时","8时","9时","10时","11时","12时","13时","14时","15时","16时","17时","18时","19时","20时","21时","22时","23时"];
+   var arr=[],arr1=[],arr2=[],arr3=[],arr4=[];
+   var tooltip={
+       pointFormat : '<b>{point.y:.2f}%</b>',
+       valueSuffix: '%'
+   };
+   var tooltip1={
+       pointFormat : '<b>{point.y:.2f}</b>',
+       valueSuffix: ''
+   };
+    $('#dd').combobox({
+        method:'get',
+        url:'select.json',
+        valueField:'id',
+        textField:'text',
+        onSelect: function(){
+            proname = $("#dd").combobox('getValue');
+        }
+    });
+    function search24hour(){
+        var dayVal=$("#dateBox").datebox('getValue');
+        if(proname=="0"||proname==" "){
+            $.messager.alert("操作提示","请选择产品","error");
+        }else if(!dayVal){
+            $.messager.alert("操作提示","请选择日期","error");
+        }else{
+            var dayarr=dayVal.split('/');
+            dayVal=dayarr[2]+dayarr[0]+dayarr[1];
+            var yesterdayArr=[];
+            var temp = new Date(dayarr[2],parseInt(dayarr[0])-1,dayarr[1]);
+            for(var j=1;j<=8;j++){
+                yesterdayArr[j-1] = new Date(temp.getTime()-j*24*60*60*1000).Format('yyyyMMdd');
+            }
+            postJson("/userData/getVipTableTime",{day:dayVal,type:1,dbName:proname},function(rtn){
+                if(!rtn||rtn.length==0){
+                    $.messager.alert("操作提示","没有数据","error");
+                    $("#tt").datagrid("loadData",{total:0,rows:[{hh:"没有数据",hour0:"",hour1:"",hour2:"",hour3:"",hour4:"",hour5:"",hour6:"",hour7:"",hour8:"",hour9:"",hour10:"",hour11:"",hour12:"",hour13:"",hour14:"",hour15:"",hour16:"",hour17:"",hour18:"",hour19:"",hour20:"",hour21:"",hour22:"",hour23:""}]});
+                }else{
+                    var rows=rtn[0]["data"];
+                    var tempdata=[],tempdata0=[],tempdata1=[],tempdata2=[],tempdata3=[],tempdata4=[],tempdata5=[],tempdata6=[],tempdata7=[];
+
+                    for(var i=0;i<rows.length;i++){
+                        if(rows[i]["_id"]==dayVal){
+                            tempdata=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[0]){
+                            tempdata0=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[1]){
+                            tempdata1=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[2]){
+                            tempdata2=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[3]){
+                            tempdata3=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[4]){
+                            tempdata4=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[5]){
+                            tempdata5=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[6]){
+                            tempdata6=rows[i]["vipTableTime"];
+                        }
+                        if(rows[i]["_id"]==yesterdayArr[7]){
+                            tempdata7=rows[i]["vipTableTime"];
+                        }
+                    }
+                    var eightaver=0;
+                    var rr={},rr1={},week={},d_value={},d_value1={};
+                    rr["hh"]="当日场次";
+                    rr1["hh"]="昨日场次";
+                    week["hh"]="前7天平均场次";
+                    d_value["hh"]="今日较前7天增长率";
+                    d_value1["hh"]="昨日较前7天增长率";
+                    if(!tempdata){
+                        $.messager.alert("操作提示","没有数据","error");
+                        $("#tt").datagrid("loadData",{total:0,rows:[{hh:"没有数据",hour0:"",hour1:"",hour2:"",hour3:"",hour4:"",hour5:"",hour6:"",hour7:"",hour8:"",hour9:"",hour10:"",hour11:"",hour12:"",hour13:"",hour14:"",hour15:"",hour16:"",hour17:"",hour18:"",hour19:"",hour20:"",hour21:"",hour22:"",hour23:""}]});
+                    }else{
+                        for(var j=0;j<tempdata.length;j++){
+                            arr[j]=parseFloat(tempdata[j]);
+                            arr1[j]=parseFloat(tempdata0[j]);
+                            rr["hour"+j]=tempdata[j];
+                            rr1["hour"+j]=tempdata0[j];
+                            week["hour"+j]=((tempdata0[j]+tempdata1[j]+tempdata2[j]+tempdata3[j]+tempdata4[j]+tempdata5[j]+tempdata6[j])/7).toFixed(2);
+                            arr2.push(parseFloat(week["hour"+j]));
+                            eightaver=((tempdata1[j]+tempdata2[j]+tempdata3[j]+tempdata4[j]+tempdata5[j]+tempdata6[j]+tempdata7[j])/7).toFixed(2);
+                            if(!week["hour"+j]||week["hour"+j]=="0.00"){
+                                arr3[j]=0;
+                                d_value["hour"+j]="-";
+                            }else{
+                                arr3[j]=parseFloat((rr["hour"+j]-week["hour"+j])/week["hour"+j]*100);
+                                d_value["hour"+j]=((rr["hour"+j]-week["hour"+j])/week["hour"+j]*100).toFixed(2)+"%";
+                            }
+                            if(!eightaver||eightaver=="0.00"){
+                                arr4[j]=0;
+                                d_value1["hour"+j]='-';
+                            }else{
+                                arr4[j]=parseFloat((rr1["hour"+j]-eightaver)/eightaver*100);
+                                d_value1["hour"+j]=((rr1["hour"+j]-eightaver)/eightaver*100).toFixed(2)+"%";
+                            }
+                        }
+                        showChart('场次展示',seriesArr,tooltip1,"数值");
+                        console.log("arr3"+arr3);
+                        console.log("arr4"+arr4);
+                        var dd={};
+                        dd.total=5;
+                        dd.rows=[];
+                        dd.rows.push(rr);
+                        dd.rows.push(rr1);
+                        dd.rows.push(week);
+                        dd.rows.push(d_value);
+                        dd.rows.push(d_value1);
+                        $("#tt").datagrid("loadData",dd);
+                    }
+                }
+            })
+        }
+    }
+   var seriesArr=[{
+       name: "当日场次",
+       data:arr
+   },{
+       name: "前日场次",
+       data: arr1
+   },{
+       name: "前7日场次",
+       data: arr2
+   }];
+   var seriesArr1=[{
+       name: "当日增长率",
+       data: arr3,
+       dataLabels : {
+           // 默认显示数值
+           enabled : true,
+           // pointFormat : '<b>{point.y:.4f}</b>', 鼠标移动上去显示内容
+           format : '{point.y:.2f}%'
+       }
+   },{
+       name: "前一日增长率",
+       data: arr4,
+       dataLabels : {
+           // 默认显示数值
+           enabled : true,
+           // pointFormat : '<b>{point.y:.4f}</b>', 鼠标移动上去显示内容
+           format : '{point.y:.2f}%'
+       }
+   }];
+   console.log(arr);
+   console.log(arr1);
+   console.log(arr2);
+   console.log(arr3);
+   console.log(arr4);
+    function showChart(title,seriesArr,tooltip,units){
+        $('#charts').html('');
+        $('#charts').highcharts({
+            title: {
+                text: title,
+                x: -20 //center
+            },
+            chart:{
+                width:760,
+                height:400
+            },
+            subtitle: {
+                text: '',
+                x: -20
+            },
+            xAxis: {
+                categories: dateArr
+            },
+            yAxis: {
+                title: {
+                    text:units
+                },
+                plotLines: [{
+                    value: 2,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            credits: {
+                enabled:false
+            },
+            tooltip:tooltip,
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series:seriesArr
+        });
+    }*/
+</script>
+</body>
+</html>

@@ -1,0 +1,1760 @@
+<html>
+<head>
+	<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="email=no">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+	<link rel="stylesheet" href="../css/hygl.css"/>
+	<script type="text/javascript" src="/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<script type="text/javascript" src="/easyui/locale/easyui-lang-zh_CN.js"></script>
+	<!--<script type="text/javascript" src="/easyui/easyloader.js"></script>-->
+	<script type="text/javascript" src="/easyui/common.js"></script>
+	<title>会员管理</title>
+	<style>
+		.subtotal { font-weight: bold; }/*合计单元格样式*/
+	</style>
+</head>
+<body  class="easyui-layout">
+<div id="filterdia" class="easyui-dialog"  title="会员筛选" style="width:1500px;height:800px;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+	<div class="easyui-tabs" style="width:100%;height:100%">
+		<div title="筛选操作" style="padding:10px">
+			<table width="100%">
+				<tr>
+					<td><label>查询时间:</label></td>
+					<td>
+						<!--开始日期:<input class="easyui-datebox" id="gmjldate" style = "width:150px"/>-->
+						<input class="easyui-datebox" id="filstarttime"/>
+					</td>
+					<td>
+						<input class="easyui-datebox" id="filendtime"/>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label>登录条件:</label></td>
+					<td>
+						<select id="login" class="easyui-combobox" name="dept" style="width:150px;">
+							<option value="1">活跃</option>
+							<option value="2">流失</option>
+						</select>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="stanum" data-options="prompt:'几日内未登录'"/>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="reqnum" data-options="prompt:'查询生成人数',disabled:'false'" />
+					</td>
+				</tr>
+				<tr>
+					<td><label>充值条件:</label></td>
+					<td>
+						<select id="active" class="easyui-combobox" name="dept" style="width:150px;">
+							<option value="1">活跃</option>
+							<option value="2">流失</option>
+						</select>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="stanum1" data-options="prompt:'几日内未登录'"/>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="reqnum1" data-options="prompt:'查询生成人数',disabled:'false'"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>充值数量:</label></td>
+					<td>
+						<select id="chargeNum" class="easyui-combobox" name="dept" style="width:150px;">
+							<option value="1">大于</option>
+							<option value="2">小于</option>
+						</select>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="stanum2" data-options="prompt:'输入数量'"/>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="reqnum2" data-options="prompt:'查询生成人数',disabled:'false'"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>销售条件:</label></td>
+					<td>
+						<select id="sale" class="easyui-combobox" name="dept" style="width:150px;">
+							<option value="1">活跃</option>
+							<option value="2">流失</option>
+						</select>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="stanum3" data-options="prompt:'输入天数'"/>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="reqnum3" data-options="prompt:'查询生成人数',disabled:'false'"/>
+					</td>
+				</tr>
+				<tr>
+					<td><label>销售数量:</label></td>
+					<td>
+						<select id="saleCount" class="easyui-combobox" name="dept" style="width:150px;">
+							<option value="1">大于</option>
+							<option value="2">小于</option>
+						</select>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="stanum4" data-options="prompt:'输入数量'"/>
+					</td>
+					<td>
+						<input class="easyui-textbox" id="reqnum4" data-options="prompt:'查询生成人数',disabled:'false'"/>
+					</td>
+				</tr>
+			</table>
+			<hr/>
+			<table width="100%">
+				<tr>
+					<td><label>筛选人数:</label></td>
+					<td>
+						<input class="easyui-textbox" id="filternum"/>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><a href="#" class="easyui-linkbutton" id="quireNum" onclick="quireNum()">查询数量</a></td>
+					<td><a href="#" class="easyui-linkbutton" id="resetBtn" onclick="resetForm()">重置数据</a></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+<!--		<div title="结果详情">
+			<table  id="dg1" class="easyui-datagrid" title="筛选结果" style="width:100%;height:80%;margin:0;padding:0"
+					data-options="singleSelect:true,collapsible:true,
+				method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false,
+				sortOrder:'desc',
+				sortName:'mTime',
+				pagination:true">
+				<thead>
+				<tr>
+					<th data-options="field:'mid',width:80,sortable:true">会员ID</th>
+					<th data-options="field:'mNick',sortable:true">微信昵称</th>
+					<th data-options="field:'mName',sortable:true">姓名</th>
+					<th data-options="field:'mAddress',sortable:true">地址</th>
+					<th data-options="field:'money',sortable:true">钻石余额</th>
+					<th data-options="field:'lastBuyDay',sortable:true">充值日期</th>
+					<th data-options="field:'mAddBy',sortable:true">推荐人</th>
+					<th data-options="field:'mAddByMid',sortable:true">推荐人ID</th>
+					<th data-options="field:'byName',sortable:true">客户经理</th>
+					<th data-options="field:'byMid',sortable:true">客户经理ID</th>
+					<th data-options="field:'buyTotal',sortable:true">本周购买</th>
+					<th data-options="field:'buyReward',sortable:true">未领返利</th>
+					<th data-options="field:'mTime',sortable:true">注册时间</th>
+					<th data-options="field:'adminLevel',sortable:true">角色等级</th>
+					<th data-options="field:'banDays',sortable:true">封禁天数</th>
+					<th data-options="field:'banBy',sortable:true">操作人</th>
+					<th data-options="field:'gameids',sortable:true">gameids</th>
+				</tr>
+				</thead>
+			</table>
+		</div>-->
+	</div>
+</div>
+<div id="ddMoney" class="easyui-dialog"  closed="true" title="添加钻石" style="width:400px;height:400px;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	<table width="100%">
+		<tr><td><label>售卖类型:</label></td>
+			<td>
+				<label class="radio inline"><input type="radio" id="buyType"  name="buyType" value="1" checked="checked">售卖</label>
+				<label class="radio inline"><input type="radio" name="buyType" name="buyType" value="0">赠送</label>
+			</td></tr>
+		<tr>
+			<td></td>
+			<td>
+				<select id="buyNumSel" style="width:200" name="state" selectedIndex="0" onchange="setNumMoney(this.options[this.options.selectedIndex].value)">
+					<option value="500/300">500	<span class="moneyType">钻石</span>300元</option>
+					<option value="900/500">900<span class="moneyType">钻石</span>500元</option>
+					<option value="1900/1000">1900<span class="moneyType">钻石</span>1000元</option>
+					<option value="4000/2000">4000<span class="moneyType">钻石</span>2000元</option>
+				</select>
+			</td></tr>
+		<tr><td><label>数量:</label></td> <td><input class="easyui-validatebox" type="text" id="buyNum" data-options="required:true" value="500"/></td></tr>
+		<tr><td><label>入账金额:</label></td> <td><input class="easyui-validatebox" type="text" id="buyMoney" data-options="required:true" value="300" /></td></tr>
+		<tr><td><label>运营备注:</label></td> <td><input class="easyui-validatebox" type="text" id="buyNote" data-options="required:true" /></td></tr>
+	</table>
+	<a href="#" class="easyui-linkbutton" onclick="addMoneyYes()">确定</a>
+</div>
+<div id="dlg" class="easyui-dialog" title="会员补钻" data-options="iconCls:'icon-save'" style="width:600px;height:400px;padding:10px" closed="true">
+	<table cellpadding="5">
+		<tr>
+			<td>会员人数：</td>
+			<td><input class="easyui-numberbox"  name="memberscount" readonly="readonly" id="memberscount"/></td>
+		</tr>
+		<tr>
+			<td>每人数量：</td>
+			<td><input class="easyui-textbox" name="diaamount" id="diaamount" data-options="prompt:'请输入每个会员的补钻数量'" placeholder="请输入每个会员的补钻数量"/></td>
+		</tr>
+		<tr>
+			<td>发放总额：</td>
+			<td><input class="easyui-textbox" name="diasum" id="diasum" readonly="readonly" data-options="prompt:'自动计算'"/></td>
+		</tr>
+		<tr>
+			<td> 运营备注：</td>
+			<td> <input class="easyui-textbox" id="remarks" data-options="multiline:true"  style="width:300px;height:100px"></td>
+		</tr>
+	</table>
+	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="supplydia()" style="padding:3px;margin:10px auto">确定</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="cancelsupply()" style="padding:3px;margin:10px auto">取消</a>
+</div>
+
+
+
+<div id="ddMember" class="easyui-dialog"  closed="true" title="添加会员" style="width:400px;height:400px;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+
+	<table width="100%">
+		<tr><td><label>微信昵称:</label></td> <td><input class="easyui-validatebox" type="text" id="mNick" data-options="required:true" /></td></tr>
+		<tr><td><label>姓名:</label></td> <td><input class="easyui-validatebox" type="text" id="mName" data-options="required:true" /></td></tr>
+		<tr><td><label>地址:</label></td> <td><input class="easyui-validatebox" type="text" id="mAddress" data-options="required:true" /></td></tr>
+		<tr><td><label>联系电话:</label></td> <td><input class="easyui-validatebox" type="text" id="mPhone1" data-options="required:true,validType:'digits'" /></td></tr>
+		<tr><td><label>紧急联系电话:</label></td> <td><input class="easyui-validatebox" type="text" id="mPhone2" data-options="required:true,validType:'digits'" /></td></tr>
+		<tr><td><label>钻石:</label></td> <td><input class="easyui-validatebox" type="text" id="money" data-options="required:true" /></td></tr>
+		<tr><td><label>推荐人:</label></td> <td><input class="easyui-validatebox" type="text" id="mAddBy" data-options="required:true" /></td></tr>
+		<tr><td><label>客户经理:</label></td> <td><input class="easyui-validatebox" type="text" id="mManager" data-options="required:true" /></td></tr>
+	</table>
+	<a href="#" class="easyui-linkbutton" onclick="addMemberYes()">确定</a>
+</div>
+
+<div id="ddMemberBuyList"  closed="true"  class="easyui-dialog" title="会员购买记录" style="width:80%;height:80%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	开始日期:<input class="easyui-datebox" id="gmjldate" style = "width:150px"/>
+	查询天数:<input id="gmjldays" type="text" class="easyui-numberbox" data-options="max:7,missingMessage:'请填写此字段',invalidMessage:'输入的值不得超过7',require:true"/>
+	<a href="#" class="easyui-linkbutton" onclick="searchForMemberBuyList()">按日期搜索</a>
+	<table  id="ddMemberBuytb" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true,rownumbers:true">
+		<thead>
+		<tr>
+			<th data-options="field:'amount',width:80"></th>
+			<th data-options="field:'buyNum',width:80">数量</th>
+			<th data-options="field:'buyMoney',width:100">金额</th>
+			<th data-options="field:'memberMoney',width:100">余额</th>
+			<th data-options="field:'byMid',width:150,align:'right'">管理员ID</th>
+			<th data-options="field:'byMoney',width:150,align:'right'">管理员余额</th>
+			<th data-options="field:'buyTime',width:150,align:'right'">时间</th>
+			<th data-options="field:'buyNote',width:150,align:'right'">备注</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+<div id="ddMemberSellList"  closed="true" class="easyui-dialog" title="卖给玩家明细" style="width:80%;height:80%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	<table  id="ddMemberSelltb" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true">
+		开始日期:<input class="easyui-datebox"  style = "width:150px" id="sel2player"/>
+		查询天数:<input id="sel2userdays" type="text" class="easyui-numberbox" data-options="max:7,missingMessage:'请填写此字段',invalidMessage:'输入的值不得超过7',require:true"/>
+		<a href="#" class="easyui-linkbutton" onclick="searchForMemberSellList()">按日期搜索</a>
+		<thead>
+		<tr>
+			<th data-options="field:'amount',width:80"></th>
+			<th data-options="field:'uid',width:80">玩家ID</th>
+			<th data-options="field:'buyNum',width:80">数量</th>
+			<th data-options="field:'buyMoney',width:100">金额</th>
+			<th data-options="field:'money',width:50">余额</th>
+			<th data-options="field:'userMoney',width:150">玩家余额</th>
+			<th data-options="field:'buyNote',width:150,align:'right'">备注</th>
+			<th data-options="field:'buyTime',width:150,align:'right'">时间</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+<div id="ddAdminSellList"  closed="true" class="easyui-dialog" title="卖给会员记录" style="width:80%;height:80%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	<table  id="ddAdminSelltb" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true">
+		开始日期:<input class="easyui-datebox"  style = "width:150px" id="sel2mem"/>
+		查询天数:<input id="sel2memdays" type="text" class="easyui-numberbox" data-options="max:7,missingMessage:'请填写此字段',invalidMessage:'输入的值不得超过7',require:true"/>
+		<a href="#" class="easyui-linkbutton" onclick="searchForAdminSellList()">按日期搜索</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<label>数量：</label><label id="ddAdminSellList_num"></label>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<label>金额：</label><label id="ddAdminSellList_money"></label>
+		<thead>
+		<tr>
+			<th data-options="field:'amount',width:80"></th>
+			<th data-options="field:'mid',width:80">会员ID</th>
+			<th data-options="field:'buyNum',width:80">数量</th>
+			<th data-options="field:'buyMoney',width:100">金额</th>
+			<th data-options="field:'buyNote',width:150,align:'right'">备注</th>
+			<th data-options="field:'buyTime',width:200,align:'right'">时间</th>
+			<th data-options="field:'byMid',width:150">管理员ID</th>
+			<th data-options="field:'byMoney',width:150,align:'right'">管理员余额</th>
+			<th data-options="field:'aliOrderNum',width:200">支付宝订单</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+<div id="ddMemberUseList"  closed="true" class="easyui-dialog" title="玩家消耗明细" style="width:80%;height:80%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	<table  id="ddMemberUsetb" class="easyui-datagrid" title="玩家消耗明细表" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true">
+		<input class="easyui-datebox" data-options="onSelect:onSelect" style = "width:150px"/>
+		<a href="#" class="easyui-linkbutton" onclick="searchForMemberUseList()">按日期搜索</a>
+		<thead>
+		<tr>
+			<th data-options="field:'userID',width:120">玩家ID</th>
+			<th data-options="field:'useDiaNum',width:120">消耗钻石</th>
+			<th data-options="field:'buyDiaNum',width:120">购买钻石</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+<div id="changeMemberPass"  closed="true" class="easyui-dialog" title="修改密码" style="width:40%;height:60%;" data-options="iconCls:'icon-save',resizable:true,modal:true">
+	<label class="sign-tips">新密码</label>
+	<div class="sign-wp"><input type="password" id="newPass" class="sign-input" value=""/></div>
+	<label class="sign-tips">确认密码</label>
+	<div class="sign-wp"><input type="password" id="newPassSame"  class="sign-input" value=""/></div>
+	<span class="sign-btn mt3" onclick="ChangePass()">确认修改</span>
+</div>
+<div style="margin:2px 0;">
+	<input class="easyui-searchbox" data-options="prompt:'',menu:'#mm',searcher:searchMembers" style="width:15%"/>
+	<div id="mm">
+		<div data-options="name:'mid'">会员ID</div>
+		<div data-options="name:'lastBuyDay'">几日未充值</div>
+		<div data-options="name:'buyDay'">几日内充值</div>
+		<div data-options="name:'mNick'">微信昵称</div>
+		<div data-options="name:'mName'">姓名</div>
+		<div data-options="name:'mAddress'">地址</div>
+		<div data-options="name:'money'">钻石余额</div>
+		<div data-options="name:'mAddBy'">推荐人</div>
+		<div data-options="name:'mAddByMid'">推荐人ID</div>
+		<div data-options="name:'byName'">客户经理</div>
+		<div data-options="name:'byMid'">客户经理ID</div>
+		<div data-options="name:'buyTotal'">本周购买</div>
+		<div data-options="name:'buyReward'">未领返利</div>
+		<div data-options="name:'mTime'">注册时间</div>
+		<div data-options="name:'adminLevel'">角色等级</div>
+	</div>
+	<span id="gameids">
+		<select id="state" class="easyui-combobox" name="state" style="width:200px;"
+				data-options="valueField:'id',textField:'text'">
+		</select>
+	</span>
+	<a href="#" class="easyui-linkbutton" id="gameidsAdd" onclick="gameIdsAdd()" style = "width:30px;">+</a>
+	<a href="#" class="easyui-linkbutton" id="gameidsMinus" onclick="gameIdsMinus()" style="width:30px;">-</a>
+
+	<a href="#" class="easyui-linkbutton" onclick="getMembers()">刷新</a>
+	<a href="#" class="easyui-linkbutton" onclick="changeMemberPass()">修改密码</a>
+	<a href="#" class="easyui-linkbutton" onclick="filterMember()">会员筛选</a>
+
+	<a href="#" class="easyui-linkbutton" onclick="banMember(1)">封号</a>
+	<input class="easyui-validatebox" type="text" id="banTime" data-options="required:true" value="0"/>天
+	<a href="#" class="easyui-linkbutton" onclick="banMember(0)">解封</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="opendia()">会员补钻</a>
+	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="unbanPhone()">重置手机</a>
+</div>
+
+<div style="margin:2px 0;">
+
+	<span style="font:600 16px/20px '宋体'">会员管理:</span>
+	<a href="#" class="easyui-linkbutton" onclick="addMember()" id="addMembersMenu">添加会员</a>
+	<a href="#" class="easyui-linkbutton" onclick="editMember()">修改会员</a>
+	<a href="#" class="easyui-linkbutton" onclick="delMember()">删除会员</a>
+	<a href="#" id="addMoney" class="easyui-linkbutton" onclick="addMoney()">添加钻石</a>
+
+	<span style="font:600 16px/20px '宋体'">会员明细:</span>
+	<a href="#" class="easyui-linkbutton" onclick="getMemberBuyList()">会员购买明细</a>
+	<a href="#" class="easyui-linkbutton" onclick="getMemberSellList()">卖给玩家明细</a>
+	<a href="#" class="easyui-linkbutton" onclick="getAdminSellList()">卖给会员明细</a>
+	<a href="#" class="easyui-linkbutton" onclick="getMemUseList()">玩家消耗明细</a>
+
+	<span style="font:600 16px/20px '宋体'">权限设置:</span>
+	<select class="easyui-combobox" id="permission" name="查询记录" style="width:15%;">
+		<option value="">选中会员后下拉选择级别设置</option>
+		<option value="0">设置为普通会员</option>
+		<option value="1">设置为客户经理</option>
+		<option value="2">设置为高级会员</option>
+		<option value="3">设置为区域经理</option>
+		<option value="4">设置为查看者</option>
+	</select>
+
+	<span style="font:600 16px/20px '宋体'">推荐关系:</span>
+	<a href="#" class="easyui-linkbutton" onclick="selectAddBy()">选中邀请人</a>
+	<label id="selectAddBy" style="margin:-20px 0 0 0px"></label>
+	<a href="#" class="easyui-linkbutton" onclick="setAddBy(false)">关联推荐人</a>
+	<a href="#" class="easyui-linkbutton" onclick="setAddBy(true)">关联客户经理</a>
+	<a href="#" class="easyui-linkbutton" onclick="computeMemberReward()">发放推荐返利</a>
+
+	<div><span style="font:600 16px/20px '宋体'">展示数量:</span>
+		<select class="easyui-combobox" id="showNum" name="查询记录" style="width:10%;">
+			<option value="50">每页显示50个</option>
+			<option value="100">每页显示100个</option>
+			<option value="200">每页显示200个</option>
+			<option value="500">每页显示500个</option>
+			<option value="1000">每页显示1000个</option>
+		</select>
+	</div>
+</div>
+
+<table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%;margin:0;padding:0">
+	<!--<thead>-->
+	<!--<tr>-->
+		<!--<th data-options="field:'mid',width:80,sortable:true">会员ID</th>-->
+		<!--<th data-options="field:'mNick',sortable:true">微信昵称</th>-->
+		<!--<th data-options="field:'mName',sortable:true">姓名</th>-->
+		<!--<th data-options="field:'mAddress',sortable:true">地址</th>-->
+		<!--<th data-options="field:'money',sortable:true">钻石余额</th>-->
+		<!--<th data-options="field:'lastBuyDay',sortable:true">充值日期</th>-->
+		<!--<th data-options="field:'mAddBy',sortable:true">推荐人</th>-->
+		<!--<th data-options="field:'mAddByMid',sortable:true">推荐人ID</th>-->
+		<!--<th data-options="field:'byName',sortable:true">客户经理</th>-->
+		<!--<th data-options="field:'byMid',sortable:true">客户经理ID</th>-->
+		<!--<th data-options="field:'buyTotal',sortable:true">本周购买</th>-->
+		<!--<th data-options="field:'buyReward',sortable:true">未领返利</th>-->
+		<!--<th data-options="field:'mTime',sortable:true">注册时间</th>-->
+		<!--<th data-options="field:'adminLevel',sortable:true">角色等级</th>-->
+		<!--<th data-options="field:'banDays',sortable:true">封禁天数</th>-->
+		<!--<th data-options="field:'banBy',sortable:true">操作人</th>-->
+		<!--<th data-options="field:'gameids',sortable:true">gameids</th>-->
+	<!--</tr>-->
+	<!--</thead>-->
+</table>
+<div id = "pageButton" style="margin:2px 0;">
+</div>
+<div id="successTip" style="width:240px;height:40px;position:absolute;top:50%;left:50%;background-color:rgba(0,0,0,0.5);color:white;font:600 20px/40px '宋体';display:none;text-align:center">关联设置成功
+</div>
+<script type="text/javascript">
+	var host = window.location.host.split(".");
+	if(host[0] == "pdk"){
+		$('.moneyType').eq(0).html("元宝");
+		$('#addMoney').html("添加元宝");
+	}else if(host[0] == "phz"){
+		$('.moneyType').eq(0).html("红宝石");
+		$('#addMoney').html("添加红宝石");
+	}else if(host[0] == "ddz"){
+		$('.moneyType').eq(0).html("红钻");
+		$('#addMoney').html("添加红钻");
+	}else{
+		$('.moneyType').eq(0).html("钻石");
+		$('#addMoney').html("添加钻石");
+	}
+	$("#dg").datagrid({
+				title:"筛选结果",
+				singleSelect:true,
+				collapsible:true,
+				rownumbers:true,
+				fitColumns:true,
+				pagination:true,
+				method:'get',
+				remoteSort:false,
+				multiSort:true,
+				autoRowHeight:false,
+				sortOrder:'desc',
+				sortName:'mTime',
+				data:data.slice(0,100),
+			columns:[
+		    [
+			{field:'mid', align:"center", title:"会员ID", width:80},
+			{field:'mNick', align:"center", title:"微信昵称", width:80},
+			{field:'mName', align:"center", title:"姓名", width:80},
+			{field:'mAddress', align:"center", title:"地址", width:200},
+			{field:'money', align:"center", title:"钻石余额", width:80},
+			{field:'lastBuyDay', align:"center", title:"充值日期", width:150},
+			{field:'mAddBy', align:"center", title:"推荐人", width:80},
+			{field:'mAddByMid', align:"center", title:"推荐人ID", width:80},
+			{field:'byName', align:"center", title:"客户经理", width:80},
+			{field:'byMid', align:"center", title:"客户经理ID", width:80},
+			{field:'buyTotal', align:"center", title:"本周购买", width:80},
+			{field:'buyReward', align:"center", title:"未领返利", width:80},
+			{field:'mTime', align:"center", title:"注册时间", width:150},
+			{field:'adminLevel', align:"center", title:"角色等级", width:80},
+			{field:'banDays', align:"center", title:"封禁天数", width:80},
+			{field:'banBy', align:"center", title:"操作人", width:150},
+			{field:'gameids', align:"center", title:"gameids", width:80}
+		   ]
+	]
+	});
+	function format(){
+		var dat=new Date();
+		var y = dat.getFullYear();
+		var m = dat.getMonth()+1;
+		var d = dat.getDate();
+		return  y+'-'+m+'-'+d;
+	}
+	function filterMember(){
+		$('#filterdia').dialog('open').window('resize',{width:'80%',height:'80%',top:10,left:10});
+	}
+	//filstarttime filendtime
+    //处理日期的函数
+	function ddhandle(timestr){
+		var dayarr = timestr.split('-');
+		var dayVal = dayarr[0] + dayarr[1] +dayarr[2];
+		return dayVal;
+	}
+	//计算天数差的函数，通用
+	function  DateDiff(sDate1,sDate2){ //sDate1和sDate2是2006-12-18格式
+		var  aDate,  oDate1,  oDate2,  iDays;
+		aDate  =  sDate1.split("-");
+		oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0]);//转换为12-18-2006格式
+		aDate  =  sDate2.split("-");
+		oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0]);
+		iDays  =  parseInt((oDate2  -  oDate1 ) /  1000  /  60  /  60  /24);    //把相差的毫秒数转换为天数
+		return  iDays
+	}
+	function getStrDate(filendtime,daydval){
+		var loginbegin=new Date(new Date(filendtime).getTime()-daydval*23*59*59*1000);
+		var year = loginbegin.getFullYear();//2015
+		var mon = loginbegin.getMonth()+1;//9
+		var day = loginbegin.getDate();//21
+		return year+'-'+mon+'-'+day;
+	}
+	//	查询数量
+	function quireNum(){
+//			id="quireNum" id="filterDetail" id="resetBtn"
+		var filstarttimelabel=$("#filstarttime").datebox('getValue');
+		var filendtimelabel=$("#filendtime").datebox('getValue');
+		var startDay=ddhandle(filstarttimelabel);
+		var endDay=ddhandle(filendtimelabel);
+		//起始结束日期差
+		var daydval=DateDiff(filstarttimelabel,filendtimelabel);
+		//结束日期不得超过今日
+		var today=format();
+		//结束日期与今天的日期差
+		var daydval1=DateDiff(filendtimelabel,today);
+		//检查是否填写了开始及结束日期
+		if(!filstarttimelabel){
+			$.messager.alert("操作提示","请检查起始日期的选择","error");
+			return;
+		}
+		if(!filendtimelabel){
+			$.messager.alert("操作提示","请检查结束日期的选择","error");
+			return;
+		}
+		//判断结束日期是否超过今天
+		if(daydval1<0){
+			$.messager.alert("操作提示","只能查询当天之前的数据","error");
+			return;
+		}
+        //以下判断为初始日期与结束日期相差天数的判断
+		if(daydval>7){
+			$.messager.alert("操作提示","只能跨7天进行查询","error");
+			return;
+		}
+		var logintype=1,chargetype=1,chargemounttype=1,selltype=1,sellmounttype= 1;//筛选条件1
+		var msg={};
+		msg.startDay=startDay;
+		msg.endDay=endDay;
+		$("#login").combobox({
+			onChange: function () {
+				logintype=parseInt($("#login").combobox('getValue'));
+			}
+		});
+		$("#active").combobox({
+			onChange: function () {
+				chargetype=parseInt($("#active").combobox('getValue'));
+			}
+		});
+		$("#chargeNum").combobox({
+			onChange: function () {
+				chargemounttype=parseInt($("#chargeNum").combobox('getValue'));
+			}
+		});
+		$("#sale").combobox({
+			onChange: function () {
+				selltype=parseInt($("#sale").combobox('getValue'));
+			}
+		});
+		$("#saleCount").combobox({
+			onChange: function () {
+				sellmounttype=parseInt($("#saleCount").combobox('getValue'));
+			}
+		});
+		var loginday=parseInt($("#stanum").val()),//登录天数
+				chargeday= parseInt($("#stanum1").val()),//天数
+				chargemount= parseInt($("#stanum2").val()),//数量
+				sellday = parseInt($("#stanum3").val()),//天数
+				sellmount= parseInt($("#stanum4").val());//数量
+		if(!loginday && !chargeday && !chargemount && !sellday && !sellmount){
+			$.messager.alert("操作提示","请进行查询条件的填写","error");
+			return;
+		}
+		if(loginday){
+			if(loginday>daydval){
+				$.messager.alert("操作提示","查询天数超过了终止日期","error");
+				return;
+			}
+			msg.loginday=loginday;
+			msg.logintype=logintype;
+		}
+		if(chargeday){
+			if(chargeday>daydval){
+				$.messager.alert("操作提示","查询天数超过了终止日期","error");
+				return;
+			}
+			msg.chargeday=chargeday;
+			msg.chargetype=chargetype;
+		}
+		if(chargemount){
+			msg.chargemount=chargemount;
+			msg.chargemounttype=chargemounttype;
+		}
+		if(sellday){
+			if(sellday>daydval){
+				$.messager.alert("操作提示","查询天数超过了终止日期","error");
+				return;
+			}
+		    msg.sellday=sellday;//销售结束时间
+			msg.selltype=selltype;
+		}
+		if(sellmount){
+			msg.sellmount=sellmount;
+			msg.sellmounttype=sellmounttype;////大于还是小于 1 是大于 2是小于
+		}
+		MaskUtil.mask("查询数据较慢请耐心等候");
+		$('#quireNum').linkbutton('disable');
+		$('#filterDetail').linkbutton('disable');
+		$('#resetBtn').linkbutton('disable');
+/*		$("#filterdia").dialog({
+			onBeforeClose:function(){
+				console.log("dialogclose");
+			    return false;
+		   },
+			onClose:function(){
+				console.log("dialogclose+++++");
+				MaskUtil.unmask();
+			}
+		});*/
+//		console.log("msg"+JSON.stringify(msg));
+
+		postJson("/admin/getMembersFilter",msg,function(rtn){
+		    	MaskUtil.unmask();
+
+				$('#quireNum').linkbutton('enable');
+				$('#filterDetail').linkbutton('enable');
+				$('#resetBtn').linkbutton('enable');
+		});
+	}
+  //重置数据
+	function resetForm(){
+		$("#filstarttime").datebox('setValue',format());
+		$("#filendtime").datebox('setValue',format());
+		$("#login").combobox("select","1");
+		$("#active").combobox("select","1");
+		$("#chargeNum").combobox("select","1");
+		$("#sale").combobox("select","1");
+		$("#saleCount").combobox("select","1");
+		$("#stanum").textbox("setValue","");
+		$("#stanum1").textbox("setValue","");
+		$("#stanum2").textbox("setValue","");
+		$("#stanum3").textbox("setValue","");
+		$("#stanum4").textbox("setValue","");
+		$("#reqnum").textbox("setValue","");
+		$("#reqnum1").textbox("setValue","");
+		$("#reqnum2").textbox("setValue","");
+		$("#reqnum3").textbox("setValue","");
+		$("#reqnum4").textbox("setValue","");
+		$("#filternum").textbox("setValue","");
+	}
+	//指定列求和
+	function compute(tableName,colName) {
+		var rows = $('#'+tableName).datagrid('getRows');
+		var total = 0;
+		for (var i = 0; i < rows.length; i++) {
+			total += parseFloat(rows[i][colName]);
+		}
+		return total;
+	}
+	var searchKey = 0;
+	var startDate;
+	function initStartDate() {
+		startDate = getFormatDate(new Date());
+		startDate = startDate.toString();
+	}
+
+	initStartDate();
+	//会员补钻对话框弹出初始化
+	function opendia(){
+		$('#dlg').dialog('open');
+		$("#memberscount").numberbox("setValue","");
+		$("#diaamount").textbox("setValue","");
+		$("#diasum").textbox("setValue","");
+		$("#remarks").textbox("setValue","");
+		postJson("/admin/getMembersCount",{type:1},
+				function(data)
+				{
+					$("#memberscount").numberbox("setValue",data);
+				});//填充数据
+		//数据绑定
+		$("#diaamount").textbox({
+			"onChange":function(){
+				var memberscount=$("#memberscount").numberbox("getValue");
+				var diaamount=parseInt($("#diaamount").textbox("getValue"));
+				var sum=diaamount*memberscount;
+				$("#diasum").textbox("setValue",sum);
+			}
+		});
+	}
+	// 确定补钻
+	function supplydia(){
+		var diaamount=parseInt($("#diaamount").textbox("getValue"));
+		var remarks=$("#remarks").textbox("getValue");
+		if(diaamount!="0"&&diaamount!=0&&diaamount!=null){
+			var msg={
+				mount:parseFloat(diaamount),
+				commit:remarks
+			};
+			postJson("/admin/fillMembersMoney",msg,function(rtn){
+				if(rtn==0){
+					$.messager.alert("操作提示", "补钻完成");
+					$("#diaamount").textbox("setValue","");
+					$("#diasum").textbox("setValue","");
+					$("#remarks").textbox("setValue","");
+				}else if(rtn==1){
+					$.messager.alert("操作提示", "操作失败","error");
+				}
+			})
+		}else{
+			$.messager.alert("操作提示", "请填写补钻数量","error");
+		}
+	};
+	//补钻对话框选择取消按钮
+	function cancelsupply(){
+		$("#diaamount").textbox("setValue","");
+		$("#diasum").textbox("setValue","");
+		$("#remarks").textbox("setValue","");
+		$('#dlg').dialog('close');
+	}
+
+	//		修改密码界面
+	function ChangePass()
+	{
+		var newPass=$("#newPass").val();
+		var newPassSame=$("#newPassSame").val();
+		selectedMember=$("#dg").datagrid("getSelected");
+		var mid=selectedMember.mid;
+		if(newPassSame==newPass&&newPass.length>0)
+		{
+			var passwd=$("#newPass").val();
+			$("#newPass").val("");
+			$("#newPassSame").val("");
+			$('#changeMemberPass').dialog('close');
+			postJson('/admin/changeMemberPass', {mid:mid,mPass:passwd}, function(data) {
+				{
+					if(data)
+						$.messager.alert("操作提示", "修改成功");
+					else
+						$.messager.alert("操作提示", "修改失败","error");
+				}
+			});
+
+		}
+		else
+		{
+			$.messager.alert("操作提示", "输入错误","error");
+		}
+
+	}
+	//修改密码对话框弹出界面
+	function changeMemberPass(){
+
+		selectedMember=$("#dg").datagrid("getSelected");
+
+		if(selectedMember)
+		{
+			$('#changeMemberPass').dialog('open');
+		}
+		else
+		{
+			$.messager.alert("操作提示", "选中会员","error");
+		}
+
+	}
+	var pageLimit = 50;
+
+	$("#showNum").combobox({
+
+		onChange: function () {
+
+			var showNum=parseFloat($("#showNum").combobox('getValue'));
+
+			changePageLimit(showNum);
+
+		}
+
+	});
+	function changePageLimit(num){
+		pageLimit = num;
+		getMembers();
+	}
+
+	function showMembers(num) {
+		var para = {};
+		para.limit = pageLimit;
+		para.skip = (num - 1) * pageLimit;
+
+//			var para = {};
+//			if(key == "mid" || key == "mPhone1" || key == "mPhone2" || key == "money" || key == "mAddByMid"
+//					|| key == "byMid" || key == "buyTotal" || key == "buyReward" || key == "adminLevel" || key == "lastBuyDay"){
+//				para[key] = parseInt(value);
+//			} else {
+//				para[key] = value;
+//			}
+//			searchKey = para;
+//
+//			showMembersPage();//在此处进行分页函数的修改
+//			showMembers(1);
+		if(searchKey) {
+			para.searchKey = searchKey;
+		}
+
+		postJson("/admin/getMembers", para, function(data) {
+			for(var key in data.rows){
+				var time = data.rows[key]["mTime"];
+				time = new Date(time);
+				time = getDateCommonFormat(time);
+				var now = Date.now();
+				data.rows[key]["mTime"] = time;
+
+				if(data.rows[key]["banTime"] && data.rows[key]["banTime"] > now) {
+					var days = Math.ceil((data.rows[key]["banTime"] - now) / 86400000);
+					data.rows[key]["banDays"] = days;
+				}
+			}
+			$('#dg').datagrid("loadData",data);
+			if(data.total==0){
+				$('#dg').datagrid('appendRow',{mid:"没有数据", lastBuyDay:"", mNick:"", mName:"", mAddress:"", money:"", mAddBy:"", mAddByMid:"", byMid:"",buyTotal:"",buyReward:"",mTime:"",adminLevel:""});
+			}
+
+		});
+	}
+
+	function getTotalPage(data) {
+		return Math.ceil(data / pageLimit);
+	}
+	var allmembersCount=0;
+	function showMembersPage(){
+		var div = document.getElementById("pageButton");
+		div.innerHTML = "";
+		var para = {type : 2};
+		if(searchKey) {
+			para = searchKey;
+		}
+
+		postJson("/admin/getMembersCount", para, function(data) {
+			allmembersCount=data;
+			for(var i = 1; i <= getTotalPage(data); i++) {
+				$("#pageButton").append("<button onclick=showMembers("+i+")>"+ i +"</button>");
+			}
+		});
+	}
+	/*进行分页改造的函数*/
+	//得到分页总数的函数
+	/*function getTotalPage(data){
+	 return ((data % pageLimit>0 ? 1 : 0) +Math.floor(data / pageLimit));
+	 }*/
+	//以下是获得总页数并进行初始化的数据
+	/*postJson("/admin/getMembersCount",{},
+	 function(data)
+	 {
+	 pageTotal=getTotalPage(data);
+	 $(".allPage").eq(0).text(pageTotal);
+	 $("#Pagination").pagination(pageTotal,{
+	 callback:function(p){
+	 //点击选择某一页数
+	 // 在此处进行页面数据的加载
+	 pageNum=p;
+	 getMembers();
+	 }
+	 });
+	 }
+	 );*/
+	//点击页面跳转的函数
+	//输入框输入跳转的页数进行的页面效果
+	/*$(".page-btn").on("click",function(){
+	 var allPage = $(".allPage").text();
+	 var goPage = $("#gopage").val() - 1; //跳转页数
+	 var opts1={
+	 items_per_page:1,
+	 num_display_entries:4,
+	 current_page:0,
+	 num_edge_entries:1,
+	 link_to:"#",
+	 prev_text:"<i></i>上一页",
+	 next_text:"下一页 <i></i>",
+	 ellipse_text:"...",
+	 prev_show_always:true,
+	 next_show_always:true,
+	 renderer:"defaultRenderer",
+	 show_if_single_page:false,
+	 load_first_page:false,
+	 callback:function(){}
+	 };
+	 if(goPage > -1 && goPage < allPage){
+	 opts1.current_page = goPage;
+	 $("#Pagination").pagination(allPage,opts1);
+	 }else {
+	 $("#Pagination").pagination(allPage);
+	 }
+	 //                清空用户跳转页数
+	 $(".page-go input").val("");
+	 pageNum=parseInt($(".current").eq(0).text())-1;
+	 getMembers();
+	 });*/
+	function getMembers() {
+		searchKey = 0;
+		showMembers(1);
+		showMembersPage();
+	}
+	getMembers();
+
+	//=================================
+
+	//(function($){})(jQuery)
+	//(function(){})(jQuery) 	执行()(para)匿名方法，只不过是传递了jQuery对象
+	//function aa($){} 	相当于 	aa(jQuery)	是初始化jQuery对象的惯用方法
+
+	//$.fn是指j	Query的命名空间,加上fn上的方法及属性,会对jquery实例每一个有效.
+
+	//jQuery.extend(object);为扩展jQuery类本身.为类添加新的方法。
+	//jQuery.fn.extend(object);给jQuery对象添加方法.
+
+	//(function($){})(jQuery);
+
+	//=================================
+
+	var mid=null;
+	function addMember()
+	{
+		mid=null;
+		$('#mNick').val("");
+		$('#mName').val("");
+		$('#mAddress').val("");
+		$('#mPhone1').val("");
+		$('#mPhone2').val("");
+		$('#money').val("0");
+		$('#mAddBy').val("");
+		$('#mManager').val("");
+
+		$('#ddMember').dialog('open');
+	}
+	function addMemberYes()
+	{
+
+		var msg={
+			mNick:$('#mNick').val(),
+			mName:$('#mName').val(),
+			mAddress:$('#mAddress').val(),
+			mPhone1:parseFloat( $('#mPhone1').val() ),
+			mPhone2:parseFloat( $('#mPhone2').val() ),
+			mAddBy:$('#mAddBy').val(),
+			mManager:$('#mManager').val(),
+		};
+		if(mid==null)
+		{
+			msg.money=parseInt($('#money').val());
+			if(!(msg.money>=0))           { $.messager.alert("操作提示", "无效钻石","error"); return; }
+		}
+		else msg.mid=mid;
+
+		if(msg.mNick.length==0) {$.messager.alert("操作提示", "无效昵称","error");  return; }
+		if(msg.mName.length==0) {$.messager.alert("操作提示", "无效名字","error");  return; }
+
+		if(mid==null) {
+			if(!(msg.mPhone1>1000000000)) { $.messager.alert("操作提示", "无效联系电话","error"); return; }
+			if(!(msg.mPhone2>1000000000)) { $.messager.alert("操作提示", "无效紧急联系电话","error"); return; }
+			msg.mPass=(msg.mPhone1+""); msg.mPass=msg.mPass.substr(msg.mPass.length-6);
+		} else {
+			if(!(msg.mPhone1>1000000000)) { delete msg.mPhone1 }
+			if(!(msg.mPhone2>1000000000)) { delete msg.mPhone2 }
+		}
+
+
+		$('#ddMember').dialog('close');
+		postJson(mid==null?"/admin/addMember":"/admin/saveMember",msg,
+				function(data)
+				{
+					getMembers();
+				}
+		);
+	}
+	function editMember()
+	{
+		var member=$("#dg").datagrid("getSelected");
+
+		if(member)
+		{
+			mid=member.mid;
+			$('#mNick').val(member.mNick);
+			$('#mName').val(member.mName);
+			$('#mAddress').val(member.mAddress);
+			//$('#mPhone1').val(member.mPhone1);
+			//$('#mPhone2').val(member.mPhone2);
+			$('#mPhone1').val("");
+			$('#mPhone2').val("");
+			$('#money').val(member.money);
+			$('#mAddBy').val(member.mAddBy);
+			$('#mManager').val(member.mManager);
+			$('#ddMember').dialog('open');
+		}
+	}
+	function addMoney()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(member)
+		{
+			mid=member.mid;
+			$('#buyType').val(1);
+			$('#buyNote').val("");
+			$('#ddMoney').dialog('open');
+		}else{
+			$.messager.alert("操作提示", "选中会员");
+		}
+	}
+	function setNumMoney(val)
+	{
+		$('#buyNum').val(val.split('/')[0]);
+		$('#buyMoney').val(val.split('/')[1]);
+	}
+
+	function addMoneyYes()
+	{
+		$('#ddMoney').dialog('close');
+		postJson("/admin/addMemberMoney",
+				{
+					mid:mid
+					,buyNum:parseInt($('#buyNum').val())
+					,buyMoney:parseInt($('#buyMoney').val())
+					,buyNote:$('#buyNote').val()
+					,buyType:$('#buyType').val()
+				}
+				,function(data)
+				{
+					if(data == -10) {
+						$.messager.alert("操作提示", "您的密码不安全，请修改密码后操作","error");
+						return;
+					} else if(data.er == 2) {
+						$.messager.alert("操作提示", "余额不足","error");
+						return;
+					}
+
+					if(!data.er) {
+						getMembers();
+					}
+				}
+		);
+	}
+	var addByMember;
+	function selectAddBy()
+	{
+		addByMember=$("#dg").datagrid("getSelected");
+		if(addByMember)
+		{
+			$("#selectAddBy").html(addByMember.mid+" "+addByMember.mNick);
+		}
+		else
+		{
+			$.messager.alert("操作提示", "选中邀请人","error");
+			// $("#selectAddBy").html("请选择");
+		}
+	}
+	function setAddBy(isManager)
+	{
+		var toMember=$("#dg").datagrid("getSelected");
+		if(toMember&&addByMember&&toMember.mid!=addByMember.mid)
+		{
+			var msg=isManager?
+			{
+				mid:toMember.mid,
+				byName:addByMember.mNick,
+				byMid:addByMember.mid
+			}:
+			{
+				mid:toMember.mid,
+				mAddBy:addByMember.mNick,
+				mAddByMid:addByMember.mid
+			};
+
+			postJson("/admin/saveMember",msg,
+					function(data)
+					{
+						getMembers();
+						$("#successTip").css("display","block");
+						setTimeout(function(){
+							$("#successTip").css("display","none");
+						},2000);
+						$("#selectAddBy").html("");
+					}
+			);
+
+		}
+		else
+			$.messager.alert("操作提示", "先选定推荐人,再选择会员设置","error");
+	}
+	function computeMemberReward()
+	{
+		if(window.confirm("会员累计充值清0,返利给当前设置的推荐人?"))
+		{
+			postJson("/admin/computeMemberReward",{},
+					function(data)
+					{
+						getMembers();
+					}
+			);
+		}
+	}
+	function getMemberBuyList()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		$("#gmjldays").numberbox('setValue',0);
+		$("#gmjldate").datebox('setValue',format());
+		$("#ddMemberBuytb").datagrid("loadData",{total:1,rows:[{amount:'没有数据',buyNum:'',buyMoney:'',memberMoney:'',byMoney:'',byMid:'',buyNote:'',buyTime:''}]});
+		$("#ddMemberBuyList").dialog("open");
+		searchForMemberBuyList();
+		/*postJson("/admin/getMemberBuyList",{mid:member.mid, day:startDate},
+		 function(data)
+		 {
+		 for(var key in data.rows){
+		 data.rows[key]["amount"]="";
+		 var time = data.rows[key]["buyTime"];
+		 time = new Date(time);
+		 //time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+		 time = getDateCommonFormat(time);
+
+		 data.rows[key]["buyTime"] = time;
+		 }
+
+		 data.rows = data.rows.reverse();
+
+		 $("#ddMemberBuyList").dialog("open");
+		 $("#ddMemberBuytb").datagrid("loadData",data);
+		 $("#ddMemberBuytb").datagrid('appendRow',{
+		 amount: '<span class="subtotal">总计</span>',
+		 buyNum: '<span class="subtotal">' + compute("ddMemberBuytb", "buyNum") + '</span>',
+		 buyMoney: '<span class="subtotal">' + compute("ddMemberBuytb", "buyMoney") + '</span>',
+		 memberMoney: '<span class="subtotal"></span>',
+		 byMid: '<span class="subtotal"></span>',
+		 byMoney: '<span class="subtotal"></span>',
+		 buyTime: '<span class="subtotal"></span>',
+		 buyNote: '<span class="subtotal"></span>'
+		 });
+		 initStartDate();
+		 }
+		 );*/
+	}
+	function getMemberSellList()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		$("#sel2userdays").numberbox('setValue',0);
+		$("#sel2player").datebox('setValue',format());
+		$("#ddMemberSelltb").datagrid("loadData",{total:1,rows:[{amount:'没有数据',uid:'',buyNum:'',buyMoney:'',money:'',userMoney:'',buyNote:'',buyTime:''}]});
+		$("#ddMemberSellList").dialog("open");
+		searchForMemberSellList();
+
+		/*postJson("/admin/getMemberSellList",{mid:member.mid,day:startDate},
+		 function(data)
+		 {
+		 for(var key in data.rows){
+		 data.rows[key]["amount"]="";
+		 var time = data.rows[key]["buyTime"];
+		 time = new Date(time);
+		 //time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+		 time = getDateCommonFormat(time);
+		 data.rows[key]["buyTime"] = time;
+		 }
+
+		 data.rows = data.rows.reverse();
+
+		 $("#ddMemberSellList").dialog("open");
+		 $("#ddMemberSelltb").datagrid("loadData",data);
+		 $("#ddMemberSelltb").datagrid('appendRow',{
+		 amount:'<span class="subtotal">总计</span>',
+		 uid: '<span class="subtotal"></span>',
+		 buyNum:'<span class="subtotal">' + compute("ddMemberSelltb","buyNum") + '</span>',
+		 buyMoney:'<span class="subtotal">' + compute("ddMemberSelltb","buyMoney") + '</span>',
+		 money: '<span class="subtotal"></span>',
+		 userMoney: '<span class="subtotal"></span>',
+		 buyNote: '<span class="subtotal"></span>',
+		 buyTime: '<span class="subtotal"></span>'
+		 });
+		 initStartDate();
+		 }
+		 );*/
+	}
+	function getAdminSellList()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		$("#sel2memdays").numberbox('setValue',0);
+		$("#sel2mem").datebox('setValue',format());
+		$("#ddAdminSelltb").datagrid("loadData",{total:1,rows:[{amount:'没有数据',mid:'',buyNum:'',buyMoney:'',buyNote:'',buyTime:'',byMid:'',byMoney:'',aliOrderNum:''}]});
+		$("#ddAdminSellList").dialog("open");
+		searchForAdminSellList();
+		/*postJson("/admin/getAdminSellList",{mid:member.mid, day:startDate},
+		 function(data)
+		 {
+		 var buyNum = 0;
+		 var buyMoney = 0;
+
+		 for(var key in data.rows){
+		 data.rows[key]["amount"]="";
+		 var time = data.rows[key]["buyTime"];
+		 time = new Date(time);
+		 //time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+		 time = getDateCommonFormat(time);
+		 data.rows[key]["buyTime"] = time;
+
+		 buyNum += data.rows[key]["buyNum"];
+		 buyMoney += data.rows[key]["buyMoney"];
+		 }
+
+		 data.rows = data.rows.reverse();
+
+		 $("#ddAdminSellList").dialog("open");
+		 $("#ddAdminSelltb").datagrid("loadData",data);
+		 $("#ddAdminSelltb").datagrid('appendRow',{
+		 amount:'<span class="subtotal">总计</span>',
+		 mid: '<span class="subtotal"></span>',
+		 buyNum:'<span class="subtotal">' + compute("ddAdminSelltb","buyNum") + '</span>',
+		 buyMoney:'<span class="subtotal">' + compute("ddAdminSelltb","buyMoney") + '</span>',
+		 byMoney: '<span class="subtotal"></span>',
+		 byMid: '<span class="subtotal"></span>',
+		 buyNote: '<span class="subtotal"></span>',
+		 buyTime: '<span class="subtotal"></span>',
+		 aliOrderNum:'<span class="subtotal"></span>'
+		 });
+
+		 $("#ddAdminSellList_num").html(buyNum);
+		 $("#ddAdminSellList_money").html(buyMoney);
+
+		 initStartDate();
+		 }
+		 );*/
+	}
+	//ddMemberUseList ddMemberUsetb searchForMemberUseList() userID useDiaNum buyDiaNum
+	function getMemUseList(){
+		var member=$("#dg").datagrid("getSelected");
+
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		$("#ddMemberUseList").dialog("open");
+	}
+	$("#permission").combobox({
+
+		onSelect: function () {
+
+			var adminLevel=parseInt($("#permission").combobox('getValue'));
+
+			asManager(adminLevel);
+
+			$('#permission').combobox('setValue',"");
+		}
+
+	});
+	function asManager(adminLevel)
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		if((adminLevel == ""||adminLevel == 0) && member.adminLevel != 2) {
+			$.messager.alert("操作提示", "只有高级会员可以被取消","error");
+			return;
+		}
+		postJson("/admin/saveMember",{mid:member.mid,adminLevel:adminLevel},
+				function(data)
+				{
+					getMembers();
+				}
+		);
+	}
+
+	function delMember() {
+		var member = $("#dg").datagrid("getSelected");
+
+		if(!member) {
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		//区域经理，管理员不能删除
+		if(member.adminLevel == 3 || member.adminLevel == 10) {
+			$.messager.alert("操作提示", "区域经理、超级管理员不可删除","error");
+			return;
+		}
+
+		if(window.confirm("确定删除选中的会员?")) {
+			postJson("/admin/delMember", {mid: member.mid, member: member}, function (data) {
+				if (data.ok && data.n > 0) {
+					$.messager.alert("操作提示", "用户删除成功，刷新列表","error");
+					getMembers();
+				} else {
+					$.messager.alert("操作提示", "用户删除失败","error");
+				}
+			});
+		}
+	}
+
+	function searchMembers(value, key) {
+		var para = {};
+		if(key == "mid" || key == "mPhone1" || key == "mPhone2" || key == "money" || key == "mAddByMid"
+				|| key == "byMid" || key == "buyTotal" || key == "buyReward" || key == "adminLevel" || key == "lastBuyDay"|| key == "buyDay"){
+			para[key] = parseInt(value);
+		} else {
+			para[key] = value;
+		}
+		searchKey = para;
+
+		showMembersPage();//在此处进行分页函数的修改
+		showMembers(1);
+	}
+	function MergeCells(tableID, fldList) {
+		var Arr = fldList.split(",");
+		var dg = $('#' + tableID);
+		var fldName;
+		var RowCount = dg.datagrid("getRows").length;
+		var span;
+		var PerValue = "";
+		var CurValue = "";
+		var length = Arr.length - 1;
+		for (i = length; i >= 0; i--) {
+			fldName = Arr[i];
+			PerValue = "";
+			span = 1;
+			for (row = 0; row <= RowCount; row++) {
+				if (row == RowCount) {
+					CurValue = "";
+				}
+				else {
+					CurValue = dg.datagrid("getRows")[row][fldName];
+				}
+				if (PerValue == CurValue) {
+					span += 1;
+				}
+				else {
+					var index = col - span;
+					dg.datagrid('mergeCells', {
+						index: index,
+						field: fldName,
+						rowspan: null,
+						colspan: span
+					});
+					span = 1;
+					PerValue = CurValue;
+				}
+			}
+		}
+	}
+	function onSelect(date){
+	 startDate = getFormatDate(date);
+	 startDate = startDate.toString();
+	 }
+	//进行日期的转换
+	function dateTrans(dayValID,strdayID){
+
+		var n=$('#'+dayValID).numberbox('getValue');
+		if(!n){
+			$.messager.alert("操作提示","请输入需要查询的天数","error");
+			return;
+		}else if(n>7){
+			$.messager.alert("操作提示","查询记录的天数不得超过7天","error");
+			return;
+		}
+		var startDate= $('#'+strdayID).datebox('getValue');
+		var startDateArr=startDate.split('/');
+		startDateArr[0]-=1;
+		startDate=new Date(startDateArr[2],startDateArr[0],startDateArr[1]);
+		startDate=startDate.getTime();
+		var endDate=startDate+(n*24*60*60*1000+23*59*59*1000);
+	/*	var comparetime=new Date().getTime();
+		if(endDate>comparetime){
+			$.messager.alert("操作提示","只能查询本日之前的数据","error");
+			return;
+		}*/
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		if(!startDate){
+			$.messager.alert("操作提示","请再次选择日期","error");
+			return;
+		}
+
+		var msg={mid:member.mid,_strday:startDate,_endday:endDate}
+		return msg;
+
+	}
+
+	function searchForMemberBuyList() {
+		//getMemberBuyList();
+		var msg=dateTrans('gmjldays','gmjldate');
+		postJson("/admin/getMemberBuyList",msg,
+				function(data)
+				{
+					if(data.total==0){
+
+						$("#ddMemberBuytb").datagrid("loadData",{total:1,rows:[{amount:'没有数据',buyNum:'',buyMoney:'',memberMoney:'',byMoney:'',byMid:'',buyNote:'',buyTime:''}]});
+
+					}else{
+						for(var key in data.rows){
+							data.rows[key]["amount"]="";
+							var time = data.rows[key]["buyTime"];
+							time = new Date(time);
+							//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+							time = getDateCommonFormat(time);
+
+							data.rows[key]["buyTime"] = time;
+						}
+
+						data.rows = data.rows.reverse();
+
+						$("#ddMemberBuytb").datagrid("loadData",data);
+						$("#ddMemberBuytb").datagrid('appendRow',{
+							amount: '<span class="subtotal">总计</span>',
+							buyNum: '<span class="subtotal">' + compute("ddMemberBuytb", "buyNum") + '</span>',
+							buyMoney: '<span class="subtotal">' + compute("ddMemberBuytb", "buyMoney") + '</span>',
+							memberMoney: '<span class="subtotal"></span>',
+							byMid: '<span class="subtotal"></span>',
+							byMoney: '<span class="subtotal"></span>',
+							buyTime: '<span class="subtotal"></span>',
+							buyNote: '<span class="subtotal"></span>'
+						});
+					}
+
+				});
+	}
+
+	function searchForMemberSellList() {
+		//getMemberSellList();
+		var msg=dateTrans('sel2userdays','sel2player');
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+//		console.log(JSON.stringify(msg));
+
+		postJson("/admin/getMemberSellList",msg,
+				function(data)
+				{
+					if(data.total==0){
+						$("#ddMemberSelltb").datagrid("loadData",{total:1,rows:[{amount:'没有数据',uid:'',buyNum:'',buyMoney:'',money:'',userMoney:'',buyNote:'',buyTime:''}]});
+					}else{
+						for(var key in data.rows){
+							data.rows[key]["amount"]="";
+							var time = data.rows[key]["buyTime"];
+							time = new Date(time);
+							//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+							time = getDateCommonFormat(time);
+							data.rows[key]["buyTime"] = time;
+						}
+
+						data.rows = data.rows.reverse();
+						$("#ddMemberSelltb").datagrid("loadData",data);
+						$("#ddMemberSelltb").datagrid('appendRow',{
+							amount:'<span class="subtotal">总计</span>',
+							uid: '<span class="subtotal"></span>',
+							buyNum:'<span class="subtotal">' + compute("ddMemberSelltb","buyNum") + '</span>',
+							buyMoney:'<span class="subtotal">' + compute("ddMemberSelltb","buyMoney") + '</span>',
+							money: '<span class="subtotal"></span>',
+							userMoney: '<span class="subtotal"></span>',
+							buyNote: '<span class="subtotal"></span>',
+							buyTime: '<span class="subtotal"></span>'
+						});
+					}
+				}
+		);
+	}
+
+	function searchForAdminSellList() {
+		//getAdminSellList();
+		var msg=dateTrans('sel2memdays','sel2mem');
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+		postJson("/admin/getAdminSellList",msg,
+				function(data)
+				{
+					if(data.total==0){
+
+						$("#ddAdminSelltb").datagrid("loadData",{total:1,rows:[{amount:'没有数据',mid:'',buyNum:'',buyMoney:'',buyNote:'',buyTime:'',byMid:'',byMoney:'',aliOrderNum:''}]});
+
+					}else{
+						var buyNum = 0;
+						var buyMoney = 0;
+
+						for(var key in data.rows){
+							data.rows[key]["amount"]="";
+							var time = data.rows[key]["buyTime"];
+							time = new Date(time);
+							//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+							time = getDateCommonFormat(time);
+							data.rows[key]["buyTime"] = time;
+
+							buyNum += data.rows[key]["buyNum"];
+							buyMoney += data.rows[key]["buyMoney"];
+						}
+
+						data.rows = data.rows.reverse();
+
+						$("#ddAdminSelltb").datagrid("loadData",data);
+						$("#ddAdminSelltb").datagrid('appendRow',{
+							amount:'<span class="subtotal">总计</span>',
+							mid: '<span class="subtotal"></span>',
+							buyNum:'<span class="subtotal">' + compute("ddAdminSelltb","buyNum") + '</span>',
+							buyMoney:'<span class="subtotal">' + compute("ddAdminSelltb","buyMoney") + '</span>',
+							byMoney: '<span class="subtotal"></span>',
+							byMid: '<span class="subtotal"></span>',
+							buyNote: '<span class="subtotal"></span>',
+							buyTime: '<span class="subtotal"></span>',
+							aliOrderNum:'<span class="subtotal"></span>'
+						});
+
+						$("#ddAdminSellList_num").html(buyNum);
+						$("#ddAdminSellList_money").html(buyMoney);
+
+					}
+				}
+		);
+	}
+	function searchForMemberUseList(){
+		var member=$("#dg").datagrid("getSelected");
+		postJson("/admin/getUserUseList",{mid:member.mid, day:startDate},
+		 function(data)
+		 {
+			 $("#ddMemberUseList").dialog("open");
+			 $("#ddMemberUsetb").datagrid("loadData",data);
+			 var row=[];
+			 row["userID"]="合计";
+			 row["useDiaNum"]=compute("ddMemberUsetb","useDiaNum");
+			 row["buyDiaNum"]=compute("ddMemberUsetb","buyDiaNum");
+			 $("#ddMemberUsetb").datagrid("appendRow",row);
+			 initStartDate();
+		 }
+		 );
+		getMemUseList();
+	}
+	function isUndefined(obj) {
+		return obj === void 0;
+	}
+
+	function isNull(obj) {
+		return obj == null;
+	}
+
+	function showAddMembersMenu() {
+		if(getGameType(window.location.host).disableAddMember == true){
+			$('#addMembersMenu').hide();
+		}
+	}
+
+	function showGameIds() {
+		var host = window.location.host.split(".");
+		if(getGameType(window.location.host).gameIds){
+			var ids = getGameType(window.location.host).gameIds;
+			var data = [];
+			for(var i = 0; i < ids.length; i++){
+				if(i == 0){
+					data.push({"id":ids[i], "text":ids[i], "selected":true});
+				}
+				else {
+					data.push({"id":ids[i], "text":ids[i]});
+				}
+			}
+
+			$('#state').combobox('loadData', data);
+		}
+		else {
+			$("#gameids").hide();
+			$("#gameidsAdd").hide();
+			$("#gameidsMinus").hide();
+		}
+	}
+
+	$(document).ready(function () {
+		showGameIds();
+		showAddMembersMenu();
+	});
+
+	function gameIdsAdd() {
+		var member=$("#dg").datagrid("getSelected");
+
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+
+		var gameIds = member.gameids;
+
+		//alert("gameIds type " + typeof gameIds);
+
+		var addId = $('#state').combobox('getValue');
+
+		if (isUndefined(gameIds) || isNull(gameIds)) {
+			gameIds = "";
+		}
+
+		if (gameIds.indexOf(addId) >= 0) {
+			return;
+		}
+
+		if (gameIds.length == 0) {
+			gameIds += addId;
+		}
+		else {
+			gameIds += "|" + addId;
+		}
+
+		postJson("/admin/saveMember", {mid: member.mid, gameids: gameIds},
+				function (data) {
+					getMembers();
+				}
+		);
+	}
+
+	function gameIdsMinus() {
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+
+		var gameIds = member.gameids;
+
+		if(isUndefined(gameIds) || isNull(gameIds)){
+			gameIds = "";
+		}
+
+		var minusId = $('#state').combobox('getValue');
+
+		if(gameIds.indexOf(minusId) < 0){
+			return;
+		}
+
+		if(gameIds.length == minusId.length){
+			gameIds = "";
+		}
+		else if(gameIds.length > minusId.length){
+			var strIds = gameIds.split("|");
+
+			var deleteId;
+
+			for(var i = 0; i < strIds.length; i++){
+				if(strIds[i] == minusId){
+					deleteId = i;
+				}
+			}
+
+			if(deleteId >= 0){
+				strIds.splice(deleteId, 1);
+			}
+
+			var ids = "";
+
+			for(var i = 0; i < strIds.length; i++){
+				if(i == 0){
+					ids += strIds[i];
+				}
+				else {
+					ids += "|" + strIds[i];
+				}
+			}
+
+			gameIds = ids;
+		}
+
+		postJson("/admin/saveMember",{mid:member.mid,gameids:gameIds},
+				function(data)
+				{
+					getMembers();
+				}
+		);
+	}
+
+	function banMember(type) {
+		var member = $("#dg").datagrid("getSelected");
+
+		if(!member) {
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+
+		var banTime;
+
+		if(type) {//封号
+			banTime = parseInt($('#banTime').val());
+
+			if(banTime < 1) {
+				$.messager.alert("操作提示", "请输入封禁的天数","error");
+				return;
+			}
+		} else {//解封
+			banTime = 0;
+		}
+
+		postJson("/admin/banMember",{mid:member.mid,banTime:banTime},
+				function(data)
+				{
+					if(!data) {
+						$.messager.alert("操作提示", "操作失败","error");
+					} else if(type) {
+						$.messager.alert("操作提示", "封禁成功");
+					} else {
+						$.messager.alert("操作提示", "解封成功");
+					}
+				}
+		);
+	}
+
+	function unbanPhone() {
+		var member = $("#dg").datagrid("getSelected");
+
+		if(!member) {
+			$.messager.alert("操作提示", "请选中会员","error");
+			return;
+		}
+
+		postJson("/admin/unbanPhone",{mid:member.mid},
+				function(data)
+				{
+					if(!data) {
+						$.messager.alert("操作提示", "操作失败","error");
+					} else {
+						$.messager.alert("操作提示", "手机解除绑定成功，请通知会员重新绑定手机号");
+					}
+				}
+		);
+	}
+</script>
+</body>
+</html>

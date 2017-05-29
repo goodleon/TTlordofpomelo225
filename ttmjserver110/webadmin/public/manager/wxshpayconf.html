@@ -1,0 +1,99 @@
+<html>
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>微信审核支付配置</title>
+</head>
+
+<body  class="easyui-layout">
+<div>
+    <a href="#" class="easyui-linkbutton" onclick="showCfg()">刷新</a>
+    <a href="#" class="easyui-linkbutton" onclick="editwxpay()">修改配置</a>
+</div>
+<div id="ddwxpay" style="width:400px;height:400px;">
+    <table width="100%">
+        <tr><td><label>金额:</label></td> <td><input class="easyui-textbox" type="text"  id="agentmoney" data-options="disabled:true"/></td></tr>
+        <tr><td><label>数量:</label></td> <td><input class="easyui-textbox" type="text" id="diamond" data-options="disabled:true"/></td></tr>
+        <tr><td><label>赠送:</label></td> <td><input class="easyui-textbox" type="text" id="giftmoney" data-options="disabled:true"/></td></tr>
+    </table>
+    <a href="#" class="easyui-linkbutton" onclick="editwxpayYes()">确定</a>
+</div>
+
+<script type="text/javascript">
+    var checkstatus=0;
+
+    function percentageToFloat(per){
+        var result = per.split('%');
+        return parseFloat(result[0]) / 100;
+    }
+    function editwxpay(){
+
+        $('#agentmoney').textbox({'disabled':false});
+        $('#diamond').textbox({'disabled':false});
+        $('#giftmoney').textbox({'disabled':false});
+
+    }
+
+    function editwxpayYes(){
+			
+        var msg={
+            agentMoney:parseInt($('#agentmoney').textbox('getValue')),
+            diamond:parseFloat($('#diamond').textbox('getValue')),
+            giftDiamond:parseInt($('#giftmoney').textbox('getValue')),
+            checkstatus:checkstatus
+        };
+
+        if(msg.agentMoney === void 0 || msg.agentMoney == null || isNaN(msg.agentMoney) || msg.agentMoney <= 0) {
+            $.messager.alert("操作提示", "无效金额","error");
+            return;
+        }
+        else if(msg.diamond === void 0 || msg.diamond == null || isNaN(msg.diamond) || msg.diamond <= 0) {
+            $.messager.alert("操作提示", "无效数量","error");
+            return;
+        }
+        else if(msg.giftDiamond === void 0 || msg.giftDiamond == null || isNaN(msg.giftDiamond) || msg.giftDiamond < 0) {
+            $.messager.alert("操作提示", "无效赠送数量","error");
+            return;
+        }
+
+        postJson("/wxData/saveWxPayJson",{msg},
+                function(data)
+                {
+                   
+                    if(data > 0){
+                        $.messager.alert("操作提示", "修改成功");
+                        showCfg();
+                        $('#agentmoney').textbox({'disabled':true});
+                        $('#diamond').textbox({'disabled':true});
+                        $('#giftmoney').textbox({'disabled':true});
+                    }
+                }
+        );
+    }
+    function showCfg(){
+        postJson("/wxData/getWxPayJson",{},
+                function(data) {
+                    if(data){
+                        checkstatus=data.checkStatus;
+                        $('#agentmoney').textbox('setValue',data.agentMoney);
+                        $('#diamond').textbox('setValue',data.diamond);
+                        $('#giftmoney').textbox('setValue',data.giftDiamond);
+                        return;
+                    }
+                    $.messager.alert("操作提示", "没有数据配置请进行配置");
+                }
+        );
+    }
+
+    $(document).ready(function () {
+        showCfg();
+    });
+
+</script>
+</body>
+</html>

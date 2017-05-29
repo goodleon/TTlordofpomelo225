@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+		<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../share.js"></script>
+		<title>金币场</title>
+	</head>
+	<body class="easyui-layout">
+		<div data-options="region:'north',title:'North Title',split:true" style="height:100%;">
+		    <div>
+		        <label>玩家ID</label>
+		        <input class="easyui-validatebox" type="text" id="uid" data-options="required:true"/>
+		        <button  data-ripple onclick="searchForRecords()">搜索</button>
+		       
+		    </div>
+		    <table id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+		           data-options="singleSelect:true,collapsible:true">
+		        <thead>
+		        <tr>
+		            <th data-options="field:'uid',width:70">序号</th>
+		            <th data-options="field:'type',width:80">类型</th>
+		            <th data-options="field:'value',width:80">金币</th>
+		        </tr>
+		        </thead>
+		    </table>
+		</div>
+		<script type="text/javascript">
+		    function searchForRecords(){
+		        var uid =  getCurrentSelectedUid ();
+		        
+		        if(uid != undefined ){
+		            getUserConsumptionRecord(uid);
+		        }else{
+		            zeroModal.alert('请输入Id');
+		        }
+		    };
+		    
+		    // 获取当前uid
+		    function getCurrentSelectedUid (){
+		        return parseInt( $("#uid").val() );
+		    };
+		    
+		    // TODO 接口要改
+		    function getUserConsumptionRecord(id){	    
+		        postJson("/userConsumption/getUserConsumptionRecord",{_id:id},
+	                function(data){
+	                    if(data && data.rows && data.rows.length){
+	                        refreshRecordsUI(data);
+	                    }else{
+	                        zeroModal.alert('无数据');
+	                    }
+	                }
+		        );
+		    }
+		    
+		    // 渲染页面
+		    function refreshRecordsUI(originalData){
+		        var data = {};
+		        data.total= data.length;
+		        data.rows = [];
+		        data.rows.push(originalData);
+		        $("#dg").datagrid("loadData",data);
+	             if(data.total==0){
+	                 $("#dg").datagrid("appendRow",uid:'没有数据',type:'',value:'');         
+	              }
+		    }
+		</script>
+	</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	<div class="accordion" data-options="fit:true,border:false">
+		<div class="easyui-accordion">
+			<div title="财务数据" style="padding:0;" selected="true" data-options="multiple:true">
+				<ul class="easyui-tree" id="tr0" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+					<li id='memberTransactionRecord.html'><span>用户消费详情</span></li>
+					<li id='tradingVolumeD.html'><span >财务统计(日)</span></li>
+					<li id='tradingVolumeW.html'><span >财务统计(周)</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

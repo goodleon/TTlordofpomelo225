@@ -1,0 +1,164 @@
+以下是NGINX的 嘉兴乐玩配置
+1. 请求限制
+	limit_req_zone
+	 limit_req_zone $client_ip zone=one:20m rate=50r/s;
+	zone 限制空间大小, 每个基本上180b左右 , rate 限制次数 /s
+	limit_req zone=one nodelay;  持续1秒就进行限制
+	limit_req zone=one burst=5;	持续5秒进行限制
+2. 连接限制
+	limit_conn_zone $client_ip zone=addr:20m;	// 如上
+    limit_conn_status 403;	// 如上
+
+
+	limit_conn addr 50;    // 限制次数， 50次每秒
+3. 访问限制
+	if ($uri !~* .(json|html|zip|manifest|txt|project|png|dat)$) {
+            return 403;
+        }
+	正则匹配拓展名, 如果不是,直接抛掉
+4. 系统
+	1. worker_connections 1024; 每个进程处理的数量
+	2. worker_processes auto; 进程自动， 可以设置为别的
+	3. user root;	使用 root权限
+
+
+
+
+
+
+
+
+user root;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 4096;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 2048;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+    limit_req_zone $client_ip zone=one:20m rate=50r/s;
+    limit_req_status 403;
+
+	#limit_conn_zone $client_ip zone=addr:20m;
+    #limit_conn_status 403;
+
+    server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  _;
+        root         /root/mjserver/web-server/public;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        set $client_ip $proxy_add_x_forwarded_for;
+        if ($proxy_add_x_forwarded_for ~ ^(.*),(.*)$) {
+            set $client_ip $1;
+        }
+
+        #add_header X-Client-Ip $client_ip;
+        #add_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        location / {
+            limit_req zone=one burst=5;
+			#limit_conn addr 50;
+        }
+
+        if ($uri !~* .(json|html|zip|manifest|txt|project|png|dat)$) {
+            return 403;
+        }
+
+    }
+
+  server {
+        listen       800 default_server;
+        listen       [::]:800 default_server;
+        server_name  _;
+        root         /root/mjserver/web-server/public;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        set $client_ip $proxy_add_x_forwarded_for;
+        if ($proxy_add_x_forwarded_for ~ ^(.*),(.*)$) {
+            set $client_ip $1;
+        }
+
+        #add_header X-Client-Ip $client_ip;
+        #add_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        location / {
+            limit_req zone=one burst=5;
+			#limit_conn addr 50;
+        }
+
+		if ($uri !~* .(json|html|zip|manifest|txt|project|png|dat)$) {
+            return 403;
+        }
+
+        #error_page 404 /404.html;
+        #   location = /40x.html {
+        #}
+
+        #error_page 500 502 503 504 /50x.html;
+        #   location = /50x.html {
+        #}
+    }
+
+
+# Settings for a TLS enabled server.
+#
+#    server {
+#        listen       443 ssl http2 default_server;
+#        listen       [::]:443 ssl http2 default_server;
+#        server_name  _;
+#        root         /usr/share/nginx/html;
+#
+#        ssl_certificate "/etc/pki/nginx/server.crt";
+#        ssl_certificate_key "/etc/pki/nginx/private/server.key";
+#        ssl_session_cache shared:SSL:1m;
+#        ssl_session_timeout  10m;
+#        ssl_ciphers HIGH:!aNULL:!MD5;
+#        ssl_prefer_server_ciphers on;
+#
+#        # Load configuration files for the default server block.
+#        include /etc/nginx/default.d/*.conf;
+#
+#        location / {
+#        }
+#
+#        error_page 404 /404.html;
+#            location = /40x.html {
+#        }
+#
+#        error_page 500 502 503 504 /50x.html;
+#            location = /50x.html {
+#        }
+#    }
+
+}

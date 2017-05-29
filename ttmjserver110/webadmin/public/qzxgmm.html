@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>强制修改密码</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="newcss/newPhonebind.css"/>
+    <link rel="stylesheet" href="newcss/reset.css"/>
+    <link rel="stylesheet" href="newcss/intlTelInput.css"/>
+</head>
+<body>
+<img  class="img-rounded img-responsive" alt="产品头像表" id="productImg" src=""/>
+<h1 id="title"></h1>
+<form role="form" class="form-horizontal">
+    <div class="form-group">
+        <label for="oldPass" class="col-xs-3 col-xs-offset-1 col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">原密码:</label>
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <input type="password" name="oldPass" class="form-control" id="oldPass" placeholder="输入原密码" required/>
+            <span class="help-block glyphicon glyphicon-info-sign">请填写原密码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="newPass" class="col-xs-3 col-xs-offset-1 col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">新密码:</label>
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <input type="password" name="newPass" class="form-control" id="newPass" placeholder="请输入新密码" required/>
+            <span class="help-block glyphicon glyphicon-info-sign">请输入新密码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="newPassSame" class="col-xs-3 col-xs-offset-1 col-sm-2 col-sm-offset-2 col-md-2 col-md-offset-2 control-label">再次输入:</label>
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <input type="password" name="newPassSame" class="form-control" id="newPassSame" placeholder="请再次输入新密码" required/>
+            <span class="help-block glyphicon glyphicon-info-sign">请填写新密码</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4">
+            <button role="button" class="btn btn-primary btn-block" id="confirmbtn">确定</button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-xs-offset-4 col-sm-offset-4 col-md-offset-4">
+            <a role="button" class="btn btn-primary btn-block" href="login.html">返回</a>
+        </div>
+    </div>
+</form>
+<p class="lead">首次登录的用户必须修改密码</p>
+<script src="script/jquery-1.11.1.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="script/intlTelInput.js"></script>
+<script src="script/slidemenu.js"></script>
+<script src="share.js"></script>
+<script>
+    $(function() {
+        function changeAvatarAndName() {
+            $("#productImg").attr("src", "../" + getGameType(window.location.host).loginImg);
+            $("#title").text(getGameType(window.location.host).name);
+        }
+        changeAvatarAndName();
+        // 输入框的字段校验
+        $("#oldPass").blur(function () {
+            if ($(this).val().length ==0|| $(this).val() == "" || $(this).val() == null) {
+                $(".help-block").eq(0).css("display", "block");
+            } else {
+                $(".help-block").eq(0).css("display", "none");
+            }
+        });
+        $("#oldPass").focus(function () {
+            $(".help-block:gt(0)").css("display", "none");
+        })
+        $("#newPass").blur(function () {
+            if ($(this).val().length == 0 ||  $(this).val() == "" || $(this).val() == null) {
+                $(".help-block").eq(1).css("display", "block").html("请输入新密码");
+            } else if($(this).val()==$("#oldPass").val()){
+                $(".help-block").eq(1).css("display", "block").html("新密码与原密码相同");
+            }else{
+                $(".help-block").eq(1).css("display", "none");
+            }
+        });
+        $("#newPass").focus(function () {
+            $(".help-block").eq(0).css("display", "none");
+            $(".help-block").eq(2).css("display", "none");
+        });
+        $("#newPassSame").keyup(function () {
+            if ($(this).val().length == 0 || $(this).val() == ""|| $(this).val() == null) {
+                $(".help-block").eq(2).css("display", "block").html("请再次输入密码");
+            } else if($(this).val()!=$("#newPass").val()){
+                $(".help-block").eq(2).css("display", "block").html("两次输入的密码不一样");
+            }else{
+                $(".help-block").eq(2).css("display", "none");
+            }
+        });
+        $("#newPassSame").focus(function () {
+            $(".help-block").eq(0).css("display", "none");
+        });
+        $("#confirmbtn").click(function(e){
+            e.preventDefault();
+            var newPass=$("#newPass").val();
+            var newPassSame=$("#newPassSame").val();
+            var oldPass=$("#oldPass").val();
+            postJson("/login/changeMyPass",{ oldPass:oldPass, newPass:newPass },
+                    function(rtn) {
+                        if(rtn == 0)
+                        {
+                            alert("修改成功，请刷新使用新密码重新登录");
+                            $("#newPass").val("");
+                            $("#newPassSame").val("");
+                            $("#oldPass").val("");
+                            window.parent.location.href="/login.html";
+                        }
+                        else alert("修改失败");
+                    });
+        })
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+#!/bin/bash
+currentPath=$PWD
+
+if [ $# != 1 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 2" error;
+exit 1;
+fi
+
+cd ../game-server
+export NODE_PATH=/usr/lib/node_modules
+pomelo start -e ${1} -D -t pkplayer
+
+if [ $? != 0 ];then
+    cd ${currentPath}
+    bash echoColor "${0}: start ${1} failed !" error;
+    exit 1;
+else
+    cd ${currentPath}
+    bash echoColor "${0}: start ${1} Success !" info;
+    exit 0;
+fi

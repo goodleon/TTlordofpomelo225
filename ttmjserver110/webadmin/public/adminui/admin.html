@@ -1,0 +1,85 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/layout.css">
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script> 
+	<script type="text/javascript" src="/share.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.pagination.js"></script>
+	<script type="text/javascript" src="../highchart/highcharts.js"></script>
+	<script type="text/javascript" src="../highchart/layout.js"></script>
+	<script type="text/javascript" src="../highchart/modernizr.js"></script>
+</head>
+<body  class="easyui-layout">
+	<div id="divHeader" data-options="region:'north',border:false,href:'header.html'"></div>
+	<div id="divMenuBar" data-options="region:'west',split:true,collapsed:false,title:'管理后台',href:'menu.html'">
+	</div>
+	<div id="divFooter" data-options="region:'south',border:false,href:'footer.html'">
+	</div>
+	<div id="divContent" data-options="region:'center',title:false">
+		<div id="helpDia"  closed="true" class="easyui-dialog" title="帮助信息" style="width:100%;height:100%;"
+			 data-options="iconCls:'icon-save',resizable:true,modal:true">
+			<div class="easyui-panel" id="p" style="overflow-y:scroll" data-options="width:'100%',height:'100%',left:0,top:10,title:'帮助操作',href:'./helpDoc/bulletinboard.html',closed:true">
+			</div>
+		</div>
+        <div id="tabs" class="easyui-tabs" data-options="fit:true,border:false">
+        </div>
+	</div>
+    <script type="text/javascript">
+ 
+ //    function getIFrame(id)
+	// {
+	//     var content = '<iframe scrolling="auto" frameborder="0"  src="'+id+'" style="width:100%;height:100%;"></iframe>';
+	// 	return content;
+	// }
+    
+ //   $('#leftTree').tree({
+	// 	onClick: function(node){
+	// 		$('#dataTab').tabs('add',{
+	// 			title:node.text,
+	// 			content:getIFrame(node.id+".html"),
+	// 			closable:true,
+	// 			tools:[{
+	// 				iconCls:'icon-mini-refresh',
+	// 				handler:function(){
+	// 					alert('refresh');
+	// 				}
+	// 			}]
+	// 		});
+	// 	}
+ //   });
+ 	 
+	 function refresh(){
+	 	var currTab = $('#tabs').tabs('getSelected'); //获得当前tab
+        var url = currTab.panel('options').href;
+        currTab.panel('open').panel('refresh',url);
+	 }
+	/*function logout()
+	{
+		postJson("/login/doLogout",{  },function(rtn)
+		{
+			window.parent.location.href="/login.html";
+
+		});
+	}*/
+ function logout()
+ {
+	postJson("/login/doLogout",{  },function(rtn)
+	  {
+	 /* var tmp=window.open("about:blank","","fullscreen=1");
+	  tmp.moveTo(0,0);
+	  tmp.resizeTo(screen.width+20,screen.height);
+	  tmp.focus();
+	  tmp.location='/login.html';*/
+	  /* window.parent.open("/login.html");*/
+	  // window.parent.open ('/login.html', '_blank'); //这句要写成一行
+	  window.parent.location.href="/login.html";
+	  });
+ }
+	</script>
+</body>
+</html>

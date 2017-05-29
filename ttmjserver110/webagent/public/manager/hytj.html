@@ -1,0 +1,355 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+</head>
+<body  class="easyui-layout">
+<div>
+    <input class="easyui-datebox" id="db"/>
+    <a href="#" class="easyui-linkbutton" onclick="searchForTJData()">按月查询</a>
+    <a href="#" class="easyui-linkbutton" onclick="downLoadXls()">下载excel</a>
+</div>
+<table  id="tt" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+        data-options="singleSelect:true,collapsible:true">
+    <thead>
+    <tr>
+        <th data-options="field:'_id',width:80">日期</th>
+        <th data-options="field:'sumRegCount',width:80">总注册人数</th>
+        <th data-options="field:'regCount',width:80">注册新增</th>
+        <!--<th data-options="field:'buyUserAdd',width:80">新增充值人数</th>&lt;!&ndash;新增&ndash;&gt;-->
+        <!--<th data-options="field:'buyUserAddRatio',width:80">新增充值比例</th>&lt;!&ndash;新增&ndash;&gt;-->
+        <th data-options="field:'loginCount',width:80">登录人数</th>
+        <th data-options="field:'buyUserCount',width:80">充值人数</th>
+        <th data-options="field:'chargePer',width:80">付费比例</th>
+        <th data-options="field:'buyCount',width:80">充值次数</th>
+        <th data-options="field:'buyNum',width:80">充值数量-钻</th><!--新增-->
+        <th data-options="field:'aveDia',width:80">人均充值-钻</th><!--新增-->
+        <th data-options="field:'buyMoney',width:80">充值金额-元</th>
+        <th data-options="field:'aveMoney',width:80">人均充值-元</th>
+        <th data-options="field:'diaPrice',width:80">钻石单价-元/钻</th><!--新增-->
+        <th data-options="field:'sellUserCount',width:80">销售人数</th>
+        <!--<th data-options="field:'sellRatio',width:80">销售比例</th>&lt;!&ndash;新增&ndash;&gt;-->
+        <th data-options="field:'sellCount',width:80">销售次数</th>
+        <th data-options="field:'sellNum',width:80">销售数量-钻</th><!--新增-->
+        <th data-options="field:'fillMembersMoney',width:80">会员补钻</th>
+        <th data-options="field:'memberMoney',width:80">会员余钻-钻</th>
+        <th data-options="field:'userCount7',width:100">7日充值活跃</th>
+        <th data-options="field:'userCount15',width:100">15日充值活跃</th>
+        <th data-options="field:'userCount30',width:100">30日充值活跃</th>
+        <th data-options="field:'userMoney7',width:120">7日充值活跃库存-钻</th>
+        <th data-options="field:'userMoney15',width:120">15日充值活跃库存-钻</th>
+        <th data-options="field:'userMoney30',width:120">30日充值活跃库存-钻</th>
+    </tr>
+    </thead>
+</table>
+<script type="text/javascript">
+    var xls=[{
+        _id:"日期",
+        regCount:"注册新增",
+        sumRegCount:"注册总人数",
+        buyUserCount:"充值人数",
+        loginCount:"登录人数",
+        chargePer:"付费比例",
+        buyCount:"充值次数",
+        buyMoney:"充值金额-元",
+        aveMoney:"人均充值-元",
+        sellUserCount:"销售人数",
+        sellCount:"销售次数",
+        buyNum:"充值数量-钻",//新增
+        diaPrice:"钻石单价-元/钻",//新增
+        sellNum:"销售数量-钻",//新增
+        aveDia:"人均充值-钻",//新增
+        /*      buyUserAdd:"新增充值人数",//新增
+         buyUserAddRatio:"新增充值比例",//新增
+         sellRatio:"销售比例",//新增
+         */
+        fillMembersMoney:"会员补钻",
+        memberMoney:"会员余钻-钻",
+        userCount7:"7日充值活跃",
+        userCount15:"15日充值活跃",
+        userCount30:"30日充值活跃",
+        userMoney7:"7日充值活跃库存-钻",
+        userMoney15:"15日充值活跃库存-钻",
+        userMoney30:"30日充值活跃库存-钻"
+    }];
+    var xls1=[];
+    function compute(tableName,colName){
+        var rows = $('#'+tableName).datagrid('getRows');
+        var total = 0;
+        for (var i = 1; i < rows.length; i++) {
+            if(!rows[i][colName]){
+                rows[i][colName]=0;
+            }
+            total += parseFloat(rows[i][colName]);
+        }
+        return total;
+    }
+
+    function computeAll(tableName){
+        var rows = $('#'+tableName).datagrid('getRows');
+        var data = {};
+        for (var i = 0; i < rows.length; i++) {
+
+            for (var key in rows[i])
+            {
+                if(!data[key])
+                {
+                    data[key] = 0;
+                }
+                if(typeof rows[i][key] == 'string')
+                {
+                    if(rows[i][key].indexOf("%")>=0){
+                        rows[i][key]=rows[i][key].replace(/%/g,"");
+                    }
+                    data[key] += isNaN(parseFloat(rows[i][key]))?0:parseFloat(rows[i][key]);
+                }
+                else
+                {
+                    data[key] += rows[i][key];
+                }
+            }
+        }
+        return data;
+    }
+    function searchForTJData() {
+        var startDate=$("#db").datebox('getValue');
+        if(!startDate){
+            $.messager.alert("操作提示","请选择月份","error");
+            return;
+        }
+        var dateArr=startDate.split('-');
+        if(dateArr[1]<10){
+            dateArr[1]='0'+dateArr[1];
+        }
+        startDate=dateArr[0]+dateArr[1];
+        postJson("/memberData/getMemberStatistics", {month: startDate}, function (data) {
+            if (data && data.rows) {
+                xls1=[];
+                var row = {};
+                for (var i = 0; i < data.rows.length; i++) {
+                    /*chargePer:"付费比例"*/
+                    /*付费比例（chargePer）=充值人数（buyUserCount）/登录人数(loginCount)*/
+                    if (!data.rows[i]["loginCount"] || data.rows[i]["loginCount"] == 0 || data.rows[i]["loginCount"] == '0') {
+                        data.rows[i]["chargePer"] = 0.00+"%";
+                    } else {
+                        if(data.rows[i]["buyUserCount"]){
+                            data.rows[i]["chargePer"] = (data.rows[i]["buyUserCount"] / data.rows[i]["loginCount"]*100).toFixed(2)+"%";
+                        }else{
+                            data.rows[i]["chargePer"] = 0.00+"%";
+                        }
+                    }
+                    /*人均充值-元*/
+                    /* regCount:"注册新增",
+                     buyMoney:"充值金额-元",
+                     buyUserCount:"充值人数",
+                     aveMoney:"人均充值-元",
+                     */
+                    /*人均充值-元（aveMoney）=注册新增(regCount)/充值人数（buyUserCount）*/
+                    if (!data.rows[i]["buyUserCount"] || data.rows[i]["buyUserCount"] == 0 || data.rows[i]["buyUserCount"] == '0') {
+                        data.rows[i]["aveMoney"] = 0.00;
+                    } else {
+                        if(data.rows[i]["buyMoney"]){
+                            data.rows[i]["aveMoney"] = (data.rows[i]["buyMoney"] / data.rows[i]["buyUserCount"]).toFixed(2);
+                        }else{
+                            data.rows[i]["aveMoney"] = 0.00;
+                        }
+                    }
+                    data.rows[i]["memberMoney"]=parseInt(data.rows[i]["memberMoney"]);
+                    /*
+                     /*buyUserAdd:"新增充值人数",//新增
+                     buyUserAddRatio:"新增充值比例",//新增
+                     buyDiaCount:"充值数量-钻",//新增
+                     aveDia:"人均充值-钻",//新增
+                     sellRatio:"销售比例",//新增
+                     sellAmount:"销售数量-钻",//新增
+                     diaPrice:"钻石单价-元/钻",//新增*/
+                    /* 计算钻石单价(diaPrice)=充值金额(buyMoney)/充值数量(buyNum)*/
+                    if (!data.rows[i]["buyNum"] || data.rows[i]["buyNum"] == 0 || data.rows[i]["buyNum"] == '0') {
+                        data.rows[i]["diaPrice"] = 0;
+                    } else {
+                        data.rows[i]["diaPrice"] = (data.rows[i]["buyMoney"] / data.rows[i]["buyNum"]).toFixed(2);
+                    }
+                    /*新增充值比例(buyUserAddRatio)=新增充值人数(buyUserAdd)/注册新增（regCount);*/
+                    /* if (!data.rows[i]["regCount"] || data.rows[i]["regCount"] == 0 || data.rows[i]["regCount"] == '0') {
+                     data.rows[i]["buyUserAddRatio"] = 0;
+                     } else {
+                     data.rows[i]["buyUserAddRatio"] = (data.rows[i]["buyUserAdd"] / data.rows[i]["regCount"]*100).toFixed(2)+"%";
+                     }
+                     * */
+                    /*人均充值-钻(aveDia)=充值数量-钻（buyNum）/充值人数（buyUserCount）*/
+                    /*人均充值-钻(aveDia)=充值数量-钻（buyNum）/充值人数（buyUserCount）*/
+                    if (!data.rows[i]["buyUserCount"] || data.rows[i]["buyUserCount"] == 0 || data.rows[i]["buyUserCount"] == '0') {
+                        data.rows[i]["aveDia"] = 0;
+                    } else {
+                        if(!data.rows[i]["buyNum"]){
+                            data.rows[i]["buyNum"]=0;
+                        }
+                        data.rows[i]["aveDia"] = (data.rows[i]["buyNum"] / data.rows[i]["buyUserCount"]).toFixed(2);
+                    }
+                    /*钻石单价（diaPrice）=充值金额(buyMoney)/充值数量(buyNum)*/
+                    /*
+                     if (!data.rows[i]["buyDiaCount"] || data.rows[i]["buyDiaCount"] == 0 || data.rows[i]["buyDiaCount"] == '0') {
+                     data.rows[i]["diaPrice"] = 0;
+                     } else {
+                     data.rows[i]["diaPrice"] = (data.rows[i]["buyMoney"] / data.rows[i]["buyDiaCount"]).toFixed(2);
+                     }
+                     * */
+                    /*销售比例（sellRatio）=销售人数（sellUserCount）/注册总人数（sumRegCount）*/
+                    /*
+                     if (!data.rows[i]["sumRegCount"] || data.rows[i]["sumRegCount"] == 0 || data.rows[i]["sumRegCount"] == '0') {
+                     data.rows[i]["sellRatio"] = 0.00+"%";
+                     } else {
+                     data.rows[i]["sellRatio"] = (data.rows[i]["sellUserCount"] / data.rows[i]["sumRegCount"]*100).toFixed(2)+"%";
+                     }
+                     *  */
+                    if(!data.rows[i]["buyNum"]){
+                        data.rows[i]["buyNum"]="-";
+                    }
+                    if(!data.rows[i]["sellNum"]){
+                        data.rows[i]["sellNum"]="-";
+                    }
+                }
+                xls1 = xls.concat(data.rows.reverse());
+                /*  if (data) {
+                 $("#tt").datagrid("loadData", data);
+                 row["_id"]='合计';
+                 row["regCount"]='';
+                 row["buyUserCount"]='';
+                 row["loginCount"]='';
+                 row["buyCount"]=compute("tt","buyCount");
+                 row["buyMoney"]=compute("tt","buyMoney");
+                 row["sellUserCount"]='';
+                 row["sellCount"]=compute("tt","sellCount");
+                 row["sellMoney"]=compute("tt","sellMoney");
+                 row["fillMembersMoney"]=compute("tt","fillMembersMoney");
+                 row["memberMoney"]='';
+                 row["chargePer"]='';
+                 row["aveMoney"]='';
+                 $("#tt").datagrid('appendRow',row);
+                 xls.push(row);
+                 } else {
+                 $.messager.alert("操作提示", "数据请求失败", "error");
+                 }*/
+                $("#tt").datagrid("loadData", data);
+                var tableName = "tt";
+                var tData = computeAll(tableName);
+                var table = $('#'+ tableName).datagrid('getRows');
+                /*   buyUserAdd:"新增充值人数",//新增
+                 buyUserAddRatio:"新增充值比例",//新增
+                 buyNum:"充值数量-钻",//新增
+                 aveDia:"人均充值-钻",//新增
+                 sellRatio:"销售比例",//新增
+                 sellNum:"销售数量-钻",//新增
+                 diaPrice:"钻石单价-元",//新增*/
+                row["_id"]='合计';
+                /*新增start*/
+                row["diaPrice"]="-";
+                row["buyNum"]=tData["buyNum"];
+                row["sellNum"]=tData["sellNum"];
+                /* row["buyUserAdd"]=tData["buyUserAdd"];
+                 row["buyUserAddRatio"]="-";
+                 row["aveDia"]=tData["aveDia"];
+                 row["sellRatio"]="-";*/
+                /*新增end*/
+                row["regCount"]=tData["regCount"];
+                row["sumRegCount"]=tData["sumRegCount"];
+                row["buyUserCount"]=tData["buyUserCount"];
+                row["loginCount"]=tData["loginCount"];
+                row["buyCount"]=tData["buyCount"];
+                row["buyMoney"]=tData["buyMoney"];
+                row["sellUserCount"]=tData["sellUserCount"];
+                row["sellCount"]=tData["sellCount"];
+                row["sellMoney"]=tData["sellMoney"];
+                row["fillMembersMoney"]=tData["fillMembersMoney"];
+                row["memberMoney"]=tData["memberMoney"];
+                row["userCount7"]="-",
+                        row["userCount15"]="-",
+                        row["userCount30"]="-",
+                        row["userMoney7"]="-",
+                        row["userMoney15"]="-",
+                        row["userMoney30"]="-"
+                if(table.length){
+                    row["chargePer"]=(tData["chargePer"]/table.length*100).toFixed(2)+"%";
+                    row["aveMoney"]=(tData["aveMoney"]/table.length).toFixed(2);
+                }else{
+                    row["chargePer"]=0.00+"%";
+                    row["aveMoney"]=0.00;
+                }
+                $("#tt").datagrid('appendRow',row);
+                xls1.push(row);
+            }
+            else {
+                $.messager.alert("操作提示", "数据请求失败", "error");
+            }
+        });
+    }
+    //数据格式
+    function downLoadXls(){
+        if(!xls1)
+        {
+            $.messager.alert("操作提示", "无数据可导出1","error");
+            return;
+        }
+        postJson("/tools/downloadExcelFile",{data:xls1},
+                function(data)
+                {
+                    console.log(data);
+                    if(data)
+                    {
+                        console.log(parent.document.location.origin);
+                        document.location.href = parent.document.location.origin  + data;
+                    }else
+                    {
+                        $.messager.alert("操作提示", "无数据可导出2","error");
+                    }
+                });
+
+    }
+    $(function () {
+        var db = $('#db');
+        db.datebox({
+            onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); //触发click事件弹出月份层
+                if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                    tds = p.find('div.calendar-menu-month-inner td');
+                    tds.click(function (e) {
+                        e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+                        var year = /\d{4}/.exec(span.html())[0]//得到年份
+                                , month = parseInt($(this).attr('abbr'), 10); //月份，这里不需要+1
+                        db.datebox('hidePanel')//隐藏日期对象
+                                .datebox('setValue', year + "-" + month); //设置日期的值
+                    });
+                }, 0);
+                yearIpt.unbind();//解绑年份输入框中任何事件
+            },
+            parser: function (s) {
+                if (!s) return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            formatter: function (d) {
+                return d.getFullYear()+ '-'+(d.getMonth()+1);
+            }
+        });
+        var p = db.datebox('panel'), //日期选择对象
+                tds = false, //日期选择对象中月份
+                aToday = p.find('a.datebox-current'),
+                yearIpt = p.find('input.calendar-menu-year'),//年份输入框
+        //显示月份层的触发控件
+                span = aToday.length ? p.find('div.calendar-title span') ://1.3.x版本
+                        p.find('span.calendar-text'); //1.4.x版本
+        if (aToday.length) {//1.3.x版本，取消Today按钮的click事件，重新绑定新事件设置日期框为今天，防止弹出日期选择面板
+
+            aToday.unbind('click').click(function () {
+                var now = new Date();
+                db.datebox('hidePanel').datebox('setValue', now.getFullYear() + (now.getMonth() + 1));
+            });
+        }
+    });
+</script>
+</body>
+</html>

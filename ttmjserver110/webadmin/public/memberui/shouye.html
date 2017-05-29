@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+
+    <title>Login</title>
+
+    <link href="../lvcss/style.css" rel="stylesheet">
+    <link href="../lvcss/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<style>
+    .ponsive{
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        position: absolute;
+        z-index: 10;
+        left: 20px;
+     }
+     .sive {
+        width: 16px;
+        height: 16px;
+        display: inline-block;
+        position: absolute;
+        left: 20px;
+    }
+</style>
+<body class="login-body">
+    
+<h1 style="text-align:center;margin-top:100px;font-weight:bold;" id="title"> 
+    <img src="../img/avater.png" style="width:100px;height:100px;" id="image" alt="头像">江苏麻将代理后台
+</h1>
+
+<div class="container">
+    <form class="form-signin" action="">
+        <div class="login-wrap">
+            <input type="text" class="form-control" id="mid"  placeholder="请输入用户名" onblur="GetPwdAndChk()" required>
+            <input type="password" class="form-control" id="mPass" placeholder="请输入密码" required>
+                <!-- <input type="checkbox" id="mark" value="remember-me"><a href="tuiguangxx.html">用户推广协议</a> -->
+                     <span class="pull-left">
+
+                        <img src="../img/check.png"  id="mark" class="ponsive"/><img src="../img/checkedbox.png" class="sive"/>
+                        <input type="checkbox" name="check" id="check" checked="checked"/> <a href="###" style="color:#000;">同意《用户使用协议》</a>
+
+                     <a href="wangjimm.html" style="color:#D82727;margin-left:60px;"> 忘记密码</a>
+                </span>
+            <button class="btn btn-lg btn-login btn-block" id="check" type="submit">
+                登录
+            </button>
+           
+            <label class="checkbox"></label>
+    </form>
+    </div>
+</div>
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/modernizr.min.js"></script>
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script scr="../share.js"></script>
+<script>
+    var isPostBack = "<%= IsPostBack %>";
+    $(document).ready(function(){
+
+        var mark = document.getElementById("mark");
+
+        var check = document.getElementById("check");
+
+        changeAvatarAndName();
+
+        check.addEventListener("click", function() {
+            if (check.checked) {
+                mark.style.display = "block";
+            } else {
+                mark.style.display = "none";
+            }
+        }, 'false');
+        document.onkeydown=function(e){
+            var keycode=document.all?event.keyCode:e.which;
+            if(keycode==13){
+                doLogin();
+            };
+        };
+    });
+    //从后台获取头像和标题进行动态添加其中getGameType方法 在share.js中存放
+    function changeAvatarAndName() {
+        $("#image").attr("src", getGameType(window.location.host).loginImg);
+        $("#title").text(getGameType(window.location.host).name);
+    }
+    //以下是点击登录按钮触发的函数
+     function doLogin(){
+         var host = window.location.host.split(".");
+         var msg={mid:parseFloat($("#mid").val()), mPass:$("#mPass").val() };
+
+         if(host[0] == "pdk" || host[0] == "phz"|| host[0] == "ddz"|| host[0] == "scmj"){
+             msg.gameid = host[0];
+         }
+
+         if(msg.mid>100000&&msg.mPass.length>0)
+             postJson("/login/doLogin",msg,function(rtn){
+                 if(typeof(rtn) == 'object') {
+
+                     if(rtn.banDays) {
+
+                         $(".alert").eq(0).alertModal('您的账号被封禁，请在' + rtn.banDays + '天后尝试登录',2000);
+
+                     } else if(rtn.banMins) {
+
+                         $(".alert").eq(0).alertModal('您的账号被封禁，请在' + rtn.banMins + '分钟后尝试登录',2000);
+                     }
+
+                 } else if(typeof(rtn)=='string') {
+
+                     window.location.href=rtn;
+
+                 } else {
+
+                     $(".alert").eq(0).alertModal('用户名或者密码错误',2000);
+
+                 }
+             });
+         //取用户名
+         var usr = document.getElementById('mid').value;
+         SetLastUser(usr);
+         //如果记住密码选项被选中
+         if (document.getElementById('rememberpass').checked == true) {
+             //取密码值
+             var pwd = document.getElementById('mPass').value;
+             // alert(pwd);
+             var expdate = new Date();
+             expdate.setTime(expdate.getTime() + 14 * (24 * 60 * 60 * 1000));
+             //将用户名和密码写入到Cookie
+             SetCookie(usr, pwd, expdate);
+         } else {
+             //如果没有选中记住密码,则立即过期
+             ResetCookie();
+         }
+     }
+    $("#doLogin").click(function(e){
+        e.preventDefault();
+        doLogin();
+    });
+    // 以下是实现了cookie的记住密码功能
+    window.onload=function onLoginLoaded() {
+        if (isPostBack == "False") {
+            GetLastUser();
+        }
+    };
+
+    function GetLastUser() {
+        var id = "49BAC005-7D5B-4231-8CEA-16939BEACD67";//GUID标识符
+        var usr = GetCookie(id);
+        if (usr != null) {
+            document.getElementById('mid').value = usr;
+        } else {
+            document.getElementById('mid').value = "001";
+        }
+        GetPwdAndChk(); 
+    }
+
+    //用户名失去焦点时调用该方法
+    function GetPwdAndChk() {
+        var usr = document.getElementById('mid').value;
+        var pwd = GetCookie(usr);
+        if (pwd != null) {
+            document.getElementById('rememberpass').checked = true;
+            document.getElementById('mPass').value = pwd;
+        } else {
+            document.getElementById('rememberpass').checked = false;
+            document.getElementById('mPass').value = "";
+        }
+    }
+
+    //
+    function GetCookie(name) {
+        var arg = name + "=";
+        var alen = arg.length;
+        var clen = document.cookie.length;
+        var i = 0;
+        while (i < clen) {
+            var j = i + alen;
+            //alert(j);
+            if (document.cookie.substring(i, j) == arg) return getCookieVal(j);
+            i = document.cookie.indexOf(" ", i) + 1;
+            if (i == 0) break;
+        }
+        return null;
+    }
+
+    function getCookieVal(offset) {
+        var endstr = document.cookie.indexOf(";", offset);
+        if (endstr == -1) endstr = document.cookie.length;
+        return unescape(document.cookie.substring(offset, endstr));
+    }
+
+    //
+    function SetLastUser(usr) {
+        var id = "49BAC005-7D5B-4231-8CEA-16939BEACD67";
+        var usr = document.getElementById('mid').value;
+        var expdate = new Date();
+        //当前时间加上两周的时间
+        expdate.setTime(expdate.getTime() + 14 * (24 * 60 * 60 * 1000));
+        SetCookie(id, usr, expdate);
+    }
+
+    function SetCookie(name, value, expires) {
+        var argv = SetCosokie.arguments;
+        //本例中length = 3
+        var argc = SetCookie.arguments.length;
+        var expires = (argc > 2) ? argv[2] : null;
+        var path = (argc > 3) ? argv[3] : null;
+        var domain = (argc > 4) ? argv[4] : null;
+        var secure = (argc > 5) ? argv[5] : false;
+        document.cookie = name + "=" + escape(value) + ((expires == null) ? "" : ("; expires=" + expires.toGMTString())) + ((path == null) ? "" : ("; path=" + path)) + ((domain == null) ? "" : ("; domain=" + domain)) + ((secure == true) ? "; secure" : "");
+    }
+
+    function ResetCookie() {
+        var usr = document.getElementById('mid').value;
+        var expdate = new Date();
+        SetCookie(usr, null, expdate);
+    }
+
+</script>
+</body>
+</html>

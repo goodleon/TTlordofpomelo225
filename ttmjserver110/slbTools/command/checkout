@@ -1,0 +1,82 @@
+#!/bin/sh
+#负载均衡标志 LB
+#数据服 data master
+#登录玩家服 loginPkplayer
+#房间服 room
+#链接服 link
+#参数1 项目名
+#参数2 master或者rollback 
+MODULE="`hostname|awk -F- '{print $2}'`"
+MODULE=$(echo ${MODULE}|tr A-Z a-z)
+echo "MOUDLE=$MODULE"
+PRO=$(echo $1|tr A-Z a-z)
+echo $PRO
+BRANCH=$(echo $2|tr A-Z a-z)
+echo $BRANCH
+DIRS=""
+
+CHECK_OUT(){
+  if [ ! -d /root/$1 ];then
+    echo "/root/$1 not exist!"
+    exit 1
+  fi    
+  cd /root/${1}
+  git checkout ${2} 2>/tmp/${1}
+  if [ $? -eq 0 ];then
+    echo -e "\033[32m ${1} git checkout ${2} success. \033[0m"
+  else
+    echo -e "\033[31m ${1} git checkout ${2} fail. \033[0m"
+    DATE_DIR=`date "+%Y%m%d_%H%M%S"`
+    echo ${DATE_DIR}
+    mkdir -p /home/backup/${1}/${DATE_DIR}
+    echo -e "\033[32m mv files to /home/backup/${1}/${DIR_DIR} \033[0m"
+    for line in `cat /tmp/${1}|grep -v "error:"|grep -v "Aborting"|grep -v "changes or stash them"|xargs`
+    do
+      cd /root/${1}
+      mv ${line} /home/backup/${1}/${DATE_DIR}
+    done
+  cd /root/${1}
+  git checkout ${2} 2>/tmp/${1}
+  if [ $? -eq 0 ];then
+    echo -e "\033[32m ${1} git checkout ${2} success. \033[0m"
+  else
+    echo "\033[31m ${1} git checkout ${2} fail. \033[0m"
+    exit 1
+  fi
+  fi
+}
+
+###main ####
+if [ -z ${1} -o -z ${2} ];then
+    echo "用法: sh checkout 项目名 分支名"
+    exit 1
+fi
+if [ ! -d /root/${PRO} ];then
+  echo "/root/${PRO} not exist!"
+  exit 1
+fi
+
+#if [ "$BRANCH" != "master" -a "$BRANCH" != "rollback" ];then
+  #echo "branch error"
+  #exit 1
+#fi
+  
+
+
+if [ "${MODULE}" == "lb" -o "${MODULE}" == "data" -o "${MODULE}" == "master" ];then
+   DIRS="${PRO} ${PRO}_web ${PRO}_zip"
+  echo $DIRS
+  for dir in `echo $DIRS|xargs` 
+  do
+    CHECK_OUT ${dir} ${BRANCH}
+  done
+elif [ "${MODULE}" == "loginpkplayer" -o "${MODULE}" == "room" ];then
+  DIRS="${PRO}"
+  for dir in `echo $DIRS|xargs`
+  do
+    echo 2
+    CHECK_OUT ${dir} ${BRANCH}
+  done
+else
+  echo "not need to checkout."
+fi

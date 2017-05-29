@@ -1,0 +1,118 @@
+bash执行的shell都在/root/mjserver/command目录下
+***表示项目名称，例如：hnmj
+
+
+1.停止服务
+	bash stop
+
+	连接服查看连接数为0，才可以重启
+	netstat -an |grep ':150' |grep 'tcp' |wc -l
+
+2.记录 项目/mjserver/webadmin  当前版本，保存好
+
+	git log -1
+
+3.备份	webadmin/*.json     项目/web/*.json
+	git status
+	
+	备份notice.json alipay/***.json等有修改的json到/home/jsonbackup/  注意检查/config/***.json
+
+4.更新  游戏项目/mjserver/webadmin代码
+	
+	git pull，注意冲突 git checkout .
+	
+	如果有冲突将备份的notice.json alipay/***.json检查并覆盖回来
+	
+	
+	见第六步：*******************
+	注意更新香港服务器的项目目录************************
+	注意香港服务器JSON SERVERS配置，全部修改为本服IP*****************************
+	
+	
+	
+5.更新负载均衡服务器
+	登录负载均衡服务器查看是否有维护项目的目录，如果有，执行：
+	
+	cd /root/***
+	git checkout .
+	git pull
+	
+	
+	对比负载均衡服务器下的json文件与webadmin所在服务器项目目录下的json文件，如果有新增文件，执行：
+	
+	wget http://webadin服务器IP:800/***/新增json文件名
+
+
+6.更新境外服务器
+	ps ax | grep web
+	查看境外服务器是否存在 web进程
+	如果没有 
+	cd /root/mjserver/command/
+	bash web
+	
+	登录境外服务器, 进入相应的项目文件夹
+	cd /root/***
+	git checkout .
+	git pull
+	
+	cd /root/mjserver/crontab/
+	bash setText servers原始地址  现有地址  项目名(如果主机名和项目名相同可不填)
+	bash setText '120.55.226.152:15010:15039,218.11.0.218:15010:15039' '47.89.10.195:15010:15039' fjmj
+	bash setText '120.55.226.152:15010:15039,218.11.0.218:15010:15039' '47.89.10.195:15010:15039' 
+	
+
+7.重启服务器
+	连接服查看连接数为0，才可以重启
+
+	重启前df检查磁盘，top检查mongod占用的内存
+
+	重启顺序
+
+
+	1)如果只有一台服务器
+		bash autostart
+
+	2)多台服务器：
+
+		数据服：
+			bash data ***
+		
+		pkplayer/login可能和master在一起，需要单独启动
+			bash pkplayer ***
+		
+			bash login ***
+		
+		如果pkplayer/login在独立服务器
+		
+			bash autostart
+		
+		启动login后需要
+		使用top观察数据服的mongo cpu，等cpu正常后才能启动其他服务
+		
+		房间：
+			bash autostart / bash room ***
+		
+		连接：
+			bash autostart / bash link ***
+		
+		
+		查看各个服务器的端口，特别是连接服
+		连接服 ：netstat -an |grep ':150' |grep 'tcp' |wc -l
+		
+		
+		在数据服启动web和webadmin 
+			bash web
+		
+			bash admin ***(注意：ddz在pkplayer)
+		
+		启动活动服务器
+			bash activity ***
+	
+	3)绑定CPU
+		目前主要针对压力大的项目pkcon与pkroom
+	
+		bash setCpu
+		
+8.测试
+	1）查看客户端的更新版本号 **.**.**
+	2）需要创建房间并加入一个帐号

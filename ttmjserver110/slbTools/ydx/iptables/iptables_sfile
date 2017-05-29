@@ -1,0 +1,35 @@
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:TEST - [0:0]
+-A INPUT -j TEST
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -i eth1 -d 114.55.218.189 --syn -m recent --name suduip --rcheck --seconds 1 --hitcount 15 -j DROP
+-A INPUT -p tcp -i eth1 -d 114.55.218.189 --syn -m recent --name suduip --set
+-A INPUT -i eth1 -p tcp -m tcp -d 114.55.218.189 --syn -m connlimit --connlimit-above 50 --connlimit-mask 32 --connlimit-saddr -j DROP
+-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG SYN -m length --length 0:128 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 88 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 800 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 2010:2039 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 3001 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 3005 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 4005 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 5030:5069 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 6030:6069 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 15010:15039 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 15120:15149 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 16010:16039 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 16120:16149 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 27017 -j ACCEPT
+-A INPUT -j DROP
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j TEST
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+-A OUTPUT -j TEST
+-A TEST -j RETURN
+COMMIT

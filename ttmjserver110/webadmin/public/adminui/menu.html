@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript" src="/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+</head>
+<body>
+<div class="accordion" data-options="fit:true,border:false,multiple:true">
+	<div class="easyui-accordion" data-options="multiple:true">
+		<div title="运营数据" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr0" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id="bulletinboard.html"><span>数据分析</span></li>
+				<li id="zxrs.html"><span>在线人数</span></li>
+			</ul>
+		</div>
+	</div>
+	<div class="easyui-accordion" data-options="multiple:true">
+		<div title="财务数据" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr1" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='memberTransactionRecord.html'><span>用户消费详情</span></li>
+				<li id='tradingVolumeD.html'><span >财务统计(日)</span></li>
+				<li id='tradingVolumeW.html'><span >财务统计(周)</span></li>
+				<li id='memuserdata.html'>会员/用户数据</li>
+			</ul>
+		</div>
+	</div>
+	<div class="easyui-accordion">
+		<div title="权限管理" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr2" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='qxdj.html'><span>权限等级</span></li>
+			</ul>
+		</div>
+	</div>
+	<div class="easyui-accordion">
+		<div title="客服管理" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr3" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='kfgl.html'><span>客服管理</span></li>
+				<li id='kftj.html'><span>客服统计</span></li>
+				<li id='customerStatistics.html'><span>客服业绩</span></li>
+			</ul>
+		</div>
+
+	</div>
+
+	<div class="easyui-accordion">
+		<div title="会员管理" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr4" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='hygl.html'><span>会员管理</span></li>
+				<li id='hytj.html'><span>会员统计</span></li>
+				<li id='hyyj.html'><span>会员业绩</span></li>
+				<li id='bzlogs.html'><span>补钻日志</span></li>
+				<li id='memberRetention.html'><span>会员留存</span></li>
+
+				<li id='fljs.html'><span>会员返利</span></li>
+				<li id='hysh.html'><span>会员审核</span></li>
+			</ul>
+		</div>
+	</div>
+	<div class="easyui-accordion">
+		<div title="用户管理" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr5" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='yhgl.html'><span>用户管理</span></li>
+				<li id='yhtj.html'><span>用户统计</span></li>
+				<li>
+					<span>对战查询</span>
+					<ul>
+						<li id='dztj.html'><span>对战统计</span></li>
+						<li id='daydz.html'><span>24小时对战查询</span></li>
+						<li id='prodz.html'><span>各产品对战查询</span></li>
+					</ul>
+				</li>
+				<li id='yhcx.html'><span>用户查询</span></li>
+				<li id="cccx.html"><span>场次查询</span></li>
+				<li id='yhxf.html'><span>用户消费</span></li>
+				<li>
+					<span>每日查询</span>
+					<ul>
+						<li id='login_ana.html'><span>每日在线</span></li>
+						<li id='act_ana.html'><span>每日活跃</span></li>
+						<li id='countNo.html'><span>每日场次</span></li>
+					</ul>
+				</li>
+				<li id='IPdistribution.html'><span>IP分布</span></li>
+			</ul>
+		</div>
+	</div>
+	<div class="easyui-accordion">
+		<div title="支付管理" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr6" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='alipayConfig.html'><span>支付配置</span></li>
+				<li id='wxshpayconf.html'>微信审核配置</li>
+				<li id='bzconfig.html'>补钻配置</li>
+				<li id='playerWxConf.html'>玩家微信支付配置</li>
+				<li id='rebateConfig.html'><span>返利配置</span></li>
+			</ul>
+		</div>
+
+	</div>
+	<div class="easyui-accordion">
+		<div title="运营管理" style="padding:0;" selected="true">
+			<ul class="easyui-tree" id="tr7" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='yxmf.html'><span>游戏免费</span></li>
+				<li id='yxmf1.html'><span>游戏免费1</span></li>
+				<li id='hdgl.html' class="insert"><span>活动管理</span></li>
+				<li id='kjhd.html'><span>快捷活动</span></li>
+
+				<li id='xxgg.html'><span>信息公告</span></li>
+				<li id='xtsz.html'><span>系统设置</span></li>
+				<li id='opLog.html'><span>操作日志</span></li>
+			</ul>
+		</div>
+	</div>
+	<div class="easyui-accordion">
+		<div title="其他后台" style="padding:0;" selected="true" data-options="multiple:true">
+			<ul class="easyui-tree" id="tr8" data-options="animate: true,onClick: function(node){addNewTab(node.text,node.id);clearother(node);}">
+				<li id='../memberui/member.html'><span>客服后台(当前版本)</span></li>
+				<li id='../newmember/index.html'><span>代理后台(当前版本)</span></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		if(getGameType(window.location.host).jbcBtn){
+			$(".insert").before("<li class='jbcConfig'><span>金币场配置</span><ul><li id='jbcpz.html'>兑换配置</li><li id='countervail.html'>底分配置</li><li id='pushMoney.html'>抽水比例</li><li id='presentedConfig.html'>赠送比例</li></ul></li>");
+		}
+	});
+</script>
+</body>
+</html>

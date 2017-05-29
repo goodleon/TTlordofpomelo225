@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+</head>
+<body class="easyui-layout">
+<div title="allServer" style="margin:2px 0;">
+&nbsp;&nbsp;&nbsp; <a href="#" class="easyui-linkbutton" onclick="ReloadServer(0)">加载房间代码</a>
+    <a href="#" class="easyui-linkbutton" onclick="autoRestart()">重启所有</a>
+    <a href="#" class="easyui-linkbutton" onclick="contentNum()">测试连接数</a>
+</div>
+
+<div title="allServer" style="margin:2px 0;">
+&nbsp;&nbsp;  <a href="#" class="easyui-linkbutton" onclick="runAllCommand(1)">查看磁盘占用</a>
+    <a href="#" class="easyui-linkbutton" onclick="runAllCommand(2)">查看Tcp连接数</a>
+    <a href="#" class="easyui-linkbutton" onclick="runAllCommand(3)">查看Tcp连接数统计</a>
+    <a href="#" class="easyui-linkbutton" onclick="runAllCommand(4)">查看内存</a>
+    <a href="#" class="easyui-linkbutton" onclick="runAllCommand(5)">查看Cpu</a>
+    <a href="#" class="easyui-linkbutton" onclick="runAllCommand(6)">查看网络</a>
+</div>
+
+<div title="abc" style="height: 95%;">
+    <table id="dg" class="easyui-datagrid" title="服务器列表" style="width:100%;height:100%"
+           data-options="singleSelect:true,collapsible:true">
+        <thead>
+        <tr>
+            <th data-options="field:'id',width:80, height:150">编号</th>
+            <th data-options="field:'name',width:100, height:150">名称</th>
+            <th data-options="field:'ip',width:150, height:150">IP</th>
+            <th data-options="field:'callback',width:300,height:150,align:'right'">反馈</th>
+            <th data-options="field:'control',width:300,height:150,align:'right', formatter:formatOper">操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+
+    getServerInfo();
+    function getServerInfo()
+    {
+        postJson("/PAM/getServerInfo",{},
+                function(data)
+                {
+                    if(data)
+                    {
+//                        console.log("data is :" + JSON.stringify(data));
+                    }
+                    data = JSON.parse(data);
+                    for(var i=0;i<data.rows.length;i++)
+                    {
+                        data.rows[i].id = i;
+                        data.rows[i].name = data.rows[i].type + data.rows[i].index;
+                        data.rows[i].ip = data.rows[i].IP;
+                        data.rows[i].control = "";
+                        console.log(data.rows[i]);
+                    }
+                    $("#dg").datagrid("loadData",data);
+                }
+        );
+    }
+    
+    function updateRow(index, key, value)
+    {
+        console.log('index' + index + "key" + key + "value" + value);
+        var row = {};
+        row[key] = value;
+        $('#dg').datagrid('updateRow',{
+            index: index,
+            row: row
+        });
+    }
+
+
+    var MButton = function (index)
+    {
+        this.index = index;
+        this.count = 0;
+        this.data = "";
+        this.addButton = function (text, funcName, command)
+        {
+            this.data += '<a href="#" class="easyui-linkbutton" onclick="editItem(' + this.index + ',' + funcName + ',' + command + ')">' + text + '</a>';
+            if (++this.count % 3 == 0)
+            {
+                this.data+='<br/>';
+            }
+        };
+        this.push =  this.addButton;
+    };
+
+    function formatOper(val,row,index){
+        var newButton = new MButton(index);
+        newButton.addButton('查看磁盘占用 ', 'runCommand', 1);
+        newButton.addButton('查看Tcp连接数 ', 'runCommand', 2);
+        newButton.addButton('查看Tcp连接数统计 ', 'runCommand', 3);
+        newButton.addButton('查看内存 ', 'runCommand', 4);
+        newButton.addButton('查看Cpu ', 'runCommand', 5);
+        newButton.addButton('查看网络 ', 'runCommand', 6);
+        return newButton.data;
+    }
+
+    function editItem(index, func, command) {
+        $('#dg').datagrid('selectRow',index);// 关键在这里
+        var row = $('#dg').datagrid('getSelected');
+        if (row){
+            func(index, command);
+//            $('#dlg').dialog('open').dialog('setTitle','修改学生信息');
+//            $('#fm').form('load',row);
+//            url = '${ctx}updateStudent.do?id='+row.id;
+        }
+    }
+
+
+    function ReloadServer(onlyCode)
+    {
+        postJson("/test/ReloadServer",{onlyCode:onlyCode},function(rtn){alert(rtn);});
+    }
+
+    function autoRestart()
+    {
+//        postJson("/PAM/autoRestart",{proj:"webadmin"},function(rtn){
+//        });
+
+        setInterval(refreshStatus, 5000);
+    }
+
+    function contentNum()
+    {
+        postJson("/PAM/contentNum",{proj:"webadmin"},function(rtn)
+        {
+//		  	console.log("servercount is: " + rtn);
+//		  	document.getElementById('contentNum').innerHTML = ("contentNum:" + rtn);
+        });
+
+        setInterval(refreshStatus, 5000);
+    }
+
+    function refreshStatus()
+    {
+        postJson("/PAM/getContentNum",{proj:"webadmin"},function(rtn)
+        {
+            console.log("servercount is: " + rtn);
+        });
+    }
+    
+    function runCommand(index, command)
+    {
+        postJson("/PAM/runCommand",{id:index, command: command},function(rtn)
+        {
+            if(rtn)
+            {
+                console.log(JSON.stringify(rtn));
+                var res = rtn.res.split("\n");
+                updateRow(index, 'callback', res.join(" <br>"));
+            }
+        });
+    }
+    
+    function runAllCommand(command)
+    {
+        var data=$('#dg').datagrid('getData');
+        for (var count = 0; count <data.rows.length; count ++)
+        {
+            (function (count)
+            {
+                runCommand(count, command);
+            })(count);
+        }
+    }
+</script>
+</body>
+</html>

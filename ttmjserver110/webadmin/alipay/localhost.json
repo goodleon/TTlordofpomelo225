@@ -1,0 +1,22 @@
+{
+  "content":{
+    "0":{"buyNum":1,"buyMoney":0.02,"givePercentage":0.1},
+    "1":{"buyNum":500,"buyMoney":0.02,"givePercentage":0.1},
+    "2":{"buyNum":900,"buyMoney":500,"givePercentage":0.1},
+    "3":{"buyNum":1900,"buyMoney":1000,"givePercentage":0.1},
+    "4":{"buyNum":4000,"buyMoney":2000,"givePercentage":0.1},
+    "5":{"buyNum":10500,"buyMoney":5000,"givePercentage":0.1},
+    "6":{"buyNum":40000,"buyMoney":18000,"givePercentage":0.1},
+    "7":{"buyNum":125000,"buyMoney":50000,"givePercentage":0.1}
+  },
+  "rebate":{
+    "basic":{"sca":0.3, "recommend":0, "recharge":0},
+    "firstLevel":{"sca":0.4, "recommend":4, "recharge":1000},
+    "secondLevel":{"sca":0.5, "recommend":10, "recharge":1000}
+  },
+  "rebate2":{
+    "basic":{"sca":0.3, "recommend":0, "recharge":0},
+    "firstLevel":{"sca":0.4, "recommend":4, "recharge":1000},
+    "secondLevel":{"sca":0.5, "recommend":10, "recharge":1000}
+  }
+}

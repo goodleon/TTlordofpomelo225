@@ -1,0 +1,4 @@
+1.bash copy.sh
+文件夹里面是修改pomelo 文件 
+修改了ws 为tcp
+注释掉了tcp-mailbox.js 里面180行的logger未定义

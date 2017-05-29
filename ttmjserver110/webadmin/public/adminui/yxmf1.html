@@ -1,0 +1,205 @@
+<html>
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/layout.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <title>游戏免费</title>
+</head>
+
+<body  class="easyui-layout">
+<div>
+    <br/>
+    <br/>
+    操作说明:1.点击添加按钮添加活动;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;2.序列号填写数字<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;3.免费标号请填写数字标号，每个标号之间使用英文状态的','分隔,例如:1,2,3;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;4.编辑完成后请点击保存按钮进行提交;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;5.提交后请双击某一行进行编辑修改已提交内容;<br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;6.在免费活动失效后请删除活动
+    <hr/>
+</div>
+<table  id="dg" style="width:100%;height:80%">
+
+</table>
+<script>
+    function isObject(e) {
+        var t;
+        for (t in e)
+            return 1;
+        return 0
+    }
+    var dat=[];
+    function initGrid(dat){
+        var datagrid; //定义全局变量datagrid
+        var editRow = undefined; //定义全局变量：当前编辑的行
+        var addFlag=0;
+        datagrid = $("#dg").datagrid({
+            data:dat||[],
+            fitColumn: false, //列自适应宽度
+            striped: true, //行背景交换
+            nowrap: true, //列内容多时自动折至第二行
+            border: false,
+            checkOnSelect:false,
+            singleSelect:true,
+            idField: 'actid',
+            columns: [[//显示的列
+                { field: 'actid', title: '序列号', width: 80,
+                    editor: { type: 'numberbox', options: { required: true}}
+                },
+                { field: 'gameType', title: '免费标号', width: 80,
+                    editor: { type: 'textarea', options: { required: true}}
+                },
+                { field: 'gameNote', title: '活动说明', width: 160,
+                    editor: { type: 'textarea', options: { required: true}}
+                },
+                { field: 'gameStartTime', title: '开始时间', width: 100,
+                    editor: { type: 'datetimebox', options: { required: true}}
+                },
+                { field: 'gameEndTime', title: '结束时间', width: 100,
+                    editor: { type: 'datetimebox', options: { required: true}}
+                }
+            ]],
+            queryParams: {}, //查询参数
+            toolbar: [{ text: '添加', iconCls: 'icon-add', handler: function () {//添加列表的操作按钮添加，修改，删除等
+                //添加时先判断是否有开启编辑的行，如果有则把开户编辑的那行结束编辑
+                if (editRow != undefined) {
+                    datagrid.datagrid("endEdit", editRow);
+                }
+                //添加时如果没有正在编辑的行，则在datagrid的第一行插入一行
+                if (editRow == undefined) {
+                    datagrid.datagrid("insertRow", {
+                        index: 0, // index start with 0
+                        row: {
+
+                        }
+                    });
+                    //将新插入的那一行开户编辑状态
+                    datagrid.datagrid("beginEdit", 0);
+                    //给当前编辑的行赋值
+                    editRow = 0;
+                    addFlag=1;
+                }
+
+            }
+            }, '-',
+                { text: '删除', iconCls: 'icon-remove', handler: function () {
+                    //删除时先获取选择行
+                    var rows = datagrid.datagrid("getSelected");
+                    //选择要删除的行
+                    if (rows) {
+                        $.messager.confirm("提示", "你确定要删除吗?", function (r) {
+                            if (r) {
+                                postJson("/admin/delGameFreeJson",{msg:rows.actid}, function (rtn) {
+                                    if (rtn) {
+                                        refreshUI();
+                                    }else{
+                                        alert("操作失败");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                    else {
+                        $.messager.alert("提示", "请选择要删除的行", "error");
+                    }
+                }
+                }, '-',
+                { text: '保存', iconCls: 'icon-save', handler: function () {
+                    //保存时结束当前编辑的行，自动触发onAfterEdit事件如果要与后台交互可将数据通过Ajax提交后台
+                    datagrid.datagrid("endEdit", editRow);
+//                    var msg={};
+                    if(addFlag){
+                        datagrid.datagrid("unselectAll");
+                        datagrid.datagrid("selectRow",0);
+                        var msg=datagrid.datagrid("getSelected");
+                        msg.actid="";
+                        if(msg.gameType!=""&&msg.gameType!=null){
+                            if(isNaN(Number(msg.gameType))){
+                                if(msg.gameType.indexOf(",")<=0){
+                                    $.messager.alert("提示", "数据格式错误", "error");
+                                    editRow = undefined;
+                                    datagrid.datagrid("rejectChanges");
+                                    datagrid.datagrid("unselectAll");
+                                    return;
+                                }else{
+                                    var arr=msg.gameType.split(",");
+                                    for(var i=0;i<arr.length;i++){
+                                        arr[i]=Number(arr[i]);
+                                    }
+                                    msg.gameType=arr;
+                                }
+                            }else{
+                                msg.gameType=[parseInt(msg.gameType)];
+                            }
+                        }else{
+                            $.messager.alert("提示", "请求失败,请填写免费标号", "error");
+                            if (editRow != undefined) {
+                                datagrid.datagrid("endEdit", editRow);
+                            }
+                            if (editRow == undefined) {
+                                datagrid.datagrid("beginEdit", 0);
+                                editRow = 0;
+                            }
+                            return;
+                        }
+                        addFlag=0;
+                    }else{
+                        var msg=datagrid.datagrid("getSelected");
+                    }
+                    postJson("/admin/saveGameFreeJson",{msg:msg}, function (rtn) {
+                        if (rtn) {
+                            refreshUI();
+                        }
+                    });
+                }
+                }, '-',
+                { text: '取消编辑', iconCls: 'icon-redo', handler: function () {
+                    //取消当前编辑行把当前编辑行罢undefined回滚改变的数据,取消选择的行
+                    editRow = undefined;
+                    datagrid.datagrid("rejectChanges");
+                    datagrid.datagrid("unselectAll");
+                }
+                }, '-'],
+            onAfterEdit: function (rowIndex, rowData, changes) {
+                //endEdit该方法触发此事件
+                editRow = undefined;
+            },
+            onDblClickRow: function (rowIndex, rowData) {
+                //双击开启编辑行
+                if (editRow != undefined) {
+                    datagrid.datagrid("endEdit", editRow);
+                }
+                if (editRow == undefined) {
+                    datagrid.datagrid("beginEdit", rowIndex);
+                    editRow = rowIndex;
+                }
+            }
+        });
+    }
+
+
+    function refreshUI(){
+        postJson("/admin/getGameFreeJson", {}, function (rtn){
+            if (isObject(rtn)) {
+                alert("成功");
+                dat=[];
+                for(var key in rtn){
+                    dat.push(rtn[key]);
+                }
+            }else{
+                alert("没有数据");
+            }
+            initGrid(dat);
+        });
+    }
+    initGrid(dat);
+    refreshUI();
+
+</script>
+</body>
+</html>

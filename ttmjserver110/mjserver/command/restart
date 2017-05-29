@@ -1,0 +1,114 @@
+#!/bin/bash
+
+##### 暂时不支持auto写法, fixme
+TEMP=`getopt -o at: --long t-long: \
+     -n 'example.bash' -- "$@"`
+
+if [ $? != 0 ] ; then bash echoColor "Terminating..." err >&2 ; exit 1 ; fi
+
+eval set -- "${TEMP}"
+
+Type=*
+IsAuto=false
+
+function autoImplement
+{
+    if ${IsAuto}; then
+    echo ""
+    fi
+}
+
+while true ; do
+        case "$1" in
+                -a) IsAuto=true; shift ;;
+                -t|--t-long) Type=$2 ; shift 2 ;;
+                --) shift ; break ;;
+                *) bash echoColor "Internal error!" error ; exit 1 ;;
+        esac
+done
+
+if [ $# != 1 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 1" error;
+exit 1;
+fi
+
+OK=0
+bash stop
+
+case ${Type} in
+         all | A | ALL | a | data | Data| DATA)
+         bash all $1
+         let OK=$?+${OK};
+         sleep 2s
+         bash web
+         let OK=$?+${OK};
+         bash admin $1
+         let OK=$?+${OK};
+		 bash activity $1
+         let OK=$?+${OK};
+         ;;
+         master | Master | MASTER| m | M)
+         bash data $1
+         let OK=$?+${OK};
+         sleep 2s
+         bash web
+         let OK=$?+${OK};
+         bash admin $1
+         let OK=$?+${OK};
+		 bash activity $1
+         let OK=$?+${OK};
+         ;;
+         login | Login | LOGIN| lo | LO | Lo)
+         bash login $1
+         let OK=$?+${OK};
+		 bash setCpu
+         let OK=$?+${OK};
+         ;;
+         pkplayer | Pkplayer | PKPLAYER| p | P)
+         bash pkplayer $1
+         let OK=$?+${OK};
+		 bash setCpu
+         let OK=$?+${OK};
+         ;;
+         loginPkplayer | LoginPkplayer | LOGINPKPLAYER | lp | LP | Lp)
+         bash login $1
+         let OK=$?+${OK};
+         bash pkplayer $1
+         let OK=$?+${OK};
+		 bash setCpu
+         let OK=$?+${OK};
+         ;;
+         room | Room | ROOM| r | R)
+         bash room $1
+         let OK=$?+${OK};
+		 bash setCpu
+         let OK=$?+${OK};
+         ;;
+         link | Link | LINK| LI |li | Li)
+         bash link $1
+         let OK=$?+${OK};
+		 bash setCpu
+         let OK=$?+${OK};
+         ;;
+         test | Test | TEST)
+         bash all $1
+         let OK=$?+${OK};
+         bash web
+         let OK=$?+${OK};
+         bash adminTest $1
+         let OK=$?+${OK};
+		 bash activity $1
+         let OK=$?+${OK};
+         ;;
+         *)
+         let OK=1;
+         bash echoColor "${0}: start ${1}  ${Type}  other type!" tip;
+         autoImplement
+         ;;
+ esac
+
+if [ ${OK} != 0 ];then
+    bash echoColor "${0}: start ${1}  ${Type} failed !" error;
+else
+    bash echoColor "${0}: start ${1}  ${Type} Success !" info;
+fi

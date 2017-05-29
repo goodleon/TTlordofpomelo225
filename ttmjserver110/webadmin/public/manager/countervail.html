@@ -1,0 +1,230 @@
+<html>
+	<head>
+		<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+		<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../share.js"></script>
+		<title>抵分配置</title>
+	</head>
+	<body class="easyui-layout">
+		<div id="addCountervail" class="easyui-dialog"  closed="true" title="添加" style="width:400px;height:400px;"
+		 data-options="iconCls:'icon-save',resizable:true,modal:true">
+		<table width="100%">
+			<tr><td><label>Id:</label></td> <td><label id="id">0</label></td></tr>
+			<tr><td><label>类别:</label></td> <td><input class="easyui-validatebox" type="text" id="type" data-options="required:true" /></label></td></tr>
+			<tr><td><label>底分:</label></td> <td><input class="easyui-validatebox" type="text" id="win" data-options="required:true" /></td></tr>
+
+			<tr><td><label>进入下限:</label></td> <td><input class="easyui-validatebox" type="text" id="min" data-options="required:true" /></td></tr>
+			<tr><td><label>进入上限:</label></td> <td><input class="easyui-validatebox" type="text" id="max" data-options="required:true" /></td></tr>
+			<tr><td><label>每局消耗:</label></td> <td><input class="easyui-validatebox" type="text" id="cost" data-options="required:true" /></td></tr>
+
+		</table>
+		<a href="#" class="easyui-linkbutton" onclick="editCountervailYes()">确定</a>
+	</div>
+		<div>
+			<a href="#" class="easyui-linkbutton" onclick="showCfg()">刷新</a>
+			<a href="#" class="easyui-linkbutton" onclick="addCountervail()">添加</a>
+			<a href="#" class="easyui-linkbutton" onclick="editCountervail()">修改</a>
+			<a href="#" class="easyui-linkbutton" onclick="deleteCountervail()">删除</a>
+		</div>
+	<table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%"
+			data-options="singleSelect:true,collapsible:true,
+				method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false
+            ">
+		<thead>
+		<tr>
+			<th data-options="field:'id',width:80,sortable:true">id</th>
+			<th data-options="field:'type',width:80,sortable:true">类别</th>
+			<th data-options="field:'win',sortable:true">底分</th>
+
+			<th data-options="field:'min',sortable:true">进入下限</th>
+			<th data-options="field:'max',sortable:true">进入上限</th>
+			<th data-options="field:'cost',sortable:true">每局消耗</th>
+
+		</tr>
+		</thead>
+	</table>
+		<script type="text/javascript">
+			var data_ = {};
+		var addId = 0;
+		//TODO添加充值的保存url、字段需要修改		
+		function saveCountervailData(msg){
+			postJson("/redisData/saveCountervailJson",{msg:{type:"content", content:msg}},
+
+
+				function(data)
+				{
+					if(data > 0){
+						alert("修改成功");
+						showCfgCommon();
+					}
+				}
+			);
+		}
+		function deleteCountervail(){
+			var alipay = $("#dg").datagrid("getSelected");
+			if(alipay){
+				var id = alipay.id;
+
+				if(window.confirm("删除，请确认?")) {
+					postJson("/redisData/deleteCountervail", {msg:id.toString()}, function(data) {
+
+						data_ = data;
+
+						showCfgCommon();
+					});
+				}
+			}
+			else {
+				alert("请选择删除条目");
+			}
+		}
+
+		function editCountervailYes(){
+			var idlabel = document.getElementById("id").innerHTML;
+			var msg={
+				id:parseInt(idlabel),
+				type:$('#type').val(),
+				cost:parseFloat($('#cost').val()),
+				win:parseInt($('#win').val()),
+				min:parseFloat($('#min').val()),
+				max:parseFloat($('#max').val())
+			};
+
+			if(msg.cost === void 0 || msg.cost == null || isNaN(msg.cost) || msg.cost <= 0) {
+				alert("无效数量");
+				return;
+			}
+			else if(msg.win === void 0 || msg.win == null || isNaN(msg.win) || msg.win <= 0) {
+				alert("无效金额");
+				return;
+			}
+			else if(msg.max === void 0 || msg.max == null || isNaN(msg.max)) {
+				alert("无效金额");
+				return;
+			}
+
+			var itemInfo = {};
+			var obj = {"type":msg.type,"cost":msg.cost,"win":msg.win,"min":msg.min,"max":msg.max};
+			data_[msg.id] = obj;
+			itemInfo["id"] = msg.id;
+			itemInfo["content"] = obj;
+
+			saveCountervailData(itemInfo);
+
+			$('#addCountervail').dialog('close');
+		}
+
+		function editCountervail(){
+			var itemSelected = $("#dg").datagrid("getSelected");
+			if(itemSelected){
+//				document.getElementById("id").style.display = "none";
+				console.log(itemSelected);
+				$("#id").html(itemSelected.id);
+				$("#type").val(itemSelected.type);
+				$('#cost').val(itemSelected.cost);
+				$('#win').val(itemSelected.win);
+				$('#min').val(itemSelected.min);
+				$('#max').val(itemSelected.max);
+				$('#addCountervail').dialog('open');
+			}
+			else {
+				alert("请选择条目");
+			}
+		}
+
+		function getAddId(){
+			return (addId + 1).toString();
+		}
+		
+		function addCountervail(){
+			$("#id").html(getAddId());
+
+			$('#type').val("");
+			$('#cost').val("");
+			$('#win').val("");
+			$('#min').val("");
+			$('#max').val("");
+
+			$('#addCountervail').dialog('open');
+		}
+        //添加到table中 		
+		function showCfgCommon(){
+			addId = 0;
+
+			var result = [];
+
+			for(var key in resluts){
+				var cell = {};
+
+				cell["id"] = key;
+
+				if (resluts[key].type) {
+					cell["type"] = resluts[key].type;
+					cell["cost"] = resluts[key].cost;
+					cell["win"] = resluts[key].win;
+					cell["min"] = resluts[key].min;
+					cell["max"] = resluts[key].max;
+
+
+
+				}
+
+				if(parseInt(key) > addId){
+					addId = parseInt(key);
+				}
+
+				cell[key] = resluts[key];
+
+				result.push(cell);
+			}
+
+			var da = {};
+			da["total"] = result.length;
+			da["rows"] = result;
+
+
+			$("#dg").datagrid("loadData", da);
+			if(da.total==0||da==""||!da){
+				$('#dg').datagrid('appendRow',{id:"没有数据", cost:"", win:"", min:"",max:""});
+			}
+		}
+// TODO url修
+        var  resluts =  [];
+		function showCfg(){
+			postJson("/redisData/getCoinRoomCfgJson",{msg:"content"},
+				function(data) {
+					if(!data){
+						$('#dg').datagrid('appendRow',{id:"没有数据", point:"", accounts:"", highLine:"",consume:""});
+						return;
+					}
+					data_ = data;
+
+					var len =data_['data'].length;
+					//resluts =JSON.parse(data_['data']);
+
+					//	console.log(resluts);
+
+					for( var  i=0; i< len ; i++) {
+						//	resluts.push(JSON.parse(data_['data'][i]));
+						resluts[i] =JSON.parse(data_['data'][i]);
+
+					}
+
+					showCfgCommon();
+				}
+			);
+		}
+		$(document).ready(function () {
+			showCfg();
+		});
+		</script>
+	</body>
+</html>

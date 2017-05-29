@@ -1,0 +1,33 @@
+.ripple-container {
+}
+.ripple-container .ripple{
+        -moz-animation:ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
+	-webkit-animation:ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
+	-ms-animation:ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
+	-o-animation:ripple 2s forwards cubic-bezier(0, 0, 0.2, 1)	
+	animation: ripple 2s forwards cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+@keyframes ripple {
+	0% {
+		transform: scale(0);
+		opacity: 1;
+	}
+	80% {
+		transform: scale(1);
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+ button {
+	 background-color: dodgerblue;
+	 color: white;
+	 padding: 10px 20px;
+	 border:0;
+	 font-size: 14px;
+	 cursor: pointer;
+	 border-radius:5px
+ }

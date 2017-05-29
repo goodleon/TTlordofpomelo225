@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+<head>
+<style>
+*{
+	margin:0;
+	padding:0;
+	font-family: "Helvetica Neue",Helvetica,"Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
+}
+img{
+	border:none;
+}
+h1,h2,h3,h4,h5,h6{
+	font-weight:normal;
+}
+.f_l{
+	float:left;
+}
+.f_r{
+	float:right;
+}
+body{
+}
+header{
+	position:fixed;
+	top:0;
+	width:100%;
+	height:50px;
+	text-align:center;
+	line-height:50px;
+	z-index:99;
+	}
+header h1 {
+	position:absolute;
+	left:44%;
+}
+header h1 img{
+	width:114px;
+    max-width: 100%!important;
+    box-sizing: border-box!important;
+    -webkit-box-sizing: border-box!important;
+    word-wrap: break-word!important;
+}
+header .header_bg{
+	width:100%;
+	height:100%;
+}
+.banner{
+	width:100%;
+	margin-top:51px;
+	text-align:right;
+	background-position:top center;
+	background-repeat:no-repeat;
+	background-size:cover;
+	position:relative;
+}
+.banner img{
+	width:100%;
+	height:100%;
+}
+.banner a{
+	position:absolute;
+	right:4%;
+	bottom:8%;
+	color:#FFF;
+	padding:12px 24px;
+	border-radius:4px;
+	font-size:1.05em;
+	border:0px solid #FFF;
+	outline:none;
+	filter: progid:DXImageTransform.Microsoft.Gradient(startColorStr='#2a4322',endColorStr='#2a4322',gradientType='0');
+
+background: -moz-linear-gradient(top, #2a4322, #2a4322);
+
+background: -o-linear-gradient(top,#2a4322, #2a4322);
+
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#2a4322), to(#2a4322));
+	
+}
+.banner a:active{
+	background:#5c7b52;
+}
+
+.tittle{
+	height:58px;
+	overflow:hidden;
+	line-height:58px;
+	background-color:#FFF;
+}
+.tittle h1{
+	font-size:20px;
+}
+.tittle h1,i{
+	float:left;
+}
+.tittle i{
+	margin-left:6%;
+}
+.tittle i img{
+	width:70%;
+}
+.game_box{
+	width:100%;
+	overflow:hidden;
+	padding-bottom:10%;
+	border-top:2px solid #dedede;
+}
+.game_box .game_list{
+	width:49.5%;
+	float:left;
+	overflow:hidden;
+	text-align:center;
+	background-color:#fff;
+	border:2px solid #dedede;
+	border-top:none;
+}
+.game_box .game_list:nth-child(even) {
+	border-right:none;
+	border-left:none;
+}
+.game_box .game_list:nth-child(odd) {
+	border-left:none;
+}
+.game_box .game_top{
+	overflow:hidden;
+}
+.game_img{
+	width:45%;
+	margin-left:4%;
+	margin-top:4%;
+}
+.game_img img{
+	width:95%;
+}
+.game_explain{
+	width:45%;
+	margin-top:4%;
+	margin-left:4%;
+}
+.game_explain h1,p{
+	font-size:118%;
+	text-align:left;
+}
+.game_explain h1{
+	height:3.8rem;
+}
+.game_list a{
+	width:85%;
+	display:block;
+	padding:10px 0px;
+	margin:4% auto;
+	border-radius:4px;
+	border:1px solid #cccccc;
+	background-image:url(images/game_list_btn.png);
+	background-repeat:repeat-x;
+	background-size:cover;
+	outline:none;
+	font-size:18px;
+}
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;"  />
+<title>皮皮游戏</title>
+</head>
+
+<body>
+<header>
+	<h1>
+    	<img src="images/header_logo.png">
+    </h1>
+	<img class="header_bg" src="images/header_bg.png">
+</header>
+
+<div class="banner">
+	<img src="images/banner_bg.png">
+	<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.scmj">	
+			<button>安装</button>
+	</a>
+</div>
+
+<div class="tittle">
+	<i><img src="images/tittle_h1.png"></i>
+	<h1>其他游戏</h1>
+</div>
+
+<div class="game_box">
+
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_01.png"></div>
+            <div class="game_explain f_l">
+                <h1>皮皮跑胡子</h1>
+                <p>32.5MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.hnphz">
+			<button>安装</button>
+		</a>
+    </div>
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_02.png"></div>
+            <div class="game_explain f_l">
+                <h1>皮皮四川麻将</h1>
+                <p>32.5MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.scmj">
+			<button>安装</button>
+		</a>
+    </div>
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_03.png"></div>
+            <div class="game_explain f_l">
+                <h1>皮皮湖南麻将</h1>
+                <p>32.5MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.symj">
+			<button>安装</button>
+		</a>
+    </div>
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_04.png"></div>
+            <div class="game_explain f_l">
+                <h1>皮皮跑得快</h1>
+                <p>32.5MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.pdk">
+			<button>安装</button>
+		</a>
+	</div>
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_05.png"></div>
+            <div class="game_explain f_l">
+                <h1>皮皮陕西麻将</h1>
+                <p>22.5MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.sxmj">
+			<button>安装</button>
+		</a>
+    </div>
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_06.gif"></div>
+            <div class="game_explain f_l">
+                <h1>皮皮斗地主</h1>
+                <p>27.5MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.ddz">
+			<button>安装</button>
+		</a>
+    </div>
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_07.png"></div>
+            <div class="game_explain f_l">
+                <h1>湖北麻将卡五星</h1>
+                <p>23.6MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.kwx">
+			<button>安装</button>
+		</a>
+    </div>
+	<div class="game_list">
+    	<div class="game_top">
+        	<div class="game_img f_l"><img src="images/game_list_08.png"></div>
+            <div class="game_explain f_l">
+                <h1>广西麻将</h1>
+                <p>29.5MB</p>
+            </div>
+        </div>
+		<a href = "http://a.app.qq.com/o/simple.jsp?pkgname=com.happyplay.gxmj">
+			<button>安装</button>
+		</a>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+currentPath=$PWD
+
+
+if [ $# != 2 ];then
+ bash echoColor "${0}:The number of parameters must be equal to 2" error;
+exit 1;
+fi
+
+OK=0
+
+if [ -d /root/mjserver/web-server/public/$1 ];then
+ cd /root/mjserver/web-server/public/$1
+ #bash $currentPath/echoColor "000" error;
+ git add $2
+ git commit -a -m "server auto push"
+ git push
+ let OK=$?+$OK
+else
+ let OK=1
+fi
+
+if [ ${OK} != 0 ];then
+ cd ${currentPath}
+ bash echoColor "${0}:push ${1} failed !" error;
+ exit 1
+else
+ cd ${currentPath}
+ bash echoColor "${0}:push ${1} Success !" info;
+ exit 0
+fi

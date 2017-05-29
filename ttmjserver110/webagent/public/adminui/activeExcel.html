@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../css/layout.css">
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="../highchart/highcharts.js"></script>
+    <script type="text/javascript" src="../highchart/layout.js"></script>
+    <title>活跃统计</title>
+</head>
+<body>
+    <div id="table_container">
+        <div id="data_table">
+            <table  border= "1" cellspacing="0">
+                <tr>
+                    <th rowspan="2">注册日期</th>
+                    <th rowspan="2">注册人数</th>
+                    <th colspan="10">登录人数/存留率</th>
+                </tr>
+                <tr>
+                    <th>当日存留</th>
+                    <th>次日存留</th>
+                    <th>3日存留</th>
+                    <th>4日存留</th>
+                    <th>5日存留</th>
+                    <th>6日存留</th>
+                    <th>7日存留</th>
+                    <th>8日存留</th>
+                    <th>14-28日存留</th>
+                    <th>28日+</th>
+                </tr>
+                <tr>
+                    <td>9月26日</td>
+                    <td>3000</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9月25日</td>
+                    <td>2000</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9月24日</td>
+                    <td>1000</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9月23日</td>
+                    <td>1001</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9月22日</td>
+                    <td>1002</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9月21日</td>
+                    <td>1003</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9月20日</td>
+                    <td>1004</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>9月5日到9月19日</td>
+                    <td>1006</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8月20到9月4日</td>
+                    <td>1005</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>8月19日之前</td>
+                    <td>1007</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                    <td>5081,90%</td>
+                </tr>
+            </table>
+        </div>
+        <div id="column_chart">
+        </div>
+    </div>
+    <script>
+		var startDate_ = new Date();
+        startDate_.setDate(startDate_.getDate() - 14);
+
+        var startDate = getFormatDate(startDate_);
+        var endDate   = getFormatDate(new Date());
+		
+			postJson("/admin/getDayCountLog",{"_id":{$gte:startDate, $lte:endDate}},
+                function(data) {
+				}
+			);
+
+		
+        $(document).ready(function(){
+            var table=document.getElementsByTagName("table")[0];
+            var tr=document.getElementsByTagName("tr");
+            var trlen=tr.length;
+            var series1= [];
+            $.ajax({
+                type: "get",
+                url: "../chart1.json",
+                async: true,
+                success: function (data) {
+                    var tab=data.tabledata;
+                    for(var i=0;i<10;i++){
+                        var datestr=tab[i]["date"];
+                        var datearr=datestr.split("-");
+                        $("tr").eq(i+2).children().eq(0).html(datearr[1]+"月"+datearr[2]+"日");
+                        $("tr").eq(i+2).children().eq(1).html(tab[i]["registernum"]);
+                        var len=tab[i]["arr"].length;
+                        var content=tab[i]["arr"];
+                        var obj={};
+                        obj.data=[];
+                        if(obj.name==undefined){
+                            obj.name=datearr[1]+"月"+datearr[2]+"日";
+//	        			    		if(i==7){
+//	        			    			var dat=transDate(datearr[0],datearr[1],datearr[2]);
+//	        			    			obj.name=
+//	        			    		}
+                        }
+                        for(var j=0;j<len;j++){
+                            $("tr").eq(i+2).children().eq(j+2).html(content[j]["num"]+","+content[j]["per"]+"%");
+                            obj.data.push(parseInt(content[j]["num"]));
+                        }
+                        series1.push(obj);
+                    }
+                    //动态填写条形图
+                    json2.series = series1;
+                    $('#column_chart').highcharts(json2);
+                }
+            })
+                //柱状图数据
+                var chart = {
+                    type: 'column'
+                };
+
+                var title = {
+                    text: '用户存留'
+                };
+
+                var xAxis = {
+                    categories: ['当日存留', '次日存留', '3日存留', '4日存留', '5日存留','6日存留','7日存留','8-14日存留','14-28日存留','28日+']
+                };
+
+                var yAxis ={
+                    min: 0
+                };
+
+                var tooltip = {
+                    pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.percentage:.0f}%)<br/>',
+                    shared: true
+                };
+
+                var plotOptions = {
+                    column: {
+                        stacking: 'normal',
+                        dataLabels: {
+                            enabled: false,
+                            color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                            style: {
+                                textShadow: '0 0 3px black'
+                            }
+                        }
+                    }
+                };
+                var exporting={
+                    enabled:false
+                };
+
+                var credits = {
+                    enabled: false
+                };
+
+                var json2 = {};
+                json2.chart = chart;
+                json2.title = title;
+                json2.xAxis = xAxis;
+                json2.yAxis = yAxis;
+                json2.tooltip = tooltip;
+                json2.plotOptions = plotOptions;
+                json2.credits = credits;
+                json2.exporting=exporting;
+        })
+    </script>
+</body>
+</html>

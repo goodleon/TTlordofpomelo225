@@ -1,0 +1,1057 @@
+<html>
+<head>
+	<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+	<link rel="stylesheet" href="../css/hygl.css"/>
+	<script type="text/javascript" src="/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<title>出售</title>
+</head>
+<body  class="easyui-layout">
+<div id="ddMoney" class="easyui-dialog"  closed="true" title="添加钻石" style="width:400px;height:400px;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	<table width="100%">
+		<tr><td><label>售卖类型:</label></td>
+			<td>
+				<label class="radio inline"><input type="radio" class="buyTypeChange" id="buyType"  name="buyType" value="1" checked="checked">售卖</label>
+				<label class="radio inline"><input type="radio" class="buyTypeChange" id="buyTypePresenter" name="buyType" value="0">赠送</label>
+			</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>
+				<select id="buyNumSel" style="width:200" name="state" selectedIndex="0" onchange="setNumMoney(this.options[this.options.selectedIndex].value)">
+					<option value="500/300">500	<span class="moneyType">钻石</span>300元</option>
+					<option value="900/500">900<span class="moneyType">钻石</span>500元</option>
+					<option value="1900/1000">1900<span class="moneyType">钻石</span>1000元</option>
+					<option value="4000/2000">4000<span class="moneyType">钻石</span>2000元</option>
+				</select>
+			</td></tr>
+		<tr><td><label>数量:</label></td> <td><input class="easyui-validatebox" type="text" id="buyNum" data-options="required:true" value="500"/></td></tr>
+		<tr id="enterMoney"><td><label>入账金额:</label></td> <td><input class="easyui-validatebox" type="text" id="buyMoney" data-options="required:true" value="300" /></td></tr>
+		<tr><td><label>运营备注:</label></td> <td><input class="easyui-validatebox" type="text" id="buyNote" data-options="required:true" /></td></tr>
+	</table>
+	<a href="#" class="easyui-linkbutton" onclick="addMoneyYes()">确定</a>
+</div>
+
+<div id="ddMember" class="easyui-dialog"  closed="true" title="添加会员" style="width:100%;height:60%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+
+	<table width="100%">
+		<tr><td><label>微信昵称:</label></td> <td><input class="easyui-validatebox" type="text" id="mNick" data-options="required:true" /></td></tr>
+		<tr><td><label>姓名:</label></td> <td><input class="easyui-validatebox" type="text" id="mName" data-options="required:true" /></td></tr>
+		<tr><td><label>地址:</label></td> <td><input class="easyui-validatebox" type="text" id="mAddress" data-options="required:true" /></td></tr>
+	</table>
+	<a href="#" class="easyui-linkbutton" onclick="addMemberYes()">确定</a>
+</div>
+
+<div id="ddMemberBuyList"  closed="true"  class="easyui-dialog" title="会员购买记录" style="width:80%;height:80%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	查询从:<input class="easyui-datebox" id="strday2" style = "width:150px"/>
+	至:<input class="easyui-datebox" id="endday2" style = "width:150px"/>
+	<a href="#" class="easyui-linkbutton" onclick="searchForMemberBuyList()">按日期搜索</a>
+	<table  id="ddMemberBuytb" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true">
+		<thead>
+		<tr>
+			<!-- TODO 把时间挪前边来了，为了合计 -->
+			<th data-options="field:'buyTime',width:150,align:'right'">时间</th>
+			<th data-options="field:'buyNum',width:80">数量</th>  
+			<th data-options="field:'buyMoney',width:100">金额</th>
+			<th data-options="field:'buyNote',width:150,align:'right'">备注</th>
+			<th data-options="field:'byMid',width:150,align:'right'">管理员ID</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+<div id="ddMemberSellList"  closed="true" class="easyui-dialog" title="会员出售记录" style="width:80%;height:80%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	查询从:<input class="easyui-datebox" id="strday" style = "width:150px"/>
+	至:<input class="easyui-datebox" id="endday" style = "width:150px"/>
+	<a href="#" class="easyui-linkbutton" onclick="searchForMemberSellList()">按日期搜索</a>
+	<table  id="ddMemberSelltb" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true">
+		<thead>
+		<tr>
+			<th data-options="field:'uid',width:80">玩家ID</th>
+			<th data-options="field:'buyNum',width:80">数量</th>
+			<th data-options="field:'buyMoney',width:100">金额</th>
+			<th data-options="field:'money',width:50">余额</th>
+			<th data-options="field:'userMoney',width:150">玩家余额</th>
+			<th data-options="field:'buyNote',width:150,align:'right'">备注</th>
+			<th data-options="field:'buyTime',width:150,align:'right'">时间</th>
+		</tr> 
+		</thead>
+	</table>
+</div>
+<div id="ddAdminSellList"  closed="true" class="easyui-dialog" title="卖给会员记录" style="width:80%;height:80%;"
+	 data-options="iconCls:'icon-save',resizable:true,modal:true">
+	查询从:<input class="easyui-datebox" id="strday1" style = "width:150px"/>
+	至:<input class="easyui-datebox" id="endday1" style = "width:150px"/>
+	<a href="#" class="easyui-linkbutton" onclick="searchForAdminSellList()">按日期搜索</a>
+	<table  id="ddAdminSelltb" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+			data-options="singleSelect:true,collapsible:true">
+		<thead>
+		<tr>
+			<th data-options="field:'mid',width:80">会员ID</th>
+			<th data-options="field:'buyNum',width:80">数量</th>
+			<th data-options="field:'buyMoney',width:100">金额</th>
+			<th data-options="field:'buyNote',width:150,align:'right'">备注</th>
+			<th data-options="field:'buyTime',width:200,align:'right'">时间</th>
+			<th data-options="field:'byMid',width:150">管理员ID</th>
+		</tr>
+		</thead>
+	</table>
+</div>
+
+
+<div style="margin:2px 0;">
+
+	<a href="#" class="easyui-linkbutton" onclick="getMembers()">刷新</a>
+
+	<a href="#" class="easyui-linkbutton" onclick="addMember()" id="addMembersMenu">添加会员</a>
+	<a href="#" class="easyui-linkbutton" onclick="addMoney()">添加钻石</a>
+	<a href="#" class="easyui-linkbutton" onclick="getMemberBuyList()">会员购买明细</a>
+	<a href="#" class="easyui-linkbutton" onclick="getMemberSellList()">卖给玩家明细</a>
+	<a href="#" class="easyui-linkbutton" onclick="getAdminSellList()">卖给会员明细</a>
+
+	<a href="#" class="easyui-linkbutton" onclick="changePageLimit(20)">每页显示20个</a>
+	<a href="#" class="easyui-linkbutton" onclick="changePageLimit(50)">每页显示50个</a>
+	<a href="#" class="easyui-linkbutton" onclick="changePageLimit(100)">每页显示100个</a>
+	<a href="#" class="easyui-linkbutton" onclick="changePageLimit(200)">每页显示200个</a>
+	<a href="#" class="easyui-linkbutton" onclick="changePageLimit(500)">每页显示500个</a>
+
+</div>
+
+<div style="margin:2px 0;">
+	<input class="easyui-searchbox" data-options="prompt:'',menu:'#mm',searcher:searchMembers" style="width:300px;line-height:100%;vertical-align: middle"></input>
+	<div id="mm">
+		<div data-options="name:'mid',iconCls:'icon-ok'">用户ID</div>
+		<div data-options="name:'lastBuyDay'">几日未充值</div>
+		<div data-options="name:'mNick'">微信昵称</div>
+		<div data-options="name:'mName'">姓名</div>
+		<div data-options="name:'mAddress'">地址</div>
+		<div data-options="name:'money'">钻石余额</div>
+		<div data-options="name:'mAddBy'">推荐人</div>
+		<div data-options="name:'mAddByMid'">推荐人ID</div>
+		<div data-options="name:'byName'">客户经理</div>
+		<div data-options="name:'byMid'">客户经理ID</div>
+		<div data-options="name:'buyTotal'">本周购买</div>
+		<div data-options="name:'buyReward'">未领返利</div>
+		<!--div data-options="name:'mPass'">初始密码</div-->
+		<div data-options="name:'mTime'">注册时间</div>
+	</div>
+
+	<!--span id="gameids">
+            <select id="state" class="easyui-combobox" name="state" style="width:200px;"
+                    data-options="valueField:'id',textField:'text'">
+            </select>
+        </span>
+
+    <a href="#" class="easyui-linkbutton" id="gameidsAdd" onclick="gameIdsAdd()">+</a>
+    <a href="#" class="easyui-linkbutton" id="gameidsMinus" onclick="gameIdsMinus()">-</a-->
+
+</div>
+
+<table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:70%"
+		data-options="singleSelect:true,collapsible:true,
+            	method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false
+				">
+	<thead>
+	<tr>
+		<th data-options="field:'mid',width:80,sortable:true">用户ID</th>
+		<th data-options="field:'mNick',width:80,sortable:true">微信昵称</th>
+		<th data-options="field:'mName',width:80,sortable:true">姓名</th>
+		<th data-options="field:'mAddress',width:80,sortable:true">地址</th>
+		<th data-options="field:'money',width:80,sortable:true">钻石余额</th>
+		<th data-options="field:'lastBuyDay',width:80,sortable:true">充值日期</th>
+		<th data-options="field:'mAddBy',width:80,sortable:true">推荐人</th>
+		<th data-options="field:'mAddByMid',width:80,sortable:true">推荐人ID</th>
+		<th data-options="field:'mManager',width:80,sortable:true">客户经理</th>
+		<th data-options="field:'byMid',width:80,sortable:true">客户经理ID</th>
+		<th data-options="field:'buyTotal',width:80,sortable:true">本周购买</th>
+		<th data-options="field:'buyReward',width:80,sortable:true">未领返利</th>
+		<!--th data-options="field:'mPass',sortable:true">初始密码</th-->
+		<th data-options="field:'mTime',width:80,sortable:true">注册时间</th>
+		<th data-options="field:'gameids',width:80,sortable:true">gameids</th>
+	</tr>
+	</thead>
+</table>
+<div id = "pageButton" style="margin:2px 0;">
+</div>
+<script type="text/javascript">
+	var startDate;
+
+	function initStartDate() {
+		startDate = getFormatDate(new Date());
+		startDate = startDate.toString();
+	}
+
+	initStartDate();
+
+	var pageLimit = 20;
+	var pageLimitLast = 20;
+
+	var pageNum = 1;
+
+	function changePageLimit(num){
+		pageLimit = num;
+
+		pageNum = 1;
+
+		getMembers();
+	}
+
+	function LoadData(num)
+	{
+		pageNum = num;
+
+		getMembers();
+	}
+
+	function getTotalPage(data) {
+		return (data / pageLimit) + (data % pageLimit > 0 ? 1 : 0);
+	}
+
+	function showMembersPage() {
+		var div = document.getElementById("pageButton");
+		div.innerHTML = "";
+
+		postJson("/admin/getMyMembersCount",{},
+				function(data)
+				{
+					$(document).ready(function () {
+						for(var i = 1; i <= getTotalPage(data); i++){
+							$("#pageButton").append("<button onclick=showMembers("+i+") class=btn"+i+">第"+i+"页</button>");
+							$(".btn1").addClass("butt");
+						}
+					});
+				}
+		);
+	}
+	var searchKey = 0;
+	function showMembers(num) {
+		if($("button").hasClass("butt")){
+			$("button").removeClass("butt");
+		}
+		$(".btn"+num).addClass("butt");
+		var para = {};
+		para.limit = pageLimit;
+		para.skip = (num - 1) * pageLimit;
+		if(searchKey) {
+			para.searchKey = searchKey;
+		}
+		postJson("/admin/getMembers", para, function(data) {
+			for(var key in data.rows){
+				var time = data.rows[key]["mTime"];
+				time = new Date(time);
+				time = getDateCommonFormat(time);
+				var now = Date.now();
+				data.rows[key]["mTime"] = time;
+
+				if(data.rows[key]["banTime"] && data.rows[key]["banTime"] > now) {
+					var days = Math.ceil((data.rows[key]["banTime"] - now) / 86400000);
+					data.rows[key]["banDays"] = days;
+				}
+			}
+			$('#dg').datagrid("loadData",data);
+			if(data.total==0){
+				$('#dg').datagrid('loadData',{total:0,rows:[{mid:"没有数据", lastBuyDay:"", mNick:"", mName:"", mAddress:"", money:"", mAddBy:"", mAddByMid:"", byMid:"",buyTotal:"",buyReward:"",mTime:"",adminLevel:""}]});
+			}
+		});
+	}
+
+	function getMembers()
+	{		// "limit": pageLimit, "skip":(pageNum - 1) * pageLimit  // isManager:true
+		postJson("/admin/getMyMembers",{"limit": pageLimit, "skip":(pageNum - 1) * pageLimit},
+				function(data)
+				{
+					if(data.total==0){				
+						$("#dg").datagrid("loadData",{total:1,rows:[{mid:"没有数据",mNick:"",mName:"",mAddress:"",money:"",lastBuyDay:"",
+						mAddBy:"",mAddByMid:"",mManager:"",byMid:"",buyTotal:"",buyReward:"",mTime:"",gameids:""}]});
+					}else{
+						for(var key in data.rows){
+						var time = data.rows[key]["mTime"];
+						time = new Date(time);
+						//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						time = getDateCommonFormat(time);
+						data.rows[key]["mTime"] = time;
+					}
+
+					$("#dg").datagrid("loadData",data);
+
+					if (pageLimitLast != pageLimit){
+						showMembersPage();
+						pageLimitLast = pageLimit;
+					}
+					}
+					
+					
+					
+					
+				}
+		);
+	}
+
+
+	getMembers();
+	showMembersPage();
+
+
+	var mid=null;
+	function addMember()
+	{
+		mid=null;
+		$('#mNick').val("");
+		$('#mName').val("");
+
+		$('#ddMember').dialog('open').window('resize',{width:'80%',height:'80%',top:10,left:10});
+	}
+	function addMemberYes()
+	{
+
+		var msg={
+			mNick:$('#mNick').val(),
+			mName:$('#mName').val(),
+			mAddress:$('#mAddress').val()
+		};
+		if(mid==null)
+		{
+		}
+		else msg.mid=mid;
+
+		if(msg.mNick.length==0) { alert("无效昵称"); return; }
+		if(msg.mName.length==0) { alert("无效名字"); return; }
+		$('#ddMember').dialog('close');
+		postJson(mid==null?"/admin/addMember":"/admin/saveMember",msg,
+				function(data)
+				{
+					getMembers();
+				}
+		);
+	}
+	function editMember()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(member)
+		{
+			mid=member.mid;
+			$('#mNick').val(member.mNick);
+			$('#mName').val(member.mName);
+			$('#mPhone1').val("");
+			$('#mPhone2').val("");
+			$('#money').val(member.money);
+			$('#mAddBy').val(member.mAddBy);
+			$('#mManager').val(member.mManager);
+			$('#ddMember').dialog('open').window('resize',{width:'80%',height:'80%',top:10,left:10});;
+		}
+	}
+	function addMoney()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(member)
+		{
+			mid=member.mid;
+			$('#buyType').val(1);
+			$('#buyNote').val("");
+			$('#ddMoney').dialog('open').window('resize',{width:'40%',height:'40%',top:10,left:10});
+			$('#buyNum').val(500);
+			$('#buyMoney').val(300);
+			$("#buyTypePresenter").prop("checked",false);
+			$("#buyType").prop("checked",true);
+			$('#buyNumSel').show();
+			$('#enterMoney').show();
+		}else{
+			$.messager.alert("操作提示", "选中会员");
+		}
+	}
+	function setNumMoney(val)
+	{	
+		$('#buyMoney').val(val.split('/')[1]);
+	    $('#buyNum').val(val.split('/')[0]);
+	}
+	
+	var buyTypeVal = 1;//1 ：购买；0：赠送
+	
+	$(function(){
+		$(".buyTypeChange").change(function(){
+			var v = $("input[name='buyType']:checked").val();
+			if (v ==1){
+				$('#buyNote').val('');
+				$('#buyNumSel').show();
+				$('#enterMoney').show();
+				$('#buyNum').val(500);
+				$('#buyMoney').val(300);
+			}else{
+				$('#buyNum').val(500);
+				$('#buyMoney').val(0);
+				$('#buyNote').val('');
+				$('#buyNumSel').hide();
+				$('#enterMoney').hide();
+			}
+		});
+		//初始化日期选择框
+		$('#strday1').datebox('setValue',sevenDayAgo());
+		$('#endday1').datebox('setValue',format());
+		$('#strday2').datebox('setValue',sevenDayAgo());
+		$('#endday2').datebox('setValue',format());
+		$('#strday').datebox('setValue',sevenDayAgo());
+		$('#endday').datebox('setValue',format());
+    });
+	/*===================================时间处理函数START==========================================*/
+	//获取7天之前的日期
+	function sevenDayAgo(){
+		var lastperiod=new Date(new Date().getTime() - 6*1000*60*60*24);
+		var y = lastperiod.getFullYear();
+		var m = lastperiod.getMonth()+1;
+		var d = lastperiod.getDate();
+		return m+'/'+d+'/'+y;
+	}
+	//将得到的时间转换为UTC时间
+	function time2UTC(Datenum){
+		var DateArr=Datenum.split('/');
+		var Date2time=new Date(DateArr[2],DateArr[0]-1,DateArr[1]);
+		return Date2time.getTime();
+	}
+	function format(){
+		var dat=new Date();
+		var y = dat.getFullYear();
+		var m = dat.getMonth()+1;
+		var d = dat.getDate();
+		return m+'/'+d+'/'+y;
+	}
+	/*===================================时间处理函数END==========================================*/
+	function compute(tableName,colName) {
+		var rows = $('#'+tableName).datagrid('getRows');
+		var total = 0;
+		for (var i = 0; i < rows.length; i++) {
+			if(!rows[i][colName]){
+				rows[i][colName]=0;
+			}
+			total += parseFloat(rows[i][colName]);
+		}
+		return total;
+	}
+
+
+
+	function addMoneyYes()
+	{
+		$('#ddMoney').dialog('close');
+		if($('#buyMoney').val() != 0){
+			buyTypeVal =  1;
+		}else{
+			buyTypeVal =  0;
+		}
+		postJson("/admin/addMemberMoney",
+				{
+					mid:mid,
+					buyNum:parseInt($('#buyNum').val()),
+					buyMoney:parseInt($('#buyMoney').val()),//parseInt(buyMoneyVal),
+					buyNote:$('#buyNote').val(),
+					buyType:buyTypeVal
+				}
+				,function(data)
+				{
+					if(data == -10) {
+						$.messager.alert("操作提示", "您的密码不安全，请修改密码后操作","error");
+						return;
+					} else if(data.er == 2) {
+						$.messager.alert("操作提示", "余额不足","error");
+						return;
+					}
+
+					if(!data.er) {
+						getMembers();
+					}
+				}
+		);
+	}
+	var addByMember;
+	function selectAddBy()
+	{
+		addByMember=$("#dg").datagrid("getSelected");
+		if(addByMember)
+		{
+			$("#selectAddBy").html(addByMember.mid+" "+addByMember.mNick);
+		}
+		else
+		{
+			$("#selectAddBy").html("请选择");
+		}
+	}
+	function setAddBy()
+	{
+		var toMember=$("#dg").datagrid("getSelected");
+		if(toMember&&addByMember&&toMember.mid!=addByMember.mid)
+		{
+			var msg={
+				mid:toMember.mid,
+				mAddBy:addByMember.mName,
+				mAddByMid:addByMember.mid
+			};
+
+			postJson("/admin/saveMember",msg,
+					function(data)
+					{
+						getMembers();
+					}
+			);
+
+		}
+		else alert("先选定推荐人,在选择会员设置");
+	}
+	function computeMemberReward()
+	{
+		if(window.confirm("会员累计充值清0,返利给当前设置的推荐人?"))
+		{
+			postJson("/admin/computeMemberReward",{},
+					function(data)
+					{
+						getMembers();
+					}
+			);
+		}
+	}
+
+/*========================================7天明细查询=========================================================*/
+	function getMemberBuyList()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示","请选中会员","error");
+			return;
+		}
+		$("#ddMemberBuyList").dialog("open").window('resize',{width:'80%',height:'80%',top:10,left:10});
+		var startDate= time2UTC(format())-6*23*59*59*1000;
+		var endDate= time2UTC(format())+23*59*59*1000;
+		if(!startDate){
+			$.messager.alert("操作提示","请选择起始日期","error");
+			return;
+		}
+		if(!endDate){
+			$.messager.alert("操作提示","请选择截止日期","error");
+			return;
+		}
+		if(startDate>endDate){
+			$.messager.alert("操作提示","起始日期大于截止日期","error");
+			return;
+		}
+		var day=new Date();
+		var comparetime=(day.getMonth()+1)+'/'+day.getDate()+'/'+day.getFullYear();
+		comparetime=time2UTC(comparetime)+23*59*59*1000;
+		if(endDate>comparetime){
+			$.messager.alert("操作提示","只能查询本日及之前的数据","error");
+			return;
+		}
+		/*searchForMemberBuyList(startDate,endDate);*/
+	}
+	function searchForMemberBuyList(strday,endday){
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示","请选中会员","error");
+			return;
+		}
+		if(!strday||!endday){
+			var startDate= time2UTC($('#strday2').datebox('getValue'));
+			var endDate= time2UTC($('#endday2').datebox('getValue'))+23*59*59*1000;
+			if(!startDate){
+				$.messager.alert("操作提示","请选择起始日期","error");
+				return;
+			}
+			if(!endDate){
+				$.messager.alert("操作提示","请选择截止日期","error");
+				return;
+			}
+			if(startDate>endDate){
+				$.messager.alert("操作提示","起始日期大于截止日期","error");
+				return;
+			}
+			if (endDate-startDate>8*23*59*59*1000) {
+				$.messager.alert("操作提示", "只能查询7天内的数据", "error");
+				return;
+			}
+			var day=new Date();
+			var comparetime=(day.getMonth()+1)+'/'+day.getDate()+'/'+day.getFullYear();
+			comparetime=time2UTC(comparetime)+23*59*59*1000;
+			if(endDate>comparetime){
+				$.messager.alert("操作提示","只能查询本日及之前的数据","error");
+				return;
+			}
+		}
+		postJson("/admin/getMemberBuyList",{mid:member.mid, _strday:strday?strday:startDate, _endday:endday?endday:endDate},
+				function(data)
+				{
+					if(data.length==0){
+						$("#ddMemberBuytb").datagrid("loadData",{total:1,rows:[{buyTime:"没有数据",buyNum:"",buyMoney:"",buyNote:"",byMid:""}]});
+					}else{
+						for(var key in data.rows){
+						var time = data.rows[key]["buyTime"];
+						time = new Date(time);
+						//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						time = getDateCommonFormat(time);
+
+						data.rows[key]["buyTime"] = time;
+					}
+
+					data.rows = data.rows.reverse();
+					$("#ddMemberBuytb").datagrid("loadData",data);
+					//TODO 合计 
+					$("#ddMemberBuytb").datagrid('appendRow',{
+							buyTime:"合计",
+							buyNum:compute("ddMemberBuytb","buyNum"),
+							buyMoney:compute("ddMemberBuytb","buyMoney"),
+							buyNote:"",
+							byMid:""
+						});
+					}
+				}
+		);
+	}
+	function getMemberSellList()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示","请选中会员","error");
+			return;
+		}
+		$("#ddMemberSellList").dialog("open").window('resize',{width:'80%',height:'80%',top:10,left:10});
+
+//		  $('#strday').datebox('setValue',format());
+//		  $('#endday').datebox('setValue',format());
+		var startDate= time2UTC(format())-6*23*59*59*1000;
+		var endDate= time2UTC(format())+23*59*59*1000;
+		if(!startDate){
+			$.messager.alert("操作提示","请选择起始日期","error");
+			return;
+		}
+		if(!endDate){
+			$.messager.alert("操作提示","请选择截止日期","error");
+			return;
+		}
+		if(startDate>endDate){
+			$.messager.alert("操作提示","起始日期大于截止日期","error");
+			return;
+		}
+		var day=new Date();
+		var comparetime=(day.getMonth()+1)+'/'+day.getDate()+'/'+day.getFullYear();
+		comparetime=time2UTC(comparetime)+23*59*59*1000;
+		if(endDate>comparetime){
+			$.messager.alert("操作提示","只能查询本日及之前的数据","error");
+			return;
+		}
+//		searchForMemberSellList(startDate,endDate);
+	}
+	function searchForMemberSellList(strday,endday){
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示","请选中会员","error");
+			return;
+		}
+		if(!strday||!endday) {
+			var startDate = time2UTC($('#strday').datebox('getValue'));
+			var endDate = time2UTC($('#endday').datebox('getValue')) + 23 * 59 * 59 * 1000;
+			if (!startDate) {
+				$.messager.alert("操作提示", "请选择起始日期", "error");
+				return;
+			}
+			if (!endDate) {
+				$.messager.alert("操作提示", "请选择截止日期", "error");
+				return;
+			}
+			if (startDate > endDate) {
+				$.messager.alert("操作提示", "起始日期大于截止日期", "error");
+				return;
+			}
+			if (endDate-startDate>8*23*59*59*1000) {
+				$.messager.alert("操作提示", "只能查询7天内的数据", "error");
+				return;
+			}
+			var day = new Date();
+			var comparetime = (day.getMonth() + 1) + '/' + day.getDate() + '/' + day.getFullYear();
+			comparetime = time2UTC(comparetime) + 23 * 59 * 59 * 1000;
+			if (endDate > comparetime) {
+				$.messager.alert("操作提示", "只能查询本日及之前的数据", "error");
+				return;
+			}
+		}
+		postJson("/admin/getMemberSellList",{mid:member.mid,_strday:strday?strday:startDate, _endday:endday?endday:endDate},function(data){
+			if(data.length){
+				$("#ddMemberSelltb").datagrid("loadData",{});
+			}else{
+				for(var key in data.rows){
+					var time = data.rows[key]["buyTime"];
+					time = new Date(time);
+					//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+					time = getDateCommonFormat(time);
+					data.rows[key]["buyTime"] = time;
+				}
+
+				data.rows = data.rows.reverse();
+	//TODO 合计  uid buyNum buyMoney money userMoney buyNote buyTime
+				$("#ddMemberSelltb").datagrid("loadData",data);
+				$("#ddMemberSelltb").datagrid('appendRow',{
+					uid:"合计",
+					buyNum:compute("ddMemberSelltb","buyNum"),
+					buyMoney:compute("ddMemberSelltb","buyMoney"),
+					money:"",
+					userMoney:"",
+					buyNote:"",
+					buyTime:""
+				});
+				
+			
+			}
+			
+		});
+	}
+	function getAdminSellList()
+	{
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示","请选中会员","error");
+			return;
+		}
+		$("#ddAdminSellList").dialog("open").window('resize',{width:'80%',height:'80%',top:10,left:10});
+		var startDate= time2UTC(format())-6 * 23 * 59 *59 *1000;
+		var endDate= time2UTC(format())+23*59*59*1000;
+		if(!startDate){
+			$.messager.alert("操作提示","请选择起始日期","error");
+			return;
+		}
+		if(!endDate){
+			$.messager.alert("操作提示","请选择截止日期","error");
+			return;
+		}
+		if(startDate>endDate){
+			$.messager.alert("操作提示","起始日期大于截止日期","error");
+			return;
+		}
+		var day=new Date();
+		var comparetime=(day.getMonth()+1)+'/'+day.getDate()+'/'+day.getFullYear();
+		comparetime=time2UTC(comparetime)+23*59*59*1000;
+		if(endDate>comparetime){
+			$.messager.alert("操作提示","只能查询本日及之前的数据","error");
+			return;
+		}
+		/*searchForAdminSellList(startDate,endDate);*/
+	}
+	function searchForAdminSellList(strday,endday){
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示","请选中会员","error");
+			return;
+		}
+		if(!strday||!endday) {
+			var startDate = time2UTC($('#strday1').datebox('getValue'));
+			var endDate = time2UTC($('#endday1').datebox('getValue')) + 23 * 59 * 59 * 1000;
+			if (!startDate) {
+				$.messager.alert("操作提示", "请选择起始日期", "error");
+				return;
+			}
+			if (!endDate) {
+				$.messager.alert("操作提示", "请选择截止日期", "error");
+				return;
+			}
+			if (startDate > endDate) {
+				$.messager.alert("操作提示", "起始日期大于截止日期", "error");
+				return;
+			}
+			if (endDate-startDate>8*23*59*59*1000) {
+				$.messager.alert("操作提示", "只能查询7天内的数据", "error");
+				return;
+			}
+			var day = new Date();
+			var comparetime = (day.getMonth() + 1) + '/' + day.getDate() + '/' + day.getFullYear();
+			comparetime = time2UTC(comparetime) + 23 * 59 * 59 * 1000;
+			if (endDate > comparetime) {
+				$.messager.alert("操作提示", "只能查询本日及之前的数据", "error");
+				return;
+			}
+		}
+		postJson("/admin/getAdminSellList1",{mid:member.mid,_strday:strday?strday:startDate, _endday:endday?endday:endDate},
+				function(data)
+				{
+					for(var key in data.rows){
+						var time = data.rows[key]["buyTime"];
+						time = new Date(time);
+						//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						time = getDateCommonFormat(time);
+						data.rows[key]["buyTime"] = time;
+					}
+
+					data.rows = data.rows.reverse();
+
+					$("#ddAdminSellList").dialog("open").window('resize',{width:'80%',height:'80%',top:10,left:10});
+					$("#ddAdminSelltb").datagrid("loadData",data);
+					var comTotal = {
+						mid:"合计",
+						buyNum:compute("ddAdminSelltb","buyNum"),
+						buyMoney:compute("ddAdminSelltb","buyMoney"),
+						buyNote:"-",
+						buyTime:"-",
+						byMid:"-"
+					};
+					$("#ddAdminSelltb").datagrid("appendRow",comTotal);
+
+				}
+		);
+	}
+	/*=============================================7天明细查询结束================================================================*/
+	function searchMembers(value, key)
+	{
+		var para = {};
+		if(key == "mid" || key == "mPhone1" || key == "mPhone2" || key == "money" || key == "mAddByMid"
+				|| key == "byMid" || key == "buyTotal" || key == "buyReward" || key == "adminLevel" || key == "lastBuyDay"){
+			para[key] = parseInt(value);
+		}
+		else {
+			para[key] = value;
+		}
+
+		var msg = {searchKey:para};
+
+		//alert("searchMembers " + JSON.stringify(para));
+
+		postJson("/admin/getMembers", msg,
+				function(data)
+				{
+					for(var key in data.rows){
+						var time = data.rows[key]["mTime"];
+						time = new Date(time);
+						//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						time = getDateCommonFormat(time);
+						data.rows[key]["mTime"] = time;
+					}
+					$("#dg").datagrid("loadData",data.rows);
+				}
+		);
+	}
+
+	function isUndefined(obj) {
+		return obj === void 0;
+	}
+
+	function isNull(obj) {
+		return obj == null;
+	}
+
+	function showAddMembersMenu() {
+		if(getGameType(window.location.host).disableAddMember == true){
+			$('#addMembersMenu').hide();
+		}
+	}
+	$(document).ready(function () {
+		showAddMembersMenu();
+	});
+
+	function gameIdsAdd() {
+		var member=$("#dg").datagrid("getSelected");
+
+		if(!member)
+		{
+			alert("请选中会员");
+			return;
+		}
+
+		var gameIds = member.gameids;
+
+		//alert("gameIds type " + typeof gameIds);
+
+		var addId = $('#state').combobox('getValue');
+
+		if (isUndefined(gameIds) || isNull(gameIds)) {
+			gameIds = "";
+		}
+
+		if (gameIds.indexOf(addId) >= 0) {
+			return;
+		}
+
+		if (gameIds.length == 0) {
+			gameIds += addId;
+		}
+		else {
+			gameIds += "|" + addId;
+		}
+
+		postJson("/admin/saveMember", {mid: member.mid, gameids: gameIds},
+				function (data) {
+					getMembers();
+				}
+		);
+	}
+
+	function gameIdsMinus() {
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			alert("请选中会员");
+			return;
+		}
+
+		var gameIds = member.gameids;
+
+		if(isUndefined(gameIds) || isNull(gameIds)){
+			gameIds = "";
+		}
+
+		var minusId = $('#state').combobox('getValue');
+
+		if(gameIds.indexOf(minusId) < 0){
+			return;
+		}
+
+		if(gameIds.length == minusId.length){
+			gameIds = "";
+		}
+		else if(gameIds.length > minusId.length){
+			var strIds = gameIds.split("|");
+
+			var deleteId;
+
+			for(var i = 0; i < strIds.length; i++){
+				if(strIds[i] == minusId){
+					deleteId = i;
+				}
+			}
+
+			if(deleteId >= 0){
+				strIds.splice(deleteId, 1);
+			}
+
+			var ids = "";
+
+			for(var i = 0; i < strIds.length; i++){
+				if(i == 0){
+					ids += strIds[i];
+				}
+				else {
+					ids += "|" + strIds[i];
+				}
+			}
+
+			gameIds = ids;
+		}
+
+		postJson("/admin/saveMember",{mid:member.mid,gameids:gameIds},
+				function(data)
+				{
+					getMembers();
+				}
+		);
+	}
+
+	function onSelect(date){
+		startDate = getFormatDate(date);
+		startDate = startDate.toString();
+	}
+
+
+	/*====================未删除接口START===========================================*/
+	function searchForMemberBuyList1(){
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			alert("请选中会员");
+			return;
+		}
+		postJson("/admin/getMemberBuyList1",{mid:member.mid, day:""},
+				function(data)
+				{
+					for(var key in data.rows){
+						var time = data.rows[key]["buyTime"];
+						time = new Date(time);
+						//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						time = getDateCommonFormat(time);
+
+						data.rows[key]["buyTime"] = time;
+					}
+
+					data.rows = data.rows.reverse();
+
+					$("#ddMemberBuyList").dialog("open").window('resize',{width:'80%',height:'80%',top:10,left:10});
+					//TODO 
+					$("#ddMemberBuytb").datagrid("loadData",data);
+				}
+		);
+	}
+
+	function searchForMemberSellList1(){
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			$.messager.alert("操作提示","请选中会员","error");
+			return;
+		}
+		postJson("/admin/getMemberSellList1",{mid:member.mid, day:""},
+				function(data)
+				{
+					for(var key in data.rows){
+						var time = data.rows[key]["buyTime"];
+						time = new Date(time);
+						//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						time = getDateCommonFormat(time);
+						data.rows[key]["buyTime"] = time;
+					}
+
+					data.rows = data.rows.reverse();
+
+					$("#ddMemberSellList").dialog("open").window('resize',{width:'80%',height:'80%',top:10,left:10});
+					//TODO 下边有
+					$("#ddMemberSelltb").datagrid("loadData",data);
+					
+				});
+	}
+
+	function searchForAdminSellList1() {
+		var member=$("#dg").datagrid("getSelected");
+		if(!member)
+		{
+			alert("请选中会员");
+			return;
+		}
+		postJson("/admin/getAdminSellList1",{mid:member.mid, day:""},
+				function(data)
+				{
+					for(var key in data.rows){
+						var time = data.rows[key]["buyTime"];
+						time = new Date(time);
+						//time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+						time = getDateCommonFormat(time);
+						data.rows[key]["buyTime"] = time;
+					}
+
+					data.rows = data.rows.reverse();
+
+					$("#ddAdminSellList").dialog("open").window('resize',{width:'80%',height:'80%',top:10,left:10});
+					//TODO 合计
+					$("#ddAdminSelltb").datagrid("loadData",data);
+					$("#ddAdminSelltb").datagrid('appendRow',{
+						uid:"合计",
+						buyNum:compute("ddAdminSelltb","buyNum"),
+						buyMoney:compute("ddAdminSelltb","buyMoney"),
+						money:"",
+						userMoney:"",
+						buyNote:"",
+						buyTime:""
+					});
+				});
+	}
+/*====================未删除接口END===========================================*/
+</script>
+</body>
+</html>

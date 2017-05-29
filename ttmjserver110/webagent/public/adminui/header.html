@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="header1">
+			<div class="header2">
+				<ul class="logo easyui-tree">
+					<li id='bulletinboard.html'><span id="gameName">管理后台</span></li>
+				</ul>
+				<div class="contact">
+					<div class="prompt">
+	                    <span id="systime">2014年10月26日 星期日 农历闰九月初三</span>
+	                </div>
+	                <div class="headerMenu">
+	                    <ul>
+							<li><a href="#" target="_blank" class="easyui-linkbutton" id="helpBtn" data-options="iconCls:'icon-help',iconAlign:'right'">帮助</a></li>
+	                        <li><a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="logout()">安全退出</a></li>
+							<li><a href="#" class="easyui-linkbutton" data-options="plain:true" onclick="opensafeTab()">安全设置</a></li>
+							<li><a href="#" class="easyui-linkbutton" data-options="plain:true">余额:<span id="money"></span></a></li>
+	                        <li><a href="#" class="easyui-linkbutton" data-options="plain:true">您好，<span id="memebername">XXX</span></a></li>
+	                    </ul>
+                	</div> 
+				</div>
+			</div>
+		</div>
+	    <script type="text/javascript">
+	    	$(function(){
+	    		setInterval(showTime,1000);
+				function showTime(){
+					var show_day=new Array('星期一','星期二','星期三','星期四','星期五','星期六','星期日');
+					var time=new Date();
+					var year=time.getFullYear();
+					var month=time.getMonth()+1;
+					var date=time.getDate();
+					var day=time.getDay();
+					month<10?month='0'+month:month;
+					var now_time=year+'年'+month+'月'+date+'日'+' '+show_day[day-1];
+					document.getElementById('systime').innerHTML=now_time;
+				}
+				function getMyInfo(){
+			   	      postJson("/admin/getMyInfo",{msg:"content"},function(rtn){
+						   if(rtn){
+							   $("#memebername").html(rtn.mName);
+							   $("#money").html(rtn.money);
+						   }
+					  });
+	       		}
+	       		getMyInfo();
+	       		$("#gameName").text(getGameType(window.location.host).name);
+			});
+			$("#helpBtn").click(function(e){
+				e.preventDefault();
+				var tab = $('#tabs').tabs('getSelected');
+				var url = $(tab.panel('options').content).attr('src').toLowerCase();
+				if(url.indexOf("/") >= 0){
+					var urlArr=url.split("/");
+					url=urlArr[2].toLowerCase();
+
+				}
+				postJson("/admin/checkFile",{url:url},function(rtn){
+					if(rtn.url) {
+						window.open (rtn.url);
+					}
+				});
+			});
+			function opensafeTab(){
+				$('#tabs').tabs('add', {
+					title: "安全设置",
+					content: '<iframe width="100%" height="99%" frameborder="0" marginwidth="5" marginheight="5" ' +
+					' allowtransparency="yes" src="../memberui/safeset.html" ></iframe>',
+					closable: true,
+					tools:[{
+						iconCls:'icon-mini-refresh',
+						handler:function(){
+							var currTab = $('#tabs').tabs('getSelected'); //获得当前tab
+							var url = $(currTab.panel('options').content).attr('src');
+							$('#tabs').tabs('update', {
+								tab : currTab,
+								options : {
+									content: '<iframe width="100%" height="99%" frameborder="0" marginwidth="5" marginheight="5" ' +
+									' allowtransparency="yes" src="../memberui/safeset.html" ></iframe>'
+								}
+							});
+						}
+					}]
+				});
+			}
+	    </script>
+	</body>
+</html>

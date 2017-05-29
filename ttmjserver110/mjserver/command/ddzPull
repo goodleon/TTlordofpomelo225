@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+originVersion=$(cat /etc/hosts | grep testlocal | awk '{print $2}' | awk -F '.' '{print $1}' | awk -F 'testlocal' '{print $2}')
+let nowVersion=${originVersion}+1
+sed -i 's/testlocal'${originVersion}'/testlocal'${nowVersion}'/g' /etc/hosts
+sed -i 's/testlocal'${originVersion}'/testlocal'${nowVersion}'/g' /root/ddz/.git/config
+
+if [ $? != 0 ];then
+    bash echoColor "${0}: change ${originVersion} -> ${nowVersion}   failed !" error;
+	exit 1;
+else
+    bash echoColor "${0}: change ${originVersion} -> ${nowVersion}  Success !" info;
+    bash pull ddz
+	exit 0;
+fi

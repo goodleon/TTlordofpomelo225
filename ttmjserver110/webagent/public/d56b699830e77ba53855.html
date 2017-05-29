@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>登录</title>
+<meta name="viewport" content="width=device-width,user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="email=no">
+<script type="text/javascript" src="js/zepto.js"></script>
+<script type="text/javascript" src="easyui/jquery.min.js"></script>  
+<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script> 
+<script type="text/javascript" src="easyui/jquery.easyui.mobile.js"></script> 
+<script type="text/javascript" src="/share.js"></script>
+
+<link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+
+<img src="" alt="头像" class="avatar" id = "image"/>
+<h2 class="sign-tit" id = "title">皮皮麻将会员管理后台</h2>
+<label class="sign-tips">用户名</label>
+<div class="sign-wp"><input type="text" id="mid" class="sign-input" value=""/></div>
+<label class="sign-tips">密码</label>
+<div class="sign-wp"><input type="password"  id="mPass" class="sign-input" value=""/></div>
+<div class="agreement"><p><a href="symj.html">同意推广协议</a></p><em class="on"></em></div>
+<div>&nbsp;</div>
+<span class="sign-btn" onclick="doLogin()" style="cursor:pointer">登&nbsp;&nbsp;录</span>
+<div>&nbsp;&nbsp;</div>
+
+<script type="text/javascript">
+	function changeAvatarAndName() {
+		$("#image").attr("src", getGameType(window.location.host).loginImg);
+		$("#title").text(getGameType(window.location.host).name);
+	}
+
+	$(document).ready(function(){
+		changeAvatarAndName();
+	});
+
+    $$(function(){
+        $('.agreement').click(function(){
+            $(this).find('em').hasClass('on')?$(this).find('em').removeClass('on'):$(this).find('em').addClass('on');
+        });
+    });
+	
+	function doLogin()
+	{
+	   var msg={mid:parseFloat($("#mid").val()), mPass:$("#mPass").val() };
+
+		var host = window.location.host.split(".");
+
+		if(host[0] == "pdk" || host[0] == "phz"|| host[0] == "ddz"|| host[0] == "scmj"){
+			msg.gameid = host[0];
+		}
+
+	   if(msg.mid>100000&&msg.mPass.length>0)
+	   postJson("/login/dld56b699830e77ba53855",msg,function(rtn){
+		   if(typeof(rtn) == 'object') {
+			   if(rtn.banDays) {
+				   alert('您的账号被封禁，请在' + rtn.banDays + '天后尝试登录');
+			   } else if(rtn.banMins) {
+				   alert('您的账号被封禁，请在' + rtn.banMins + '分钟后尝试登录');
+			   }
+		   } else if(typeof(rtn)=='string') {
+			   window.location.href=rtn;
+		   } else {
+			   alert("用户名或者密码错误");
+		   }
+	   });
+	}
+	
+</script>
+</body>
+</html>
+

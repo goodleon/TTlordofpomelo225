@@ -1,0 +1,90 @@
+vim /etc/firewalld/zones/public.xml
+
+// 在 /zone添加
+<rule family="ipv4">
+      <port protocol="tcp" port="88"/>
+      <accept/>
+    </rule>
+
+    <rule family="ipv4">
+      <port protocol="tcp" port="22"/>
+      <accept/>
+    </rule>
+
+    <rule family="ipv4">
+      <port protocol="tcp" port="27017"/>
+      <accept/>
+    </rule>
+
+    <rule family="ipv4">
+      <port protocol="tcp" port="3005"/>
+      <accept/>
+    </rule>
+
+    <rule family="ipv4">
+      <port protocol="tcp" port="800"/>
+      <accept/>
+    </rule>
+
+    <rule family="ipv4">
+      <port protocol="tcp" port="4006"/>
+      <accept/>
+    </rule>
+
+    <rule family="ipv4">
+      <source address="183.149.115.116"/>
+      <drop/>
+    </rule>
+
+  <rule family="ipv4">
+      <source address="117.176.255.160"/>
+      <drop/>
+    </rule>
+
+  <rule family="ipv4">
+      <source address="171.216.78.77"/>
+      <drop/>
+    </rule>
+
+  <rule family="ipv4">
+      <source address="117.172.24.204"/>
+      <drop/>
+    </rule>
+
+  <rule family="ipv4">
+      <source address="183.221.90.240"/>
+      <drop/>
+    </rule>
+
+
+
+
+重启防火墙
+1
+systemctl restart firewalld.service
+1、运行、停止、禁用firewalld
+启动：# systemctl start  firewalld
+查看状态：# systemctl status firewalld 或者 firewall-cmd --state
+停止：# systemctl disable firewalld
+禁用：# systemctl stop firewalld
+ 
+2、配置firewalld
+查看版本：$ firewall-cmd --version
+查看帮助：$ firewall-cmd --help
+查看设置：
+显示状态：$ firewall-cmd --state
+查看区域信息: $ firewall-cmd --get-active-zones
+查看指定接口所属区域：$ firewall-cmd --get-zone-of-interface=eth0
+拒绝所有包：# firewall-cmd --panic-on
+取消拒绝状态：# firewall-cmd --panic-off
+查看是否拒绝：$ firewall-cmd --query-panic
+ 
+更新防火墙规则：# firewall-cmd --reload
+# firewall-cmd --complete-reload
+两者的区别就是第一个无需断开连接，就是firewalld特性之一动态添加规则，第二个需要断开连接，类似重启服务
+
+
+
+http://www.mamicode.com/info-detail-1030830.html
+
+http://www.centoscn.com/CentOS/Intermediate/2015/0313/4879.html

@@ -1,0 +1,64 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <title>返利计算</title>
+</head>
+<body  class="easyui-layout">
+        <table class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:100%"
+            data-options="singleSelect:true,collapsible:true,url:'datagrid_data1.json',method:'get'">
+        <thead>
+            <tr>
+                <th data-options="field:'itemid',width:80">会员名称</th>
+                <th data-options="field:'productid',width:100">推荐会员名称</th>
+                <th data-options="field:'listprice',width:80,align:'right'">推荐会员购买数量</th>
+                <th data-options="field:'unitcost',width:80,align:'right'">自购返利金额</th>
+                <th data-options="field:'attr1',width:250">推荐返利金额</th>
+                <th data-options="field:'status',width:60,align:'center'">总返利金额</th>
+                <th data-options="field:'status',width:60,align:'center'">售卖次数</th>
+                <th data-options="field:'status',width:60,align:'center'">售卖人数</th>
+            </tr>
+        </thead>
+    </table>
+    <script>
+//        <!--预留接口-->
+//        function fillGrid(){
+//                postJson("/admin/getMembers",{"limit": pageLimit, "skip":(pageNum - 1) * pageLimit},
+//                        function(data)
+//                        {
+//                            console.log(data);
+//                            if(data.length==0){
+//                                $('#dg').datagrid('loadData',{totals:"1",rows:[]});
+//                            }else{
+//                                for(var key in data.rows){
+//                                    var time = data.rows[key]["mTime"];
+//                                    time = new Date(time);
+//                                    time = getDateCommonFormat(time);
+//                                    var now = Date.now();
+//
+//                                    data.rows[key]["mTime"] = time;
+//                                    if(data.rows[key]["banTime"] && data.rows[key]["banTime"] > now) {
+//                                        var days = Math.ceil((data.rows[key]["banTime"] - now) / 86400000);
+//                                        data.rows[key]["banDays"] = days;
+//                                    }
+//                                }
+//                                $('#dg').datagrid("loadData",data);
+//                                if (pageLimitLast != pageLimit){
+//                                    showMembersPage();
+//                                    pageLimitLast = pageLimit;
+//                                }
+//                                if(data.total==0){
+//                                    $('#dg').datagrid('appendRow',{mid:"没有数据", mPhone1:"", mPhone2:"", money:"", mAddByMid:"", byMid:"", buyTotal:"", buyReward:"", adminLevel:""});
+//                                }
+//
+//                            }
+//
+//                        }
+//                );
+//        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<title>我的推荐</title>
+</head>
+<body  class="easyui-layout">
+
+        <div>
+			<a href="#" class="easyui-linkbutton" onclick="getMyMembers()">刷新</a>
+			<!--返利比例:<font color="red" id="rewardRate"> </font>  说明:基础8%  推荐会员,4个超过1000: 10%   10个超过1000: 12%-->
+			返利比例:<font color="red" id="rewardRate"> </font>
+			说明:基础<Label id="rebateBasic"></Label>%
+			<!--推荐会员,4个超过1000: <Label id="rebateFirst"></Label>%-->
+			<!--10个超过1000: <Label id="rebateSecond"></Label>%-->
+			推荐会员,<Label id="rfRecommand"></Label>个超过<Label id="rfRecharge"></Label>: <Label id="rebateFirst"></Label>%
+			<Label id="rsRecommand"></Label>个超过<Label id="rsRecharge"></Label>: <Label id="rebateSecond"></Label>%
+		</div>
+		<div style="margin:2px 0;">
+			<span>会员数量:</span><span id="memAmount"></span>
+			<a href="#" class="easyui-linkbutton" onclick="changePageLimit(20)">每页显示20个</a>
+			<a href="#" class="easyui-linkbutton" onclick="changePageLimit(50)">每页显示50个</a>
+			<a href="#" class="easyui-linkbutton" onclick="changePageLimit(100)">每页显示100个</a>
+			<a href="#" class="easyui-linkbutton" onclick="changePageLimit(200)">每页显示200个</a>
+			<a href="#" class="easyui-linkbutton" onclick="changePageLimit(500)">每页显示500个</a>
+		</div>
+        <table  id="dg" class="easyui-datagrid" style="width:100%;height:70%"
+            data-options="singleSelect:true,collapsible:true">
+        <thead>
+            <tr>
+                <th data-options="field:'mid',width:80">会员ID</th>
+                <th data-options="field:'mNick',width:100">昵称</th>
+                <th data-options="field:'mNick',width:100">姓名</th>
+                <th data-options="field:'buyTotal',width:80,align:'right'">本周购买</th>
+                <th data-options="field:'buyReward',width:80,align:'right'">返利</th>
+				<th data-options="field:'mTime',width:80,align:'right'">时间</th>
+            </tr>
+        </thead>
+    </table>
+	<div id = "pageButton" style="margin:2px 0;">
+	</div>
+	<script type="text/javascript">
+		function initShowRebate() {
+			postJson("/admin/getRebateJson",{msg:"rebate"},function(data){
+				var rebate = {};
+				var rebate2 = {};
+
+				if(data <= 0){
+					rebate = getGameType(window.location.host).rebate;
+					rebate2 = getGameType(window.location.host).rebate2;
+				}
+				else {
+					rebate = data.rows[0];
+					//rebate2 = ; msg:"rebate2"
+				}
+
+				$("#rebateBasic").html(rebate.basic.sca / 2 * 100);
+
+				$("#rfRecommand").html(rebate.firstLevel.recommend);
+				$("#rfRecharge").html(rebate.firstLevel.recharge);
+				$("#rebateFirst").html(rebate.firstLevel.sca / 2 * 100);
+
+				$("#rsRecommand").html(rebate.secondLevel.recommend);
+				$("#rsRecharge").html(rebate.secondLevel.recharge);
+				$("#rebateSecond").html(rebate.secondLevel.sca / 2 * 100);
+			});
+		}
+
+		$(document).ready(function () {
+			initShowRebate();
+			getMemAmount();
+		});
+		function getMemAmount(){
+			postJson("/admin/getMyMembersCount",{},
+					function(data)
+					{
+						$("#memAmount").html(data+"个");
+					}
+			);
+		}
+		var pageLimit = 20;
+		var pageLimitLast = 0;
+
+		var pageNum = 1;
+
+		function changePageLimit(num){
+			pageLimit = num;
+
+			pageNum = 1;
+
+			getMyMembers();
+		}
+
+		function LoadData(num)
+		{
+			pageNum = num;
+
+			getMyMembers();
+		}
+
+		function getTotalPage(data) {
+			return (data / pageLimit) + (data % pageLimit > 0 ? 1 : 0);
+		}
+
+		function showMembersPage() {
+			var div = document.getElementById("pageButton");
+			div.innerHTML = "";
+
+			postJson("/admin/getMyMembersCount",{},
+					function(data)
+					{
+
+						$(document).ready(function () {
+							for(var i = 1; i <= getTotalPage(data); i++){
+								$("#pageButton").append("<button onclick=LoadData("+i+")>第"+ i +"页</button>");
+							}
+						});
+					}
+			);
+		}
+
+	  function getMyMembers()
+	  {		//  "limit": pageLimit, "skip":(pageNum - 1) * pageLimit
+		 postJson("/admin/getMyMembers",{"limit": pageLimit, "skip":(pageNum - 1) * pageLimit},
+		   function(data)
+		   {
+			   postJson("/admin/getRebateJson",{msg:"rebate"},function(dat){
+				   var rebate = {};
+				   var rebate2 = {};
+
+				   if(dat <= 0){
+					   rebate = getGameType(window.location.host).rebate;
+					   rebate2 = getGameType(window.location.host).rebate2;
+				   }
+				   else {
+					   rebate = dat.rows[0];
+					   //rebate2 = ;msg:"rebate2"
+				   }
+
+				   var rewardRate=rebate.basic.sca;//0.16//rebate.basic
+				   var rows=data.rows;
+				   var bigNum=0;
+				   for(var i=0;i<rows.length;i++)
+				   {
+					   if(rows[i].buyTotal>=rebate.firstLevel.recharge) bigNum++;//1000
+				   }
+				   if(bigNum>=rebate.firstLevel.recommend)  rewardRate=rebate.firstLevel.sca;//0.2
+				   if(bigNum>=rebate.secondLevel.recommend) rewardRate=rebate.secondLevel.sca;//0.24
+
+				   for(var i=0;i<rows.length;i++)
+				   {
+					   var row=rows[i];
+					   row.buyReward=Math.floor(rewardRate*row.buyTotal);
+				   }
+				   $("#rewardRate").html(rewardRate/2);
+
+				   for(var key in data.rows){
+					   var time = data.rows[key]["mTime"];
+					   time = new Date(time);
+					   //time = time.toLocaleDateString() + " " + time.toLocaleTimeString();
+					   time = getDateCommonFormat(time);
+					   data.rows[key]["mTime"] = time;
+				   }
+
+				   $("#dg").datagrid("loadData",data);
+
+				   if(data.total==0||data==""||!data||data.rows.length==0){
+					   $('#dg').datagrid('appendRow',{mid:"没有数据", mNick:"", mNick:"", buyTotal:"",buyReward:"",mTime:""});
+				   }
+
+				   if (pageLimitLast != pageLimit){
+					   showMembersPage();
+					   pageLimitLast = pageLimit;
+				   }
+			   });
+		   }
+		 );
+	  }
+
+		//减少服务器压力先注掉
+	  	//getMyMembers();
+		//showMembersPage();
+
+	</script>
+
+	
+</body>
+</html>

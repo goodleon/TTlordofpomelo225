@@ -1,0 +1,173 @@
+<html>
+	<head>
+		<meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+		<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="../share.js"></script>
+		<title>抽水比例</title>
+	</head>
+	<body class="easyui-layout">
+		<div id="pushMoney" class="easyui-dialog"  closed="true" title="抽水比例" style="width:400px;height:400px;"
+		 data-options="iconCls:'icon-save',resizable:true,modal:true">
+		<table width="100%">
+			<tr><td><label>Id:</label></td> <td><label id="id">0</label></td></tr>
+			<tr><td><label>抽水比例:</label></td> <td><input class="easyui-validatebox" type="text" id="pushmoneys" data-options="required:true" /></td></tr>
+			<!-- <tr><td><label>金额:</label></td> <td><input class="easyui-validatebox" type="text" id="buyMoney" data-options="required:true" /></td></tr> -->
+		</table>
+		<a href="#" class="easyui-linkbutton" onclick="editConfigYes()">确定</a>
+	</div>
+		<div>
+		<a href="#" class="easyui-linkbutton" onclick="showCfg()">刷新</a>
+		<a href="#" class="easyui-linkbutton" onclick="addpushMoney()">添加抽水比例</a>
+		<a href="#" class="easyui-linkbutton" onclick="editpushMoney()">修改比例</a>
+		<a href="#" class="easyui-linkbutton" onclick="deletepushMoney()">删除</a>
+	</div>
+	<table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%"
+			data-options="singleSelect:true,collapsible:true,
+				method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false
+            ">
+		<thead>
+		<tr>
+			<th data-options="field:'id',width:80,sortable:true">类别</th>
+			<th data-options="field:'pushmoneys',width:80,sortable:true">抽水比例</th>
+			
+		</tr>
+		</thead>
+	</table>
+		<script type="text/javascript">
+		   		var data_ = {};
+		var addId = 0;
+		//TODO添加充值的保存url、字段需要修改		
+		function savepushMoneyData(msg){
+			postJson("/redisData/savepushMoneyJson",{msg:{type:"content", content:msg}},
+				function(data)
+				{
+					if(data > 0){
+						alert("修改成功");
+						showCfgCommon();
+					}
+				}
+			);
+		}
+
+		 function deletepushMoney(){
+			 var alipay = $("#dg").datagrid("getSelected");
+			 if(alipay){
+				var id = alipay.id;
+
+				if(window.confirm("删除，请确认?")) {
+					 postJson("/redisData/deletepushMoneyJson", {msg:id.toString()}, function(data) {
+
+						 data_ = data;
+// 
+						showCfgCommon();
+					 });
+				 }
+			}
+			 else {
+				 alert("请选择删除条目");
+			 }
+		}
+
+
+		function editConfigYes(){
+			
+			var idlabel = document.getElementById("id").innerHTML;
+			var msg={
+				id:parseInt(idlabel),
+				pushmoneys:parseFloat($('#pushmoneys').val()),
+			};
+
+			console.log(typeof msg.push_moneys);
+
+			if(msg.pushmoneys == 0 || msg.pushmoneys == null   || msg.pushmoneys <= 0) {
+
+				alert("无效比例");
+				return
+			}
+
+			var itemInfo = {};
+			var obj = {"pushmoneys":msg.pushmoneys};
+			data_[msg.id] = obj;
+			itemInfo["id"] = msg.id;
+			itemInfo["content"] = obj;
+
+			savepushMoneyData(itemInfo);
+
+			$('#pushMoney').dialog('close');
+		}
+
+		 function editpushMoney(){
+			var itemSelected = $("#dg").datagrid("getSelected");
+			 if(itemSelected){
+			//document.getElementById("id").style.display = "none";
+
+			$("#id").html(itemSelected.id);
+
+			 $('#pushmoneys').val(itemSelected.pushmoneys);
+			 $('#pushMoney').dialog('open');
+			}
+		else {
+				 alert("请选择条目");
+			 }
+	 }
+
+		function getAddId(){
+			return (addId + 1).toString();
+		}
+
+		function addpushMoney(){
+			$("#id").html(getAddId());
+			$('#pushmoneys').val("");
+			$('#pushMoney').dialog('open');
+		}
+        //添加到table中
+		var  resluts =  [];
+		function showCfgCommon(){
+			addId = 0;
+			var result = [];
+
+				var cell = {};
+				cell["id"] = 0;
+				cell["pushmoneys"] = resluts.pushmoneys;
+
+				result.push(cell);
+
+			var da = {};
+			da["total"] = result.length;
+			da["rows"] = result;
+			$("#dg").datagrid("loadData", da);
+			if(da.total==0||da==""||!da){
+				$('#dg').datagrid('appendRow',{id:"没有数据", pushmoneys:""});
+			}
+		}
+// TODO url修改  
+		function showCfg(){
+			postJson("/redisData/getpushMoneyJson",{msg:"content"},
+				function(data) {
+					if(!data){
+						$('#dg').datagrid('appendRow',{id:"没有数据", pushmoneys:""});
+						return;
+					}
+					data_ = data;
+					//resluts =JSON.parse(data_['data']);
+					//	console.log(resluts);
+					resluts =JSON.parse(data_['data']);
+					showCfgCommon();
+				}
+			);
+		}
+		$(document).ready(function () {
+			 showCfg();
+
+		});
+		</script>
+	</body>
+</html>

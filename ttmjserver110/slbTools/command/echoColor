@@ -1,0 +1,33 @@
+#!/bin/bash
+RED_COLOR='\E[1;31m'  #红  error
+GREEN_COLOR='\E[1;32m' #绿  info
+YELLOW_COLOR='\E[1;33m' #黄
+BLUE_COLOR='\E[1;34m'  #蓝
+PINK='\E[1;35m'      #粉红
+RES='\E[0m'
+
+
+
+if [ $# != 2 ] ; then
+    bash echoColor "${0}: The number of parameters must be equal to 2" error;
+exit 1;
+fi
+
+CurColor=${BLUE_COLOR}
+
+case $2 in
+         err | error | ERR | Error)
+            CurColor=${RED_COLOR};
+         ;;
+         info | Info | INFO)
+            CurColor=${GREEN_COLOR};
+         ;;
+         tip | Tip | TIP)
+            CurColor=${YELLOW_COLOR};
+         ;;
+         *)
+            CurColor=${BLUE_COLOR};
+         ;;
+ esac
+
+echo -e  "${CurColor}${1}${RES}"

@@ -1,0 +1,217 @@
+<html>
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+	<title>支付配置</title>
+</head>
+
+<body  class="easyui-layout">
+	<div id="ddAlipay" class="easyui-dialog"  closed="true" title="充值修改" style="width:400px;height:400px;"
+		 data-options="iconCls:'icon-save',resizable:true,modal:true">
+
+		<table width="100%">
+			<tr><td><label>Id:</label></td> <td><label id="id">0</label></td></tr>
+			<tr><td><label>数量:</label></td> <td><input class="easyui-validatebox" type="text" id="buyNum" data-options="required:true" /></td></tr>
+			<tr><td><label>金额:</label></td> <td><input class="easyui-validatebox" type="text" id="buyMoney" data-options="required:true" /></td></tr>
+			<tr><td><label>赠送:</label></td> <td><input class="easyui-validatebox" type="text" id="givePercentage" data-options="required:true" /></td></tr>
+			<tr><td><label>赠送数量:</label></td> <td><input class="easyui-validatebox" type="text" id="giveNum" data-options="required:true" /></td></tr>
+		</table>
+		<a href="#" class="easyui-linkbutton" onclick="editAlipayYes()">确定</a>
+	</div>
+	<div>
+		<a href="#" class="easyui-linkbutton" onclick="showCfg()">刷新</a>
+		<a href="#" class="easyui-linkbutton" onclick="addAlipay()">添加充值</a>
+		<a href="#" class="easyui-linkbutton" onclick="editAlipay()">修改充值</a>
+		<a href="#" class="easyui-linkbutton" onclick="deleteAlipay()">删除充值</a>
+	</div>
+
+	<table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%"
+			data-options="singleSelect:true,collapsible:true,
+				method:'get',
+				remoteSort:false,
+				multiSort:true,
+				rownumbers:true,
+				singleSelect:true,
+				autoRowHeight:false
+            ">
+		<thead>
+		<tr>
+			<th data-options="field:'id',width:80,sortable:true">Id</th>
+			<th data-options="field:'buyNum',width:80,sortable:true">数量</th>
+			<th data-options="field:'buyMoney',sortable:true">金额</th>
+			<th data-options="field:'givePercentage',sortable:true">赠送</th>
+			<th data-options="field:'giveNum',sortable:true">赠送数量</th>
+		</tr>
+		</thead>
+	</table>
+
+    <script type="text/javascript">
+		var data_ = {};
+		var addId = 0;
+
+		function saveAlipayData(msg){
+			postJson("/admin/saveAlipayJson",{msg:{type:"content", content:msg}},
+				function(data)
+				{
+					if(data > 0){
+						alert("修改成功");
+						showCfgCommon();
+					}
+				}
+			);
+		}
+
+		function deleteAlipay(){
+			var alipay = $("#dg").datagrid("getSelected");
+			if(alipay){
+				var id = alipay.id;
+				if(window.confirm("删除，请确认?")) {
+					postJson("/admin/delAlipayJson", {msg:id.toString()}, function(data) {
+
+						data_ = data;
+
+						showCfgCommon();
+					});
+				}
+			}
+			else {
+				alert("请选择删除条目");
+			}
+		}
+
+		function percentageToFloat(per){
+			var result = per.split('%');
+			return parseFloat(result[0]) / 100;
+		}
+
+		function editAlipayYes(){
+			//id:parseInt($('#id').val())
+			var idlabel = document.getElementById("id").innerHTML;
+			var msg={
+				id:parseInt(idlabel),
+				buyNum:parseInt($('#buyNum').val()),
+				buyMoney:parseFloat($('#buyMoney').val()),
+				//givePercentage:parseFloat($('#givePercentage').val())
+				givePercentage:percentageToFloat($('#givePercentage').val())
+			};
+
+			if(msg.buyNum === void 0 || msg.buyNum == null || isNaN(msg.buyNum) || msg.buyNum <= 0) {
+				alert("无效数量");
+				return;
+			}
+			else if(msg.buyMoney === void 0 || msg.buyMoney == null || isNaN(msg.buyMoney) || msg.buyMoney <= 0) {
+				alert("无效金额");
+				return;
+			}
+			else if(msg.givePercentage === void 0 || msg.givePercentage == null || isNaN(msg.givePercentage) || msg.givePercentage < 0) {
+				alert("无效赠送百分比");
+				return;
+			}
+
+			var itemInfo = {};
+			var obj = {"buyNum":msg.buyNum,"buyMoney":msg.buyMoney,"givePercentage":msg.givePercentage};
+			data_[msg.id] = obj;
+			itemInfo["id"] = msg.id;
+			itemInfo["content"] = obj;
+
+			saveAlipayData(itemInfo);
+
+			$('#ddAlipay').dialog('close');
+		}
+
+		function editAlipay(){
+			var itemSelected = $("#dg").datagrid("getSelected");
+			if(itemSelected){
+//				document.getElementById("id").style.display = "none";
+
+				$("#id").html(itemSelected.id);
+
+				$('#buyNum').val(itemSelected.buyNum);
+				$('#buyMoney').val(itemSelected.buyMoney);
+				$('#givePercentage').val(itemSelected.givePercentage);
+				$('#giveNum').val(itemSelected.giveNum);
+				$('#ddAlipay').dialog('open');
+			}
+			else {
+				alert("请选择条目");
+			}
+		}
+
+		function getAddId(){
+			return (addId + 1).toString();
+		}
+
+		function addAlipay(){
+			$("#id").html(getAddId());
+
+			$('#buyNum').val("");
+			$('#buyMoney').val("");
+			$('#givePercentage').val("");
+			$('#giveNum').val("");
+			$('#ddAlipay').dialog('open');
+		}
+		function showCfgCommon(){
+			addId = 0;
+
+			var result = [];
+
+			for(var key in data_){
+				var cell = {};
+
+				cell["id"] = key;
+
+				if(parseInt(key) > addId){
+					addId = parseInt(key);
+				}
+
+				for(var ke in data_[key]){
+					if(ke == "givePercentage"){
+						cell[ke] = 100 * data_[key][ke] + "%";
+					}
+					else {
+						cell[ke] = data_[key][ke];
+					}
+				}
+				cell["giveNum"]=Math.floor(data_[key]["givePercentage"]*parseInt(data_[key]["buyNum"]));
+				result.push(cell);
+			}
+
+			var da = {};
+			da["total"] = result.length;
+			da["rows"] = result;
+
+
+			$("#dg").datagrid("loadData", da);
+			if(da.total==0||da==""||!da){
+				$('#dg').datagrid('appendRow',{id:"没有数据", buyNum:"", buyMoney:"", givePercentage:"",giveNum:""});
+			}
+		}
+
+		function showCfg(){
+			postJson("/admin/getAlipayJson",{msg:"content"},
+				function(data) {
+					if(!data){
+						$('#dg').datagrid('appendRow',{id:"没有数据", buyNum:"", buyMoney:"", givePercentage:"",giveNum:""});
+						return;
+					}
+					data_ = data;
+					showCfgCommon();
+				}
+			);
+		}
+
+		$(document).ready(function () {
+			showCfg();
+			$("#givePercentage").keyup(function(){
+				$("#giveNum").val(Math.floor(percentageToFloat($("#givePercentage").val())*parseInt($("#buyNum").val())));
+			});
+		});
+
+	</script>
+</body>
+</html>

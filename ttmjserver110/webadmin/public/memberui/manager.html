@@ -1,0 +1,269 @@
+
+<!doctype html>
+    <html>
+    <head>
+        <meta charset="UTF-8">  
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>皮皮麻将会员后台</title>  
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/metro/easyui.css">  
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/mobile.css">  
+        <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">  
+        <script type="text/javascript" src="/easyui/jquery.min.js"></script>  
+        <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script> 
+        <script type="text/javascript" src="/easyui/jquery.easyui.mobile.js"></script> 
+		<script type="text/javascript" src="/share.js"></script>
+		<title>首页</title>
+    </head>
+    <body>
+        <div>
+		    <div class="m-toolbar">
+			   &nbsp;
+            </div>
+            <div class="m-toolbar">
+				<span id="username">
+					<input class="easyui-combobox" id="language" name="language"
+						   data-options="valueField:'id',textField:'text'" style="width:150px;">
+				</span>
+
+                <span>用户名:&nbsp;</span><label id="mName">abc</label>&nbsp;&nbsp;
+				<span>余额:&nbsp;</span><label id="money">100</label>&nbsp;&nbsp;
+	<!--		<span>会员推荐返利:&nbsp;</span><label id="buyReward">0</label>
+				<a href="#" class="easyui-linkbutton" onclick="GetBuyReward()">领取返利</a>&nbsp;&nbsp;
+				<span>累计充值返利:&nbsp;</span><label id="accruedReward">0</label>
+				<a href="#" class="easyui-linkbutton" onclick="getAccruedReward()">领取返利</a>-->
+            </div>
+        </div>
+			   
+			  
+			 
+        <div class="easyui-tabs" data-options="fit:true,border:false">
+            <div title="出售" style="padding:10px">
+			  <iframe width="100%" height="100%" scrolling="auto" frameborder="0" src="yhgl2.html"></iframe> 
+            </div>
+			<div title="充值" style="padding:10px" id="recharge">
+				<select class="easyui-combobox" id="charge" name="charge" style="width:250px;">
+				</select>
+
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="easyui-linkbutton" onclick="recharge()" style="width:200px;height:33px;">爱贝充值</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+					<a href="#" class="easyui-linkbutton scanBtn" onclick="rechargewx()" style="width:200px;height:33px;display:none">微信扫码支付</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="#" class="easyui-linkbutton scanBtn" onclick="rechargeali()" style="width:200px;height:33px;display:none">阿里扫码支付</a>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<div style="margin:20px 0px;">
+					<!--上下 左右-->
+					<font color="red" style="margin:0px 0px;" size="3" id="chargeTip"></font>
+				</div>
+				<div>
+					<img src="" id="scanid" style="width:200px;height:200px" >
+				</div>
+			</div>
+            <div title="出售记录" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="wjjl.html"></iframe> 
+            </div>
+            <div title="购买记录" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="gmjl.html"></iframe> 
+            </div>
+            <div title="我的会员" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="hygl.html"></iframe> 
+            </div>
+			<div title="会员统计" style="padding:10px">
+				<iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="hytj.html"></iframe>
+			</div>
+			<div title="用户统计" style="padding:10px">
+				<iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="yhtj.html"></iframe>
+			</div>
+            <div title="修改密码" style="padding:10px">
+			  <iframe width="100%" height="100%"  scrolling="auto" frameborder="0" src="xgmm.html"></iframe> 
+            </div>
+        </div>
+		<script type="text/javascript">
+
+			$(document).ready(function () {
+				if(getGameType(window.location.host).wxScanPay){
+					$(".scanBtn").css("display","inline-block");
+				}
+			});
+			var mid;
+
+			function recharge() {
+				var str = $('#charge').combobox('getValue');
+
+				if(str != "-1"){
+					postJson("/admin/genAlipayCharge",{msg:str},function(rtn){
+						//alert(rtn);
+						if(rtn == 1) {
+							alert('您的密码不安全，请修改密码后操作');
+						} else if(rtn) {
+							window.location.href = rtn;
+						}
+					});
+				}
+				else {
+					alert("请选择充值金额");
+				}
+			}
+			//点击后生成二维码图片
+			function qrimg() {
+				$("#qrimg").attr("src", "");
+			}
+
+			function rechargewx() {
+				var str = $('#charge').combobox('getValue');
+				var type="weixin";
+				if(str != "-1"){
+					//	postJson("/admin/genAlipayCharge",{msg:str},function(rtn){
+					postJson("/admin/genAlipayChargeWxAli",{msg:str,type:type},function(rtn){
+						if(rtn == 1) {
+							alert('您的密码不安全，请修改密码后操作');
+						} else if(rtn) {
+							$("#scanid").attr("src",rtn) ;
+							$("#chargeTip").html(getGameType(window.location.host).wxScanPayTextTip);
+						}
+					});
+				}
+				else {
+					alert("请选择充值金额");
+				}
+			}
+
+
+			function rechargeali() {
+				var str = $('#charge').combobox('getValue');
+				var type="ali";
+
+				if(str != "-1"){
+					postJson("/admin/genAlipayChargeWxAli",{msg:str,type:type},function(rtn){
+						//alert(rtn);
+						//console.log(11111122222);
+						if(rtn == 1) {
+							alert('您的密码不安全，请修改密码后操作');
+						} else if(rtn) {
+							//	alert(111);
+							//console.log(rtn);
+							$("#scanid").attr("src",rtn) ;
+							$("#chargeTip").html(getGameType(window.location.host).wxScanPayTextTip);
+							//window.location.href = rtn;
+						}
+					});
+				}
+				else {
+
+					alert("请选择充值金额");
+				}
+			}
+			function chargeDivOpen() {
+				//var currentTab = $('#tt').tabs('getSelected');
+				//var currtab_title = currentTab.panel('options').title;
+				//$('#tt').tabs('close', currtab_title);
+
+				if(!(getGameType(window.location.host).rechargeOpen)){
+					//$("#tt").tabs('close', 1);
+					$("#tt").tabs('close', "充值");
+				}
+				else {
+					postJson("/admin/getAlipayJsonContent", {},
+						function (data) {
+							$("#chargeTip").html(getGameType(window.location.host).alipayTextTip);
+							$("#charge").combobox("loadData", data);
+						}
+					);
+				}
+			}
+
+			$(document).ready(function(){
+				chargeDivOpen();
+			});
+
+			var data = [];
+
+			function jumpToAdmin() {
+				var str = $('#language').combobox('getValue');
+
+				if(!str)
+					return;
+
+				window.location.href = str;
+			}
+
+			$(document).ready(function () {
+				$("#language").combobox({onChange:function (news, olds) {
+					if(news != "tip"){
+						jumpToAdmin();
+					}
+				}});
+			});
+
+			function loadData() {
+				var host = window.location.host.split(".");
+				if(!gameType[host[0]].jump){
+					$("#username").hide();
+					return;
+				}
+
+				var obj = gameType[host[0]].jump;
+
+				for(var key in obj){
+					data.push(obj[key]);
+				}
+
+				var data_ = [];
+
+				for(var i = 0; i < data.length; i++){
+					if(i == 0){
+						data_.push({"id":data[i]["url"], "text":data[i]["name"], "selected":true});
+					}
+					else {
+						data_.push({"id":data[i]["url"], "text":data[i]["name"]});
+					}
+				}
+
+				$('#language').combobox('loadData', data_);
+			}
+
+			$(document).ready(function(){
+				loadData();
+			});
+
+		   function getMyInfo()
+		   {
+		      postJson("/admin/getMyInfo",{},function(rtn){
+			       
+				   if(rtn){
+					   mid = rtn.mid;
+					   $("#mName").html(rtn.mName);
+					   $("#money").html(rtn.money);
+					   $("#buyReward").html(rtn.buyReward);
+					   $("#accruedReward").html(rtn.accruedReward);
+				   } 
+				   
+			  });
+		   }
+		   function setMoney(data)
+		   {
+		      $("#money").html(data);
+		   }
+		   function GetBuyReward()
+		   {  postJson("/admin/GetBuyReward",{},function(rtn){
+			       if(rtn){
+					   $("#mName").html(rtn.mName);
+					   $("#money").html(rtn.money);
+					   $("#buyReward").html(rtn.buyReward);
+				   } 
+			  });
+		   }
+
+		   function getAccruedReward() {
+			   postJson("/admin/getAccruedReward",{},function(rtn){
+				   if(rtn){
+					   getMyInfo();
+				   }
+			   });
+		   }
+		   getMyInfo();
+
+		</script>
+    </body>    
+    </html>

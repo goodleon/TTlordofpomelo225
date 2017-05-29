@@ -1,0 +1,306 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/materialRippleEffect/icon.css">
+    <link rel="stylesheet" type="text/css" href="/ui/zeroModal/css/zeroModal.css">
+
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/share.js"></script>
+    <script type="text/javascript" src="/ui/materialRippleEffect/ripple.js"></script>
+    <script type="text/javascript" src="/ui/zeroModal/js/zeroModal.js"></script>
+    <style>
+        .subtotal { font-weight: bold; }/*合计单元格样式*/
+    </style>
+</head>
+<body class="easyui-layout">
+
+<div data-options="region:'north',title:'North Title',split:true" style="height:100%;">
+    <div>
+        <label>玩家ID</label>
+        <input class="easyui-validatebox" type="text" id="uid" data-options="required:true"/>
+        <label>月份:</label>
+        <input class="easyui-datebox" id="searchDate" style = "width:140px" />
+        <button  data-ripple onclick="searchForRecords()">搜索</button>
+        <button  data-ripple onclick="downExcel()">下载Excel</button>
+    </div>
+    <table id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+           data-options="singleSelect:true,collapsible:true,rownumbers:true">
+        <thead>
+        <tr>
+            <th data-options="field:'uid',width:70">用户ID</th>
+            <th data-options="field:'date',width:70">日期</th>
+            <th data-options="field:'mName',width:80">用户姓名</th>
+            <th data-options="field:'currentUnitPrice',width:80">钻石单价</th>
+            <th data-options="field:'previousNum',width:100">上期未消耗数量</th>
+            <th data-options="field:'previousMoney',width:100">上期未消耗金额</th>
+            <th data-options="field:'buyNum',width:100">本期购入数量</th>
+            <th data-options="field:'buyMoney',width:100">本期购入金额</th>
+            <th data-options="field:'sellNum',width:100">本期消耗数量</th>
+            <th data-options="field:'sellMoney',width:100">本期消耗金额</th>
+            <th data-options="field:'currentNum',width:100">期末结余数量</th>
+            <th data-options="field:'currentMoney',width:100">期末结余金额</th>
+            <th data-options="field:'numberOfPersonnel',width:100">相关人员数量</th>
+            <th data-options="field:'saleNumber',width:80">售卖次数</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+    Array.prototype.forEach.call(document.querySelectorAll('[data-ripple]'), function(element){
+        new RippleEffect(element);
+    });
+
+    var cn = {
+        date:'日期',
+        uid:'用户ID',
+        mName:'用户姓名',
+        currentUnitPrice:'钻石单价',
+        previousNum:'上期未消耗数量',
+        previousMoney:'上期未消耗金额',
+        buyNum:'本期购入数量',
+        buyMoney:'本期购入金额',
+        sellNum:'本期消耗数量',
+        sellMoney:'本期消耗金额',
+        currentNum:'期末结余数量',
+        currentMoney:'期末结余金额',
+        numberOfPersonnel:'相关人员数量',
+        saleNumber:'售卖次数'
+    };
+
+    $(function () {
+        function padding(v) { if (v < 10) return '0' + v;return v;}//格式化类，小于10前面增加0
+        $('#searchDate').datebox({
+            onShowPanel: function () {//显示日趋选择对象后再触发弹出月份层的事件，初始化时没有生成月份层
+                span.trigger('click'); //触发click事件弹出月份层
+                if (!tds) setTimeout(function () {//延时触发获取月份对象，因为上面的事件触发和对象生成有时间间隔
+                    tds = p.find('div.calendar-menu-month-inner td');
+                    tds.click(function (e) {
+                        e.stopPropagation(); //禁止冒泡执行easyui给月份绑定的事件
+                        var year = /\d{4}/.exec(span.html())[0]//得到年份
+                                , month = parseInt($(this).attr('abbr'), 10); //月份，这里不需要+1
+                        $('#searchDate').datebox('hidePanel')//隐藏日期对象
+                                .datebox('setValue', year + '-' + month); //设置日期的值
+                    });
+                }, 0);
+                yearIpt.unbind();//解绑年份输入框中任何事件
+            },
+            parser: function (s) {
+                if (!s) return new Date();
+                var arr = s.split('-');
+                return new Date(parseInt(arr[0], 10), parseInt(arr[1], 10) - 1, 1);
+            },
+            //不需要xxxx-xx格式的去掉padding函数
+            formatter: function (d) { return d.getFullYear() + '-' + padding(d.getMonth() + 1);/*getMonth返回的是0开始的，忘记了。。已修正*/ }
+        });
+        var p = $('#searchDate').datebox('panel'), //日期选择对象
+                tds = false, //日期选择对象中月份
+                yearIpt = p.find('input.calendar-menu-year'),//年份输入框
+                span = p.find('span.calendar-text'); //显示月份层的触发控件
+    });
+
+
+    //
+    var clientData = {};
+    clientData.recordsIndex = {};
+    clientData.currentData = null;
+    getUserConsumptionRecordIndex();
+
+    /**
+     * 搜索
+     * */
+    function searchForRecords()
+    {
+        var uid =  getCurrentSelectedUid ();
+        var strDate = $('#searchDate').datebox('getValue');
+        strDate = strDate.replace('-','');
+        console.log(strDate);
+        console.log(JSON.stringify(clientData.recordsIndex));
+        var index = clientData.recordsIndex.rows.indexOf(Number(strDate));
+        if(index != -1)
+        {
+            getUserConsumptionRecord(uid, index);
+        }else
+        {
+            zeroModal.alert('查询失败, 无此月份');
+        }
+    }
+
+    function downExcel()
+    {
+        if(!clientData.currentData || !clientData.currentData.length)
+        {
+            zeroModal.alert('无数据可导出');
+            return;
+        }
+        postJson("/userConsumption/downloadExcelFile",{data:clientData.currentData},
+                function(data)
+                {
+                    if(data)
+                    {
+                        console.log(parent.document.location.origin);
+                        document.location.href = parent.document.location.origin  + data;
+//                        console.log(JSON.stringify(data));
+                    }else
+                    {
+                        zeroModal.alert('无数据可导出');
+                    }
+                }
+        );
+    }
+    
+    /**
+     * 获取当前uid
+     * */
+    function getCurrentSelectedUid ()
+    {
+        return parseInt( $("#uid").val() );
+    }
+
+    /**
+     * 获取用户消费记录 的目录
+     * */
+    function getUserConsumptionRecordIndex()
+    {
+        postJson("/userConsumption/getUserConsumptionRecordIndex",{},
+                function(data)
+                {
+                    if(data && data.rows && data.rows.length)
+                    {
+//                        console.log(JSON.stringify(data));
+                        clientData.recordsIndex = data;
+                    }
+                }
+        );
+    }
+
+    /**
+     * 获取用户消费记录
+     * @param {number} id 输入的用户id
+     * @param {number} index
+     * */
+    function getUserConsumptionRecord(id, index)
+    {
+        postJson("/userConsumption/getUserConsumptionRecord",{_id:id, index:index},
+                function(data)
+                {
+                    if(data && data.rows && data.rows.length)
+                    {
+//                        console.log(JSON.stringify(data));
+                        refreshRecordsUI(data);
+                    }else
+                    {
+                        zeroModal.alert('无数据');
+                    }
+                }
+        );
+    }
+
+    /**
+     * 刷新ui
+     * */
+    function refreshRecordsUI(data)
+    {
+        var newData = [];
+        var total = 0;
+        var money = 0;
+        var  buyNumTotal=0;
+        var  buyMoneyTotal=0;
+        var  sellNumTotal=0;
+        var  sellMoneyTotal=0;
+        for(var count  = 0; count <　data.rows.length; count++)
+        {
+            var currentRecord = data.rows[count];
+            var uid = currentRecord._id;
+            delete currentRecord._id;
+
+            for(var key in currentRecord)
+            {
+                if(!currentRecord.hasOwnProperty(key))
+                {
+                    continue;
+                }
+                var info = currentRecord[key];
+                var newRecord = {};
+                newData.push(newRecord);
+                newRecord.uid= uid;
+                newRecord.date = key;
+                total+=info.buyNum;
+                money+=info.buyMoney;
+                newRecord.currentUnitPrice = data.statistics.currentUnitPrice;
+                newRecord.currentNum = data.statistics.currentMoney;
+                newRecord.currentMoney = newRecord.currentNum * data.statistics.currentUnitPrice;
+                newRecord.previousNum = data.statistics.previousMoney;
+                newRecord.previousMoney =newRecord.previousNum * data.statistics.previousUnitPrice;
+
+                for(var key2 in info)
+                {
+                    if(!info.hasOwnProperty(key2))
+                    {
+                        continue;
+                    }
+                    newRecord[key2] = info[key2];
+                }
+
+                var sellAllUserCount = 0;
+                if('sellAllUser' in info)
+                {
+                    for(var k in info['sellAllUser'])
+                   {
+                       sellAllUserCount++;
+                   }
+                }
+                newRecord.numberOfPersonnel = sellAllUserCount;
+                newRecord.saleNumber = info.sellCount || 0;
+
+            }
+        }
+
+        clientData.currentData = [];
+        for(count = 0; count < newData.length; count++)
+       {
+           var currentData = {};
+           for(key in newData[count])
+           {
+               if(!newData[count].hasOwnProperty(key) || key == 'money')
+               {
+                   continue;
+               }
+               currentData[cn[key]] = newData[count][key];
+               buyNumTotal+=newData[count][buyNum];
+               buyMoneyTotal=newData[count][buyMoney];
+               sellNumTotal=newData[count][sellNum];
+               sellMoneyTotal=newData[count][sellMoney];
+           }
+           clientData.currentData.push(currentData);
+
+       }
+        $("#dg").datagrid("loadData",newData);
+//        var  buyNumTotal=0;
+//        var  buyMoneyTotal=0;
+//        var  sellNumTotal=0;
+//        var  sellMoneyTotal=0;
+        $('#dg').datagrid('appendRow',{
+            date:newData.length,
+            uid:'合计',
+            mName:'',
+            currentUnitPrice:'',
+            previousNum:'',
+            previousMoney:'',
+            buyNum:buyNumTotal,
+            buyMoney:buyMoneyTotal,
+            sellNum:sellNumTotal,
+            sellMoney:sellMoneyTotal,
+            currentNum:'',
+            currentMoney:'',
+            numberOfPersonnel:'',
+            saleNumber:''
+        });
+    }
+
+</script>
+</body>
+</html>

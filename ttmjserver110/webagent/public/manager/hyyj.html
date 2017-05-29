@@ -1,0 +1,667 @@
+<html>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="email=no">
+    <link rel="stylesheet" href="../css/common.css"/>
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../easyui/themes/icon.css">
+	<script type="text/javascript" src="../easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="../easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../share.js"></script>
+	<script type="text/javascript" src="../js/pageControl.js"></script>
+	<title>会员业绩</title>
+	<style>
+	</style>
+</head>
+<body  class="easyui-layout">
+	<div id="personCollect" class="easyui-dialog"  closed="true" title="个人汇总" style="width:950px;height:700px;"
+		 data-options="iconCls:'icon-save',resizable:true,modal:true">
+		<select class="yearChoice" id="yearChoiceStart"></select>
+		<select class=" dateChoice" id="startDay"></select>
+		<select class="yearChoice" id="yearChoiceEnd"></select>
+		<select class=" dateChoice" id="endDay"></select>
+		<a href="#" class="easyui-linkbutton" id="searchId" onclick="giveOutFind(searchMemberData)">按期搜索</a>
+		<table id="personDg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:95%"
+	           data-options="singleSelect:true,collapsible:true">
+	        <thead>
+		        <tr>
+					<th data-options="field:'number',width:145,align:'center'">期数</th>
+		            <th data-options="field:'memberId',width:80,align:'center'">会员ID</th>
+		            <th data-options="field:'rechargeNumber',width:90,align:'center'">充值数量-钻</th>
+		            <th data-options="field:'sellPeople',width:80,align:'center'">销售人数</th>
+		            <th data-options="field:'sellNumber',width:90,align:'center'">销售数量-钻</th> 
+		            <th data-options="field:'remMemberNum',width:90,align:'center'">推荐会员人数</th>
+		            
+					<th data-options="field:'reMeRechargeCount',width:125,align:'center'">推荐会员充值数量</th>
+					 <!--recommend  member   recharge count  -->
+		            <th data-options="field:'sumBuyNum',width:125,align:'center'">历史累计充值数量-钻</th> 
+		            <th data-options="field:'sumBuyMoney',width:125,align:'center'">历史累计充值额度-元</th> 
+		            <th data-options="field:'sumsellNum',width:125,align:'center'">历史累计销售数量-钻</th> 
+		            <th data-options="field:'sumSellMoney',width:125,align:'center'">历史累计销售额度-元</th>
+					
+
+		            <!-- <th data-options="field:'memberGrade',width:70,align:'center'">会员等级</th>
+		            <th data-options="field:'rechargeCount',width:70,align:'center'">推荐会员充值数量</th> 
+		            <th data-options="field:'rechargeLimit',width:70,align:'center'">充值额度</th> 
+		            <th data-options="field:'sellCount',width:70,align:'center'">销售笔数</th> 
+		            <th data-options="field:'sellLimit',width:70,align:'center'">销售额度</th>
+		            <th data-options="field:'recharge',width:70,align:'center'">充值</th> -->
+		        </tr>
+	        </thead>
+	    </table>
+	</div>
+	<div data-options="region:'north',title:'North Title',split:true" style="height:100%;">
+		    <div>
+		        <label>会员ID</label>
+		        <input class="easyui-validatebox"  type="text" id="uid" data-options="" placehould = "会员ID"/>
+		        <select class="yearChoice" id="yearChoice"></select>
+		        <select class="dateChoice" id="aloneDate"></select>
+				<a href="#" class="easyui-linkbutton" onclick="getIndex()">按期查询</a><!-- searchForRecords -->
+				<a href="#" class="easyui-linkbutton" onclick="searchMemberTotal()">个人汇总</a>
+				<!-- <a href="#" class="easyui-linkbutton" onclick="giveOut()">发放返利</a>
+				<a href="#" class="easyui-linkbutton" onclick="deleteAlipay()">清除返利</a> -->
+		    </div>
+		    <table id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:85%;"
+		           data-options="singleSelect:true,
+								  collapsible:true,
+								  remoteSort:false,
+							      multiSort:true,
+								  rownumbers:true,
+								  autoRowHeight:false" >
+		        <thead>
+		        <tr>
+		            <th data-options="field:'memberId',width:70,align:'center'">会员ID</th>
+		            <th data-options="field:'TWrechargeNumber',width:110,align:'center'">本周充值数量-钻</th>
+		            <th data-options="field:'LWrechargeNumber',width:110,align:'center'">上周充值数量-钻</th>
+		            <th data-options="field:'TWsellPeople',width:90,align:'center'">本周销售人数</th>
+		            <th data-options="field:'LWsellPeople',width:90,align:'center'">上周销售人数</th>
+		            
+		            <th data-options="field:'TWsellNum',width:90,align:'center'">本周销售数量</th>
+					<th data-options="field:'LWsellNum',width:90,align:'center'">上周销售数量</th> 
+		            
+		            <th data-options="field:'TWbuyCount',width:90,align:'center'">本周充值笔数</th>
+		            <th data-options="field:'LWbuyCount',width:90,align:'center'">上周充值笔数</th>
+		            <th data-options="field:'recommendCount',width:90,align:'center'">推荐人数</th>
+
+		            <th data-options="field:'sumBuyNum',width:125,align:'center'">历史累计充值数量-钻</th> 
+		            <th data-options="field:'sumBuyMoney',width:125,align:'center'">历史累计充值额度-元</th> 
+		            <th data-options="field:'sumsellNum',width:125,align:'center'">历史累计销售数量-钻</th> 
+		            <th data-options="field:'sumSellMoney',width:125,align:'center'">历史累计销售额度-元</th>
+		            
+
+		            <!--<th data-options="field:'TWrechargeLimit',width:90,align:'center'">本周充值额度</th>
+		            <th data-options="field:'memberGrade',width:80,align:'center'">会员等级</th>
+					<th data-options="field:'LWsellLimit',width:90,align:'center'">上周充值额度</th>
+		            -->
+		        </tr>
+		        </thead> 
+		    </table>
+			<!-- <div id="pageToolbar"></div> -->
+			<div style="margin-top:20px;">
+				<div class="page_common">
+					<section class="pageSize">
+						<span>每页显示</span>
+						<select>
+							<option value="50">50</option>
+							<option value="100">100</option>
+							<option value="200">200</option>
+							<option value="500">500</option>
+							<option value="1000">1000</option>
+						</select>
+					</section>
+					<!-- <section style="float:right;"> -->
+						<i class="totalItemNum"></i>
+						<i class="firstPage"> 首页 </i>
+						<i class="prevPage"> 上页 </i>
+						<ul class="pageList"></ul>
+						<i class="nextPage">下页</i>
+						<i class="lastPage">尾页</i>
+						<i class="totalPageNum"></i>
+						<section class="goPagebox">
+							<p>
+								跳转到
+								<input type="text" class="go2PageIpt"/>
+								<img src="../images/goPage.png" class="go2PageBtn"/>
+								<i>页</i>
+							</p>
+						</section>
+					<!-- </section > -->
+				</div>
+			</div>
+		</div>
+	<script type="text/javascript">
+		/*
+		 * author : wanglingyu
+		 */
+		
+		var searchMemberData ={};
+		var yearArr = [];
+		var option_list = '';
+		var pageOld = 0;
+		var sizeOld = 10;
+		
+		var yearChoiceStart = $('#yearChoiceStart');
+		var yearChoiceEnd = $('#yearChoiceEnd');
+		var startDay = $("#startDay");
+		var endDay = $("#endDay");
+		var yearChoice = $("#yearChoice");
+		var aloneDate = $("#aloneDate");
+		var y=$("#startDay option").length;
+		var z=$("#endDay option").length;
+		 	
+        var nowDate = new Date();
+		var nowYear = nowDate.getFullYear();
+		
+		var pageCon = components.pageControl({
+				target : '.page_common',
+				curPage : 1,
+				pageSize : 50,
+				totalPage : 0,
+				totalItem : 0,
+				pageChange : function(e) {
+					
+				}
+		});
+		for(var i= 2016;i<=nowYear;i++){
+			var option = '<option value='+i+">"+ i+"</option>";
+			yearArr.push(i);
+			yearChoice.prepend(option);
+			yearChoiceStart.prepend(option);
+			yearChoiceEnd.prepend(option);
+		}
+		$("#yearChoice option").eq(0).attr("selected", 'selected'); 
+		$("#yearChoiceStart option").eq(0).attr("selected", 'selected');
+		$("#yearChoiceEnd option").eq(0).attr("selected", 'selected');
+		
+        yearChange(yearChoice,aloneDate);
+        yearChange(yearChoiceStart,startDay);
+        yearChange(yearChoiceEnd,endDay);
+    
+        zhou(nowYear,aloneDate);
+		zhou(nowYear,startDay);
+		zhou(nowYear,endDay);
+		$("#startDay option").eq(2).attr("selected", 'selected'); 
+		$("#endtDay option").eq(0).attr("selected", 'selected'); 
+	
+		//初始化表格
+        getIndex();
+        
+        //年份改变对应周option填充
+        function yearChange(yearReset,weekAdd){
+        	 yearReset.change ( function(){
+	            var yearValue = this.value;
+	            for(var i=0;i<yearArr.length;i++){
+	            	if(yearValue== yearArr[i]){
+	            		 weekAdd.html('');
+	               		 zhou(yearArr[i],weekAdd);
+	            	}
+	            }
+        	});
+        }
+		//会员业绩表格渲染
+		function getIndex(){
+			var x=document.getElementById("aloneDate");
+			var indexDate =  x.selectedIndex +1;
+			var aloneDate = $('#aloneDate option');
+			var searchData = {
+				thisWeekTo:aloneDate.eq(x.selectedIndex).attr('to'),
+				thisWeekFrom:aloneDate.eq(x.selectedIndex).attr('from'),
+				lastWeekTo:aloneDate.eq(indexDate).attr('to'),
+				lastWeekFrom:aloneDate.eq(indexDate).attr('from')
+			};
+			if($('#uid').val()){
+				searchData.memberId = $('#uid').val();
+			}
+			if(searchData.thisWeekFrom=="20170102"){
+				searchData.lastWeekTo = "20170101";
+				searchData.lastWeekFrom = "20161226";
+			}else if(searchData.thisWeekFrom=="20180101"){
+				searchData.lastWeekTo = "20171231";
+				searchData.lastWeekFrom = "20171225";
+			}else if(searchData.thisWeekFrom=="20190107"){
+				searchData.lastWeekTo = "20190106";
+				searchData.lastWeekFrom = "20181231";
+			}
+			getMembers(searchData);
+		}
+		//渲染会员业绩表格
+		function getMembers(searchData){
+			var pagesize = parseInt($('.pageSize select').val());
+			searchData.limit = pagesize||0;
+			if( pageOld*pagesize<=0){
+				searchData.skip = 0;
+			}else{
+				searchData.skip = (pageOld-1)*pagesize;
+			}
+		    postJson("/memberData/getMemberConsumption",searchData,function(data){
+				
+				var pagesize =parseInt( $('.pageSize select').val());
+				if(data.total>0){
+				
+					$("#dg").datagrid("loadData",data);
+			      	var pageJson = {
+	                        curPage : pageOld,
+	                        totalPage : Math.ceil(data.total/pagesize),
+	                        totalItem : data.total,
+	                        pageSize : pagesize,
+	                        pageChange : function(e) {
+	                            if (e.action != 'init') {
+	                                pageOld = e.curPage ;
+	                                getIndex();
+	                            }
+	                        },
+	                        pageSizeChange : function(e) {
+	                            if (e.action == 'operate') {
+	                               pageOld = 0;
+	                               pagesize= e.pageSize;
+	                               getIndex();
+	                            }
+	                        }
+	                };
+	                pageCon.pageBox.show();
+	                pageCon.updatePage(pageJson);   
+				}else if(data.total==0){
+
+					$('#dg').datagrid('loadData', { total: 0, rows: [] });
+
+					$('#dg').datagrid('appendRow',{memberId:"没有数据", TWrechargeNumber:"", LWrechargeNumber:"",TWsellPeople:"",
+		            LWsellPeople:"",TWsellNum:"", LWsellNum:"", TWbuyCount:"", LWbuyCount:"", recommendCount:"", sumSellMoney:"", 
+		            sumsellNum:"", sumBuyMoney:"", sumBuyNum:""});
+		      	}
+		    });
+		};
+		
+		/**
+		 * linkbutton方法扩展
+		 * @param {Object} jq
+		 */
+		$.extend($.fn.linkbutton.methods, {
+		    /**
+		     * 激活选项（覆盖重写）
+		     * @param {Object} jq
+		     */
+		    enable: function(jq){
+		        return jq.each(function(){
+		            var state = $.data(this, 'linkbutton');
+		            if ($(this).hasClass('l-btn-disabled')) {
+		                var itemData = state._eventsStore;
+		                //恢复超链接
+		                if (itemData.href) {
+		                    $(this).attr("href", itemData.href);
+		                }
+		                //回复点击事件
+		                if (itemData.onclicks) {
+		                    for (var j = 0; j < itemData.onclicks.length; j++) {
+		                        $(this).bind('click', itemData.onclicks[j]);
+		                    }
+		                }
+		                //设置target为null，清空存储的事件处理程序
+		                itemData.target = null;
+		                itemData.onclicks = [];
+		                $(this).removeClass('l-btn-disabled');
+		            }
+		        });
+		    },
+		    /**
+		     * 禁用选项（覆盖重写）
+		     * @param {Object} jq
+		     */
+		    disable: function(jq){
+		        return jq.each(function(){
+		            var state = $.data(this, 'linkbutton');
+		            if (!state._eventsStore)
+		                state._eventsStore = {};
+		            if (!$(this).hasClass('l-btn-disabled')) {
+		                var eventsStore = {};
+		                eventsStore.target = this;
+		                eventsStore.onclicks = [];
+		                //处理超链接
+		                var strHref = $(this).attr("href");
+		                if (strHref) {
+		                    eventsStore.href = strHref;
+		                    $(this).attr("href", "javascript:void(0)");
+		                }
+		                //处理直接耦合绑定到onclick属性上的事件
+		                var onclickStr = $(this).attr("onclick");
+		                if (onclickStr && onclickStr != "") {
+		                    eventsStore.onclicks[eventsStore.onclicks.length] = new Function(onclickStr);
+		                    $(this).attr("onclick", "");
+		                }
+		                //处理使用jquery绑定的事件
+		                var eventDatas = $(this).data("events") || $._data(this, 'events');
+		                if (eventDatas["click"]) {
+		                    var eventData = eventDatas["click"];
+		                    for (var i = 0; i < eventData.length; i++) {
+		                        if (eventData[i].namespace != "menu") {
+		                            eventsStore.onclicks[eventsStore.onclicks.length] = eventData[i]["handler"];
+		                            $(this).unbind('click', eventData[i]["handler"]);
+		                            i--;
+		                        }
+		                    }
+		                }
+		                state._eventsStore = eventsStore;
+		                $(this).addClass('l-btn-disabled');
+		            }
+		        });
+		    }
+		});
+		
+		//会员业绩选中会员
+		function searchMemberTotal(){
+			var member = $("#dg").datagrid("getSelected");
+		    if(!member){
+		        $.messager.alert("操作提示", "请选中会员","error");
+		        return;
+		    }
+		   searchMemberData.memberId = parseInt(member.memberId);
+		    $('#personCollect').dialog('open');
+			$('#searchId').linkbutton('enable');
+			$('#personDg').datagrid('loadData', { total: 0, rows: [] }); 
+			giveOutFind(searchMemberData);
+		}
+		// $('#searchId').click(function(){
+			// giveOutFind(searchMemberData);
+		// });
+		//个人汇总
+		 function giveOutFind(searchMemberData){
+		 	var y=document.getElementById("startDay");
+		 	var z=document.getElementById("endDay");
+		 	var yStartselectedIndex = y.selectedIndex;
+		 	var zStartselectedIndex = z.selectedIndex;
+		 	if(yStartselectedIndex < zStartselectedIndex){
+		 		$.messager.alert("操作提示", "开始日期应早于结束日期","error");
+		 	}
+		    var startDate = $('#startDay option').eq(yStartselectedIndex).attr('from');
+			var endDate = $('#endDay option').eq(zStartselectedIndex).attr('to');
+			searchMemberData.startDate =startDate;
+			searchMemberData.endDate =endDate;
+			$('#searchId').linkbutton('disable');
+			//$('#searchId').linkbutton({disabled:false});
+			postJson("/memberData/getUserMembers",searchMemberData,function(data){
+				$('#searchId').linkbutton('enable');
+				//$('#searchId').linkbutton({disabled:true});
+				if(data.total>0){
+					var total = {rechargeNumber: 0, sellPeople: 0, sellNumber: 0, remMemberNum: 0,reMeRechargeCount:0};
+	
+					for (var i = 0; i < data.rows.length; i++) {
+						for (var key in data.rows[i]) {
+							if(typeof(total[key] !="undefined")){
+								if(key == 'remMemberNum' ){
+									total[key] += parseInt(data.rows[i][key]);
+								}else if(key == 'reMeRechargeCount' ){
+									total[key] += parseInt(data.rows[i][key]);
+								}else if(key == 'rechargeNumber' ){
+									total[key] += parseInt(data.rows[i][key]);
+								}else if(key == 'sellPeople' ){
+									total[key] += parseInt(data.rows[i][key]);
+								}else if(key == 'sellNumber' ){
+									total[key] += parseInt(data.rows[i][key]);
+								}else{
+									total[key] += parseInt(data.rows[i][key]);
+								}
+							}
+						}
+					}
+					var j = data.rows.length-1;
+					var oDom = data.rows[j];
+					total.number='合计';
+					total.memberId=oDom.memberId;
+					total.sumBuyMoney=oDom.sumBuyMoney;
+					total.sumBuyNum=oDom.sumBuyNum;
+					total.sumSellMoney=oDom.sumSellMoney;
+					total.sumsellNum=oDom.sumsellNum;
+					data.rows.push(total);
+					$("#personDg").datagrid("loadData",data);
+
+				}else  if(data.total==0){    
+					$('#personDg').datagrid('loadData', { total: 0, rows: [] });                                                                                                                                                       
+
+		            $('#personDg').datagrid('appendRow',{number:"没有数据", memberId:"", 
+		            rechargeNumber:"", sellPeople:"", remMemberNum:"",reMeRechargeCount:"",sumSellMoney:"", 
+		            sumsellNum:"", sumBuyMoney:"", sumBuyNum:""});
+		        }
+		    });
+		};
+		
+        //年，月，返回周列表
+        function getInfo(year, month) {
+            var d = new Date();
+            // what day is first day
+            d.setFullYear(year, month-1, 1);
+            var w1 = d.getDay();
+            if (w1 == 0) w1 = 7;
+            // total day of month
+            d.setFullYear(year, month, 0);
+            var dd = d.getDate();
+            // first Monday
+            if (w1 != 1) d1 = 7 - w1 + 2;
+            else d1 = 1;
+            week_count = Math.ceil((dd-d1+1)/7);
+            var zhou_arr = [];
+            for (var i = 0; i < week_count; i++) {
+                var monday = d1+i*7;
+                var sunday = monday + 6;
+               if(month.toString().length<2){
+					month = '0'+ month;  
+               }
+               if(monday.toString().length<2){
+					monday = '0'+ monday;  
+               }
+                var from = year+"-"+month+"-"+monday;
+                var to;
+                if (sunday <= dd) {
+                	if(sunday.toString().length<2){
+						sunday = '0'+ sunday;            
+	               }
+                    to = year+"-"+month+"-"+sunday;
+                } else {
+                    d.setFullYear(year, month-1, sunday);
+                    if((d.getMonth()+1).toString().length<2){
+						getMonthT = '0'+ (d.getMonth()+1);   
+						//console.log(sunday);             
+	               }else{
+	               	getMonthT = d.getMonth()+1;
+	               }
+	               if(d.getDate().toString().length<2){
+						getDateT = '0'+ d.getDate();   
+						//console.log(sunday);             
+	               }else{
+	               		getDateT = d.getDate(); 
+	               }
+                    to = d.getFullYear()+"-"+getMonthT+"-"+getDateT;
+                }
+                zhou_arr.unshift(from + "|" + to);
+            }
+            return zhou_arr;
+        }
+        function YMDinfo(ymd){
+            var arr = new Array();
+            var arr = ymd.split("|");
+			return arr[0].split("-")[1] + "月" + arr[0].split("-")[2] + "日" + "-" + arr[1].split("-")[1] + "月" + arr[1].split("-")[2] + "日";
+           
+        }
+        function zhou(z,e){
+        	
+	//      var d=new Date(z);
+	//      var yt=( ( z%4==0 && z%100!=0) || z%400==0)?366:365;
+	//      week_count = Math.ceil((yt-d.getDay())/7.0);
+			var d=new Date();
+			var myDate = new Date();
+            var week_arr = [];
+            
+	       	for(var i=12; i>0; i--){
+                week_arr.unshift(getInfo(z, i));
+            }
+	       //定义空字符串
+            var str_week = [];
+            for(var j=week_arr.length-1; j>=0; j--){
+                for(var o=0; o<week_arr[j].length; o++){
+                    str_week.unshift(week_arr[j][o]);
+                }
+            }
+            var option_list = '';
+            if(z<nowYear){
+            	//小于当前年限的周数全部展示
+	            for(var f=str_week.length-1; f>=0; f--){
+	            	var a =str_week[f].split("|")[0];
+					var b =str_week[f].split("|")[1];
+					a = a.replace(/-/g,'');
+   					b= b.replace(/-/g,'');
+   					var weekData=YMDinfo(str_week[f]);
+          			var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">第"+(f+1)+"周 "+ weekData +"</option>"; 
+	          		option_list += option;
+	            }
+	            e.append(option_list);
+ 			}else{
+ 				//等于当前年份的选择性展示
+ 				 for(var f=str_week.length-1; f>=0; f--){
+ 				 	
+	          		// var a =str_week[f].split("|")[0];
+	          		// var b =str_week[f].split("|")[1];
+   					// a = a.replace(/-/g,'');
+   					// b= b.replace(/-/g,'');
+   					
+					var weekData=YMDinfo(str_week[f]);
+					var weekDataYue =  weekData.split("月") ;	
+	           		if(weekData.split("月")[0]>myDate.getMonth()+1){
+	           			// 判断开始月份大于当前月的不展示
+	           			var option ='';
+	           		}else  if(weekData.split("月")[0]<myDate.getMonth()+1){
+	           			 //判断开始月份小于当前月的展示      有两种可能 当前的、下一个月份的比较
+	          			 //截止月份等于当前月份 每个月的最后一周
+	          			if(weekData.split("月")[1].split("-")[1]>=myDate.getMonth()+1){
+	          				var a =str_week[f].split("|")[0];
+			          		var b =str_week[f].split("|")[1];
+		   					a = a.replace(/-/g,'');
+		   					b= b.replace(/-/g,'');
+	          				
+	          				if((myDate.getMonth()+1).toString().length<2){
+								var newMonth = '0'+ (myDate.getMonth()+1).toString(); 
+			               	}else{
+			               		newMonth = myDate.getMonth()+1; 
+			               	}
+			              	if(myDate.getDate().toString().length<2){
+								var newDate = '0'+ myDate.getDate().toString(); 
+							}else{
+				               	var newDate = myDate.getDate();
+				            }
+		          			var b = z.toString() +newMonth + newDate;
+		          			
+	          				if(weekData.split("月")[2].split("日")[0] ==myDate.getDate()){
+	          					var a =str_week[f].split("|")[0];
+				          		var b =str_week[f].split("|")[1];
+			   					a = a.replace(/-/g,'');
+			   					b= b.replace(/-/g,'');
+	          					var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">本期&nbsp;&nbsp;&nbsp;"+weekData.split("-")[0]+"-"+b.substring(4,6)+"月" + b.substring(6,8)+"日"+"</option>"; 
+	          				}else if(weekData.split("月")[2].split("日")[0] >myDate.getDate()){
+	          					// var a =str_week[f].split("|")[0];
+				          		// var b =str_week[f].split("|")[1];
+			   					// a = a.replace(/-/g,'');
+			   					// b= b.replace(/-/g,'');
+	          					var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">本期&nbsp;&nbsp;&nbsp;"+weekData.split("-")[0]+"-"+b.substring(4,6)+"月" + b.substring(6,8)+"日"+"</option>"; 
+	          				}else{
+	          					
+	          					var a =str_week[f].split("|")[0];
+				          		var b =str_week[f].split("|")[1];
+			   					a = a.replace(/-/g,'');
+			   					b= b.replace(/-/g,'');
+	          					var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">第"+(f+1)+"周 "+ weekData +"</option>"; 
+	          				}
+	          			}else{
+	          				var a =str_week[f].split("|")[0];
+			          		var b =str_week[f].split("|")[1];
+		   					a = a.replace(/-/g,'');
+		   					b= b.replace(/-/g,'');
+	          				var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">第"+(f+1)+"周 "+ weekData +"</option>"; 
+	          			}
+	          			
+	           		} else if(weekData.split("月")[0]==myDate.getMonth()+1){
+	           			//开始月份等于当前月份
+	           			//weekData 03月27日-04月02日
+	           			if(weekDataYue[2].split("日")[0]<myDate.getDate()){
+	           				
+	           				if((myDate.getMonth()+1).toString().length<2){
+								var newMonth = '0'+ (myDate.getMonth()+1).toString(); 
+			               	}else{
+			               		newMonth = myDate.getMonth()+1; 
+			               	}
+			              	if(myDate.getDate().toString().length<2){
+								var newDate = '0'+ myDate.getDate().toString(); 
+							}else{
+				               	var newDate = myDate.getDate();
+				            }
+		          			var b = z.toString() +newMonth + newDate;
+	           				if(weekData.split("月")[1].split("-")[1]>=myDate.getMonth()+1){	           					
+	           					//周结束时间早于现在全部展示出来
+		           				if(weekDataYue[1].split("日")[0]==myDate.getDate()){
+		           					var a =str_week[f].split("|")[0];
+					          		var b =str_week[f].split("|")[1];
+				   					a = a.replace(/-/g,'');
+				   					b= b.replace(/-/g,'');
+		           					var option = '<option from='+a+" to="+a+" ext="+(f+1)+">本期&nbsp;&nbsp;&nbsp;"+a.substring(4,6)+"月" + a.substring(6,8)+"日"+"</option>"; 
+		           				}else if(weekDataYue[1].split("日")[0]<myDate.getDate()){
+		           					if(weekDataYue[1].split("-")[1]>myDate.getMonth()+1){
+		           						if(weekDataYue[1].split("日")[0]<=myDate.getDate()){
+		           							if((myDate.getMonth()+1).toString().length<2){
+												var newMonth = '0'+ (myDate.getMonth()+1).toString();   
+							               	}else{
+							               		newMonth = myDate.getMonth()+1; 
+							               	}
+							               	if(myDate.getDate().toString().length<2){
+												var newDate = '0'+ myDate.getDate().toString(); 
+							               	}else{
+							               		newDate = myDate.getDate(); 
+							               	}
+							                var a =str_week[f].split("|")[0];
+							                a = a.replace(/-/g,'');
+											var b = z.toString() +newMonth + newDate;
+											var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">本期&nbsp;&nbsp;&nbsp;"+weekData.split("-")[0]+"-"+b.substring(4,6)+"月" + b.substring(6,8)+"日"+"</option>"; 
+		           						}
+		           					}else{
+		           						var a =str_week[f].split("|")[0];
+						          		var b =str_week[f].split("|")[1];
+					   					a = a.replace(/-/g,'');
+					   					b= b.replace(/-/g,'');
+		           						var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">第"+(f+1)+"周 "+ weekData +"</option>"; 
+		           					}
+		           				}
+	           				}
+	           			}else if(weekDataYue[2].split("日")[0]>=myDate.getDate()){
+	           				//周结束时间晚于现在判断后看是否展示出来
+							if(weekDataYue[1].split("日")[0]<myDate.getDate()){
+								//周开始时间小于现在那就定位在了这一周
+	           					if((myDate.getMonth()+1).toString().length<2){
+									var newMonth = '0'+ (myDate.getMonth()+1).toString();   
+				               }else{
+				               		newMonth = myDate.getMonth()+1; 
+				               }
+				               if(myDate.getDate().toString().length<2){
+									var newDate = '0'+ myDate.getDate().toString(); 
+				               }else{
+				               		newDate = myDate.getDate(); 
+				               }
+				                var a =str_week[f].split("|")[0];
+				                a = a.replace(/-/g,'');
+	          					var b = z.toString() +newMonth + newDate;
+	          					var option = '<option from='+a+" to="+b+"  ext="+(f+1)+">本期&nbsp;&nbsp;&nbsp;"+weekData.split("-")[0]+"-"+b.substring(4,6)+"月" + b.substring(6,8)+"日"+"</option>"; 		          			
+	           				}else if(weekDataYue[1].split("日")[0]==myDate.getDate()){
+	           					//周开始时间正好是这一天
+	           					 var a =str_week[f].split("|")[0];
+				                 a = a.replace(/-/g,'');
+	           					var option = '<option from='+a+" to="+a+" ext="+(f+1)+">本期&nbsp;&nbsp;&nbsp;"+a.substring(4,6)+"月" + a.substring(6,8)+"日"+"</option>"; 	           			
+	           				}else{
+	           					//这个月中大于这一天所在周的不展示
+	           					var option ='';
+	           				}	
+	           			}
+	           		} 
+	                option_list += option;
+            	}
+ 				e.append(option_list); 
+ 			}
+        }
+	</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "actType":
+    {
+      "turntable":1,
+      "compensate":2,
+      "newbie":3,
+      "recommend":4
+    },
+
+  "rewTypeAll":{
+    "1":"钻石",
+    "2":"iPhone6s",
+    "3":"iPadMini",
+    "4":"红米手机",
+    "5":"10元话费",
+    "6":"50元话费",
+    "7":"100元话费"
+  },
+
+  "rewType":
+    {
+      "turntable":[1,2,3,4,5,6,7],
+      "compensate":[1],
+      "newGift":[1],
+      "recommendGift":[1]
+    },
+
+  "actRewardNum":
+    {
+      "turntable":12,
+      "compensate":1,
+      "newGift":1,
+      "recommendGift":5
+    },
+
+  "erType":
+    {
+      "ok":0,
+      "erNoAct":1,
+      "erAct":2,
+      "erActNotOpen":3,
+      "erTimesLimit":4,
+      "erRewardIndex":5,
+      "erRecommendCount":6,
+      "erPlayNum":7
+    }
+}

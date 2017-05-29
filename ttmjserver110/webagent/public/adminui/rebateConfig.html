@@ -1,0 +1,144 @@
+<html>
+
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="/share.js"></script>
+    <title>二级返利</title>
+</head>
+
+<body  class="easyui-layout">
+    <div id="ddRebate" class="easyui-dialog"  closed="true" title="充值修改" style="width:400px;height:400px;"
+         data-options="iconCls:'icon-save',resizable:true,modal:true">
+
+        <table width="100%">
+            <tr><td><label>等级:</label></td> <td><label id="level">0</label></td></tr>
+            <tr><td><label>返利比例:</label></td> <td><input class="easyui-validatebox" type="text" id="sca" data-options="required:true" /></td></tr>
+            <tr><td><label>推荐会员:</label></td> <td><label id="recommend">0</label></td></tr>
+            <tr><td><label>购买数量:</label></td> <td><label id="recharge">0</label></td></tr>
+        </table>
+        <a href="#" class="easyui-linkbutton" onclick="editRebateYes()">确定</a>
+    </div>
+    <div>
+        <a href="#" class="easyui-linkbutton" onclick="showCfg()">刷新</a>
+        <a href="#" class="easyui-linkbutton" onclick="editRebate()">修改返利</a>
+    </div>
+    <table  id="dg" class="easyui-datagrid" title="Basic DataGrid" style="width:100%;height:80%"
+            data-options="singleSelect:true,collapsible:true,
+                method:'get',
+                remoteSort:false,
+                multiSort:true,
+                rownumbers:true,
+                singleSelect:true,
+                autoRowHeight:false
+            ">
+        <thead>
+        <tr>
+            <th data-options="field:'level',width:80,sortable:true">等级</th>
+            <th data-options="field:'sca',width:80,sortable:true">返利比例</th>
+            <th data-options="field:'recommend',sortable:true">推荐会员</th>
+            <th data-options="field:'recharge',sortable:true">购买数量</th>
+        </tr>
+        </thead>
+    </table>
+
+    <script type="text/javascript">
+        var rebate={};
+
+        function editRebateYes(){
+            var sca = parseFloat($('#sca').val());
+            if(sca <= 0 || sca >= 1 || sca === void 0 || sca == null || isNaN(sca)){
+                alert("无效调整");
+                return;
+            }
+
+            var level = document.getElementById("level").innerHTML;
+            var levels = {"基础":"basic","一级返利":"firstLevel","二级返利":"secondLevel"};
+            var msg=levels[level];
+
+            for(var key in rebate){
+                if(key == msg){
+                    if(rebate[key]["sca"]==sca){
+                        $("#ddRebate").dialog('close');
+                        return;
+                    }
+                    else {
+                        rebate[key]["sca"]=sca;
+                    }
+                }
+            }
+
+            postJson("/admin/saveRebateJson",{msg:{type:"rebate",content:rebate}}, function (data) {
+                if(data>0){
+                    alert("修改成功");
+
+                    showCfgCommon();
+
+                    $("#ddRebate").dialog('close');
+                }
+            });
+        }
+
+        function editRebate(){
+            var itemSelected = $("#dg").datagrid("getSelected");
+            if(itemSelected){
+                $("#level").html(itemSelected.level);
+                $('#sca').val(itemSelected.sca);
+                $('#recommend').html(itemSelected.recommend);
+                $('#recharge').html(itemSelected.recharge);
+                $('#ddRebate').dialog('open');
+            }
+            else {
+                alert("请选择条目");
+            }
+        }
+
+        function showCfgCommon(){
+            var result = [];
+
+            var levels = {"basic":"基础","firstLevel":"一级返利","secondLevel":"二级返利"};
+
+            for(var key in rebate){
+                var cell = {};
+                cell.level = levels[key];
+
+                for(var ke in rebate[key]){
+                    cell[ke] = rebate[key][ke];
+                }
+
+                result.push(cell);
+            }
+
+            var da = {};
+            da["total"] = result.length;
+            da["rows"] = result;
+
+            $("#dg").datagrid("loadData", da);
+            if(da.total==0||da==""||!da){
+                $('#dg').datagrid('appendRow',{level:"没有数据", sca:"", recommend:"", recharge:""});
+            }
+        }
+
+        function showCfg(){
+            
+            postJson("/admin/getRebateJson",{msg:"rebate"},function(data){
+                if(data<=0){
+                    return;
+                }
+
+                rebate = data.rows[0];
+
+                showCfgCommon();
+            });
+        }
+
+        $(document).ready(function () {
+            showCfg();
+        });
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+export NODE_PATH=/usr/lib/node_modules
+
+webadmin=/root
+currentPath=$PWD
+currentFileName=${1}
+
+cd ${webadmin}/dataCenterService/dayTask
+log=$(node $*)
+
+if [ $? != 0 ];then
+    cd ${webadmin}/dataCenterService
+    if [ ! -d "logs" ]; then
+        mkdir logs
+    fi
+    myDate=$(date -d "1 days ago" +%Y-%m-%d)
+    echo ${myDate} error ${log}>> logs/${currentFileName}
+    exit 1;
+else
+    cd ${webadmin}/dataCenterService
+    if [ ! -d "logs" ]; then
+       mkdir logs
+    fi
+    myDate=$(date -d "1 days ago" +%Y-%m-%d)
+    echo ${myDate} successful ${log}>> logs/${currentFileName}
+    exit 0;
+fi

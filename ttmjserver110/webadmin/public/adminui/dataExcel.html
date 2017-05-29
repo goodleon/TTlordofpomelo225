@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <title>数据表</title>
+</head>
+<body class="easyui-layout">
+    <table  id="userData" class="easyui-datagrid" title="用户数据表" style="width:100%;height:80%;margin:0;padding:0"
+            data-options="singleSelect:true,
+                    collapsible:true,
+                    method:'get',
+                    remoteSort:false,
+                    multiSort:true,
+                    rownumbers:true,
+                    singleSelect:true,
+                    autoRowHeight:true
+                ">
+        <thead>
+            <tr>
+                <th data-options="field:'date',sortable:true">日期</th>
+                <th data-options="field:'activeNum',sortable:true">活跃人数</th>
+                <th data-options="field:'registerNum',sortable:true">注册人数</th>
+                <th data-options="field:'battelNum',sortable:true">对战场数</th>
+            </tr>
+        </thead>
+        <!--<tbody>-->
+            <!--<tr>-->
+                <!--<td>日期</td>-->
+                <!--<td>活跃人数</td>-->
+                <!--<td>注册人数</td>-->
+                <!--<td>对战场数</th>-->
+            <!--</tr>-->
+        <!--</tbody>-->
+    </table>
+    <script>
+//        $("#userData").
+    </script>
+</body>
+</html>

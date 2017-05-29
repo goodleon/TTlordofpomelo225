@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ThemeBucket">
+    <link rel="shortcut icon" href="#" type="image/png">
+    <title>忘记密码</title>
+</head>
+
+<style>
+    *{
+        margin:0;
+        padding:0;
+    }
+     .tuiguang{
+        width:100%;
+        height:100%;
+    }
+    h2{
+        width:100%;
+        height:68px;
+        background:#343F4B;
+        text-align: center;
+        color:#FFF;
+        line-height:66px;
+        font-weight: normal;
+    }
+    .zong{
+        width:400px;
+        height:500px;
+        position:absolute;
+        top:50%;
+        left:50%;
+        margin:-250px 0 0-250px;
+    }
+    .zong p{
+        line-height:50px;
+        text-align:center;
+    }
+    .zong p input{
+        height:30px;
+        margin-left: 100px;
+    }
+    .zong p:last-child{
+        margin-top:10px;
+        margin-left:200px;
+    }
+    .zong p a{
+        width:70px;
+        height:30px;
+        background:#30BE88;
+        display:block;
+        float:left;
+        margin:0 10px;
+        line-height:30px;
+        color:#FFF;
+        text-decoration: none;
+    }
+    .zong p button{
+        width:70px;
+        height:30px;
+        float:left;
+        border:none;
+        background:#4BAED0;
+        color:#FFF;
+    }
+    .zong p a:nth-child(2){
+         background:gray;
+    }
+</style>
+<body> 
+    <div class="tuiguang">
+
+            <h2>忘记密码</h2>
+
+            <div class="zong">
+                <p><span>用户名：<input type="text" name="userID" class="form-control" id="IuserName" placeholder="输入用户ID" required/></p>
+                <p><span>手机号：</span> <input type="tel" name="userTelphone" class="form-control" id="userTelphone" placeholder="请输入绑定的手机号" required/></p>
+
+                <p><span>验证码：</span> <input type="text" name="identyCode" class="form-control" id="identyCode" placeholder="输入验证码"/></p>
+
+                <p><span>新密码：</span> <input type="password" name="newPass" class="form-control" id="newPass" placeholder="请输入新密码" required/></p>
+
+                <p><span>再次确认：</span><input type="password" name="newPassagain" class="form-control" id="newPassagain" placeholder="请再次输入新密码" required/></p>
+
+
+                <p>
+                    <button role="button" class="btn btn-default btn-block" id="confirmbtn" disabled="disabled">确定</button>
+
+                    <a role="button" href="shouye.html">返回</a>
+                </p>
+            </div>
+ </div> 
+</body>
+<script src="../jsjava/jquery-1.10.2.min.js"></script>
+<script src="../share.js"></script>
+<script>
+      $(function(){
+        function changeAvatarAndName(){
+            $("#productImg").attr("src", "../"+getGameType(window.location.host).loginImg);
+            $("#title").text(getGameType(window.location.host).name);
+        }
+        changeAvatarAndName();
+        var count=120;
+        var InterValObj;
+        function stopsetTime(){
+            clearInterval(InterValObj);//停止计时器;
+            $("#getidentyCode").removeClass("btn-default").addClass("btn-primary").html("点击获取");
+            count=120;
+        }
+        function setRemainTime(){
+            if(count==0){
+                clearInterval(InterValObj);//停止计时器
+                $("#getidentyCode").removeAttr("disabled").removeClass("btn-default").addClass("btn-primary").html("点击获取");
+                count=120;
+            }
+            else{
+                count--;
+                $("#getidentyCode").attr("disabled",true).removeClass('btn-primary').addClass("btn-primary").html(count+"s");
+            }
+        }
+        // 输入框的字段校验
+        $("#userID").blur(function(){
+            if($(this).val().length==""||$(this).val()==""||$(this).val()==null){
+                $(".help-block").eq(0).css("display","block");
+            }else{
+                $(".help-block").eq(0).css("display","none");
+            }
+        });
+        $("#userTelphone").blur(function(){
+            if($(this).val().length==0||$(this).val().length>15){
+                $(".help-block").eq(1).css("display","block");
+            }else{
+                $(".help-block").eq(1).css("display","none");
+            }
+        });
+        $("#inputCode").blur(function(){
+            if($(this).val().length!=6||$(this).val().length==0||$(this).val()==""){
+                $(".help-block").eq(2).css("display","block");
+            }else{
+                $(".help-block").eq(2).css("display","none");
+            }
+        });
+        $("#userPass").blur(function(){
+            if($(this).val().length==0||$(this).val()==""){
+                $(".help-block").eq(3).css("display","block");
+            }else{
+                $(".help-block").eq(3).css("display","none");
+            }
+        });
+        $("#userPassAgain").blur(function(){
+            if($(this).val().length==0||$(this).val()==""){
+                $(".help-block").eq(4).css("display","block");
+            }else{
+                $(".help-block").eq(4).css("display","none");
+            }
+        });
+        $("#getidentyCode").click(function(e){
+            e.preventDefault();
+            var userName=$("#IuserName").val();
+            var phone=$("#userTelphone").val();
+//        此处需要进行用户名的验证
+            if(userName!=""&&userName!=null){
+                var msg={
+                    mid:parseInt(userName),
+                    type:3,
+                    mobile:parseFloat(phone)
+                };
+//      此处逻辑需要提交手机号码返回验证码进行填写
+                postJson("/login/doGetSms",msg,function(rtn){
+                    if(rtn.er == -1) {
+                        $(".alert").eq(0).alertModal('手机验证服务未开启',2000);
+                        stopsetTime();
+                    } else if(!rtn.er) {
+                        $(".alert").eq(0).alertModal('请查收手机验证码',2000);
+                        InterValObj=setInterval(setRemainTime,1000);
+                        $("#confirmbtn").removeAttr("disabled").removeClass("btn-default").addClass("btn-primary");
+                    } else {
+                        if (rtn.er == 1) {
+                            $(".alert").eq(0).alertModal('请先绑定手机',2000);
+                        } else if (rtn.er == 2) {
+                            $(".alert").eq(0).alertModal('输入有误，请检查',2000);
+                        } else if (rtn.er == 3) {
+                            $(".alert").eq(0).alertModal("请求过于频繁，请在" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                        }
+                        else if (rtn.er == 4) {
+                            $(".alert").eq(0).alertModal("1小时只能请求6次，请" + Math.ceil(rtn.time / 60 / 1000) + "分钟后尝试",2000);
+                        }
+                        else if (rtn.er == 5) {
+                            $(".alert").eq(0).alertModal('手机号码错误',2000);
+                        } else if (rtn.er == 6) {
+                            $(".alert").eq(0).alertModal('手机号码已绑定',2000);
+                        } else if (rtn.er == 7) {
+                            $(".alert").eq(0).alertModal('输入的ID有误',2000);
+                        } else if (rtn.er == 8) {
+                            $(".alert").eq(0).alertModal('登录过期，请重新登录',2000);
+                            //跳到登录页面
+                            window.location.href="/login.html";
+                        }
+                        stopsetTime();
+                    }
+                });
+            }else{
+                $(".alert").eq(0).alertModal('请输入信息',2000);
+            }
+        });
+        $("#confirmbtn").click(function(e){
+            //        首先判断验证码是否正确
+                e.preventDefault();
+                var pass=$("#newPass").val();
+                var passagain=$("#newPassagain").val();
+                var identycode=$("#identyCode").val();
+                var userName=parseInt($("#IuserName").val());
+                var msg={
+                    pass:pass,
+                    mcode:identycode,
+                    mid:userName,
+                    type:3
+                };
+                if(pass!=""&&passagain!=""&&pass==passagain&&identycode!=""&&identycode!=""){
+                    postJson("/login/doCheckSms ",msg,function(rtn) {
+                        if (rtn == -1) {
+                            $(".alert").eq(0).alertModal('手机验证服务未开启', 2000);
+                        } else if (rtn == 0) {
+                            $(".alert").eq(0).alertModal('修改密码成功', 2000);
+                            $("#newPass").val("");
+                            $("#newPassagain").val("");
+                            $("#identyCode").val("");
+                            $("#IuserName").val("");
+                            $("#userTelphone").val("");
+                            stopsetTime();
+                            window.location.href = "/login.html";
+                        } else if (rtn == 1) {
+                            $(".alert").eq(0).alertModal('请先获取验证码', 2000);
+                        } else if (rtn == 2) {
+                            $(".alert").eq(0).alertModal('输入信息有误，请检查', 2000);
+                        } else if (rtn == 3) {
+                            $(".alert").eq(0).alertModal('验证码错误', 2000);
+                        } else if (rtn == 4) {
+                            $(".alert").eq(0).alertModal('验证码过期请重新获取', 2000);
+                        } else if (rtn == 5) {
+                            $(".alert").eq(0).alertModal('登录过期，请重新登录', 2000);
+                            window.location.href = "/login.html";
+                        } else if (rtn == 6) {
+                            $(".alert").eq(0).alertModal('尝试次数过多请重新获取', 2000);
+                        }else if(rtn==7){
+                            $(".alert").eq(0).alertModal('手机号码已经被绑定', 2000);
+                        }
+                    });
+                };
+            });
+    });
+</script>
+</html>
