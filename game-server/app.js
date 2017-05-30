@@ -16,23 +16,23 @@ var sync = require('pomelo-sync-plugin');
 var app = pomelo.createApp();
 app.set('name', 'lord of pomelo');
 
-app.configure('production|development', function () {
+app.configure('production|development', function() {
     app.before(pomelo.filters.toobusy());
     app.enable('systemMonitor');
 
     app.filter(pomelo.filters.time()); //开启conn日志，对应pomelo-admin模块下conn request
-    app.rpcFilter(pomelo.rpcFilters.rpcLog());//开启rpc日志，对应pomelo-admin模块下rpc request
+    app.rpcFilter(pomelo.rpcFilters.rpcLog()); //开启rpc日志，对应pomelo-admin模块下rpc request
 
     // var sceneInfo = require('./app/modules/sceneInfo');
     var onlineUser = require('./app/modules/onlineUser');
     if (typeof app.registerAdmin === 'function') {
         // app.registerAdmin(sceneInfo, {app: app});
-        app.registerAdmin(onlineUser, {app: app});
+        app.registerAdmin(onlineUser, { app: app });
     }
 });
 
 // configure for global
-app.configure('production|development', function () {
+app.configure('production|development', function() {
     require('./app/util/httpServer');
 
     //Set areasIdMap, a map from area id to serverId.
@@ -77,13 +77,13 @@ app.configure('production|development', function () {
 });
 
 // Configure for auth server
-app.configure('production|development', 'auth', function () {
+app.configure('production|development', 'auth', function() {
     // load session congfigures
     app.set('session', require('./config/session.json'));
 });
 
 // Configure for area server
-app.configure('production|development', 'area', function () {
+app.configure('production|development', 'area', function() {
     app.filter(pomelo.filters.serial());
     app.before(playerFilter());
 
@@ -101,7 +101,7 @@ app.configure('production|development', 'area', function () {
     areaService.init();
 });
 
-app.configure('production|development', 'manager', function () {
+app.configure('production|development', 'manager', function() {
     var events = pomelo.events;
 
     app.event.on(events.ADD_SERVERS, instanceManager.addServers);
@@ -110,41 +110,39 @@ app.configure('production|development', 'manager', function () {
 });
 
 // Configure database
-app.configure('production|development', 'area|auth|connector|master', function () {
+app.configure('production|development', 'area|auth|connector|master', function() {
     var dbclient = require('./app/dao/mysql/mysql').init(app);
     app.set('dbclient', dbclient);
     // app.load(pomelo.sync, {path:__dirname + '/app/dao/mapping', dbclient: dbclient});
-    app.use(sync, {sync: {path: __dirname + '/app/dao/mapping', dbclient: dbclient}});
+    app.use(sync, { sync: { path: __dirname + '/app/dao/mapping', dbclient: dbclient } });
 });
 
-app.configure('production|development', 'connector', function () {
+app.configure('production|development', 'connector', function() {
     var dictionary = app.components['__dictionary__'];
     var dict = null;
     if (!!dictionary) {
         dict = dictionary.getDict();
     }
 
-    app.set('connectorConfig',
-        {
-            connector: pomelo.connectors.hybridconnector,
-            heartbeat: 30,
-            useDict: true,
-            useProtobuf: true,
-            handshake: function (msg, cb) {
-                cb(null, {});
-            }
-        });
+    app.set('connectorConfig', {
+        connector: pomelo.connectors.hybridconnector,
+        heartbeat: 30,
+        useDict: true,
+        useProtobuf: true,
+        handshake: function(msg, cb) {
+            cb(null, {});
+        }
+    });
 });
 
-app.configure('production|development', 'gate', function () {
-    app.set('connectorConfig',
-        {
-            connector: pomelo.connectors.hybridconnector,
-            useProtobuf: true
-        });
+app.configure('production|development', 'gate', function() {
+    app.set('connectorConfig', {
+        connector: pomelo.connectors.hybridconnector,
+        useProtobuf: true
+    });
 });
 // Configure for chat server
-app.configure('production|development', 'chat', function () {
+app.configure('production|development', 'chat', function() {
     app.set('chatService', new ChatService(app));
 });
 
@@ -152,6 +150,6 @@ app.configure('production|development', 'chat', function () {
 app.start();
 
 // Uncaught exception handler
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', function(err) {
     console.error(' Caught exception: ' + err.stack);
 });

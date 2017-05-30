@@ -21,48 +21,44 @@ module.exports = function(dbUrl, argv, endF, errF) {
     var hostname = os.hostname().split("-");
     // var type = hostname[1];
     hostname = hostname[0];
-    if(hostname == "localhost") {
+    if (hostname == "localhost") {
         hostname = "test";
     }
     mongoInfo.path = serverInfo.path;
     //解析url格式 str: {"protocol":"mongodb:","slashes":true,"auth":null, "host":"10.47.191.7:27017","port":"27017", "hostname":"10.47.191.7", "hash":null,"search":null,"query":null, "pathname":"/ahmj","path":"/ahmj", "href":"mongodb://10.47.191.7:27017/ahmj"}
-    mongoInfo.url = url.parse(dbUrl);//解析url
+    mongoInfo.url = url.parse(dbUrl); //解析url
     // mongoInfo.url.name = mongoInfo.url.pathname.substr(1, mongoInfo.url.pathname.length);
 
     if (!mongoInfo.url.host) {
         // console.log("---- parseDbUrl(): Error!!! mongoInfo = " + JSON.stringify(mongoInfo));
         !errF || errF("parseDbUrl(): Error!!! mongoInfo = " + JSON.stringify(mongoInfo));
         return;
-    }
-    else {
+    } else {
         // console.log("---- mongoInfo = " + JSON.stringify(mongoInfo));
     }
-    
+
     var indexColl = 0;
     var maxColl = 0;
     var collections = [];
-    var day = new Date(new Date() - 1*24*60*60*1000); //前一天
-    var day2 = new Date(new Date() - 2*24*60*60*1000); //前前一天
+    var day = new Date(new Date() - 1 * 24 * 60 * 60 * 1000); //前一天
+    var day2 = new Date(new Date() - 2 * 24 * 60 * 60 * 1000); //前前一天
     var date = tools.Format(day, 'yyyy-MM-dd');
     var date2 = tools.Format(day2, 'yyyy-MM-dd');
 
     var isRunAll = false;
-    if(argv == 1)//从头开始跑
+    if (argv == 1) //从头开始跑
     {
         isRunAll = true;
-    }
-    else if(typeof argv == 'string' && argv.length == 10)// 跑指定某一天数据
+    } else if (typeof argv == 'string' && argv.length == 10) // 跑指定某一天数据
     {
         day = new Date(argv);
         day2 = new Date(argv);
         day2.setDate(day2.getDate() - 1);
         date = tools.Format(day, 'yyyy-MM-dd');
         date2 = tools.Format(day2, 'yyyy-MM-dd')
-        console.log('跑指定某一天数据', day, day2,  date, date2);
-    }
-    else if (!argv)// 跑前一天数据
-    {
-    }
+        console.log('跑指定某一天数据', day, day2, date, date2);
+    } else if (!argv) // 跑前一天数据
+    {}
 
     var outPath = mongoInfo.path.exportMongodbPath + date; //导出路径
     var collections = [];
@@ -72,52 +68,43 @@ module.exports = function(dbUrl, argv, endF, errF) {
     collections.push("userConsumption");
     var rmCmd = 'cd ' + mongoInfo.path.exportMongodbPath + '&&rm -rf ' + date2;
     console.log("----0-- rmCmd: " + rmCmd);
-    cp.exec(rmCmd, function (error, stdout, stderr) {
+    cp.exec(rmCmd, function(error, stdout, stderr) {
 
-        if(isRunAll)
-        {
-            MongoClient.connect(dbUrl, function (er, db) {
+        if (isRunAll) {
+            MongoClient.connect(dbUrl, function(er, db) {
 
-                db.collection("system.indexes").find({}).each(function (er, doc)
-                {
-                    if (doc && doc.ns)
-                    {
+                db.collection("system.indexes").find({}).each(function(er, doc) {
+                    if (doc && doc.ns) {
                         var currentName = doc.ns.split('.')[1];
-                        if(currentName.indexOf("loginLog") >= 0)
-                        {
+                        if (currentName.indexOf("loginLog") >= 0) {
                             collections.push(currentName);
-                        }
-                        else if(currentName.indexOf("gameLog") >= 0)
-                        {
+                        } else if (currentName.indexOf("gameLog") >= 0) {
                             collections.push(currentName);
                         }
 
                     }
-                    if (!doc)
-                    {
+                    if (!doc) {
                         db.close();
                         getMemberMoneyCollections();
                     }
                 });
             });
-        }
-        else
-        {
+        } else {
 
             day = tools.Format(day, "yyyyMMdd");
-            collections.push("loginLog"+day);
-            collections.push("gameLog"+day);
+            collections.push("loginLog" + day);
+            collections.push("gameLog" + day);
             getMemberMoneyCollections();
         }
     });
+
     function closeDb() {
         // db.close();
     }
 
 
     // 所有集合
-    function getMemberMoneyCollections()
-    {
+    function getMemberMoneyCollections() {
         // console.log("-----collections:" + collections);
         indexColl = 0;
         maxColl = collections.length;
@@ -133,7 +120,7 @@ module.exports = function(dbUrl, argv, endF, errF) {
             handleCollection(mongoInfo.url.host, hostname, item, outPath);
         });*/
 
-        console.log(dbUrl+", "+maxColl+" 导出中...");
+        console.log(dbUrl + ", " + maxColl + " 导出中...");
         handleCollection(mongoInfo.url.host, hostname, collections[indexColl], outPath);
     };
 
@@ -147,33 +134,29 @@ module.exports = function(dbUrl, argv, endF, errF) {
      */
     function handleCollection(ip, name, collection, dirName) {
         var query = '{}';
-        if(!isRunAll)
-        {
-            if(collection == "cgbuser") {
+        if (!isRunAll) {
+            if (collection == "cgbuser") {
 
                 var date3 = day2;
                 var time = date3.getTime();
                 query = '\'{\"sendTime\":{$gte:Date(' + time + ')}}\'';
-            }
-            else if(collection == "memberDayLog"
-                || collection == "dayLog"
-                || collection == "userConsumption")
-            {
-                var time = date.substr(0,4)+date.substr(5,2)+date.substr(8,2);
+            } else if (collection == "memberDayLog" ||
+                collection == "dayLog" ||
+                collection == "userConsumption") {
+                var time = date.substr(0, 4) + date.substr(5, 2) + date.substr(8, 2);
                 query = '\'{\"_id\":' + Number(time) + '}\'';
             }
         }
         var cmd = 'mongodump -h  ' + ip + ' -d ' + name + ' -c ' + collection + ' -q ' + query + '  -o  ' + dirName;
-        if(tools.mdbUrl)
-        {
-            cmd = 'mongodump --host ' + ip
-                + ' --authenticationDatabase ' + serverInfo.aliyuncsDb.auth
-                + ' -u ' + serverInfo.aliyuncsDb.user
-                + ' -p ' + serverInfo.aliyuncsDb.passwd
-                + ' -d ' + name + ' -c ' + collection + ' -q ' + query + '  -o  ' + dirName;
+        if (tools.mdbUrl) {
+            cmd = 'mongodump --host ' + ip +
+                ' --authenticationDatabase ' + serverInfo.aliyuncsDb.auth +
+                ' -u ' + serverInfo.aliyuncsDb.user +
+                ' -p ' + serverInfo.aliyuncsDb.passwd +
+                ' -d ' + name + ' -c ' + collection + ' -q ' + query + '  -o  ' + dirName;
         }
         // console.log("2cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 console.log(error.stack);
                 console.log('Error code: ' + error.code);
@@ -183,9 +166,8 @@ module.exports = function(dbUrl, argv, endF, errF) {
             // console.log('stderr: ' + stderr);
             if (++indexColl >= maxColl) {
                 handleRename(outPath, hostname, date);
-            }
-            else {
-                if(indexColl % 10 == 0){
+            } else {
+                if (indexColl % 10 == 0) {
                     console.log(indexColl);
                 }
                 handleCollection(mongoInfo.url.host, hostname, collections[indexColl], outPath);
@@ -202,15 +184,14 @@ module.exports = function(dbUrl, argv, endF, errF) {
     function handleRename(path, oldName, newName) {
         var cmd = 'cd ' + path + '&&mv ' + oldName + ' ' + newName;
         // console.log("1cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 console.log(error.stack);
                 console.log('Error code: ' + error.code);
                 console.log('Signal received: ' + error.signal);
                 closeDb();
                 !errF || errF('handleRename(...), ' + error.stack);
-            }
-            else {
+            } else {
                 // console.log('Rename Success: ' + newName);
                 handleCompressed(outPath, hostname, date);
             }
@@ -226,14 +207,13 @@ module.exports = function(dbUrl, argv, endF, errF) {
     function handleCompressed(path, newName, oldName) {
         // var cmd = 'cd ' + path + '&&tar zcf ' + newName + ".tar.gz " + oldName;
         // tar cvf - 目录名 | pigz -9 -p 10 > file.tgz
-        var cmd = 'cd ' + path + '&&tar cvf - ' + oldName + " | pigz -9 -p 10 -k > " + newName+".tgz";
+        var cmd = 'cd ' + path + '&&tar cvf - ' + oldName + " | pigz -9 -p 10 -k > " + newName + ".tgz";
         console.log("0cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 closeDb();
                 !errF || errF('handleCompressed(...), ' + error.stack);
-            }
-            else {
+            } else {
                 console.log('Compressed Success: ' + newName);
                 handleRemoveFile(path, date);
             }
@@ -249,11 +229,10 @@ module.exports = function(dbUrl, argv, endF, errF) {
     function handleRemoveFile(dir, fileName) {
         var cmd = 'cd ' + dir + '&&rm -rf ' + fileName;
         // console.log("----0-- cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 !errF || errF('handleRemoveFile(...), ' + error.stack);
-            }
-            else {
+            } else {
                 // console.log('Remove Success: ' + fileName);
                 endF(fileName);
             }
@@ -274,8 +253,8 @@ module.exports = function(dbUrl, argv, endF, errF) {
  node exportDbTask.js '2016-12-01'
  */
 const exportDbTask = require('./exportDbTask.js');
-exportDbTask(tools.url, process.argv[2],function (endMsg) {
-    console.log("导出完成: "+endMsg);
-},function (errMsg) {
-    console.log("导出失败: "+errMsg)
+exportDbTask(tools.url, process.argv[2], function(endMsg) {
+    console.log("导出完成: " + endMsg);
+}, function(errMsg) {
+    console.log("导出失败: " + errMsg)
 });

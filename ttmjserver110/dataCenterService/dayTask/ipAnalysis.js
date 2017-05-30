@@ -5,38 +5,36 @@
 var ipx = require("../ipip/ip")
 var tools = require("../tools")();
 ipx.load("../ipip/17monipdb.dat");
+
 function getLocation(ip) {
     var arr = ipx.findSync(ip);
     var location = "";
-    for(var i = 0; i < arr.length; i++)
-    {
+    for (var i = 0; i < arr.length; i++) {
         location += arr[i];
     }
     return location;
 }
 
-module.exports = function (dbUrl, day, endMsg, errMsg)
-{
-    if(typeof day != 'string') {
+module.exports = function(dbUrl, day, endMsg, errMsg) {
+    if (typeof day != 'string') {
         console.info('typeof day  must be string !!');
         !errMsg || errMsg('typeof day  must be string !!');
         return;
     }
-    if(day.length != 8){
+    if (day.length != 8) {
         console.info('day\'s format invaid !!');
         !errMsg || errMsg('day\'s format invaid !!');
         return;
     }
-    require('mongodb').MongoClient.connect(dbUrl, function (err, db)
-    {
-        if(err) {
+    require('mongodb').MongoClient.connect(dbUrl, function(err, db) {
+        if (err) {
             console.info('db err ' + JSON.stringify(err));
             !errMsg || errMsg(err);
             return;
         }
         var events = require('events');
         console.time('runTime');
-        
+
         //登录
         /*var ipMsg = {};
         var tb = 'loginLog' + day;
@@ -78,36 +76,29 @@ module.exports = function (dbUrl, day, endMsg, errMsg)
         var createIdx = null;
         var index = 0;
         var result = {};
-        console.log("index",index);
-        db.collection(tb).find({"type" : "doLogin"},{uid:1, ip:1}).each(function (err, doc) {
-            if(doc && doc.ip)
-            {
-                if(!ipMsg[doc.ip])
-                {
+        console.log("index", index);
+        db.collection(tb).find({ "type": "doLogin" }, { uid: 1, ip: 1 }).each(function(err, doc) {
+            if (doc && doc.ip) {
+                if (!ipMsg[doc.ip]) {
                     ipMsg[doc.ip] = 1;
-                    if(++index % 10000 == 0)
-                    {
-                        console.log("index",index);
+                    if (++index % 10000 == 0) {
+                        console.log("index", index);
                     }
                     var loc = getLocation(doc.ip);
-                    if(loc.length > 0)
-                    {
-                        if(!result[loc])
-                        {
+                    if (loc.length > 0) {
+                        if (!result[loc]) {
                             result[loc] = 0;
                         }
                         result[loc]++;
                     }
                 }
             }
-            if(!doc)
-            {
-                db.collection('ipDayLog').update(
-                    {_id:Number(day)}, {$set:{distribution:result}}, {upsert:true},function (err, doc) {
-                        db.close();
-                        console.timeEnd('runTime');
-                        !endMsg || endMsg(day + ", index: "+index+", ok!");
-                    });
+            if (!doc) {
+                db.collection('ipDayLog').update({ _id: Number(day) }, { $set: { distribution: result } }, { upsert: true }, function(err, doc) {
+                    db.close();
+                    console.timeEnd('runTime');
+                    !endMsg || endMsg(day + ", index: " + index + ", ok!");
+                });
 
             }
         });
@@ -141,46 +132,36 @@ var date = null;
 var today = null;
 
 var serverInfo = require('../config.json');
-var dbIp = serverInfo.db.ip+':'+serverInfo.db.port;
-var mongodbUrl = "mongodb://"+dbIp+"/"+process.argv[2];
+var dbIp = serverInfo.db.ip + ':' + serverInfo.db.port;
+var mongodbUrl = "mongodb://" + dbIp + "/" + process.argv[2];
 // var mongodbUrl = tools.url;
-console.log("mongodbUrl",mongodbUrl, process.argv);
+console.log("mongodbUrl", mongodbUrl, process.argv);
 var runType = null;
-if(process.argv[3] == 1)
-{
+if (process.argv[3] == 1) {
     runType = 0;
-}
-else if(process.argv.length == 4 && process.argv[3].length == 8)
-{
+} else if (process.argv.length == 4 && process.argv[3].length == 8) {
     runType = 1;
-}
-else if(process.argv.length == 5)
-{
+} else if (process.argv.length == 5) {
     runType = 2;
 }
 
-if(runType == 0) {
+if (runType == 0) {
     //从头开始跑的逻辑
     var startDay = process.argv[4];
     var endDay = process.argv[5];
-    if(startDay)
-    {
-        var sStartDay = startDay.substr(0,4) + '-' + startDay.substr(4,2) + '-' + startDay.substr(6,2);
+    if (startDay) {
+        var sStartDay = startDay.substr(0, 4) + '-' + startDay.substr(4, 2) + '-' + startDay.substr(6, 2);
         date = new Date(sStartDay);
-    }
-    else
-    {
+    } else {
         date = new Date('2016-07-01');
     }
-    if(endDay)
-    {
+    if (endDay) {
         today = parseInt(endDay);
-    }
-    else
-    {
-        today = tools.Format(new Date(),'yyyyMMdd');
+    } else {
+        today = tools.Format(new Date(), 'yyyyMMdd');
         today = parseInt(today);
     }
+
     function runStatic() {
         var str = tools.Format(date, 'yyyyMMdd');
         if (parseInt(str) > today) {
@@ -188,11 +169,11 @@ if(runType == 0) {
             return;
         }
 
-        ipAnalysis(mongodbUrl, str, function (msg) {
+        ipAnalysis(mongodbUrl, str, function(msg) {
             console.info(msg);
             date.setDate(date.getDate() + 1);
             runStatic();
-        }, function (msg) {
+        }, function(msg) {
             console.info(msg);
             date.setDate(date.getDate() + 1);
             runStatic();
@@ -200,65 +181,57 @@ if(runType == 0) {
     }
 
     runStatic();
-}
-else if(runType == 1)
-{
+} else if (runType == 1) {
     //跑指定日期
-    ipAnalysis(mongodbUrl, process.argv[3], function (msg) {
+    ipAnalysis(mongodbUrl, process.argv[3], function(msg) {
         console.info(msg);
-    }, function (msg) {
+    }, function(msg) {
         console.info(msg);
     });
-}
-else if(runType == 2)
-{
+} else if (runType == 2) {
     var events = require('events');
     var eventEmitter = new events.EventEmitter();
 
     var startDay = process.argv[2];
     var endDay = parseInt(process.argv[3]);
     var hostname = process.argv[4];
-    var strStartDay = startDay.substr(0,4) + '-' + startDay.substr(4,2) + '-' + startDay.substr(6,2);
+    var strStartDay = startDay.substr(0, 4) + '-' + startDay.substr(4, 2) + '-' + startDay.substr(6, 2);
     var ignoreOp = hostname.split(':');
-    console.log("startDay,strStartDay,endDay",startDay,strStartDay,endDay);
-    console.log('ignoreOp',ignoreOp);
-    for (var i = 0; i < ignoreOp.length; i++)
-    {
+    console.log("startDay,strStartDay,endDay", startDay, strStartDay, endDay);
+    console.log('ignoreOp', ignoreOp);
+    for (var i = 0; i < ignoreOp.length; i++) {
         var key = ignoreOp[i];
-        if(serverInfo.server[key])
-        {
+        if (serverInfo.server[key]) {
             delete serverInfo.server[key];
             console.log("忽略: " + key);
         }
     }
-    if(serverInfo.server[hostname])
-    {
+    if (serverInfo.server[hostname]) {
         delete serverInfo.server[hostname];
     }
     console.log(JSON.stringify(serverInfo.server));
     var keysServers = Object.keys(serverInfo.server);
     var keysServersLen = keysServers.length;
     var keysServersIdx = 0;
-    var dbIp = serverInfo.db.ip+':'+serverInfo.db.port;
+    var dbIp = serverInfo.db.ip + ':' + serverInfo.db.port;
     var startTime = new Date();
 
     // return;
-    function runTask (dbUrl, endMsg)
-    {
+    function runTask(dbUrl, endMsg) {
         var date = new Date(strStartDay);
         // var date = new Date('2017-1-9');
         function runStatic2() {
             var str = tools.Format(date, 'yyyyMMdd');
 
             if (parseInt(str) > endDay) {
-                !endMsg||endMsg(dbUrl+', time: ' + (new Date() - startTime));
+                !endMsg || endMsg(dbUrl + ', time: ' + (new Date() - startTime));
                 return;
             }
-            ipAnalysis(dbUrl, str, function (msg) {
+            ipAnalysis(dbUrl, str, function(msg) {
                 console.info(msg);
                 date.setDate(date.getDate() + 1);
                 runStatic2();
-            }, function (msg) {
+            }, function(msg) {
                 console.info(msg);
                 date.setDate(date.getDate() + 1);
                 runStatic2();
@@ -274,12 +247,11 @@ else if(runType == 2)
 
     function execFunc() {
         var dbName = keysServers[keysServersIdx];
-        var dbUrl = "mongodb://"+dbIp+"/"+dbName;
-        console.log("len "+keysServersLen+" ,idx "+keysServersIdx+", "+dbName);
-        runTask(dbUrl,function (endMsg) {
+        var dbUrl = "mongodb://" + dbIp + "/" + dbName;
+        console.log("len " + keysServersLen + " ,idx " + keysServersIdx + ", " + dbName);
+        runTask(dbUrl, function(endMsg) {
             console.log("采集完成: " + endMsg);
-            if(++keysServersIdx < keysServersLen)
-            {
+            if (++keysServersIdx < keysServersLen) {
                 eventEmitter.emit('execFunc');
             }
         });
@@ -287,16 +259,14 @@ else if(runType == 2)
     }
     eventEmitter.on('execFunc', execFunc);
     eventEmitter.emit('execFunc');
-}
-else
-{
+} else {
     //跑前一天的数据
     today = new Date();
     today.setDate(today.getDate() - 1);
     var day = tools.Format(today, 'yyyyMMdd');
-    ipAnalysis(mongodbUrl, day, function (msg) {
+    ipAnalysis(mongodbUrl, day, function(msg) {
         console.info(msg);
-    }, function (msg) {
+    }, function(msg) {
         console.info(msg);
     });
 }

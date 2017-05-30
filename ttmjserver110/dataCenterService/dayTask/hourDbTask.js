@@ -22,20 +22,19 @@ module.exports = function(dbUrl, argv, endF, errF) {
     var hostname = os.hostname().split("-");
     // var type = hostname[1];
     hostname = hostname[0];
-    if(hostname == "localhost") {
+    if (hostname == "localhost") {
         hostname = "test";
     }
     mongoInfo.path = serverInfo.path;
     //解析url格式 str: {"protocol":"mongodb:","slashes":true,"auth":null, "host":"10.47.191.7:27017","port":"27017", "hostname":"10.47.191.7", "hash":null,"search":null,"query":null, "pathname":"/ahmj","path":"/ahmj", "href":"mongodb://10.47.191.7:27017/ahmj"}
-    mongoInfo.url = url.parse(dbUrl);//解析url
+    mongoInfo.url = url.parse(dbUrl); //解析url
     // mongoInfo.url.name = mongoInfo.url.pathname.substr(1, mongoInfo.url.pathname.length);
 
     if (!mongoInfo.url.host) {
         // console.log("---- parseDbUrl(): Error!!! mongoInfo = " + JSON.stringify(mongoInfo));
         !errF || errF("parseDbUrl(): Error!!! mongoInfo = " + JSON.stringify(mongoInfo));
         return;
-    }
-    else {
+    } else {
         // console.log("---- mongoInfo = " + JSON.stringify(mongoInfo));
     }
 
@@ -48,14 +47,14 @@ module.exports = function(dbUrl, argv, endF, errF) {
     var collections = [];
     collections.push("dayLog");
     getMemberMoneyCollections();
+
     function closeDb() {
         // db.close();
     }
 
 
     // 所有集合
-    function getMemberMoneyCollections()
-    {
+    function getMemberMoneyCollections() {
         // console.log("-----collections:" + collections);
         indexColl = 0;
         maxColl = collections.length;
@@ -71,7 +70,7 @@ module.exports = function(dbUrl, argv, endF, errF) {
          handleCollection(mongoInfo.url.host, hostname, item, outPath);
          });*/
 
-        console.log(dbUrl+", "+maxColl+" 导出中...");
+        console.log(dbUrl + ", " + maxColl + " 导出中...");
         handleCollection(mongoInfo.url.host, hostname, collections[indexColl], outPath);
     };
 
@@ -84,31 +83,28 @@ module.exports = function(dbUrl, argv, endF, errF) {
      * @param {string} dirName: 导出路径
      */
     function handleCollection(ip, name, collection, dirName) {
-        var time = date.substr(0,4)+date.substr(5,2)+date.substr(8,2);
+        var time = date.substr(0, 4) + date.substr(5, 2) + date.substr(8, 2);
         var query = '\'{\"_id\":' + Number(time) + '}\'';
         // var cmd = 'mongodump -h  ' + ip + ' -d ' + name + ' -c ' + collection + ' -q ' + query + '  -o  ' + dirName;
         var cmd = 'mongoexport -h  ' + ip + ' -d ' + name + ' -c ' + collection + ' -q ' + query + '  -o  ' + dirName + '/dayLog.json';
 
-        if(tools.mdbUrl)
-        {
-            cmd = 'mongoexport -h ' + ip
-                + ' --authenticationDatabase ' + serverInfo.aliyuncsDb.auth
-                + ' -u ' + serverInfo.aliyuncsDb.user
-                + ' -p ' + serverInfo.aliyuncsDb.passwd
-                + ' -d ' + name + ' -c ' + collection + ' -q ' + query + '  -o  ' + dirName
-                + '/dayLog.json';
+        if (tools.mdbUrl) {
+            cmd = 'mongoexport -h ' + ip +
+                ' --authenticationDatabase ' + serverInfo.aliyuncsDb.auth +
+                ' -u ' + serverInfo.aliyuncsDb.user +
+                ' -p ' + serverInfo.aliyuncsDb.passwd +
+                ' -d ' + name + ' -c ' + collection + ' -q ' + query + '  -o  ' + dirName +
+                '/dayLog.json';
         }
         // mongoexport -h 10.25.77.69 -d sdmj -c dayLog -o /tmp/tmp_sdmj.json
         // console.log("2cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 console.log(error.stack);
                 console.log('Error code: ' + error.code);
                 console.log('Signal received: ' + error.signal);
-            }
-            else
-            {
-                console.log(cmd,"执行成功");
+            } else {
+                console.log(cmd, "执行成功");
             }
             // console.log('stdout: ' + stdout);
             // console.log('stderr: ' + stderr);
@@ -133,15 +129,14 @@ module.exports = function(dbUrl, argv, endF, errF) {
     function handleRename(path, oldName, newName) {
         var cmd = 'cd ' + path + '&&mv ' + oldName + ' ' + newName;
         // console.log("1cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 console.log(error.stack);
                 console.log('Error code: ' + error.code);
                 console.log('Signal received: ' + error.signal);
                 closeDb();
                 !errF || errF('handleRename(...), ' + error.stack);
-            }
-            else {
+            } else {
                 // console.log('Rename Success: ' + newName);
                 handleCompressed(outPath, hostname, date);
             }
@@ -157,14 +152,13 @@ module.exports = function(dbUrl, argv, endF, errF) {
     function handleCompressed(path, newName, oldName) {
         // var cmd = 'cd ' + path + '&&tar zcf ' + newName + ".tar.gz " + oldName;
         // tar cvf - 目录名 | pigz -9 -p 10 > file.tgz
-        var cmd = 'cd ' + path + '&&tar cvf - ' + oldName + " | pigz -9 -p 10 -k > " + newName+".tgz";
+        var cmd = 'cd ' + path + '&&tar cvf - ' + oldName + " | pigz -9 -p 10 -k > " + newName + ".tgz";
         console.log("0cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 closeDb();
                 !errF || errF('handleCompressed(...), ' + error.stack);
-            }
-            else {
+            } else {
                 console.log('Compressed Success: ' + newName);
                 handleRemoveFile(path, date);
             }
@@ -180,13 +174,12 @@ module.exports = function(dbUrl, argv, endF, errF) {
     function handleRemoveFile(dir, fileName) {
         var cmd = 'cd ' + dir + '&&rm -rf ' + fileName;
         // console.log("----0-- cmd: " + cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
+        cp.exec(cmd, function(error, stdout, stderr) {
             if (error) {
                 !errF || errF('handleRemoveFile(...), ' + error.stack);
-            }
-            else {
+            } else {
                 // console.log('Remove Success: ' + fileName);
-                tools.wLog('hourDbTask', JSON.stringify({Success:'dayLogSuccess',time:new Date()}),'hourDbTask');
+                tools.wLog('hourDbTask', JSON.stringify({ Success: 'dayLogSuccess', time: new Date() }), 'hourDbTask');
                 endF(fileName);
             }
             closeDb();
@@ -201,8 +194,8 @@ module.exports = function(dbUrl, argv, endF, errF) {
  node hourDbTask.js
  */
 const hourDbTask = require('./hourDbTask.js');
-hourDbTask(tools.url, null,function (endMsg) {
-    console.log("导出完成: "+endMsg);
-},function (errMsg) {
-    console.log("导出失败: "+errMsg)
+hourDbTask(tools.url, null, function(endMsg) {
+    console.log("导出完成: " + endMsg);
+}, function(errMsg) {
+    console.log("导出失败: " + errMsg)
 });

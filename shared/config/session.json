@@ -1,4 +1,4 @@
 {
-	"secret": "pomelo_session_secret", 
-	"expire": -1
+    "secret": "pomelo_session_secret",
+    "expire": -1
 }
