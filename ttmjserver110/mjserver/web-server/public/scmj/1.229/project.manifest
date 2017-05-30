@@ -1,8 +1,0 @@
-{
-"packageUrl":       "http://scmj.coolgamebox.com:800/scmj/1.229/",
-"remoteManifestUrl":"http://scmj.coolgamebox.com:800/scmj/1.335/project.manifest",
-"version":"1.335",
-"engineVersion":"3.0 beta",
-"assets":{
-   "1.335.zip":{"md5":"1493866653653","compressed":true}
-}}
