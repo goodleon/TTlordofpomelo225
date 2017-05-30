@@ -1,5 +1,3 @@
-
-
 /*
 var cp = require('child_process');
 var fs = require('fs');
@@ -73,8 +71,8 @@ eventEmitter.emit('next');
  * node test.js 4 'fjmj' '2017-01-15' //指定日期
  *
  * */
-require('./dayTask/userStatisticsTask.js')(process.argv[2], process.argv[3], process.argv[4], function (endMsg) {
+require('./dayTask/userStatisticsTask.js')(process.argv[2], process.argv[3], process.argv[4], function(endMsg) {
     console.log("导出完成: " + endMsg);
-}, function (errMsg) {
+}, function(errMsg) {
     console.log("导出失败: " + errMsg);
 });

@@ -1,26 +1,23 @@
-module.exports = function(app,server,serverClass)
-{
-	// redis Á´½Ó
-	var redis   = require('redis');
-	var client  = redis.createClient('6379', app.getMaster().redis);
+module.exports = function(app, server, serverClass) {
+    // redis ï¿½ï¿½ï¿½ï¿½
+    var redis = require('redis');
+    var client = redis.createClient('6379', app.getMaster().redis);
 
-	// redis Á´½Ó´íÎó
-	client.on("error", function(error) {
-		console.log(error);
-	});
-	client.auth("jxlw921JXLW");
-	//var pkservers=app.GetCfgServers(app.serverType);
-	//var idx=0;
-	//for(idx=0;idx<pkservers.length;idx++) {if(pkservers[idx].id==app.serverId) break;}
-	//×î¶à15¸ö
-	client.select(0, function(error){
-    if(error) {
-        console.error("=========>pkplayer redis error " + error + ", ip = " + app.getMaster().redis);
-    }
-	else 
-	{
-		server.redisClient=client;
-	}});
+    // redis ï¿½ï¿½ï¿½Ó´ï¿½ï¿½ï¿½
+    client.on("error", function(error) {
+        console.log(error);
+    });
+    client.auth("jxlw921JXLW");
+    //var pkservers=app.GetCfgServers(app.serverType);
+    //var idx=0;
+    //for(idx=0;idx<pkservers.length;idx++) {if(pkservers[idx].id==app.serverId) break;}
+    //ï¿½ï¿½ï¿½15ï¿½ï¿½
+    client.select(0, function(error) {
+        if (error) {
+            console.error("=========>pkplayer redis error " + error + ", ip = " + app.getMaster().redis);
+        } else {
+            server.redisClient = client;
+        }
+    });
 
 }
-

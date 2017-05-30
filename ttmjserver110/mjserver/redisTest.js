@@ -1,22 +1,22 @@
-// redis Á´½Ó
-var redis   = require('redis');
-var client  = redis.createClient('6379', '6a12890d4f584e7e.m.cnsza.kvstore.aliyuncs.com');
+// redis é“¾æŽ¥
+var redis = require('redis');
+var client = redis.createClient('6379', '6a12890d4f584e7e.m.cnsza.kvstore.aliyuncs.com');
 
-// redis Á´½Ó´íÎó
+// redis é“¾æŽ¥é”™è¯¯
 client.on("error", function(error) {
     console.log(error);
 });
 
 client.auth("jxlw921JXLW");
 
-client.select('0', function(error){
-    if(error) {
+client.select('0', function(error) {
+    if (error) {
         console.log(error);
     } else {
         // set
         client.hget('login_6', 'ozUH9w9Llxk59Xg7cvj3gsvLU73U@weixin', function(error, res) {
-                console.log(JSON.stringify([error,res ] ));
-            // ¹Ø±ÕÁ´½Ó
+            console.log(JSON.stringify([error, res]));
+            // å…³é—­é“¾æŽ¥
             client.end();
         });
     }

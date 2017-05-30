@@ -1,15 +1,14 @@
-var client=require("./httpClient")();
+var client = require("./httpClient")();
 
 /*
 client.postJson("UpdatePlayer",{uid:100003,update:{$inc:{money:9}}},6031,"localhost",function(er,rtn){
 	console.info(er+" "+rtn);
 })*/
 
-function ReloadCode(port,ip)
-{
-	client.postJson("ReloadCode",{},port,ip,function(er,rtn){
-		console.info(JSON.stringify([port,er,rtn]));
-	})	
+function ReloadCode(port, ip) {
+    client.postJson("ReloadCode", {}, port, ip, function(er, rtn) {
+        console.info(JSON.stringify([port, er, rtn]));
+    })
 }
 
 //修改host与port加载pkplayer
@@ -26,6 +25,6 @@ for(var i = 0; i < roomList.length; i++) {
 	}
 }
 */
-	/*client.postJson("coinKey",{},6030,"localhost",function(er,rtn){
-		console.info(JSON.stringify([er,rtn]));
-	})*/	
+/*client.postJson("coinKey",{},6030,"localhost",function(er,rtn){
+	console.info(JSON.stringify([er,rtn]));
+})*/

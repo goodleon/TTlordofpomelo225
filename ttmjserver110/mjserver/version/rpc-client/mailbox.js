@@ -12,5 +12,5 @@ var Mailbox = require('./mailboxes/tcp-mailbox');
  * @return {Object} mailbox instancef
  */
 module.exports.create = function(serverInfo, opts) {
-  return Mailbox.create(serverInfo, opts);
+    return Mailbox.create(serverInfo, opts);
 };

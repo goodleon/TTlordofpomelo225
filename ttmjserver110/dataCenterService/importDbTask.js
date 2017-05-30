@@ -19,16 +19,13 @@ module.exports = function(dbUrl, newDbName, importPath, dir, endF, errF) {
      */
     function handleImportDb(url, dbName, pathName, dir) {
         //mongorestore -h 127.0.0.1 -d test ynmj
-        var cmd = "cd "+dir+"&&mongorestore -h " + url + " -d " + dbName + " " + pathName;
+        var cmd = "cd " + dir + "&&mongorestore -h " + url + " -d " + dbName + " " + pathName;
         // console.log("2cmd:"+cmd);
-        cp.exec(cmd, function (error, stdout, stderr) {
-            if (error)
-            {
+        cp.exec(cmd, function(error, stdout, stderr) {
+            if (error) {
                 !errF || errF(error);
-            }
-            else
-            {
-                !endF || endF(""+cmd);
+            } else {
+                !endF || endF("" + cmd);
             }
         });
     }

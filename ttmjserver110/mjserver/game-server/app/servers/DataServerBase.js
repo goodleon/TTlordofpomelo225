@@ -1,3 +1,1 @@
-module.exports = function(app,server,serverClass)
-{
-}
+module.exports = function(app, server, serverClass) {}

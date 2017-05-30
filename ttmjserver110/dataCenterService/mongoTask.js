@@ -8,8 +8,7 @@
  * 4、删除  2016-11-19
  */
 
-module.exports = function(dbUrl, endF, errF)
-{
+module.exports = function(dbUrl, endF, errF) {
     //dbUrl = "mongodb://10.47.191.7:27017/ahmj";
     const url = require('url');
     var fs = require('fs');
@@ -20,41 +19,39 @@ module.exports = function(dbUrl, endF, errF)
     var mongoInfo = {};
     mongoInfo.path = serverInfo.path;
     //解析url格式 str: {"protocol":"mongodb:","slashes":true,"auth":null, "host":"10.47.191.7:27017","port":"27017", "hostname":"10.47.191.7", "hash":null,"search":null,"query":null, "pathname":"/ahmj","path":"/ahmj", "href":"mongodb://10.47.191.7:27017/ahmj"}
-    mongoInfo.url = url.parse(dbUrl);//解析url
-    mongoInfo.url.name = mongoInfo.url.pathname.substr(1,mongoInfo.url.pathname.length);
-    if(!mongoInfo.url.host)
-    {
-        console.log("---- parseDbUrl(): Error!!! mongoInfo = "+JSON.stringify(mongoInfo));
-        !errF || errF("parseDbUrl(): Error!!! mongoInfo = "+JSON.stringify(mongoInfo));
+    mongoInfo.url = url.parse(dbUrl); //解析url
+    mongoInfo.url.name = mongoInfo.url.pathname.substr(1, mongoInfo.url.pathname.length);
+    if (!mongoInfo.url.host) {
+        console.log("---- parseDbUrl(): Error!!! mongoInfo = " + JSON.stringify(mongoInfo));
+        !errF || errF("parseDbUrl(): Error!!! mongoInfo = " + JSON.stringify(mongoInfo));
         return;
-    }
-    else
-    {
-        console.log("---- mongoInfo = "+JSON.stringify(mongoInfo));
+    } else {
+        console.log("---- mongoInfo = " + JSON.stringify(mongoInfo));
     }
     // 连接数据库
-    MongoClient.connect(dbUrl, function (err, db) {
-        if(!db) {
+    MongoClient.connect(dbUrl, function(err, db) {
+        if (!db) {
             console.info('db err ' + JSON.stringify(err));
             !errF || errF('db err ' + JSON.stringify(err));
             return;
         }
-        var sysIndex = 'system.indexes';    // 目录
+        var sysIndex = 'system.indexes'; // 目录
         var indexColl = 0;
         var maxColl = 0;
         var collections = [];
-        var date = new Date(new Date() - 24 * 60 * 60 * 1000).Format('yyyy-MM-dd');  //前一天
+        var date = new Date(new Date() - 24 * 60 * 60 * 1000).Format('yyyy-MM-dd'); //前一天
         var outPath = mongoInfo.path.exportMongodbPath + date; //导出路径
         if (!fs.existsSync(outPath)) {
             cp.exec('mkdir -p ' + outPath);
         }
+
         function closeDb() {
             db.close();
         }
 
         function getMemberMoneyCollections(callBack) {
             db.collection(sysIndex).find().each(
-                function (er, doc) {
+                function(er, doc) {
                     if (doc && doc.ns) {
                         var currentName = doc.ns.split('.')[1];
                         collections.push(currentName);
@@ -69,8 +66,9 @@ module.exports = function(dbUrl, endF, errF)
         /**
          * 数组去重
          * */
-        Array.prototype.unique = function () {
-            var n = {}, r = []; //n为hash表，r为临时数组
+        Array.prototype.unique = function() {
+            var n = {},
+                r = []; //n为hash表，r为临时数组
             for (var i = 0; i < this.length; i++) //遍历当前数组
             {
                 if (!n[this[i]]) //如果hash表中没有当前项
@@ -82,7 +80,7 @@ module.exports = function(dbUrl, endF, errF)
             return r;
         };
         // 获取所有集合
-        getMemberMoneyCollections(function () {
+        getMemberMoneyCollections(function() {
             collections = collections.unique();
             // console.log("-----collections:" + collections);
             indexColl = 0;
@@ -92,7 +90,7 @@ module.exports = function(dbUrl, endF, errF)
                 !errF || errF('collections empty!!');
                 return;
             }
-            collections.forEach(function (item) {
+            collections.forEach(function(item) {
                 handleCollection(mongoInfo.url.host, mongoInfo.url.name, item, outPath);
             });
         });
@@ -108,7 +106,7 @@ module.exports = function(dbUrl, endF, errF)
         function handleCollection(ip, name, collection, dirName) {
             var cmd = "mongodump -h  " + ip + " -d " + name + " -c " + collection + "  -o  " + dirName;
             // console.log("2cmd: " + cmd);
-            cp.exec(cmd, function (error, stdout, stderr) {
+            cp.exec(cmd, function(error, stdout, stderr) {
                 if (error) {
                     console.log(error.stack);
                     console.log('Error code: ' + error.code);
@@ -131,15 +129,14 @@ module.exports = function(dbUrl, endF, errF)
         function handleRename(path, oldName, newName) {
             var cmd = 'cd ' + path + '&&mv ' + oldName + ' ' + newName;
             console.log("1cmd: " + cmd);
-            cp.exec(cmd, function (error, stdout, stderr) {
+            cp.exec(cmd, function(error, stdout, stderr) {
                 if (error) {
                     console.log(error.stack);
                     console.log('Error code: ' + error.code);
                     console.log('Signal received: ' + error.signal);
                     closeDb();
                     !errF || errF('handleRename(...), ' + error.stack);
-                }
-                else {
+                } else {
                     // console.log('Rename Success: ' + newName);
                     handleCompressed(outPath, mongoInfo.url.name, date);
                 }
@@ -155,12 +152,11 @@ module.exports = function(dbUrl, endF, errF)
         function handleCompressed(path, newName, oldName) {
             var cmd = 'cd ' + path + '&&tar zcf ' + newName + ".tar.gz " + oldName;
             console.log("0cmd: " + cmd);
-            cp.exec(cmd, function (error, stdout, stderr) {
+            cp.exec(cmd, function(error, stdout, stderr) {
                 if (error) {
                     closeDb();
                     !errF || errF('handleCompressed(...), ' + error.stack);
-                }
-                else {
+                } else {
                     console.log('Compressed Success: ' + newName);
                     handleRemoveFile(path, date);
                 }
@@ -176,11 +172,10 @@ module.exports = function(dbUrl, endF, errF)
         function handleRemoveFile(dir, fileName) {
             var cmd = 'cd ' + dir + '&&rm -rf ' + fileName;
             // console.log("----0-- cmd: " + cmd);
-            cp.exec(cmd, function (error, stdout, stderr) {
+            cp.exec(cmd, function(error, stdout, stderr) {
                 if (error) {
                     !errF || errF('handleRemoveFile(...), ' + error.stack);
-                }
-                else {
+                } else {
                     console.log('Remove Success: ' + fileName);
                     endF(fileName);
                 }

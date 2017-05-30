@@ -1,7 +1,6 @@
 {
-  "auth.handler.buyIn":
-  {
-    "required uInt32 ismoney": 1,
-    "required uInt32 num": 2
-  }
+    "auth.handler.buyIn": {
+        "required uInt32 ismoney": 1,
+        "required uInt32 num": 2
+    }
 }

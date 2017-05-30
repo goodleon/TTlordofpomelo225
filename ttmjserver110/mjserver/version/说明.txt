@@ -1,4 +1,4 @@
 1.bash copy.sh
-�ļ����������޸�pomelo �ļ� 
-�޸���ws Ϊtcp
-ע�͵���tcp-mailbox.js ����180�е�loggerδ����
+文件夹里面是修改pomelo 文件 
+修改了ws 为tcp
+注释掉了tcp-mailbox.js 里面180行的logger未定义

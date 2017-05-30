@@ -1,39 +1,42 @@
-__resources__["/switchManager.js"] = {meta: {mimetype: "application/javascript"}, data: function(exports, require, module, __filename, __dirname) {
-    
-/**
- * Default view
- */
-var curViewNameId = "loginPanel";
+__resources__["/switchManager.js"] = {
+    meta: { mimetype: "application/javascript" },
+    data: function(exports, require, module, __filename, __dirname) {
 
-exports.selectView = selectView;
+        /**
+         * Default view
+         */
+        var curViewNameId = "loginPanel";
 
-/**
- * Swtich game views
- */
-function selectView(viewNameId){
-  if (!viewNameId || curViewNameId === viewNameId) {
-    return;
-  }
+        exports.selectView = selectView;
 
-  var oldView = $('#' + curViewNameId);
-  var newView = $('#' + viewNameId);
+        /**
+         * Swtich game views
+         */
+        function selectView(viewNameId) {
+            if (!viewNameId || curViewNameId === viewNameId) {
+                return;
+            }
 
-  oldView.addClass('f-dn');
-  newView.removeClass('f-dn');
+            var oldView = $('#' + curViewNameId);
+            var newView = $('#' + viewNameId);
 
-  if (viewNameId === 'gemePanel') {
-    $('body').addClass('f-hidbg');
-  } else {
-    $('body').removeClass('f-hidbg');
-  }
+            oldView.addClass('f-dn');
+            newView.removeClass('f-dn');
 
-  curViewNameId = viewNameId;
-}
+            if (viewNameId === 'gemePanel') {
+                $('body').addClass('f-hidbg');
+            } else {
+                $('body').removeClass('f-hidbg');
+            }
 
-function getCurrentView(){
-  return curViewNameId;
-}
+            curViewNameId = viewNameId;
+        }
 
-exports.getCurrentView = getCurrentView;
+        function getCurrentView() {
+            return curViewNameId;
+        }
 
-}};
+        exports.getCurrentView = getCurrentView;
+
+    }
+};

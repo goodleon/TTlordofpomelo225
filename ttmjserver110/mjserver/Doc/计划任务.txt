@@ -1,7 +1,7 @@
-Êı¾İ·ş:
-	Ìí¼Ó²ÆÎñ±¨±íµÄÍ³¼Æ        
+æ•°æ®æœ:
+	æ·»åŠ è´¢åŠ¡æŠ¥è¡¨çš„ç»Ÿè®¡        
 		20 4 * * * bash /root/webadmin/statistics/crontab/memberConsumption.sh
-	Í³¼Æ²Æ²ú
+	ç»Ÿè®¡è´¢äº§
 		10 4 * * * bash /root/webadmin/tool/money.sh
 
 
@@ -19,12 +19,12 @@
 
 		
 
-·¿¼ä·ş:
-	Ìí¼Ó  ÇåÀílogÈÕÖ¾µÄ½Å±¾
+æˆ¿é—´æœ:
+	æ·»åŠ   æ¸…ç†logæ—¥å¿—çš„è„šæœ¬
 		0 4 * * * sh /root/mjserver/crontab/cleanLog.sh
-	ÌáÇ°´´½¨Ã÷ÌìµÄÎÄ¼ş¼Ğ	
+	æå‰åˆ›å»ºæ˜å¤©çš„æ–‡ä»¶å¤¹	
 		0 4 * * * sh /root/mjserver/crontab/createTomorrowFolder.sh
 		
-Á´½Ó·ş:
-	Ìí¼ÓÊı¾İ¿â±¸·İ½Å±¾, ×¢ÒâÒ»¶¨ÒªÓĞ/mnt/vdb1, ÌôÑ¡Á½¸öÁ´½Ó·ş×ö±¸·İ¼´¿É
+é“¾æ¥æœ:
+	æ·»åŠ æ•°æ®åº“å¤‡ä»½è„šæœ¬, æ³¨æ„ä¸€å®šè¦æœ‰/mnt/vdb1, æŒ‘é€‰ä¸¤ä¸ªé“¾æ¥æœåšå¤‡ä»½å³å¯
 	0 4 * * * bash /root/mjserver/crontab/backup.sh

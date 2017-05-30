@@ -1,147 +1,256 @@
 {
-  "fjmjAbroad": {
-    "id": "fjmjAbroad", "host": "127.0.0.1", "port": 3005,"accountServer":4005, "actServer": {"port": 100,"num": 1}
-  },
-
-  "jsmj":{
-    "id": "jsmj", "host": "127.0.0.1", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-
-  "pdk": {
-    "id": "pdk", "host": "10.25.203.121", "port": 3005,"actServer": {"port": 100,"num": 1}
-  },
-
-  "localhost": {
-    "id": "test", "host": "127.0.0.1", "port": 3005,"accountServer": 4005, "actServer": {"port": 100,"num": 1},
-    "redis":"127.0.0.1",
-    "wxpay_appid":"wx8075f4b9146f562e",
-    "wxpay_mchid":"1325019901",
-    "wxpay_key":"321211B24A640E37A092CB180BFF722a",
-    "wxpay_url":"payment.happyplaygame.net/api/wxpay/notify"
+    "fjmjAbroad": {
+        "id": "fjmjAbroad",
+        "host": "127.0.0.1",
+        "port": 3005,
+        "accountServer": 4005,
+        "actServer": { "port": 100, "num": 1 }
     },
-  
-  "phz": {
-    "id": "phz", "host": "172.16.114.255", "port": 3005,
-    "redis":"r-bp17783e2614af34.redis.rds.aliyuncs.com",
-    "actServer": {"port": 100,"num":1}
-  },
-  "scmj": {
-    "id": "scmj", "host": "172.16.114.186", "port": 3005,
-	"redis":"r-bp17b1210e5fcc74.redis.rds.aliyuncs.com",
-	"tableid7":true,
-    "wxpay_appid":"wx8075f4b9146f562e",
-    "wxpay_mchid":"1325019901",
-    "wxpay_key":"321211B24A640E37A092CB180BFF722a",
-    "wxpay_url":"payment.happyplaygame.net/api/wxpay/notify"
-  },
-  "gzmj": {
-    "id": "gzmj", "host": "172.16.114.214", "port": 3005, "actServer": {"port": 100,"num": 1},
-    "redis":"r-bp1332f57b40e524.redis.rds.aliyuncs.com"
-    
-    
-  },
-  
-  "gxmj": {
-    "id": "gxmj", "host": "10.25.45.236", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
 
-  "kwx": {
-    "id": "kwx", "host": "10.47.114.92", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
+    "jsmj": {
+        "id": "jsmj",
+        "host": "127.0.0.1",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
 
-  "hnmj": {
-    "id": "hnmj", "host": "10.25.103.70", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
+    "pdk": {
+        "id": "pdk",
+        "host": "10.25.203.121",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
 
-  "ddz": {
-    "id": "ddz", "host": "10.47.113.110", "port": 3005, "accountServer":4005,
-    "redis":"80595c67a2a649fd.redis.rds.aliyuncs.com",
-	"actServer": {"port": 100,"num": 1}
-  },
+    "localhost": {
+        "id": "test",
+        "host": "127.0.0.1",
+        "port": 3005,
+        "accountServer": 4005,
+        "actServer": { "port": 100, "num": 1 },
+        "redis": "127.0.0.1",
+        "wxpay_appid": "wx8075f4b9146f562e",
+        "wxpay_mchid": "1325019901",
+        "wxpay_key": "321211B24A640E37A092CB180BFF722a",
+        "wxpay_url": "payment.happyplaygame.net/api/wxpay/notify"
+    },
 
-  "jxmj": {
-    "id": "jxmj", "host": "172.16.115.92", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  
-  "xjmj": {
-    "id": "xjmj", "host": "172.16.115.46", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  "sxmj": {
-    "id": "sxmj", "host": "10.25.45.188", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  "zjmj": {
-    "id": "zjmj", "host": "172.16.115.4", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  "ljmj": {
-    "id": "ljmj", "host": "172.17.0.4", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  "gdmj": {
-    "id": "gdmj", "host": "172.16.114.165", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  "sdmj": {
-    "id": "sdmj", "host": "10.25.77.69", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  "shxmj": {
-    "id": "shxmj", "host": "127.0.0.1", "port": 3005, "accountServer":4005
-  },
-  "fjmj": {
-    "id": "fjmj", "host": "172.16.115.10", "port": 3005,"actServer": {"port": 100,"num": 1}
-  },
-  "ynmj": {
-    "id": "ynmj", "host": "10.25.36.69", "port": 3005,"actServer": {"port": 100,"num": 1}
-  },
-  "hanmj": {
-    "id": "hanmj", "host": "10.47.186.61", "port": 3005,"accountServer":4005, "actServer": {"port": 100,"num": 1}
-  },
-  "ahmj": {
-    "id": "ahmj", "host": "172.16.115.77", "port": 3005,"accountServer":4005,"actServer": {"port": 100,"num": 1}
-    
-  },
-  "shmj": {
-    "id": "shmj", "host": "10.26.175.144", "port": 3005,"accountServer":4005
-  },
-  "henmj": {
-    "id": "henmj", "host": "172.16.115.8", "port": 3005,"accountServer":4005
-  },
-  "xynmmj": {
-    "id": "xynmmj", "host": "10.26.168.150", "port": 3005,"actServer": {"port": 100,"num": 1}
-  },
-  "nxmj": {
-    "id": "nxmj", "host": "10.26.168.247", "port": 3005,"actServer": {"port": 100,"num": 1}
-  },
-  "gxphz": {
-    "id": "gxphz", "host": "10.25.38.194", "port": 3005,"accountServer":4005
-  },
-  "hbmj": {
-    "id": "hbmj", "host": "10.27.255.190", "port": 3005
-  },
-  "gsmj": {
-    "id": "gsmj", "host": "172.16.115.86", "port": 3005,"accountServer":4005,
-    "mdbUrl":"mongodb://majiang:JxLw2017MajiangDB@dds-bp1ced9a83c6e7c42.mongodb.rds.aliyuncs.com:3717,dds-bp1ced9a83c6e7c41.mongodb.rds.aliyuncs.com:3717/gsmj?replicaSet=mgset-2858187"
-  },
-  "guandan": {
-    "id": "guandan", "host": "10.27.56.254", "port": 3005,"accountServer":4005
-  },
-  "dzpk": {
-    "id": "dzpk", "host": "172.16.115.61", "port": 3005,"actServer": {"port": 100,"num": 1}
-  },
-  "aFjmj": {
-    "id": "aFjmj", "host": "172.18.2.156", "port": 3005,"actServer": {"port": 100,"num": 1}
-  },
-  "psz": {
-    "id": "psz", "host": "172.16.115.88", "port": 3005, "actServer": {"port": 100,"num": 1}
-  },
-  "hnyymj": {
-    "id": "hnyymj", "host": "172.16.115.89", "port": 3005, "actServer": {"port": 100,"num": 1},
-    "redis":"r-bp178fea0675c744.redis.rds.aliyuncs.com",
-    "mdbUrl":"mongodb://majiang:JxLw2017MajiangDB@dds-bp10a6e68464b3741.mongodb.rds.aliyuncs.com:3717,dds-bp10a6e68464b3742.mongodb.rds.aliyuncs.com:3717/hnyymj?replicaSet=mgset-3155933",
-    "wxpay_appid":"wx1115805696c9aa23",
-    "wxpay_mchid":"1450248102",
-    "wxpay_key":"321211B24A640E37A092CB180BFF7666",
-    "wxpay_url":"payment.happyplaygame.net/api/wxpay/notify"
-  },
-  "zhuzhouphz": {
-    "id": "zhuzhouphz", "host": "172.16.115.82", "port": 3005, "actServer": {"port": 100,"num": 1},
-    "mdbUrl":"mongodb://majiang:JxLw2017MajiangDB@dds-bp11de13660b93042.mongodb.rds.aliyuncs.com:3717,dds-bp11de13660b93041.mongodb.rds.aliyuncs.com:3717/zhuzhouphz?replicaSet=mgset-3229997"
-  }
+    "phz": {
+        "id": "phz",
+        "host": "172.16.114.255",
+        "port": 3005,
+        "redis": "r-bp17783e2614af34.redis.rds.aliyuncs.com",
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "scmj": {
+        "id": "scmj",
+        "host": "172.16.114.186",
+        "port": 3005,
+        "redis": "r-bp17b1210e5fcc74.redis.rds.aliyuncs.com",
+        "tableid7": true,
+        "wxpay_appid": "wx8075f4b9146f562e",
+        "wxpay_mchid": "1325019901",
+        "wxpay_key": "321211B24A640E37A092CB180BFF722a",
+        "wxpay_url": "payment.happyplaygame.net/api/wxpay/notify"
+    },
+    "gzmj": {
+        "id": "gzmj",
+        "host": "172.16.114.214",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 },
+        "redis": "r-bp1332f57b40e524.redis.rds.aliyuncs.com"
+
+
+    },
+
+    "gxmj": {
+        "id": "gxmj",
+        "host": "10.25.45.236",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+
+    "kwx": {
+        "id": "kwx",
+        "host": "10.47.114.92",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+
+    "hnmj": {
+        "id": "hnmj",
+        "host": "10.25.103.70",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+
+    "ddz": {
+        "id": "ddz",
+        "host": "10.47.113.110",
+        "port": 3005,
+        "accountServer": 4005,
+        "redis": "80595c67a2a649fd.redis.rds.aliyuncs.com",
+        "actServer": { "port": 100, "num": 1 }
+    },
+
+    "jxmj": {
+        "id": "jxmj",
+        "host": "172.16.115.92",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+
+    "xjmj": {
+        "id": "xjmj",
+        "host": "172.16.115.46",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "sxmj": {
+        "id": "sxmj",
+        "host": "10.25.45.188",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "zjmj": {
+        "id": "zjmj",
+        "host": "172.16.115.4",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "ljmj": {
+        "id": "ljmj",
+        "host": "172.17.0.4",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "gdmj": {
+        "id": "gdmj",
+        "host": "172.16.114.165",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "sdmj": {
+        "id": "sdmj",
+        "host": "10.25.77.69",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "shxmj": {
+        "id": "shxmj",
+        "host": "127.0.0.1",
+        "port": 3005,
+        "accountServer": 4005
+    },
+    "fjmj": {
+        "id": "fjmj",
+        "host": "172.16.115.10",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "ynmj": {
+        "id": "ynmj",
+        "host": "10.25.36.69",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "hanmj": {
+        "id": "hanmj",
+        "host": "10.47.186.61",
+        "port": 3005,
+        "accountServer": 4005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "ahmj": {
+        "id": "ahmj",
+        "host": "172.16.115.77",
+        "port": 3005,
+        "accountServer": 4005,
+        "actServer": { "port": 100, "num": 1 }
+
+    },
+    "shmj": {
+        "id": "shmj",
+        "host": "10.26.175.144",
+        "port": 3005,
+        "accountServer": 4005
+    },
+    "henmj": {
+        "id": "henmj",
+        "host": "172.16.115.8",
+        "port": 3005,
+        "accountServer": 4005
+    },
+    "xynmmj": {
+        "id": "xynmmj",
+        "host": "10.26.168.150",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "nxmj": {
+        "id": "nxmj",
+        "host": "10.26.168.247",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "gxphz": {
+        "id": "gxphz",
+        "host": "10.25.38.194",
+        "port": 3005,
+        "accountServer": 4005
+    },
+    "hbmj": {
+        "id": "hbmj",
+        "host": "10.27.255.190",
+        "port": 3005
+    },
+    "gsmj": {
+        "id": "gsmj",
+        "host": "172.16.115.86",
+        "port": 3005,
+        "accountServer": 4005,
+        "mdbUrl": "mongodb://majiang:JxLw2017MajiangDB@dds-bp1ced9a83c6e7c42.mongodb.rds.aliyuncs.com:3717,dds-bp1ced9a83c6e7c41.mongodb.rds.aliyuncs.com:3717/gsmj?replicaSet=mgset-2858187"
+    },
+    "guandan": {
+        "id": "guandan",
+        "host": "10.27.56.254",
+        "port": 3005,
+        "accountServer": 4005
+    },
+    "dzpk": {
+        "id": "dzpk",
+        "host": "172.16.115.61",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "aFjmj": {
+        "id": "aFjmj",
+        "host": "172.18.2.156",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "psz": {
+        "id": "psz",
+        "host": "172.16.115.88",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 }
+    },
+    "hnyymj": {
+        "id": "hnyymj",
+        "host": "172.16.115.89",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 },
+        "redis": "r-bp178fea0675c744.redis.rds.aliyuncs.com",
+        "mdbUrl": "mongodb://majiang:JxLw2017MajiangDB@dds-bp10a6e68464b3741.mongodb.rds.aliyuncs.com:3717,dds-bp10a6e68464b3742.mongodb.rds.aliyuncs.com:3717/hnyymj?replicaSet=mgset-3155933",
+        "wxpay_appid": "wx1115805696c9aa23",
+        "wxpay_mchid": "1450248102",
+        "wxpay_key": "321211B24A640E37A092CB180BFF7666",
+        "wxpay_url": "payment.happyplaygame.net/api/wxpay/notify"
+    },
+    "zhuzhouphz": {
+        "id": "zhuzhouphz",
+        "host": "172.16.115.82",
+        "port": 3005,
+        "actServer": { "port": 100, "num": 1 },
+        "mdbUrl": "mongodb://majiang:JxLw2017MajiangDB@dds-bp11de13660b93042.mongodb.rds.aliyuncs.com:3717,dds-bp11de13660b93041.mongodb.rds.aliyuncs.com:3717/zhuzhouphz?replicaSet=mgset-3229997"
+    }
 }

@@ -1,9 +1,4 @@
 [
-  "PriCard"
- ,"switchRoom"
- ,"startRound"
- ,"addBet"
- ,"getCard"
- ,"dpkPubCard"
- 
+    "PriCard", "switchRoom", "startRound", "addBet", "getCard", "dpkPubCard"
+
 ]

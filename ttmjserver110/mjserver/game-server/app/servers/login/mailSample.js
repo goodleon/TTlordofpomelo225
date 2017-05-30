@@ -1,36 +1,30 @@
-module.exports={
+module.exports = {
 
-loginCode:
-{
-   en:
-   {
-     subject:"verify code-use to login games from coolgamebox",
-	 text:"",
-	 html:""
-   },
-   zh:
-   {
-     subject:"ÑéÖ¤Âë-Ê¹ÓÃ´ËÑéÖ¤ÂëµÇÂ¼coolgameboxµÄÓÎÏ·",
-	 text:"{0}",
-	 html:"<b>{0}</b>"
-   }
-},
+    loginCode: {
+        en: {
+            subject: "verify code-use to login games from coolgamebox",
+            text: "",
+            html: ""
+        },
+        zh: {
+            subject: "ï¿½ï¿½Ö¤ï¿½ï¿½-Ê¹ï¿½Ã´ï¿½ï¿½ï¿½Ö¤ï¿½ï¿½ï¿½Â¼coolgameboxï¿½ï¿½ï¿½ï¿½Ï·",
+            text: "{0}",
+            html: "<b>{0}</b>"
+        }
+    },
 
-recommend:
-{
-   en:
-   {
-     subject:"",
-	 text:"",
-	 html:""
-   },
-   zh:
-   {
-     subject:"",
-	 text:"",
-	 html:""
-   }
-}
+    recommend: {
+        en: {
+            subject: "",
+            text: "",
+            html: ""
+        },
+        zh: {
+            subject: "",
+            text: "",
+            html: ""
+        }
+    }
 
 
 

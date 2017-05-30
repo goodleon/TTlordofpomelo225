@@ -31,8 +31,8 @@ module.exports = function(cb) {
     // var masterConfig = require('../mjserver/game-server/config/master.json');
     var admin = this;
     var jsonCfg = {
-        host:"10.28.88.165",
-        id:'test',
+        host: "10.28.88.165",
+        id: 'test',
     }
     var dbIp = 'mongodb://' + jsonCfg.host + ':27017/';
     /*
@@ -46,14 +46,14 @@ module.exports = function(cb) {
             console.error('activityWeb can not connect to mongodb : ' + mdbUrl);
         }
     });*/
-    admin.connectDB = function (dbName, endF) {
-        var url  = dbIp + dbName;
+    admin.connectDB = function(dbName, endF) {
+        var url = dbIp + dbName;
         console.log('admin.connectDB : ' + url);
-        require('mongodb').MongoClient.connect(url, {server: {poolSize: 3, auto_reconnect: true}}, function(err, db) {
-            if(db) {
+        require('mongodb').MongoClient.connect(url, { server: { poolSize: 3, auto_reconnect: true } }, function(err, db) {
+            if (db) {
                 console.log('mongodb open : ' + url);
                 admin.dataCenterDb[dbName] = db;
-                !endF||endF(900);
+                !endF || endF(900);
             } else {
                 console.error('activityWeb can not connect to mongodb : ' + url);
             }
