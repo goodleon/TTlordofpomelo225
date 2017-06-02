@@ -13,7 +13,23 @@
 			1. 执行命令 nload  (如果没有执行 yum install nload)
 			2. 按房间键左右或者回车键, 来查看占用的带宽,  看着快到峰值了, 请尽快加带宽
 	以上可以通过装 htop 来更好的查看系统状态	yum install -y  htop
-	
+
+	add by wcx
+	//查看node相关的端口
+	ps aux | grep node
+	//查看所有监听的ip与端口
+	netstat -lntp
+
+/usr/lib/node_modules
+去测试服把这个目录拷贝到你的机器上对应的位置
+现在服务器都没起来
+报错了啊
+
+	[root@centos-linux1151 uncaught]# pwd
+    /root/mjserver/game-server/uncaught
+    如果启动正常，这个目录是没有文件的
+
+
 2. 游戏服务器运行状态查询
 	1. 查看服务器是否启动
 		1. ps ax | grep 项目名
