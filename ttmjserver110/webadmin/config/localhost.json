@@ -46,6 +46,6 @@
 	"growthKey":"gr0wthYYMJ2017Key#@DATE",
 	"growthAccessId":"yymjgr0wthacess2017id",
 	"growthHost":"growth.happyplaygame.net",
-	"redishost":"cbfff72bcb1b4db9.redis.rds.aliyuncs.com",
+	"redishost":"127.0.0.1",
 	"startActivityScan":1
 }

@@ -10,3 +10,5 @@ sleep 2
 nohup forever start /root/webadmin/adminWeb.js localhost.json
 sleep 1
 nohup forever start /root/mjserver/web-server/web.js &
+
+nohup forever start /root/webadmin/activityWeb.js localhost &

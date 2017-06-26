@@ -2,7 +2,9 @@ module.exports = function(app, opts) { return new ComponentData(app, opts); };
 
 function ComponentData(app, opts) {
     var segs = __dirname.split(require('path').sep);
-    var sType = segs[segs.length - 1];
+    //segs=,Users,goodleon,Documents,workspace_pomelo,TTlordofpomelo225,ttmjserver110,mjserver,game-server,app,servers,pkroom
+    //sType=pkroom
+    var sType = segs[segs.length - 1]; //获得服务器类型
     app.set(sType, this, true);
     this.app = app;
     this.ReloadCode();

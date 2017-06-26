@@ -77,7 +77,8 @@ var iosiapCfg = {
 
 
     var redis = require('redis');
-    var client = redis.createClient('6379', "cbfff72bcb1b4db9.redis.rds.aliyuncs.com");
+    //var client = redis.createClient('6379', "cbfff72bcb1b4db9.redis.rds.aliyuncs.com");
+    var client = redis.createClient('6379', "127.0.0.1");
 
     client.on("error", function(error) {
         console.log(error);

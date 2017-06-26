@@ -22,12 +22,12 @@ var nowTime = Date.now();
 var dayZero = Math.floor((nowTime + timeZone) / oneDayMsec) * oneDayMsec - timeZone;//凌晨8点减去8个小时
 var diffMsec = oneDayMsec - (nowTime - dayZero) - 60000;//23:59:00
 var nextTime = nowTime + diffMsec;
-admin.doLog('web start', {now:nowTime, dayZero:dayZero, diff:diffMsec, timeout:nowTime+diffMsec}, 'interday.log');
+admin.doLog('web start 111', {now:nowTime, dayZero:dayZero, diff:diffMsec, timeout:nowTime+diffMsec}, 'interday.log');
 //diffMsec = 1000;
 //oneDayMsec = 2000;
 //只需要一个服务器触发
 function interDay() {
-	admin.doLog('interDay function', 'interday called', 'interday.log');
+	admin.doLog('interDay function', 'interday called 222', 'interday.log');
 	if (admin.mdb && admin.balanceIndex == 0) {
 		var diff = Date.now() - nextTime;//修正延时的毫秒
 		setTimeout(interDay, oneDayMsec - diff);//next day 23:59:00
@@ -146,7 +146,7 @@ function interDay() {
 
 if(admin.balanceIndex == 0) {
 	setTimeout(interDay, diffMsec);//this day 23:59:59
-	admin.doLog('interDay start', 'start time out', 'interday.log');
+	admin.doLog('interDay start', 'start time 333 out', 'interday.log');
 }
 
 function loginCheck(member, req, res, next) {
@@ -273,19 +273,25 @@ function byMidFill(req, res, next)
 }
 
 function loginAlready(req, res, next) {
+
+	console.info("loginAlready req.cookies=" + JSON.stringify(req.cookies));
 	if(req.cookies.sessionID) {
         var member = admin.sid2member[req.cookies.sessionID];
 
         if(!member) {
+			console.info("loginAlready !member");
             next();
             return;
         }
 
 		if(!checkSpecialStatus(member, res)) {
+
+			console.info("loginAlready  !checkSpecialStatus(member, res)");
 			return;
 		}
 
         if(!member.adminLevel) {
+			console.info("loginAlready !member.adminLevel=" + !member.adminLevel);
             member.adminLevel = 0;
         }
 
@@ -299,6 +305,8 @@ function loginAlready(req, res, next) {
             default:
                 break;
         }
+	}else {
+		console.info("loginAlready else");
 	}
 
 	next();
@@ -455,6 +463,7 @@ function Reload()
 	for(var i=0;i<types.length;i++)
 	{
 		var dirPath=__dirname+"/"+types[i];
+
 		if(fs.existsSync(dirPath) && fs.statSync(dirPath ).isDirectory())
 		{
 			var lst=fs.readdirSync(dirPath);

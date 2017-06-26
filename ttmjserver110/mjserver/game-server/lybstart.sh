@@ -11,6 +11,6 @@ nohup pomelo start -e localhost -t pkcon >> output.log &
 sleep 2
 nohup forever start /root/webadmin/activityWeb.js localhost &
 sleep 2
-nohup forever start /root/webadmin/adminWeb.js localhost.json
+nohup forever start -o /home/webadmin/logwcx.txt /root/webadmin/adminWeb.js localhost.json
 sleep 1
 nohup forever start /root/mjserver/web-server/web.js &

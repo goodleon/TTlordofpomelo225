@@ -75,7 +75,7 @@
 	npm install -g request
 	npm install -g node-schedule
 
-3目录配置(add by wcx  工作目录在哪里,在哪里执行 mkdir /playlog)
+3目录配置(add by wcx  工作目录在哪里,在哪里执行(答:pwd 为 / 的地方) mkdir /playlog)
 	 // 回放数据
 	mkdir /playlog
 	ln -s /playlog /root/mjserver/web-server/public/

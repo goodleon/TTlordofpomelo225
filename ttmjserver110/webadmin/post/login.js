@@ -30,7 +30,7 @@ module.exports=function(admin)
 	}
 
 	function doLoginCheck(mid, mPass, ip, type) {
-		//admin.doLog('doLoginCheck', {mid:mid, ip:ip, type:type, checkData:loginCheck[ip]});
+		admin.doLog('doLoginCheck', {mid:mid, ip:ip, type:type, checkData:loginCheck[ip]});
 		if(type == 1) {//验证
 			if (typeof(mid) != 'number') {
 				return false;
@@ -104,6 +104,8 @@ module.exports=function(admin)
 	}
 
 	function loginInner(req, res) {
+		console.info("loginInner----00");
+
 		var ip = admin.getClientIp(req);
 		var dbIp = ip.split('.');
 		dbIp = dbIp.join('_');
@@ -114,10 +116,12 @@ module.exports=function(admin)
 
 		if(typeof(banMins) == 'number') {
 			res.json({banMins:banMins});
+			console.info("loginInner---》banMins="+banMins);
 			return;
 		}
 
 		if(!banMins) {
+			console.info("loginInner---》!banMins");
 			res.json(0);
 			return;
 		}
@@ -126,56 +130,76 @@ module.exports=function(admin)
 
 
 		if(admin.mdb) {
+			console.info("loginInner---》admin.mdb");
 			if(!msg.crossServer) {//跳转会造成2次加密
+				console.info("loginInner---》!msg.crossServer");
 				msg.mPass = admin.cryptoMemberPass(msg.mPass);
 			}
 
-			//console.info(JSON.stringify(msg));
+			console.info("loginInner---》" + JSON.stringify(msg));
 			//负载分担登录方式
 
 			msg.host = req.host;
 			//console.info("login msg "+JSON.stringify(msg));
 			admin.mdb.collection('members').findOne({_id: msg.mid}, function (er, doc) {
+				console.info("loginInner---》collection");
 				if (doc) {
+					console.info("loginInner---》collection-》doc");
 					doc.tempIp = dbIp;
 					if(doc.banTime) {
+						console.info("loginInner---》collection-》doc->doc.banTime");
 						var now = Date.now();
 
 						if(doc.banTime > now) {
+							console.info("loginInner---》collection-》doc.banTime > now");
 							var days = Math.ceil((doc.banTime - now) / 86400000);
 							res.json({banDays:days});
 							doLoginCheck(msg.mid, msg.mPass, ip, 2);//失败，累计次数，并清理ip状态
 							return;
 						}
 					}
-
-					if (doc.mPass == msg.mPass && (doc.adminLevel > 0 || !msg.gameid || (doc.gameids && doc.gameids.indexOf(msg.gameid) >= 0))) {
+					var irest11 = (doc.adminLevel > 0 || !msg.gameid || (doc.gameids && doc.gameids.indexOf(msg.gameid) >= 0));
+					console.info("loginInner---》collection-》doc.mPass=" + doc.mPass + " msg.mPass=" + msg.mPass + " irest11=" + irest11);
+					var iCheckPs = (doc.mPass == msg.mPass);
+					if ( /*iCheckPs && */irest11) {
+						console.info("loginInner---》collection-》doc 111");
 						if (msg.crossServer) {
+							console.info("loginInner---》collection-》2222");
 							res.json(doc);
 						} else {
+							console.info("loginInner---》collection-》3333");
 							msg.doc = doc;
 							admin.doLogin(msg, res, req, false);//false from login.js doLogin, true from adminWeb.js balanceLogin
 						}
+						console.info("loginInner---》collection-》4444");
 						doLoginCheck(msg.mid, msg.mPass, ip, 3);//成功，清理内存
 					} else {
+						console.info("loginInner---》collection-》5555");
 						doLoginCheck(msg.mid, msg.mPass, ip, 2);//失败，累计次数，并清理ip状态
+
 						res.json(0);
 					}
 				} else {
+					console.info("loginInner---》collection no doc");
 					if (admin.jsonCfg && admin.jsonCfg.memberFrom) {
+						console.info("loginInner---》collection no doc 1111");
 						msg.crossServer = true;
 						var mFrom = admin.jsonCfg.memberFrom;
 						admin.httpClient.postJson(mFrom.path, msg, mFrom.port, mFrom.host, function (he, hr) {
+							console.info("loginInner---》collection no doc 2222");
 							if (hr) {
+								console.info("loginInner---》collection no doc 3333");
 								delete hr.tempIp;//防止insert 写入没用的数据
 
 								if(hr.banDays) {//封禁
+									console.info("loginInner---》collection no doc 4444");
 									res.json({banDays:hr.banDays});
 									doLoginCheck(msg.mid, msg.mPass, ip, 2);//失败，累计次数，并清理ip状态
 									return;
 								}
 
 								if(hr.banMins) {
+									console.info("loginInner---》collection no doc 5555");
 									res.json({banMins:hr.banMins});
 									doLoginCheck(msg.mid, msg.mPass, ip, 2);//失败，累计次数，并清理ip状态
 									return;
@@ -184,23 +208,27 @@ module.exports=function(admin)
 								hr.buyTotal = 0;
 								if (!(hr.adminLevel > 0))    hr.money = 0;
 								admin.mdb.collection('members').insert(hr, function () {
+									console.info("loginInner---》collection no doc 6666");
 									hr.tempIp = dbIp;
 									msg.doc = hr;
 									admin.doLogin(msg, res, req, false);//false from login.js doLogin, true from adminWeb.js balanceLogin
 									doLoginCheck(msg.mid, msg.mPass, ip, 3);//成功清理内存
 								});
 							} else {
+								console.info("loginInner---》collection no doc 777");
 								doLoginCheck(msg.mid, msg.mPass, ip, 2);//失败，累计次数，并清理ip状态
 								res.json(0);
 							}
 						});
 					} else {
+						console.info("loginInner---》collection no doc 0000");
 						doLoginCheck(msg.mid, msg.mPass, ip, 2);//失败，累计次数，并清理ip状态
 						res.json(0);
 					}
 				}
 			});
 		} else {
+			console.info("loginInner---》admin.mdb else");
 			doLoginCheck(msg.mid, msg.mPass, ip, 2);//失败，累计次数，并清理ip状态
 			res.json(0);
 		}

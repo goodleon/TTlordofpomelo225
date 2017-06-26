@@ -109,9 +109,7 @@ domain.run(function() {
         return to;
     }
 
-    app.DeapClone = function(from) {
-        return JSON.parse(JSON.stringify(from));
-    }
+    app.DeapClone = function(from) {return JSON.parse(JSON.stringify(from));}
 
 
     app.regEx = {
@@ -428,7 +426,9 @@ domain.run(function() {
 
             //
             var isWin = /^win/.test(process.platform);
-            if (!isWin) app.enable('systemMonitor');
+            if (!isWin){
+                app.enable('systemMonitor');
+            }
         });
 
     //var serverInfo=app.getCurServer();if(!serverInfo.env)serverInfo.env=serverInfo.id;

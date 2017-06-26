@@ -26,7 +26,7 @@ console.log("url:"+url);
 module.exports = function ()
 {
     return{
-        dcsIp:"106.14.20.195",//dataCenterServer
+        dcsIp: "127.0.0.1",//"106.14.20.195",//dataCenterServer
         dcsPort:900,
         url : url,
         Format : function(obj, fmt)

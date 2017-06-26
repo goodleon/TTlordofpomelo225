@@ -9,7 +9,7 @@ module.exports=function(admin) {
     var postTools = require("./tools.js")(admin);
     var events = require('events');
     // var eventEmitter = new events.EventEmitter();
-    var dbIp =  "106.14.20.195";
+    var dbIp =  "127.0.0.1";//"106.14.20.195";
     var dbPort =  900
     console.log('dataCenter', dbIp, dbPort);
     var project = {

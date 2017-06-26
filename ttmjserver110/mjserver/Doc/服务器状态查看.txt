@@ -19,6 +19,9 @@
 	ps aux | grep node
 	//查看所有监听的ip与端口
 	netstat -lntp
+	netstat -tunpl | grep 6379
+	//启动redis
+	/root/local/redis-3.2.9/src/redis-server /root/local/redis-3.2.9/redis.conf
 
 /usr/lib/node_modules
 去测试服把这个目录拷贝到你的机器上对应的位置
